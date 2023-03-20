@@ -1,4 +1,8 @@
 
+# 问题
+1. win10上本地和git bash中使用ssh agent并不是一个。 gitbash中有独立的ssh。在gitbash中使用git push调用的是gitbash中的ssh agent， 感觉理论上需要配置ssh-add 列表和打开gitbash就自动启动
+
+
 在win10上安装ssh服务端
 setting - Optional Feature - Add a Feature - OpenSSH
 
@@ -18,4 +22,8 @@ change Startup type automatic 开机启动
 查找到本机的ip地址
 
 ## 生成sshkey
-ssh-keygen 
+```shell 
+# github 使用
+ssh-keygen -t rsa -C "your_email@youremail.com"
+```
+

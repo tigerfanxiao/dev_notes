@@ -32,6 +32,18 @@
             }
           },
           {
+            "id": "6868662d92ee43d5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Linux/Bash Script.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "f2dd00adbd0a51ed",
             "type": "leaf",
             "state": {
@@ -332,7 +344,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -361,7 +373,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "设计模式",
+                "query": "ssh-add",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -398,7 +410,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md",
+                "file": "Linux/Bash Script.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -415,7 +427,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md",
+                "file": "Linux/Bash Script.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -438,7 +450,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md"
+                "file": "Linux/Bash Script.md"
               }
             }
           }
@@ -459,10 +471,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f155ed3238760dc9",
+  "active": "6868662d92ee43d5",
   "lastOpenFiles": [
-    "Devops/Win10/SSH.md",
     "git/Config Multiple Repo Account in Windows.md",
+    "Linux/Bash Script.md",
+    "Linux",
+    "Devops/Win10/SSH.md",
     "Devops/Win10",
     "Devops",
     "System Design/Database.md",
@@ -491,7 +505,6 @@
     "Design Pattern/模板方法模式.md",
     "Design Pattern/桥模式.md",
     "Design Pattern/外观模式.md",
-    "Design Pattern/学习过程.md",
     "设计模式/Untitled",
     "Design Pattern",
     "FrontEnd"
