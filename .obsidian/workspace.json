@@ -32,6 +32,30 @@
             }
           },
           {
+            "id": "651807481b995abf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Jiuzhang Twitter Project/Twitter Class.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c182d80ac236d40f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "f2dd00adbd0a51ed",
             "type": "leaf",
             "state": {
@@ -332,7 +356,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -398,7 +422,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "HMO Python Scrpits.md",
+                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -415,7 +439,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "HMO Python Scrpits.md",
+                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -438,7 +462,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "HMO Python Scrpits.md"
+                "file": "Jiuzhang Twitter Project/Questions for Tutor.md"
               }
             }
           }
@@ -459,8 +483,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f155ed3238760dc9",
+  "active": "c182d80ac236d40f",
   "lastOpenFiles": [
+    "Jiuzhang Twitter Project/Twitter Class.md",
+    "Jiuzhang Twitter Project/Questions for Tutor.md",
+    "HMO Python Scrpits.md",
+    "Jiuzhang Twitter Project",
     "Linux/Bash Script.md",
     "Linux",
     "git/Config Multiple Repo Account in Windows.md",
@@ -474,7 +502,6 @@
     "Pasted image 20230221165652.png",
     "re.md",
     "python Iterator.md",
-    "HMO Python Scrpits.md",
     "Ideas & Doubts.md",
     "程序结构.md",
     "Huawei/HICP 学习计划.md",
@@ -491,8 +518,6 @@
     "Design Pattern/观察者模式.md",
     "Design Pattern/建造者模式.md",
     "Design Pattern/模板方法模式.md",
-    "Design Pattern/桥模式.md",
-    "Design Pattern/外观模式.md",
     "设计模式/Untitled",
     "Design Pattern",
     "FrontEnd"
