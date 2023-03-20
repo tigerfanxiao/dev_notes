@@ -25,19 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6868662d92ee43d5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Linux/Bash Script.md",
+                "file": "HMO Python Scrpits.md",
                 "mode": "source",
                 "source": false
               }
@@ -344,7 +332,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -373,7 +361,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "ssh-add",
+                "query": "设计模式",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -410,7 +398,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Linux/Bash Script.md",
+                "file": "HMO Python Scrpits.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -427,7 +415,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Linux/Bash Script.md",
+                "file": "HMO Python Scrpits.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -450,7 +438,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Linux/Bash Script.md"
+                "file": "HMO Python Scrpits.md"
               }
             }
           }
@@ -471,11 +459,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6868662d92ee43d5",
+  "active": "f155ed3238760dc9",
   "lastOpenFiles": [
-    "git/Config Multiple Repo Account in Windows.md",
     "Linux/Bash Script.md",
     "Linux",
+    "git/Config Multiple Repo Account in Windows.md",
     "Devops/Win10/SSH.md",
     "Devops/Win10",
     "Devops",
