@@ -13,7 +13,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "System Design/Database.md",
+                "file": "git/Config Multiple Repo Account in Windows.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f155ed3238760dc9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "git/Config Multiple Repo Account in Windows.md",
                 "mode": "source",
                 "source": false
               }
@@ -313,13 +325,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Config Multiple Repo Account in Windows.md",
+                "file": "git/Config Multiple Repo Account in Windows.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -385,7 +398,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "System Design/Database.md",
+                "file": "git/Config Multiple Repo Account in Windows.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -402,7 +415,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "System Design/Database.md",
+                "file": "git/Config Multiple Repo Account in Windows.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -425,7 +438,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "System Design/Database.md"
+                "file": "git/Config Multiple Repo Account in Windows.md"
               }
             }
           }
@@ -446,10 +459,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "33c818f4814f37dc",
+  "active": "f155ed3238760dc9",
   "lastOpenFiles": [
-    "System Design/Graphic System.md",
+    "Devops/Win10/SSH.md",
+    "git/Config Multiple Repo Account in Windows.md",
+    "Devops/Win10",
+    "Devops",
     "System Design/Database.md",
+    "System Design/Graphic System.md",
     "System Design/Distributed System.md",
     "Tech English Expression.md",
     "Pasted image 20230221165652.png",
@@ -461,7 +478,6 @@
     "Huawei/HICP 学习计划.md",
     "git",
     "python/MRO.md",
-    "Config Multiple Repo Account in Windows.md",
     "python",
     "Design Pattern/设计模式综述.md",
     "Design Pattern/工厂模式.md",
@@ -476,7 +492,6 @@
     "Design Pattern/桥模式.md",
     "Design Pattern/外观模式.md",
     "Design Pattern/学习过程.md",
-    "Design Pattern/责任链模式.md",
     "设计模式/Untitled",
     "Design Pattern",
     "FrontEnd"

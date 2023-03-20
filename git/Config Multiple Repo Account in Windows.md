@@ -11,6 +11,8 @@ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 将私钥添加到ssh中, 这是临时的， 关闭shell之后会消失
 ```shell
+eval $(ssh-agent)  # only start ssh agent, could you do some adding 
+
 ssh-add ~/.ssh/id_rsa_github
 ssh-add ~/.ssh/id_rsa_huawei
 # Check all the key you saved in ssh
@@ -20,7 +22,7 @@ ssh-add -l
 如果遇到 `Could not open a connection to your authentication agent.` 问题, 则启动ssh-agent
 ```shell
 # Start ssh agent in windows
-eval $(ssh-agent)
+
 Agent pid 1955
 ```
 
