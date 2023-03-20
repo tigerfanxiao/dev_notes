@@ -1,28 +1,7 @@
-
-9月 20 日联系 小可 最近是否有开班.  
-
-作息时间 北京时间早上9点-中午12点 下午1点-5点
-
-  西班牙 上午 11 点之前
-
-9月 20日, 阅读文档, python 基础 上
-
   
+[老师的repo](https://github.com/jiuzhangsuanfa-org/django-twitter)
 
-九章 twitter github
-
-https://github.com/jiuzhangsuanfa-org/django-twitter
-
-九章班级群
-
-Twitter 后端系统 - Python 项目
-
-  
-
-  
-
-项目的管理员 admin / fx926926
-
+微信九章班级群 Twitter 后端系统 - Python 项目
   
 
 [https://us06web.zoom.us/webinar/register/WN_ud0rQU9GRzuL0WVwUkLs6Q](https://us06web.zoom.us/webinar/register/WN_ud0rQU9GRzuL0WVwUkLs6Q)

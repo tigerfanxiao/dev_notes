@@ -13,350 +13,50 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md",
+                "file": "Jiuzhang Twitter Project/Dev Notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "f155ed3238760dc9",
+            "id": "f248ebce9945c113",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HMO Python Scrpits.md",
+                "file": "Jiuzhang Twitter Project/Project Env.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "651807481b995abf",
+            "id": "a74ff8ea6fd1086c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Jiuzhang Twitter Project/Twitter Class.md",
+                "file": "git/gitignore.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "c182d80ac236d40f",
+            "id": "eb78c5dfb1407020",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f2dd00adbd0a51ed",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Huawei/HICP 学习计划.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "45fa841a16235b67",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Huawei/OSPF.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "23150f086f3c4f83",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Huawei/HCNA.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1bbdd71f89710351",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "FrontEnd/CSS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8bab1e876f9ff8ac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ideas & Doubts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d66d61208789bf84",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/设计模式综述.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4b25c086f7547f4f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/学习框架.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "01773ddc8c2420e0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/学习过程.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8ffb5cb91344bfb2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/学习框架.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8e4264ce6242148e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/单例模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2a6f0a2183aaf7d6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/适配器模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "59f58c10898054cf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/桥模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6d99c7826f1cd22c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/组合模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a77d2bf21dcce8f8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ideas & Doubts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a5c3aa42906ce5c9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/代理模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0d7a70e83e94d629",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ideas & Doubts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b128d84e572a5212",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/观察者模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5f6cf5daf74ebb7c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/策略模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "884138c01e81da6e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/设计模式综述.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "02e0e130e63f247b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/设计模式综述.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f601cb86b31dd9ab",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/简单工厂模式.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a0f3f609bc9beee5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/设计模式综述.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "06506798fb9dea69",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ideas & Doubts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ca8b9cd351cb985c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "python/MRO.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "178bfb89a998374b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "git/Config Multiple Repo Account in Windows.md",
+                "file": "Python/Typing.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -385,7 +85,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "设计模式",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -406,7 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 338.5
   },
   "right": {
     "id": "a3a9e42fc8f34cf7",
@@ -422,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
+                "file": "Jiuzhang Twitter Project/Project Env.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -439,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
+                "file": "Jiuzhang Twitter Project/Project Env.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -462,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Jiuzhang Twitter Project/Questions for Tutor.md"
+                "file": "Jiuzhang Twitter Project/Project Env.md"
               }
             }
           }
@@ -483,15 +183,27 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c182d80ac236d40f",
+  "active": "f248ebce9945c113",
   "lastOpenFiles": [
+    "Jiuzhang Twitter Project/Dev Notes.md",
+    "Jiuzhang Twitter Project/Project Env.md",
+    "Python/Pytest.md",
+    "git/gitignore.md",
+    "Python/Typing.md",
+    "Untitled.md",
+    "Algo/AlgoExpert.md",
+    "Design Pattern/学习过程.md",
+    "Design Pattern/设计模式综述.md",
+    "Design Pattern/Strategy Pattern.md",
+    "git/Config Multiple Repo Account in Windows.md",
+    "Pasted image 20230221165652.png",
+    "Algo",
     "Jiuzhang Twitter Project/Twitter Class.md",
     "Jiuzhang Twitter Project/Questions for Tutor.md",
     "HMO Python Scrpits.md",
     "Jiuzhang Twitter Project",
     "Linux/Bash Script.md",
     "Linux",
-    "git/Config Multiple Repo Account in Windows.md",
     "Devops/Win10/SSH.md",
     "Devops/Win10",
     "Devops",
@@ -499,25 +211,14 @@
     "System Design/Graphic System.md",
     "System Design/Distributed System.md",
     "Tech English Expression.md",
-    "Pasted image 20230221165652.png",
     "re.md",
     "python Iterator.md",
     "Ideas & Doubts.md",
     "程序结构.md",
     "Huawei/HICP 学习计划.md",
     "git",
-    "python/MRO.md",
-    "python",
-    "Design Pattern/设计模式综述.md",
-    "Design Pattern/工厂模式.md",
-    "Design Pattern/简单工厂模式.md",
-    "Design Pattern/抽象工厂模式.md",
-    "Design Pattern/策略模式.md",
-    "Design Pattern/代理模式.md",
-    "Design Pattern/单例模式.md",
-    "Design Pattern/观察者模式.md",
-    "Design Pattern/建造者模式.md",
-    "Design Pattern/模板方法模式.md",
+    "Python/MRO.md",
+    "Python",
     "设计模式/Untitled",
     "Design Pattern",
     "FrontEnd"
