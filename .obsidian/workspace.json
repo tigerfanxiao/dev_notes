@@ -1,0 +1,484 @@
+{
+  "main": {
+    "id": "7322b732bb7b9065",
+    "type": "split",
+    "children": [
+      {
+        "id": "5e8c2cef6c67d41d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "33c818f4814f37dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "System Design/Database.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f2dd00adbd0a51ed",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Huawei/HICP 学习计划.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "45fa841a16235b67",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Huawei/OSPF.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "23150f086f3c4f83",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Huawei/HCNA.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1bbdd71f89710351",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FrontEnd/CSS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8bab1e876f9ff8ac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ideas & Doubts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d66d61208789bf84",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/设计模式综述.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4b25c086f7547f4f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/学习框架.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "01773ddc8c2420e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/学习过程.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8ffb5cb91344bfb2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/学习框架.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8e4264ce6242148e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/单例模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2a6f0a2183aaf7d6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/适配器模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "59f58c10898054cf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/桥模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6d99c7826f1cd22c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/组合模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a77d2bf21dcce8f8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ideas & Doubts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a5c3aa42906ce5c9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/代理模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0d7a70e83e94d629",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ideas & Doubts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b128d84e572a5212",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/观察者模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5f6cf5daf74ebb7c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/策略模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "884138c01e81da6e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/设计模式综述.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "02e0e130e63f247b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/设计模式综述.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f601cb86b31dd9ab",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/简单工厂模式.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a0f3f609bc9beee5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/设计模式综述.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "06506798fb9dea69",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ideas & Doubts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ca8b9cd351cb985c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "python/MRO.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "178bfb89a998374b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Config Multiple Repo Account in Windows.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0ec2164a38f9ef23",
+    "type": "split",
+    "children": [
+      {
+        "id": "df1ee002424cff3b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a3cd18eef25a5439",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7be2e8251b040f6f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "设计模式",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7472596048ad2292",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "a3a9e42fc8f34cf7",
+    "type": "split",
+    "children": [
+      {
+        "id": "814d1d24bb6ae986",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d52f00cd0ae7953f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "System Design/Database.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "31ec6713f4534635",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "System Design/Database.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "f9206d2088f237ca",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "71e4f6d3ad77d5c0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "System Design/Database.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "33c818f4814f37dc",
+  "lastOpenFiles": [
+    "System Design/Graphic System.md",
+    "System Design/Database.md",
+    "System Design/Distributed System.md",
+    "Tech English Expression.md",
+    "Pasted image 20230221165652.png",
+    "re.md",
+    "python Iterator.md",
+    "HMO Python Scrpits.md",
+    "Ideas & Doubts.md",
+    "程序结构.md",
+    "Huawei/HICP 学习计划.md",
+    "git",
+    "python/MRO.md",
+    "Config Multiple Repo Account in Windows.md",
+    "python",
+    "Design Pattern/设计模式综述.md",
+    "Design Pattern/工厂模式.md",
+    "Design Pattern/简单工厂模式.md",
+    "Design Pattern/抽象工厂模式.md",
+    "Design Pattern/策略模式.md",
+    "Design Pattern/代理模式.md",
+    "Design Pattern/单例模式.md",
+    "Design Pattern/观察者模式.md",
+    "Design Pattern/建造者模式.md",
+    "Design Pattern/模板方法模式.md",
+    "Design Pattern/桥模式.md",
+    "Design Pattern/外观模式.md",
+    "Design Pattern/学习过程.md",
+    "Design Pattern/责任链模式.md",
+    "设计模式/Untitled",
+    "Design Pattern",
+    "FrontEnd"
+  ]
+}
