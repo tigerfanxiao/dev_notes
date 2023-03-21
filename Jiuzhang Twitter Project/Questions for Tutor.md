@@ -22,13 +22,6 @@ comments = CommentSerializer(source='comment_set', many=True)
 -   celery 的 worker 和 server 用的是相同的代码?
 
 那用户发送请求到 server 后, server 是自动把传给 MQ, MQ 再分配给 worker? 还是说 work 知道 celery 的 MQ 的 ip 地址, 去取任务?
-
-  
-
-  
-
-  
-
   
 
 **自己查询的问题**

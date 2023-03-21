@@ -1,5 +1,5 @@
   
-[老师的repo](https://github.com/jiuzhangsuanfa-org/django-twitter)
+
 
 微信九章班级群 Twitter 后端系统 - Python 项目
   
