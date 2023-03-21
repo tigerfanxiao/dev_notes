@@ -233,6 +233,9 @@
   },
   "active": "853810d59f4011a5",
   "lastOpenFiles": [
+    "Devops/docker/Docker.md",
+    "Devops/docker/Dockerfile.md",
+    "Devops/docker",
     "Network/Cisco/cisco_network_essentials_01.md",
     "Network/资料.md",
     "Jiuzhang Twitter Project/Project Env.md",
@@ -266,10 +269,7 @@
     "System Design/Database.md",
     "System Design/Graphic System.md",
     "System Design/Distributed System.md",
-    "Tech English Expression.md",
-    "re.md",
     "git",
-    "Python",
-    "设计模式/Untitled"
+    "Python"
   ]
 }
