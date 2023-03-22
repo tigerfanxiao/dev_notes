@@ -102,6 +102,7 @@ sudo usermod -aG docker cloud_user # to avoid issue docker run with sudo
 Remove existing Docker installs. update the ubuntu
 
 ```
+sudo su
 sudo apt update
 ```
 

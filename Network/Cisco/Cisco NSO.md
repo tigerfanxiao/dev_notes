@@ -12,6 +12,7 @@ NSO Fundamentals
 * NSO gathers, parses and stores the configuration state of the network devices it manages in a configuration database (CDB). Users and other applications can then ask NSO to create, read, update or delete configuration in a programmatic way either ad hoc or through customizable network services. 
 * NSO uses software packages call Network Element Drivers (NEDs) to facilitate telnet, SSH, or API interactions with the devices that it manages. The NED provides an abstraction layer that reads in the devices's running configuration and parses it into a data-model-validated snapshot in the CDB.
 * The NEDs also allow for the reverse, creating network configuration from CDB data inputs and then sending the configurations to the network devices. There are hundreds of NEDs covering all the Cisco platforms (including IOS-XE, IOS-XR, NX-OS, and ASA) and all major non-Cisco platforms as well.
+
 注意： 牛逼的点在与NED， 每个厂商都有NED，所以可以操作其他厂商的设备（开源了， 厂商可以自己开发）
 CDB 配置数据库
 * NSO的核心是CDB。 这是一个Tree-structured database that is controlled by a YANG schema. 用YANG做输入的数据结构， 用XML来做配置的模板
@@ -30,7 +31,7 @@ Automation Maturity Model
 2. Re-useable Framework
 	Ansible 自动化框架
 3. Orchestration
-	* 能够做服务。 比如配置各种无线设备， 只需要配置几个参数， 就能配置所有设备
+		* 能够做服务。 比如配置各种无线设备， 只需要配置几个参数， 就能配置所有设备
 	* 回收配置
 		* 运营商场景：比如来了一个客户，他需要一个VPN服务或者其他NFV服务（虚拟化提供的一些网络功能）。 然后我们需要维护这个配置， 时刻监控这个配置是否被改变。 然后当客户买的服务到期后，可以做生命周期的管理（监控，扩容，更新，回滚）。可以自动回收这个配置（把配置取消掉）
 		* 优势在于，可以统一管理很多厂商的配置 
