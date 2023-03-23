@@ -47,6 +47,39 @@ driver = webdriver.Chrome(
     options=options,  
 )
 # 条件满足后，元素出现了，可以点击了
-WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "username"))).send_keys("xwx1087747")
+el_username = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "username")))
+el_username.send_keys("your name")  # 发送数据
+
+
+
 ```
 
+
+# 键盘输入
+
+```python
+from selenium.webdriver.common.keys import Keys
+
+el_username.send_keys(Keys.RETURN)
+```
+
+# 跳转登录
+有的网页使用cookies登录， 有的网页使用token登录
+## 获取cookie
+```python
+driver.get_cookies()  # 获取所有cookies
+driver.get_cookie(name)  # 获取某个cookie
+
+# 添加cookie
+driver.add_cookie({'name': '...', 'value': '...'})
+```
+
+## 使用token
+
+```python
+token = driver.execute_script('window.localStorage.getItem("token")')
+# 添加token
+driver.execute_script('window.localStorage.setItem("token","token值")' )
+
+browser.refresh() # 刷新浏览器
+```
