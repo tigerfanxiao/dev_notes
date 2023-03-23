@@ -2,7 +2,7 @@
 1. 怎么在vscode中集成mypy
 2. 怎么手动运行mypy
 
-# 开发
+### 序列
 
 ```python
 from typing import List

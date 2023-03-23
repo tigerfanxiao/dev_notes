@@ -51,3 +51,23 @@ if __name__ == '__main__':
 ```
 
 
+## 将Interface编程优化为函数式编程
+
+```python
+from typing import List, Callable 
+# Callable 的第一个参数是输入参数列表， 第二个参数是函数的返回值（不是列表)
+
+class Ticket:
+	pass
+	
+def fifo_strategy_fn(tickets: List[Ticket]) -> List[Ticket]:
+	return tickets
+
+# 用callable来约束类似上面的函数
+
+class CustomerSupport:
+	tickets: List[Ticket] = []
+	def process_tickets(self, processing_fn: Callable[[List[Ticket]], List[Ticket]]):
+		tickets = processing_fn(tickets)
+
+```
