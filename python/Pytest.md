@@ -33,6 +33,7 @@ def test_configured_isis_with_value_error():
 # Fixture
 
 ### 创建公用实例
+
 ```python
 import pytest
 
@@ -41,7 +42,7 @@ class MyClass:
 		return 2
 
 @pytest.fixture
-def c_instance():
+def c_instance():  # 类似工厂方法，用函数加fixture创建一个对象
 	return MyClass()
 
 def test_g(c_instance):  # 这里保证和fixture的函数定义一样

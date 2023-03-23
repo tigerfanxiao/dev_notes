@@ -11,16 +11,15 @@ pip install selenium
 ```python
 from selenium import webdriver  
 from selenium.webdriver.chrome.options import Options  
-  
+from selenium.webdriver.chrome.service import Service
   
 options = Options()  
 options.page_load_strategy = 'normal'  
   
-  
 PATH = "./chromedriver.exe"  
   
 driver = webdriver.Chrome(  
-    executable_path=PATH,  
+    service=Service(PATH),  
     options=options,  
 )  
   
@@ -28,7 +27,7 @@ driver = webdriver.Chrome(
 driver.get("https://www.google.com")  
   
   
-# driver.quit()
+driver.quit()  # 退出浏览器
 ```
 
 ### 满足条件EC
@@ -67,8 +66,8 @@ el_username.send_keys(Keys.RETURN)
 有的网页使用cookies登录， 有的网页使用token登录
 ## 获取cookie
 ```python
-driver.get_cookies()  # 获取所有cookies
-driver.get_cookie(name)  # 获取某个cookie
+driver.get_cookies()  # 获取所有cookies, 一个列表
+driver.get_cookie(name)  # 根据cookie的name来获取指定cookie
 
 # 添加cookie
 driver.add_cookie({'name': '...', 'value': '...'})
@@ -82,4 +81,10 @@ token = driver.execute_script('window.localStorage.getItem("token")')
 driver.execute_script('window.localStorage.setItem("token","token值")' )
 
 browser.refresh() # 刷新浏览器
+```
+
+## 隐藏浏览器
+
+```python
+options.headless = True 
 ```

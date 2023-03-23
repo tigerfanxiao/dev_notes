@@ -109,7 +109,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
+                "file": "Algo/AlgoExpert.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7f9b7430f7a04f57",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Algo/LRU Cache.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b6328d60a0a94743",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "requests.md",
                 "mode": "source",
                 "source": false
               }
@@ -157,14 +181,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/Typing.md",
+                "file": "Python/dataclass.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "81a21ac0cf5d7893",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/Configparser.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 8
+        "currentTab": 15
       }
     ],
     "direction": "vertical"
@@ -193,7 +229,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "dataclass",
+                "query": "configparser",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -210,7 +246,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -230,7 +267,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
+                "file": "Python/Configparser.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -247,7 +284,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
+                "file": "Python/Configparser.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -270,7 +307,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Design Pattern/Strategy Pattern.md"
+                "file": "Python/Configparser.md"
               }
             }
           }
@@ -291,18 +328,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "84e3038c745f9b3e",
+  "active": "81a21ac0cf5d7893",
   "lastOpenFiles": [
-    "Python/random.md",
-    "Python/Typing.md",
-    "Python/logging.md",
-    "Python/dataclass.md",
-    "Design Pattern/Strategy Pattern.md",
-    "Python/Requests.md",
     "Python/Selenium.md",
-    "Python/openpyxl.md",
+    "pyinstaller.md",
+    "OSP Network-Entity Change.md",
+    "Python/Configparser.md",
+    "Python/dataclass.md",
+    "Algo/Linked List.md",
+    "Python/Requests.md",
+    "Python/Typing.md",
+    "requests.md",
+    "Devops/docker/Dockerfile.md",
+    "Algo/LRU Cache.md",
     "Python/Pytest.md",
+    "Untitled",
     "Algo/AlgoExpert.md",
+    "Design Pattern/Strategy Pattern.md",
+    "Python/random.md",
+    "Python/logging.md",
+    "Python/openpyxl.md",
     "TinyDB.md",
     "Python/Unittest.md",
     "Network/Cisco/Cisco NSO.md",
@@ -312,16 +357,9 @@
     "Jiuzhang Twitter Project/redis.md",
     "Jiuzhang Twitter Project/Twitter Class.md",
     "Devops/docker/Docker.md",
-    "Network/资料.md",
-    "Devops/docker/Dockerfile.md",
     "Devops/docker",
-    "Network/Cisco/cisco_network_essentials_01.md",
-    "Jiuzhang Twitter Project/Project Env.md",
     "Network",
     "Pasted image 20230321060422.png",
-    "Jiuzhang Twitter Project/Configure MySQL.md",
-    "MySQL/Schema SQL.md",
-    "Linux/Ubuntu.md",
     "MySQL",
     "Pasted image 20230221165652.png",
     "Algo",
@@ -329,7 +367,6 @@
     "Linux",
     "Devops/Win10",
     "Devops",
-    "git",
-    "Python"
+    "git"
   ]
 }

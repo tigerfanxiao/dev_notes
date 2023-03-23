@@ -1,7 +1,15 @@
 
+
+# App 路径问题
+
+```python
+def get_app_running_path():
+	if getattr(sys, 'frozen', False):
+	    return os.path.dirname(sys.executable)  # 如果是exe运行
+	else os.path.dirname(__file__)  # 如果是本地调试
+```
+
 # Hidden Import
-
-
 ```
 pyinstaller --onefile --hidden-import 'plugins.bard' .\example.py
 ```
@@ -10,7 +18,7 @@ pyinstaller --onefile --hidden-import 'plugins.bard' .\example.py
 
 在python3.9的环境下
 一定要确认本地的虚拟环境安装了这两个包
-可以避免tinydb因不进去的我问题
+可以避免tinydb因不进去的问题
 ```shell
 
 pyinstaller==5.7.0  
