@@ -11,14 +11,19 @@ version = 1.2.1
 ```python
 import configparser
 
-class Config:
-	def __init__(self, setting_file_path):
-		self.config = configparser.ConfigParser().read(setting_file_path)
-		
-	def get_config(self):
-	    return self.config
-	    
-	def set_config(section, key, value):
-	    self.config.set(section, key, value)
+CONFIG_FILE_PATH = './config.ini'  
+  
+def get_config():  
+    config = configparser.ConfigParser()  
+    config.read(CONFIG_FILE_PATH)  # read没有返回值，是在原来的config上修改的
+    return config
+
+
+config = get_config()
+# get_value
+value = config[section][key]
+# set key
+config.set(section, key, value)
+
 ```
 
