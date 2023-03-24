@@ -19,7 +19,7 @@ df.size
 len(df.index)
 
 
-# combine two dataframes, ignore index
+# combine two dataframes, ignore index， 两个dataframe结构一致
 df_interface = pd.concat([df1, df2], ignore_index=True)
 
 

@@ -13,7 +13,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Design Pattern/桥模式.md",
+                "file": "Python/pandas.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "dc32c05a3b598732",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vue3/install vue.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "647fb6ffbe65fa9f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vue3/install vue.md",
                 "mode": "source",
                 "source": false
               }
@@ -26,18 +50,6 @@
               "type": "markdown",
               "state": {
                 "file": "Python/json.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4e294b3598fa9c2b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Configparser.md",
                 "mode": "source",
                 "source": false
               }
@@ -90,8 +102,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -111,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/Configparser.md",
+                "file": "vue3/install vue.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -128,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/Configparser.md",
+                "file": "vue3/install vue.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/Configparser.md"
+                "file": "vue3/install vue.md"
               }
             }
           }
@@ -172,8 +183,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4e294b3598fa9c2b",
+  "active": "647fb6ffbe65fa9f",
   "lastOpenFiles": [
+    "Untitled.md",
+    "Javascript/string.md",
+    "Javascript",
+    "vue3/install vue.md",
+    "Python/pandas.md",
+    "Ideas & Doubts.md",
+    "HMO Python Scrpits.md",
+    "Python/Configparser.md",
+    "vue3",
     "Python/pathlib.md",
     "Python/os.md",
     "Python/yaml.md",
@@ -183,9 +203,7 @@
     "Design Pattern/桥模式.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png",
-    "Untitled",
     "importlib.md",
-    "Python/Configparser.md",
     "Python/re.md",
     "Design Pattern/Object Pool Pattern.md",
     "Design Pattern/Singleton.md",
@@ -197,12 +215,6 @@
     "Python/collections.md",
     "Design Pattern/Clean Code.md",
     "Python/random.md",
-    "Python/string.md",
-    "Python/datetime.md",
-    "Markdown.md",
-    "Jiuzhang Twitter Project/Dev Notes.md",
-    "Untitled.md",
-    "Python/Selenium.md",
     "Devops/docker",
     "Network",
     "MySQL",
@@ -210,7 +222,6 @@
     "Jiuzhang Twitter Project",
     "Linux",
     "Devops/Win10",
-    "Devops",
-    "git"
+    "Devops"
   ]
 }
