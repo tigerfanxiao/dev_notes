@@ -12,4 +12,8 @@ os.path.isfile(CONFIG_FILE_PATH)
 # 查看文件的绝对路径
 os.path.abspath(CONFIG_FILE_PATH)
 
+# 查询父路径
+os.path.dirname(__file__)
+
+
 ```

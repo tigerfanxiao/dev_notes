@@ -25,14 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/Exception.md",
+                "file": "Python/json.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4e294b3598fa9c2b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/pathlib.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/Exception.md",
+                "file": "Python/pathlib.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/Exception.md",
+                "file": "Python/pathlib.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/Exception.md"
+                "file": "Python/pathlib.md"
               }
             }
           }
@@ -159,16 +171,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8cb7f1b2163b8bcf",
+  "active": "4e294b3598fa9c2b",
   "lastOpenFiles": [
-    "Design Pattern/桥模式.md",
+    "Python/os.md",
+    "Python/yaml.md",
+    "Python/json.md",
+    "Python/hashlib.md",
     "Python/Exception.md",
+    "Design Pattern/桥模式.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png",
     "Untitled",
     "importlib.md",
     "Python/pathlib.md",
-    "Python/os.md",
     "Python/Configparser.md",
     "Python/re.md",
     "Design Pattern/Object Pool Pattern.md",
@@ -185,11 +200,8 @@
     "Python/datetime.md",
     "Markdown.md",
     "Jiuzhang Twitter Project/Dev Notes.md",
-    "hashlib.md",
     "Untitled.md",
     "Python/Selenium.md",
-    "pyinstaller.md",
-    "OSP Network-Entity Change.md",
     "Devops/docker",
     "Network",
     "MySQL",
