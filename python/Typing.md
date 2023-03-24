@@ -25,3 +25,16 @@ def foo(a: int, b: int) -> int:
 if __name__ == "__main__":  
     foo("a", 1)  # pycharm 在这里会提示 a 不是int
 ```
+
+检查字典类型
+```python
+from typing import TypedDict
+
+# 字典类型
+class Interface(TypedDict):  
+    name: str  
+    ip: str
+
+
+assert Interface(name='int1', ip='192.168.1.1') == dict(name='int1', ip='192.168.1.1')
+```

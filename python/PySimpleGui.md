@@ -8,9 +8,6 @@ import PySimpleGUI as sg
 # configure the theme
 sg.ChangeLookAndFeel('DarkGrey15') 
 
-
-
-
 ```
 
 

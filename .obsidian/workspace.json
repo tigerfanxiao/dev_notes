@@ -13,50 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/pandas.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "dc32c05a3b598732",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "647fb6ffbe65fa9f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8cb7f1b2163b8bcf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/json.md",
+                "file": "English/Tech English Expression.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "vue3/install vue.md",
+                "file": "English/Tech English Expression.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "vue3/install vue.md",
+                "file": "English/Tech English Expression.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "vue3/install vue.md"
+                "file": "English/Tech English Expression.md"
               }
             }
           }
@@ -183,12 +146,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "647fb6ffbe65fa9f",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "English",
+    "Python/importlib.md",
+    "pipenv.md",
+    "Python/SqlAlchemy.md",
+    "requests.md",
+    "python data type hint.md",
+    "Python/Iterator.md",
+    "Python/PySimpleGui.md",
+    "Python/Typing.md",
+    "Python/json.md",
+    "Python/TinyDB.md",
+    "OSP Network-Entity Change.md",
+    "vue3/install vue.md",
     "Untitled.md",
     "Javascript/string.md",
     "Javascript",
-    "vue3/install vue.md",
     "Python/pandas.md",
     "Ideas & Doubts.md",
     "HMO Python Scrpits.md",
@@ -197,24 +172,12 @@
     "Python/pathlib.md",
     "Python/os.md",
     "Python/yaml.md",
-    "Python/json.md",
     "Python/hashlib.md",
     "Python/Exception.md",
     "Design Pattern/桥模式.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png",
-    "importlib.md",
     "Python/re.md",
-    "Design Pattern/Object Pool Pattern.md",
-    "Design Pattern/Singleton.md",
-    "Design Pattern/设计模式综述.md",
-    "Design Pattern/学习框架.md",
-    "Design Pattern/学习过程.md",
-    "Python/shutil.md",
-    "Design Pattern/Observer Pattern.md",
-    "Python/collections.md",
-    "Design Pattern/Clean Code.md",
-    "Python/random.md",
     "Devops/docker",
     "Network",
     "MySQL",
