@@ -43,3 +43,36 @@ def set_config(section, key, value):
 注意： 
 1. 配置文件的路径如果写相对路径，在其他模块调用的时候会出问题
 2. configparser模块不会校验配置文件是否存在，所以写代码自己校验
+
+自己封装的config读取和配置方法
+
+```python
+import os  
+import configparser  
+  
+class Config:  
+    def __init__(self):  
+        self.config_path = os.path.join(os.path.dirname(__file__), 'config.ini')  
+        if not os.path.isfile(self.config_path):  
+            raise FileNotFoundError('Config file does not exist')  
+        self._config = configparser.ConfigParser()  
+        self._config.read(self.config_path)  
+  
+    @property  
+    def config(self):  
+        return self._config  
+  
+    @config.setter  
+    def config(self, section_key_value: tuple):  
+        self._config[section_key_value[0]][section_key_value[1]] = section_key_value[2]  
+        # 每次修改都会写入文件
+        with open(self.config_path, 'w') as f:  
+            self._config.write(f)  
+  
+  
+if __name__ == '__main__':  
+    config = Config()  
+    print(config.config['token']['name'])  
+    config.config = ('token', 'name', 'xiao')
+
+```
