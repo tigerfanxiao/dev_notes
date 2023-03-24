@@ -13,211 +13,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Markdown.md",
+                "file": "Design Pattern/桥模式.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "0db73bed5d95917f",
+            "id": "8cb7f1b2163b8bcf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/datetime.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f33c02008f9e5794",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Linux/Ubuntu.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "26ce21a05d38e348",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Jiuzhang Twitter Project/Dev Notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c09e1b4ad2fa40ef",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Cisco/cisco_network_essentials_01.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "853810d59f4011a5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Pytest.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e724d4df68035607",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/openpyxl.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "907e9a220d58c9f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Typing.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9453e89ff8360a76",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/logging.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "84e3038c745f9b3e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Algo/AlgoExpert.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7f9b7430f7a04f57",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Algo/LRU Cache.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b6328d60a0a94743",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "requests.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f827822bf059c413",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Jiuzhang Twitter Project/redis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f248ebce9945c113",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Jiuzhang Twitter Project/Questions for Tutor.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a74ff8ea6fd1086c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "git/gitignore.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "eb78c5dfb1407020",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/dataclass.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "81a21ac0cf5d7893",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Untitled.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0ade77b4865c2084",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/random.md",
+                "file": "Python/Exception.md",
                 "mode": "source",
                 "source": false
               }
@@ -290,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/datetime.md",
+                "file": "Python/Exception.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -307,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/datetime.md",
+                "file": "Python/Exception.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -330,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/datetime.md"
+                "file": "Python/Exception.md"
               }
             }
           }
@@ -351,40 +159,40 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0db73bed5d95917f",
+  "active": "8cb7f1b2163b8bcf",
   "lastOpenFiles": [
-    "Markdown.md",
+    "Design Pattern/桥模式.md",
+    "Python/Exception.md",
+    "images/Pasted image 20230221165652.png",
+    "images/Pasted image 20230321060422.png",
+    "Untitled",
+    "importlib.md",
+    "Python/pathlib.md",
+    "Python/os.md",
+    "Python/Configparser.md",
+    "Python/re.md",
+    "Design Pattern/Object Pool Pattern.md",
+    "Design Pattern/Singleton.md",
+    "Design Pattern/设计模式综述.md",
+    "Design Pattern/学习框架.md",
+    "Design Pattern/学习过程.md",
+    "Python/shutil.md",
+    "Design Pattern/Observer Pattern.md",
+    "Python/collections.md",
+    "Design Pattern/Clean Code.md",
+    "Python/random.md",
+    "Python/string.md",
     "Python/datetime.md",
+    "Markdown.md",
     "Jiuzhang Twitter Project/Dev Notes.md",
     "hashlib.md",
     "Untitled.md",
-    "Python/Configparser.md",
     "Python/Selenium.md",
     "pyinstaller.md",
     "OSP Network-Entity Change.md",
-    "Python/dataclass.md",
-    "Algo/Linked List.md",
-    "Python/Requests.md",
-    "Python/Typing.md",
-    "requests.md",
-    "Devops/docker/Dockerfile.md",
-    "Algo/LRU Cache.md",
-    "Python/Pytest.md",
-    "Untitled",
-    "Algo/AlgoExpert.md",
-    "Design Pattern/Strategy Pattern.md",
-    "Python/random.md",
-    "Python/logging.md",
-    "Python/openpyxl.md",
-    "TinyDB.md",
-    "Python/Unittest.md",
-    "Network/Cisco/Cisco NSO.md",
-    "Python/re.md",
     "Devops/docker",
     "Network",
-    "Pasted image 20230321060422.png",
     "MySQL",
-    "Pasted image 20230221165652.png",
     "Algo",
     "Jiuzhang Twitter Project",
     "Linux",
