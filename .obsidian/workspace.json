@@ -8,67 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "33c818f4814f37dc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3927da0cabc82ef9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "096d2a50b2fec673",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/Event.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "35ea0ab4d2c1c679",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/Watch Property.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "99fc75c7d40d70f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vue3/Binding class.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "38821b44f2738389",
+            "id": "155106901c2c47d0",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -79,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -207,15 +146,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "38821b44f2738389",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "Learning Path/学习路线 1.xmind",
+    "Learning Path/asset/学习路线.xmind",
+    "Learning Path/asset",
+    "Learning Path/学习路线.xmind",
+    "Learning Path",
+    "xmind/学习路线.xmind",
+    "xmind",
+    "vue3/Binding Style.md",
+    "vue3/install vue.md",
     "vue3/Binding class.md",
-    "vue3/Watch Property.md",
     "HTML/Input.md",
+    "CSS/CSS.md",
+    "vue3/Watch Property.md",
     "CSS",
     "HTML",
     "vue3/Event.md",
-    "vue3/install vue.md",
     "vue3/Directive.md",
     "English/Tech English Expression.md",
     "English",
@@ -236,15 +184,7 @@
     "Python/pandas.md",
     "Ideas & Doubts.md",
     "HMO Python Scrpits.md",
-    "Python/Configparser.md",
-    "vue3",
-    "Python/pathlib.md",
     "images/Pasted image 20230221165652.png",
-    "images/Pasted image 20230321060422.png",
-    "Devops/docker",
-    "Network",
-    "MySQL",
-    "Algo",
-    "Jiuzhang Twitter Project"
+    "images/Pasted image 20230321060422.png"
   ]
 }

@@ -1,4 +1,8 @@
 
+* 传条件
+* 传值
+* 传列表
+# 传条件
 # 单个class
 ```html
 
@@ -9,8 +13,7 @@
 <!-- classname_to_add: data_property_name -->
 <div class="circle" :class="{ purple: isPurple}">
 ```
-# 多个class 使用computed property
-
+# 多个class 
 
 ```html
 
@@ -41,4 +44,12 @@ const vm = Vue.createApp({
 
 ```
 
-# 多个class
+# 传值
+
+
+
+# 传序列
+
+```html
+<div class="circle" :class="[circle_classes, selectedColor]">
+```

@@ -1,4 +1,14 @@
 
+input text
+```html
+<input type="text" />
+```
+input number 
+有箭头可以控制数字
+```html
+<input type="number" />
+```
+
 checkbox
 ```html
 <input type="checkbox"/> Purple
@@ -12,3 +22,4 @@ dropmenu
 	<option value="text-orange">Orange</option>
 </select>
 ```
+
