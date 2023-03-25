@@ -1,6 +1,5 @@
 
-
-cdn
+cdn方式安装
 ```html
 <script src="https://unpkg.com/vue@3"></script>
 

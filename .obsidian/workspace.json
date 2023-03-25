@@ -13,13 +13,62 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTML/Input.md",
+                "file": "CSS/CSS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "69560a46e35e282a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/Directive.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0fb384cb900e292e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/Conditional Render.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3bc6d696c4463257",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Javascript/string.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "871c936394a0b821",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/loop.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -48,7 +97,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "configparser",
+                "query": "chrome",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "HTML/Input.md",
+                "file": "Vue3/loop.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "HTML/Input.md",
+                "file": "Vue3/loop.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "HTML/Input.md"
+                "file": "Vue3/loop.md"
               }
             }
           }
@@ -146,8 +195,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a3cd18eef25a5439",
+  "active": "871c936394a0b821",
   "lastOpenFiles": [
+    "Javascript/Array.md",
+    "Javascript/string.md",
+    "Vue3/loop.md",
+    "Vue3/Conditional Render.md",
+    "Vue3/Directive.md",
+    "vue3/Untitled",
+    "Vue3/Event.md",
+    "Vue3/install vue.md",
+    "Vue3/Watch Property.md",
+    "Vue3/Binding Style.md",
+    "CSS/transform.md",
+    "CSS/CSS.md",
+    "Vue3/Binding class.md",
+    "HTML/Input.md",
     "Learning Path/学习路线 1.xmind",
     "Learning Path/asset/学习路线.xmind",
     "Learning Path/asset",
@@ -155,18 +218,9 @@
     "Learning Path",
     "xmind/学习路线.xmind",
     "xmind",
-    "vue3/Binding Style.md",
-    "vue3/install vue.md",
-    "vue3/Binding class.md",
-    "HTML/Input.md",
-    "CSS/CSS.md",
-    "vue3/Watch Property.md",
     "CSS",
     "HTML",
-    "vue3/Event.md",
-    "vue3/Directive.md",
     "English/Tech English Expression.md",
-    "English",
     "Python/importlib.md",
     "pipenv.md",
     "Python/SqlAlchemy.md",
@@ -179,11 +233,6 @@
     "Python/TinyDB.md",
     "OSP Network-Entity Change.md",
     "Untitled.md",
-    "Javascript/string.md",
-    "Javascript",
-    "Python/pandas.md",
-    "Ideas & Doubts.md",
-    "HMO Python Scrpits.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png"
   ]
