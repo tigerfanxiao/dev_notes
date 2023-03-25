@@ -25,7 +25,7 @@ vue的proxy， 使你写程序更方便
 ```javascript
 vm.$data.firstName
 
-// 使用了proxiy
+// 使用了proxy
 vm.firstName
 ```
 
