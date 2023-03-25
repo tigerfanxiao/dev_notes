@@ -42,9 +42,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "35ea0ab4d2c1c679",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vue3/Watch Property.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -110,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "vue3/Event.md",
+                "file": "vue3/Watch Property.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "vue3/Event.md",
+                "file": "vue3/Watch Property.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "vue3/Event.md"
+                "file": "vue3/Watch Property.md"
               }
             }
           }
@@ -171,11 +183,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "096d2a50b2fec673",
+  "active": "35ea0ab4d2c1c679",
   "lastOpenFiles": [
+    "vue3/Event.md",
+    "vue3/Watch Property.md",
     "vue3/install vue.md",
     "vue3/Directive.md",
-    "vue3/Event.md",
     "English/Tech English Expression.md",
     "English",
     "Python/importlib.md",
@@ -201,7 +214,6 @@
     "Python/os.md",
     "Python/yaml.md",
     "Python/hashlib.md",
-    "Python/Exception.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png",
     "Devops/docker",
