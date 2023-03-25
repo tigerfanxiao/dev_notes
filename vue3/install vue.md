@@ -65,6 +65,12 @@ html 和 js 互相绑定
 ```html
 <p><a v-bind:href="url" target="_blank">Google</a></p>
 
-<p><a :href="url" target="_blank">Google</a></p>
+<p><a :href="url变量名" target="_blank">Google</a></p>
 
 ```
+
+# 引入raw html
+XSS cross site scritping
+默认情况下你不能再变量里设置raw_html， vue会检测出来，并不展示
+如果一定要引入，需要用 `v-html="html变量名"` 
+

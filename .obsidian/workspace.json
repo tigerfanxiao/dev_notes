@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "English/Tech English Expression.md",
+                "file": "vue3/install vue.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3927da0cabc82ef9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vue3/Directive.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "English/Tech English Expression.md",
+                "file": "vue3/Directive.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "English/Tech English Expression.md",
+                "file": "vue3/Directive.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "English/Tech English Expression.md"
+                "file": "vue3/Directive.md"
               }
             }
           }
@@ -146,8 +159,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a3cd18eef25a5439",
+  "active": "3927da0cabc82ef9",
   "lastOpenFiles": [
+    "vue3/install vue.md",
+    "vue3/Directive.md",
+    "English/Tech English Expression.md",
     "English",
     "Python/importlib.md",
     "pipenv.md",
@@ -160,7 +176,6 @@
     "Python/json.md",
     "Python/TinyDB.md",
     "OSP Network-Entity Change.md",
-    "vue3/install vue.md",
     "Untitled.md",
     "Javascript/string.md",
     "Javascript",
@@ -177,14 +192,12 @@
     "Design Pattern/桥模式.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png",
-    "Python/re.md",
     "Devops/docker",
     "Network",
     "MySQL",
     "Algo",
     "Jiuzhang Twitter Project",
     "Linux",
-    "Devops/Win10",
-    "Devops"
+    "Devops/Win10"
   ]
 }
