@@ -104,6 +104,7 @@ const vm = Vue.createApp({
 
 Vue 提供了多种event.modifer
 
+* 鼠标点击事件做好都prevent掉
 
 ```html
 

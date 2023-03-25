@@ -8,6 +8,10 @@ input number
 ```html
 <input type="number" />
 ```
+控制条
+```html
+<input type="range" min="0" max="100"/>
+```
 
 checkbox
 ```html
