@@ -90,9 +90,45 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "afb3b82de135f0a7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Javascript/BOM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "37963706ed3120b1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/Vue Lifecycle.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e319dc82d052d29b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Javascript/Proxy.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 9
       }
     ],
     "direction": "vertical"
@@ -158,7 +194,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/Dataclass.md",
+                "file": "Javascript/Proxy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +211,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/Dataclass.md",
+                "file": "Javascript/Proxy.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +234,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/Dataclass.md"
+                "file": "Javascript/Proxy.md"
               }
             }
           }
@@ -219,8 +255,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e7c032ff08ef0d24",
+  "active": "e319dc82d052d29b",
   "lastOpenFiles": [
+    "Vue3/Vue Lifecycle.md",
+    "Javascript/Proxy.md",
+    "images/Pasted image 20230325163946.png",
+    "images/Pasted image 20230325163744.png",
+    "Javascript/BOM.md",
+    "Python/Dataclass.md",
     "Javascript/Promise.md",
     "Vue3/browser API.md",
     "Vue3/Event.md",
@@ -253,10 +295,6 @@
     "Python/SqlAlchemy.md",
     "requests.md",
     "python data type hint.md",
-    "Python/Iterator.md",
-    "Python/PySimpleGui.md",
-    "Python/Typing.md",
-    "Python/json.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png"
   ]
