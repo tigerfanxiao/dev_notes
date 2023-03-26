@@ -91,41 +91,7 @@ CSS的引入方式分为3种
 
 ```
 
-  
 
-#### 行内引入
-
-  
-
-```css
-
-<div style="front-size: 20px;color: blue">
-
-</div>
-
-```
-
-  
-
-#### 外部引入
-
-  
-
-```css
-
-/* type属性默认是 text/css 可以省略*/
-
-<link rel="stylesheet" href="stylesheet.css" type="text/css">
-
-  
-
-/*引入在线字体, 400, 700两种粗细样式 */
-
- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Space+Mono:400,700">
-
-```
-
-  
 
 ## 选择器selector
 
