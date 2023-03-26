@@ -253,14 +253,50 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vue3/webpack.md",
+                "file": "Vue3/install vue.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b837804a612305f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/Conditional Render.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "85a05b9dcc42e537",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/props.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "10f9c064098312d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/slot.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 20
+        "currentTab": 23
       }
     ],
     "direction": "vertical"
@@ -289,7 +325,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "::placeholder",
+                "query": "v-if",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -326,7 +362,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vue3/webpack.md",
+                "file": "Vue3/slot.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -343,7 +379,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vue3/webpack.md",
+                "file": "Vue3/slot.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -366,7 +402,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vue3/webpack.md"
+                "file": "Vue3/slot.md"
               }
             }
           }
@@ -387,9 +423,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f7ceb2e864e3b1e9",
+  "active": "10f9c064098312d8",
   "lastOpenFiles": [
+    "Vue3/props.md",
+    "Vue3/slot.md",
+    "Vue3/Conditional Render.md",
+    "Vue3/Binding class.md",
     "Vue3/install vue.md",
+    "Vue3/vue component.md",
+    "Vue3/SASS.md",
+    "Vue3/create vue tool.md",
     "Vue3/webpack.md",
     "CSS/pseudo-element.md",
     "Vue3/PostCSS.md",
@@ -398,11 +441,9 @@
     "vscode/JS.md",
     "vscode/General.md",
     "CSS/vendor prefix.md",
-    "Vue3/SASS.md",
     "vscode",
     "Vue3/vite.md",
     "Vue3/vue compiler.md",
-    "Vue3/vue component.md",
     "Javascript/Proxy.md",
     "Vue3/Vue Lifecycle.md",
     "images/Pasted image 20230325163946.png",
@@ -413,11 +454,6 @@
     "Vue3/browser API.md",
     "Vue3/Event.md",
     "CSS/transform.md",
-    "HTML/Input.md",
-    "System Design/Distributed System.md",
-    "Vue3/loop.md",
-    "Javascript/Array.md",
-    "Javascript/string.md",
     "vue3/Untitled",
     "Learning Path/学习路线 1.xmind",
     "Learning Path/asset/学习路线.xmind",

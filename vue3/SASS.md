@@ -40,3 +40,14 @@ h1 {
 }
 
 ```
+
+
+在vue中使用sass
+
+```vue
+<style scoped lang="scss">
+p:hover {
+    color: darken($color: red, $amount: 15%)
+}
+</style>
+```
