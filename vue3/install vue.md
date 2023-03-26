@@ -73,3 +73,52 @@ XSS cross site scritping
 默认情况下你不能再变量里设置raw_html， vue会检测出来，并不展示
 如果一定要引入，需要用 `v-html="html变量名"` 
 
+
+
+# 工具
+### Eslint
+eslint不是vite的包
+```shell
+npm install eslint --save-dev
+# 默认情况下vite不包含eslint，下面这个包强制vite在运行js程序前需要通过eslint检查
+npm install vite-plugin-eslint --save-dev --force
+
+```
+
+在项目的根目录，创建 `vite.config.js`
+```javascript
+import { defineConfig } from 'vite' // 这个插件是帮助编辑器提示的配置方式
+import eslint from 'vite-plugin-eslint'
+
+export default defineConfig ({
+	plugins: [eslint()]
+})
+```
+
+eslint本身还需要一个配置文件`.eslintrc`
+
+```json
+{
+	"rules": {
+		"quotes": "error"  // off， warn, error, 强制要双引号
+	}, 
+	"env": {
+		"browser": true
+	}, 
+	"parserOptions": {
+		"ecmaVersion": 2022, // version of JS
+		"sourceType": "module"  // 控制import statement
+	}
+}
+```
+
+但是这个只是在运行开发环境的时候，在console报错， 如果要从代码的角度看到错误的地方，还是需要安装vscode的eslint插件
+我们可以手动修复这些问题，也可以让eslint来修复
+在`package.json`文件中
+```javascript
+"scripts": {
+	"lint": "eslint main.js --fix"
+}
+```
+
+配置完成之后，重启开发环境
