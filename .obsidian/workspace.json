@@ -126,9 +126,81 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "c168bb59af11c212",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/vue component.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1980a915f673fefc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/vue compiler.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "044cd92295d1ac25",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/vite.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7ea76fb3fb255321",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/SASS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5b2f3953298bc03d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "vscode/JS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "97a633daeca95108",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/SASS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 9
+        "currentTab": 15
       }
     ],
     "direction": "vertical"
@@ -194,7 +266,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Javascript/Proxy.md",
+                "file": "Vue3/SASS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -211,7 +283,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Javascript/Proxy.md",
+                "file": "Vue3/SASS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -234,7 +306,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Javascript/Proxy.md"
+                "file": "Vue3/SASS.md"
               }
             }
           }
@@ -255,10 +327,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e319dc82d052d29b",
+  "active": "97a633daeca95108",
   "lastOpenFiles": [
-    "Vue3/Vue Lifecycle.md",
+    "vscode/General.md",
+    "vscode/JS.md",
+    "Vue3/SASS.md",
+    "vscode",
+    "Vue3/vite.md",
+    "Vue3/vue compiler.md",
+    "Vue3/vue component.md",
     "Javascript/Proxy.md",
+    "Vue3/Vue Lifecycle.md",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "Javascript/BOM.md",
@@ -288,13 +367,6 @@
     "xmind/学习路线.xmind",
     "xmind",
     "CSS",
-    "HTML",
-    "English/Tech English Expression.md",
-    "Python/importlib.md",
-    "pipenv.md",
-    "Python/SqlAlchemy.md",
-    "requests.md",
-    "python data type hint.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png"
   ]
