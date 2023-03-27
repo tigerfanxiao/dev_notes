@@ -113,7 +113,7 @@ Vue 提供了多种event.modifer
 
 # key modifer
 
-
+感悟： 事件的值可以写自定义的函数名， 也可以写变量的公式
 ```javascript
 // 回车触发事件
 <input type="text" @keyup.enter="updateMiddleName"/>

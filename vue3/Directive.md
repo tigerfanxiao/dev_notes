@@ -2,7 +2,7 @@
 # directive
 |directive|Usage|Comments|
 |---|---|---|
-|`v-cloak`|等到完全vue render之后再显示页面||
+|[[v-cloak]]|等到完全vue render之后再显示页面|需要配置css|
 |`v-bind:href="url_var"`|修改标签的属性值|缩写`:href="url_var"`|
 |`:value="default_value"`|输入默认值后不更改||
 |v-model|修改标签内的内容|

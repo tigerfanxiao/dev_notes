@@ -13,302 +13,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CSS/CSS.md",
+                "file": "Vue3/Watch Property.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "69560a46e35e282a",
+            "id": "7adac7d70f1c87b9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vue3/Directive.md",
+                "file": "Vue3/Emmit.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "0fb384cb900e292e",
+            "id": "8a0b6e4b89644aed",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vue3/Conditional Render.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3bc6d696c4463257",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Javascript/string.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "871c936394a0b821",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Event.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1e0dd25dfd51a812",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/browser API.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e7c032ff08ef0d24",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Dataclass.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "afb3b82de135f0a7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Javascript/BOM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "37963706ed3120b1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Vue Lifecycle.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e319dc82d052d29b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Javascript/Proxy.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c168bb59af11c212",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/vue component.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1980a915f673fefc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/vue compiler.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "044cd92295d1ac25",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/vite.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7ea76fb3fb255321",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/SASS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5b2f3953298bc03d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vscode/JS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "97a633daeca95108",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/SASS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d4b39974fdf35ed8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/CSS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5d5bfa06b70bb962",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/CSS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "60e01a062ed29db2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/CSS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "297a09e82f808eae",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f7ceb2e864e3b1e9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/install vue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b837804a612305f9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Conditional Render.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "85a05b9dcc42e537",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/props.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "10f9c064098312d8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/slot.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0ad9cef420e8ff80",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Dynamic Component.md",
+                "file": "Python/SqlAlchemy.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 24
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -337,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "v-if",
+                "query": "alch",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -354,7 +90,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -374,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vue3/Dynamic Component.md",
+                "file": "Python/SqlAlchemy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -391,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vue3/Dynamic Component.md",
+                "file": "Python/SqlAlchemy.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -414,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vue3/Dynamic Component.md"
+                "file": "Python/SqlAlchemy.md"
               }
             }
           }
@@ -435,46 +172,45 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0ad9cef420e8ff80",
+  "active": "8a0b6e4b89644aed",
   "lastOpenFiles": [
+    "Vue3/transition.md",
+    "Learning Path/asset/A3E33000",
+    "Vue3/Emmit.md",
+    "Vue3/Watch Property.md",
+    "Vue3/webpack.md",
+    "Vue3/create vue tool.md",
+    "Vue3/Directive.md",
+    "Learning Path/怎么复习.md",
+    "CSS/CSS.md",
+    "Vue3/Event.md",
+    "Vue3/v-cloak.md",
+    "Vue3/Dynamic Component.md",
+    "Learning Path/asset/6F10CA00",
+    "Learning Path/asset/54FFBA00",
+    "Learning Path/asset/~$plan.xlsx",
+    "Learning Path/asset/~$plan.xlsx.srctemp",
     "Learning Path/asset/4349BA00",
     "Learning Path/asset/B519BA00",
     "Learning Path/asset/A998BA00",
     "Learning Path/asset/AFC7BA00",
     "Learning Path/asset/69D5BA00",
-    "Learning Path/asset/CB94BA00",
-    "Learning Path/asset/1263BA00",
-    "Learning Path/asset/4AB2BA00",
-    "Learning Path/asset/EA02BA00",
-    "Learning Path/asset/17B1BA00",
-    "Learning Path/asset/73F0BA00",
     "Vue3/slot.md",
-    "Vue3/Dynamic Component.md",
     "Vue3/props.md",
     "Vue3/Conditional Render.md",
     "Vue3/Binding class.md",
     "Vue3/install vue.md",
     "Vue3/vue component.md",
     "Vue3/SASS.md",
-    "Vue3/create vue tool.md",
-    "Vue3/webpack.md",
     "CSS/pseudo-element.md",
     "Vue3/PostCSS.md",
-    "CSS/CSS.md",
     "CSS/引入方式.md",
     "vscode/JS.md",
     "vscode/General.md",
     "CSS/vendor prefix.md",
     "Vue3/vite.md",
-    "Vue3/vue compiler.md",
-    "Javascript/Proxy.md",
-    "Vue3/Vue Lifecycle.md",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
-    "Javascript/BOM.md",
-    "Python/Dataclass.md",
-    "Javascript/Promise.md",
-    "Vue3/browser API.md",
     "images/Pasted image 20230221165652.png",
     "images/Pasted image 20230321060422.png"
   ]

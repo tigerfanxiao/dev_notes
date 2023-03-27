@@ -73,12 +73,11 @@ alembic init migrations
 ```python
 from models import Base  
 target_metadata = Base.metadata
-
 ```
 
-运行下面两行
+
+如果migration已经有了， 下面用来重构数据库
 ```shell
 alembic revision --autogenerate -m "init db"
-
 alembic upgrade heads
 ```
