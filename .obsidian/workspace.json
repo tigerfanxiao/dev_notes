@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/SqlAlchemy.md",
+                "file": "Vue3/transition.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "alch",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -90,8 +90,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -111,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/SqlAlchemy.md",
+                "file": "Vue3/transition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -128,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/SqlAlchemy.md",
+                "file": "Vue3/transition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/SqlAlchemy.md"
+                "file": "Vue3/transition.md"
               }
             }
           }
@@ -174,6 +173,12 @@
   },
   "active": "8a0b6e4b89644aed",
   "lastOpenFiles": [
+    "Learning Path/asset/27D53000",
+    "Learning Path/asset/~$plan.xlsx",
+    "Learning Path/asset/F14BB000",
+    "Learning Path/asset/93162000",
+    "Python/SqlAlchemy.md",
+    "Learning Path/asset/0B6C6000",
     "Vue3/transition.md",
     "Learning Path/asset/A3E33000",
     "Vue3/Emmit.md",
@@ -188,13 +193,9 @@
     "Vue3/Dynamic Component.md",
     "Learning Path/asset/6F10CA00",
     "Learning Path/asset/54FFBA00",
-    "Learning Path/asset/~$plan.xlsx",
     "Learning Path/asset/~$plan.xlsx.srctemp",
     "Learning Path/asset/4349BA00",
     "Learning Path/asset/B519BA00",
-    "Learning Path/asset/A998BA00",
-    "Learning Path/asset/AFC7BA00",
-    "Learning Path/asset/69D5BA00",
     "Vue3/slot.md",
     "Vue3/props.md",
     "Vue3/Conditional Render.md",
@@ -208,7 +209,6 @@
     "vscode/JS.md",
     "vscode/General.md",
     "CSS/vendor prefix.md",
-    "Vue3/vite.md",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
