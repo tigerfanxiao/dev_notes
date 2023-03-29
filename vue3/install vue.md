@@ -2,7 +2,6 @@
 cdn方式安装
 ```html
 <script src="https://unpkg.com/vue@3"></script>
-
 ```
 
 vue dev tool extension
@@ -49,7 +48,6 @@ Directive 一般是标记在html里面，等vue全部加载完毕后就会消失
 /*css attribute*/
 [v-cloak] {
   display: None;
-
 }
 ```
 

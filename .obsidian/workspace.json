@@ -37,14 +37,129 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vue3/transition.md",
+                "file": "CSS/普通选择器.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "eb543dbacd490eeb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/CSS未整理.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7402a820e414ed95",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/CSS未整理.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "652521c056afdf58",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/CSS未整理.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ab9bcc394dbffeed",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/Layout.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8c871b7ba765921f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/普通选择器.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 6
+      },
+      {
+        "id": "0d20c580cb1b882f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "faeec68bd0aeb84b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/CSS未整理.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "acc020e42a387ca4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/Tools.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "96a825aa35074175",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/盒子模型.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "295f2d585c515e5b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS/单位.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +225,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vue3/transition.md",
+                "file": "CSS/Tools.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +242,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vue3/transition.md",
+                "file": "CSS/Tools.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +265,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vue3/transition.md"
+                "file": "CSS/Tools.md"
               }
             }
           }
@@ -171,15 +286,32 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8a0b6e4b89644aed",
+  "active": "acc020e42a387ca4",
   "lastOpenFiles": [
-    "Learning Path/asset/27D53000",
+    "Learning Path/asset/1D2FC200",
+    "CSS/CSS未整理.md",
+    "CSS/Tools.md",
+    "CSS/盒子模型.md",
+    "CSS/单位.md",
+    "CSS/Layout.md",
+    "CSS/pseudo-element.md",
+    "CSS/颜色.md",
+    "CSS/字体.md",
+    "伪类选择器.md",
+    "CSS/普通选择器.md",
+    "CSS/引入方式.md",
+    "CSS/transform.md",
+    "CSS/vendor prefix.md",
+    "Vue3/install vue.md",
+    "Vue3/transition.md",
+    "Learning Path/asset/AE4D7000",
+    "Learning Path/asset/58465000",
     "Learning Path/asset/~$plan.xlsx",
+    "Learning Path/asset/27D53000",
     "Learning Path/asset/F14BB000",
     "Learning Path/asset/93162000",
     "Python/SqlAlchemy.md",
     "Learning Path/asset/0B6C6000",
-    "Vue3/transition.md",
     "Learning Path/asset/A3E33000",
     "Vue3/Emmit.md",
     "Vue3/Watch Property.md",
@@ -187,28 +319,11 @@
     "Vue3/create vue tool.md",
     "Vue3/Directive.md",
     "Learning Path/怎么复习.md",
-    "CSS/CSS.md",
     "Vue3/Event.md",
     "Vue3/v-cloak.md",
     "Vue3/Dynamic Component.md",
     "Learning Path/asset/6F10CA00",
     "Learning Path/asset/54FFBA00",
-    "Learning Path/asset/~$plan.xlsx.srctemp",
-    "Learning Path/asset/4349BA00",
-    "Learning Path/asset/B519BA00",
-    "Vue3/slot.md",
-    "Vue3/props.md",
-    "Vue3/Conditional Render.md",
-    "Vue3/Binding class.md",
-    "Vue3/install vue.md",
-    "Vue3/vue component.md",
-    "Vue3/SASS.md",
-    "CSS/pseudo-element.md",
-    "Vue3/PostCSS.md",
-    "CSS/引入方式.md",
-    "vscode/JS.md",
-    "vscode/General.md",
-    "CSS/vendor prefix.md",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
