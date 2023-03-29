@@ -1,6 +1,14 @@
+标签级别
+div标签本身就是行级标签，会占一行
+
+
+
 # Position
 
 # Relative & Absolute
+默认情况下， 所有标签都有`position:static`; 属性。如果是文本元素，就是从左往右排列。如果是行级元素就是从上到下排列
+
+
 * 如果要配置某个子元素为absolute脱离文档流, 则需要把父标签设置为relative
 * 通常情况下relative不会和top, right, bottom连用
 * 如果某个元素配置了absolute, 则后面的元则会当这个元素不存在
@@ -9,7 +17,7 @@
 position是完全脱离文档流
 块级标签本身独占一行, 靠文档左侧对齐
 position属性
-`position:static`; 默认属性, 元素从左到右排列
+
 
 ```css
 
