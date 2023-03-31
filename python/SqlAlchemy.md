@@ -1,7 +1,6 @@
 
 install
 ```shell
-
 python -m pip install sqlalchemy
 ```
 如果没有orm，只是手动创建一个表
@@ -80,8 +79,8 @@ from sqlalchemy import (
     Boolean,  
 )
 
-Base = declarative_base()  # 基类
-  
+Base = declarative_base() 
+# 使用基类创建其他类
 class Person(Base):
 	__tablename__ = "people"
 	name = Column("name", String,  primary_key=True)
@@ -106,7 +105,6 @@ field的条件限制
 ```python
 name = Column(String(25), nullable=False, unique=True)
 date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对象
-
 
 ```
 
@@ -150,7 +148,7 @@ target_metadata = Base.metadata
 如果migration已经有了， 下面用来重构数据库
 ```shell
 # 应该是检查了类中的变化
-alembic revision --autogenerate -m "init db" # 类似一个commit， -m后写commit的信息
+alembic revision -m "init db" # 类似一个commit， -m后写commit的信息
 
 # 把 version中的所有commit再跑一边
 alembic upgrade heads  
@@ -158,7 +156,7 @@ alembic upgrade heads
 # merge head
 alembic merge -m "merge" <commit1> <commit2>
 
-# 
+# 查看提交历史
 alembic history
 ```
 

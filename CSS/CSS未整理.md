@@ -16,9 +16,7 @@ P57
     margin: 0;
     padding: 0;
     box-sizing: border-box; /* 如果长宽给定, 则配置padding不会使 box变大， 而是压缩内容*/
-
 }
-
 ```
 
 
