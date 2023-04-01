@@ -81,6 +81,30 @@
             }
           },
           {
+            "id": "2064ced7caa650e3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/Music project.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c3f8567924ae9495",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/Dictionary.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "8c871b7ba765921f",
             "type": "leaf",
             "state": {
@@ -93,7 +117,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 7
       },
       {
         "id": "0d20c580cb1b882f",
@@ -197,6 +221,18 @@
             }
           },
           {
+            "id": "3c700dfae07fae9a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/slot-property.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "96a825aa35074175",
             "type": "leaf",
             "state": {
@@ -221,7 +257,7 @@
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 8
       }
     ],
     "direction": "vertical"
@@ -287,7 +323,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vue3/PostCSS.md",
+                "file": "Vue3/slot-property.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -304,7 +340,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vue3/PostCSS.md",
+                "file": "Vue3/slot-property.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -327,7 +363,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vue3/PostCSS.md"
+                "file": "Vue3/slot-property.md"
               }
             }
           }
@@ -348,12 +384,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "652521c056afdf58",
+  "active": "3c700dfae07fae9a",
   "lastOpenFiles": [
+    "Learning Path/asset/3FBD1200",
+    "Learning Path/asset/E4BFD100",
+    "Python/os.md",
+    "Vue3/slot-property.md",
+    "Learning Path/asset/AE5B8100",
+    "Learning Path/asset/44074100",
+    "Python/Dictionary.md",
+    "Vue3/Music project.md",
+    "Learning Path/asset/06CC6000",
+    "Vue3/PostCSS.md",
     "vscode/JS.md",
     "Learning Path/asset/9F63B000",
     "CSS/CSS未整理.md",
-    "Python/os.md",
     "Python/SqlAlchemy.md",
     "Vue3/vue3+eel+python.md",
     "git/gitignore.md",
@@ -376,15 +421,7 @@
     "CSS/盒子模型.md",
     "CSS/单位.md",
     "CSS/pseudo-element.md",
-    "CSS/颜色.md",
-    "CSS/字体.md",
-    "伪类选择器.md",
-    "CSS/普通选择器.md",
     "Learning Path/asset/AE4D7000",
-    "Learning Path/asset/58465000",
-    "Learning Path/asset/~$plan.xlsx",
-    "Learning Path/asset/27D53000",
-    "Learning Path/asset/F14BB000",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
