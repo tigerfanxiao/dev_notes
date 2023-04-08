@@ -4,267 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "0d20c580cb1b882f",
+        "id": "49b6d0bdd0534c01",
         "type": "tabs",
         "children": [
           {
-            "id": "acc020e42a387ca4",
+            "id": "f0f69ae20e31f566",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CSS/Tools.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "467d4bf4bdf016af",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "MySQL/Schema SQL.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2c7c3b3188edf0ec",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "MySQL/Schema SQL.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9a49307efc4f4828",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "5fdf617a4f964797",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "2a56610ba4d28a29",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "5cd4919961844546",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "3c700dfae07fae9a",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "60532575b200b441",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "a6fe5367ed54b4ac",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "15cf1c3c9c4d817f",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "8ed47e6e3d57dc4d",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "a69891a4d4df5649",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "da0d0b877b7104e7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Excel/Ifna.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bea0c9f3bea92f52",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8e88ac760d6256eb",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "c0c5354b56ee1a3a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Cisco/cisco_network_essentials_01.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6e865d77d30ead89",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/介质.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2ea0d51b25907649",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/中国移动.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "30f0c03c62011e3f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/介质.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "87f02a2b5b066d80",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/勘察工具.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "52c6ef6d6c6c54bf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/OSPF.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "96a825aa35074175",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/盒子模型.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "295f2d585c515e5b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/单位.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0b17b5bccc159030",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Windows/常见 CMD 命令.md",
+                "file": "网络/Huawei/Ensp.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 24
+        ]
       }
     ],
     "direction": "vertical"
@@ -330,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Windows/常见 CMD 命令.md",
+                "file": "网络/Huawei/Ensp.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -347,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Windows/常见 CMD 命令.md",
+                "file": "网络/Huawei/Ensp.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -370,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Windows/常见 CMD 命令.md"
+                "file": "网络/Huawei/Ensp.md"
               }
             }
           }
@@ -391,24 +146,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0b17b5bccc159030",
+  "active": "f0f69ae20e31f566",
   "lastOpenFiles": [
-    "Untitled.md",
+    "网络/Huawei/Ensp.md",
+    "CSS/Tools.md",
     "Windows/常见 CMD 命令.md",
-    "Network/Cisco/cisco_network_essentials_01.md",
+    "Untitled.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
     "CSS/伪类选择器.md",
     "Windows",
     "CSS/CSS未整理.md",
-    "Network/Huawei/HCNA.md",
-    "Network/Huawei/HICP 学习计划.md",
-    "Network/Huawei/企业网架构方法论.md",
-    "Network/Huawei/FTTH.md",
-    "Network/Huawei/链路聚合.md",
-    "Network/Huawei/勘察工具.md",
-    "Network/Huawei/介质.md",
-    "Network/Huawei/5G.md",
-    "Network/中国移动.md",
-    "Network/资料.md",
+    "网络/Huawei/HCNA.md",
+    "网络/Huawei/HICP 学习计划.md",
+    "网络/Huawei/企业网架构方法论.md",
+    "网络/Huawei/FTTH.md",
+    "网络/Huawei/链路聚合.md",
+    "网络/Huawei/勘察工具.md",
+    "网络/Huawei/介质.md",
+    "网络/Huawei/5G.md",
+    "网络/中国移动.md",
+    "网络/资料.md",
     "网络/线缆.md",
     "Python/pycharm.md",
     "网络",
@@ -419,10 +176,8 @@
     "Python/Dataclass.md",
     "Design Pattern/抽象工厂模式.md",
     "Excel/Ifna.md",
-    "Python/re.md",
     "Excel",
     "Learning Path/asset/91F1FC00",
-    "Python/Dictionary.md",
     "Learning Path/asset/FC4A4500",
     "Learning Path/asset/EA594500",
     "Learning Path/asset/2BFE6000",
