@@ -108,7 +108,7 @@ date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对
 
 ```
 
-## filter
+## 查询
 
 ```python
 session.query(Person).filter(Person.lastname.Like("%An%"))
@@ -116,6 +116,10 @@ session.query(Person).filter(Person.lastname.Like("%An%"))
 session.query(Person).filter(Person.lastname.in(['Anna', 'Mike']))
 ```
 
+关联查询
+```python
+session.query(Echo, Device).filter(Echo.device_name == Device.name).filter(Device.tag == tag)
+```
 # Alembic
 
 Alembic类似数控库的git， 每一次commit，在alembic中就是revision
@@ -131,14 +135,14 @@ python -m pip install alembic
 # 在项目的路径下会创建一个 alembic.ini文件
 alembic init migrations  
 ```
-配置alembic.ini文件
+1. 配置alembic.ini文件
 ```
 # 如果是sqlite数据库
 sqlalchemy.url = sqlite:///database/device.db
 # 如果是postgresql
 sqlalchemy.url = postgresql://username:password@localhost:5432/databasename
 ```
-配置 `migrations/env.py`
+2. 配置 `migrations/env.py`
 ```python
 from models import Base  # Base是在其他model中Base = declarative_base()的基类
 target_metadata = Base.metadata
@@ -149,6 +153,7 @@ target_metadata = Base.metadata
 ```shell
 # 应该是检查了类中的变化
 alembic revision -m "init db" # 类似一个commit， -m后写commit的信息
+alembic revision --autogenerate -m "init db"
 
 # 把 version中的所有commit再跑一边
 alembic upgrade heads  
@@ -156,8 +161,23 @@ alembic upgrade heads
 # merge head
 alembic merge -m "merge" <commit1> <commit2>
 
+
 # 查看提交历史
 alembic history
 ```
 
 
+# Error Handling
+
+```python
+import sqlite3
+from sqlalchemy import exc
+
+session.add(echo)  # 在插入的时候， 不需要，因为是懒加载
+
+try:    
+	session.commit()  # 只有在提交的时候会报错， 
+except (exc.IntegrityError, sqlite3.IntegrityError)as e:
+	print("Duplicated Device Name!")
+	session.rollback()
+```

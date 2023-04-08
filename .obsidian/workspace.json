@@ -4,125 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "5e8c2cef6c67d41d",
-        "type": "tabs",
-        "dimension": 54.157131960335626,
-        "children": [
-          {
-            "id": "155106901c2c47d0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Watch Property.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7adac7d70f1c87b9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Emmit.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8a0b6e4b89644aed",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/普通选择器.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "eb543dbacd490eeb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/CSS未整理.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7402a820e414ed95",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/CSS未整理.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "652521c056afdf58",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/PostCSS.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2064ced7caa650e3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/Music project.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c3f8567924ae9495",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/Dictionary.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8c871b7ba765921f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/普通选择器.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ],
-        "currentTab": 7
-      },
-      {
         "id": "0d20c580cb1b882f",
         "type": "tabs",
-        "dimension": 45.84286803966438,
         "children": [
           {
             "id": "faeec68bd0aeb84b",
@@ -202,7 +85,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "nodejs/基础.md",
+                "file": "NodeJS/基础.md",
                 "mode": "source",
                 "source": false
               }
@@ -233,6 +116,186 @@
             }
           },
           {
+            "id": "60532575b200b441",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Vue3/firebase.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a6fe5367ed54b4ac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "NodeJS/基础.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "15cf1c3c9c4d817f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "NodeJS/模块引入.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8ed47e6e3d57dc4d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/zip.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a69891a4d4df5649",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/re.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "da0d0b877b7104e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Excel/Ifna.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bea0c9f3bea92f52",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Design Pattern/Strategy Pattern.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8e88ac760d6256eb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Python/pycharm.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c0c5354b56ee1a3a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/Cisco/cisco_network_essentials_01.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6e865d77d30ead89",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/Huawei/介质.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9eb1f544d2150c9e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Untitled.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2ea0d51b25907649",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/中国移动.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "30f0c03c62011e3f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/Huawei/介质.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "87f02a2b5b066d80",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/Huawei/勘察工具.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "52c6ef6d6c6c54bf",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/Huawei/OSPF.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "96a825aa35074175",
             "type": "leaf",
             "state": {
@@ -257,7 +320,7 @@
             }
           }
         ],
-        "currentTab": 8
+        "currentTab": 23
       }
     ],
     "direction": "vertical"
@@ -286,7 +349,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "os",
+                "query": "度量",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -323,7 +386,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vue3/slot-property.md",
+                "file": "Network/Huawei/OSPF.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -340,7 +403,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Vue3/slot-property.md",
+                "file": "Network/Huawei/OSPF.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -363,7 +426,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Vue3/slot-property.md"
+                "file": "Network/Huawei/OSPF.md"
               }
             }
           }
@@ -384,44 +447,44 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3c700dfae07fae9a",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "Network/Cisco/cisco_network_essentials_01.md",
+    "Network/Huawei/HCNA.md",
+    "Network/Huawei/HICP 学习计划.md",
+    "Network/Huawei/企业网架构方法论.md",
+    "Network/Huawei/FTTH.md",
+    "Network/Huawei/链路聚合.md",
+    "Network/Huawei/勘察工具.md",
+    "Network/Huawei/介质.md",
+    "Network/Huawei/5G.md",
+    "Network/中国移动.md",
+    "Untitled.md",
+    "Network/资料.md",
+    "网络/线缆.md",
+    "Python/pycharm.md",
+    "网络",
+    "Design Pattern/Strategy Pattern.md",
+    "Python/Pytest.md",
+    "Python/functools.md",
+    "Python/Decorator.md",
+    "Python/Dataclass.md",
+    "Design Pattern/抽象工厂模式.md",
+    "Excel/Ifna.md",
+    "Python/re.md",
+    "Excel",
+    "Learning Path/asset/91F1FC00",
+    "Python/Dictionary.md",
+    "Python/SqlAlchemy.md",
+    "Python/vscode 引包问题.md",
+    "Python/zip.md",
+    "Learning Path/asset/FC4A4500",
+    "Learning Path/asset/EA594500",
+    "Learning Path/asset/2BFE6000",
     "Learning Path/asset/3FBD1200",
     "Learning Path/asset/E4BFD100",
-    "Python/os.md",
-    "Vue3/slot-property.md",
     "Learning Path/asset/AE5B8100",
     "Learning Path/asset/44074100",
-    "Python/Dictionary.md",
-    "Vue3/Music project.md",
-    "Learning Path/asset/06CC6000",
-    "Vue3/PostCSS.md",
-    "vscode/JS.md",
-    "Learning Path/asset/9F63B000",
-    "CSS/CSS未整理.md",
-    "Python/SqlAlchemy.md",
-    "Vue3/vue3+eel+python.md",
-    "git/gitignore.md",
-    "Vue3/webpack.md",
-    "Vue3/vue compiler.md",
-    "CSS/Layout.md",
-    "nodejs/基础.md",
-    "Vue3/Composition API.md",
-    "Learning Path/asset/42245200",
-    "Learning Path/asset/62E25200",
-    "nodejs",
-    "Python/Configparser.md",
-    "MySQL/SQL.md",
-    "MySQL/Schema SQL.md",
-    "Jiuzhang Twitter Project/Project Env.md",
-    "Python/Dataclass.md",
-    "CSS/grid.md",
-    "CSS/Tools.md",
-    "Learning Path/asset/1D2FC200",
-    "CSS/盒子模型.md",
-    "CSS/单位.md",
-    "CSS/pseudo-element.md",
-    "Learning Path/asset/AE4D7000",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",

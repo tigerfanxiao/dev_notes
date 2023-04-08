@@ -35,35 +35,6 @@ peer-to-peer application: 这个应用同时收发数据, 比如聊天工具
 **网络中的组件**
 End User Device + Media(媒介) +Intermediary Device (网络设备)
 Intermediary Devices = Networking Devices
-Media
-* Fiber Optic circuit
-光纤一般是两股, 一个收, 一个发
-Each fiber-optic circuit is actually two fiber cables
-* Coaxial 同轴电缆
-* twisted-pair
-    * Unshielded twisted-pair (UTP) 在北美使用
-    * Shielded cables (STP) 在欧洲使用(在EMI和RFI高干扰场景下使用)
-
-双绞线要考虑, 线缆之间的相互干扰
-crosstalk: 线缆长距离绑在一起的干扰
-
-双绞线配 RJ45水晶头
-
-| UTP类型  |  速率 |
-| ------------ | ------------ |
-| 5类  | 100 Mbps  |
-| 5类e  | 1000 Mbps 100 MHz |
-| 6类  | 1000 Mbps at 250 MHz |
-| 6类a  | 1000 Mbps at 500 MHz  |
-| 7类e  | 10 Gbps at 600 MHz |
-
-双绞线线序
-* T568A
-* T568B
-![pin-scheme](twisted-pair-pin-oder.PNG)
-双绞线的连通方式
-* like-device: crossover
-* unlike-device: straight-through
 
 **LAN的组成**
 * Hosts/End User Devices (网络打印机被认为是host, 由自己的ip地址)
