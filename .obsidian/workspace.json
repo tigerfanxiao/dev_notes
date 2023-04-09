@@ -212,90 +212,6 @@
             }
           },
           {
-            "id": "c0c5354b56ee1a3a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Cisco/cisco_network_essentials_01.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6e865d77d30ead89",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/介质.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9eb1f544d2150c9e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Untitled.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2ea0d51b25907649",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/中国移动.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "30f0c03c62011e3f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/介质.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "87f02a2b5b066d80",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/勘察工具.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "52c6ef6d6c6c54bf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/Huawei/OSPF.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "96a825aa35074175",
             "type": "leaf",
             "state": {
@@ -320,7 +236,7 @@
             }
           }
         ],
-        "currentTab": 23
+        "currentTab": 16
       }
     ],
     "direction": "vertical"
@@ -386,7 +302,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Network/Huawei/OSPF.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -403,7 +318,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Network/Huawei/OSPF.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -425,9 +339,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Network/Huawei/OSPF.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -449,42 +361,42 @@
   },
   "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "网络/Huawei/基础命令.md",
+    "网络/Huawei/勘察工具.md",
+    "网络/Huawei/链路聚合.md",
+    "网络/Huawei/企业网架构方法论.md",
+    "网络/Huawei/OSPF.md",
+    "网络/Huawei/以太网 Ethernet.md",
+    "网络/Huawei/VLAN.md",
+    "网络/Huawei/介质.md",
+    "网络/Huawei/OSI 模型.md",
+    "网络/Huawei/MAC地址.md",
+    "网络/Huawei/HCNA.md",
+    "网络/Huawei/HICP 学习计划.md",
+    "网络/Huawei/Ensp.md",
+    "网络/Huawei/FTTH.md",
+    "网络/Huawei/ARP协议.md",
+    "网络/Cisco/cisco_network_essentials_02.md",
+    "网络/Huawei/5G.md",
+    "网络/Cisco/Cisco NSO.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
+    "网络/中国移动.md",
+    "网络/资料.md",
+    "网络/Huawei",
+    "网络/Cisco",
+    "网络",
+    "Windows/常见 CMD 命令.md",
+    "Windows",
+    "CSS/伪类选择器.md",
     "Learning Path/asset/716EC310",
     "Learning Path/asset/~$plan.xlsx",
     "Network/Cisco/cisco_network_essentials_01.md",
     "Network/Huawei/HCNA.md",
     "Network/Huawei/HICP 学习计划.md",
-    "Network/Huawei/企业网架构方法论.md",
-    "Network/Huawei/FTTH.md",
-    "Network/Huawei/链路聚合.md",
-    "Network/Huawei/勘察工具.md",
-    "Network/Huawei/介质.md",
-    "Network/Huawei/5G.md",
-    "Network/中国移动.md",
-    "Untitled.md",
-    "Network/资料.md",
-    "网络/线缆.md",
-    "Python/pycharm.md",
-    "网络",
-    "Design Pattern/Strategy Pattern.md",
-    "Python/Pytest.md",
-    "Python/functools.md",
-    "Python/Decorator.md",
-    "Python/Dataclass.md",
-    "Design Pattern/抽象工厂模式.md",
-    "Excel/Ifna.md",
-    "Python/re.md",
     "Excel",
     "Learning Path/asset/91F1FC00",
-    "Python/Dictionary.md",
-    "Python/SqlAlchemy.md",
-    "Python/vscode 引包问题.md",
     "Learning Path/asset/FC4A4500",
     "Learning Path/asset/EA594500",
-    "Learning Path/asset/2BFE6000",
-    "Learning Path/asset/3FBD1200",
-    "Learning Path/asset/E4BFD100",
-    "Learning Path/asset/AE5B8100",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
