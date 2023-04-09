@@ -13,13 +13,86 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "网络/Huawei/Ensp.md",
+                "file": "网络/Huawei/HCNA.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2e51c119545280cd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/MAC地址.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8cb5c7fb1a1ab557",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/5G.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "50558802c6da6122",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Cisco/cisco_network_essentials_01.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3566c35c3e988b00",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/OSI 模型.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "02d90da27c0b0cb4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/ARP协议.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "37af445eb99c4e5b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/OSI 模型.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -48,7 +121,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "window",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "网络/Huawei/Ensp.md",
+                "file": "网络/Huawei/OSI 模型.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "网络/Huawei/Ensp.md",
+                "file": "网络/Huawei/OSI 模型.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "网络/Huawei/Ensp.md"
+                "file": "网络/Huawei/OSI 模型.md"
               }
             }
           }
@@ -146,36 +219,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f0f69ae20e31f566",
+  "active": "37af445eb99c4e5b",
   "lastOpenFiles": [
+    "网络/Huawei/VLAN.md",
+    "网络/Huawei/ARP协议.md",
+    "网络/Huawei/OSI 模型.md",
+    "网络/Huawei/OSPF.md",
+    "网络/Huawei/介质.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
+    "网络/Huawei/基础命令.md",
+    "网络/Huawei/以太网 Ethernet.md",
+    "网络/Huawei/HICP 学习计划.md",
     "网络/Huawei/Ensp.md",
+    "网络/Cisco/Cisco NSO.md",
+    "网络/Huawei/5G.md",
+    "网络/Huawei/MAC地址.md",
+    "网络/Huawei/HCNA.md",
     "CSS/Tools.md",
     "Windows/常见 CMD 命令.md",
     "Untitled.md",
-    "网络/Cisco/cisco_network_essentials_01.md",
     "CSS/伪类选择器.md",
     "Windows",
     "CSS/CSS未整理.md",
-    "网络/Huawei/HCNA.md",
-    "网络/Huawei/HICP 学习计划.md",
     "网络/Huawei/企业网架构方法论.md",
     "网络/Huawei/FTTH.md",
     "网络/Huawei/链路聚合.md",
     "网络/Huawei/勘察工具.md",
-    "网络/Huawei/介质.md",
-    "网络/Huawei/5G.md",
     "网络/中国移动.md",
     "网络/资料.md",
     "网络/线缆.md",
-    "Python/pycharm.md",
     "网络",
-    "Design Pattern/Strategy Pattern.md",
-    "Python/Pytest.md",
-    "Python/functools.md",
-    "Python/Decorator.md",
-    "Python/Dataclass.md",
-    "Design Pattern/抽象工厂模式.md",
-    "Excel/Ifna.md",
     "Excel",
     "Learning Path/asset/91F1FC00",
     "Learning Path/asset/FC4A4500",
