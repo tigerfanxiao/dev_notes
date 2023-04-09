@@ -4,239 +4,95 @@
     "type": "split",
     "children": [
       {
-        "id": "0d20c580cb1b882f",
+        "id": "49b6d0bdd0534c01",
         "type": "tabs",
         "children": [
           {
-            "id": "faeec68bd0aeb84b",
+            "id": "f0f69ae20e31f566",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CSS/CSS未整理.md",
+                "file": "网络/Huawei/HCNA.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "acc020e42a387ca4",
+            "id": "2e51c119545280cd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CSS/Tools.md",
+                "file": "网络/Huawei/MAC地址.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "467d4bf4bdf016af",
+            "id": "8cb5c7fb1a1ab557",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MySQL/Schema SQL.md",
+                "file": "网络/Huawei/5G.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "2c7c3b3188edf0ec",
+            "id": "50558802c6da6122",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MySQL/Schema SQL.md",
+                "file": "网络/Cisco/cisco_network_essentials_01.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "9a49307efc4f4828",
+            "id": "3566c35c3e988b00",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/SqlAlchemy.md",
+                "file": "网络/Huawei/OSI 模型.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "5fdf617a4f964797",
+            "id": "02d90da27c0b0cb4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/SqlAlchemy.md",
+                "file": "网络/Huawei/ARP协议.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "2a56610ba4d28a29",
+            "id": "37af445eb99c4e5b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NodeJS/基础.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5cd4919961844546",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/os.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3c700dfae07fae9a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/slot-property.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "60532575b200b441",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/firebase.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a6fe5367ed54b4ac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/基础.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "15cf1c3c9c4d817f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/模块引入.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8ed47e6e3d57dc4d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/zip.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a69891a4d4df5649",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/re.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "da0d0b877b7104e7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Excel/Ifna.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bea0c9f3bea92f52",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8e88ac760d6256eb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/pycharm.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "96a825aa35074175",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/盒子模型.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "295f2d585c515e5b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/单位.md",
+                "file": "网络/Huawei/5G.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 16
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -265,7 +121,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "度量",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -302,6 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "网络/Huawei/5G.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -318,6 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "网络/Huawei/5G.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -339,7 +197,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "网络/Huawei/5G.md"
+              }
             }
           }
         ]
@@ -359,44 +219,44 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a3cd18eef25a5439",
+  "active": "37af445eb99c4e5b",
   "lastOpenFiles": [
-    "网络/Huawei/基础命令.md",
-    "网络/Huawei/勘察工具.md",
-    "网络/Huawei/链路聚合.md",
-    "网络/Huawei/企业网架构方法论.md",
-    "网络/Huawei/OSPF.md",
-    "网络/Huawei/以太网 Ethernet.md",
-    "网络/Huawei/VLAN.md",
-    "网络/Huawei/介质.md",
+    "网络/Huawei/HICP 学习计划.md",
     "网络/Huawei/OSI 模型.md",
+    "网络/Huawei/VLAN.md",
+    "网络/Huawei/ARP协议.md",
+    "网络/Huawei/OSPF.md",
+    "网络/Huawei/介质.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
+    "网络/Huawei/基础命令.md",
+    "网络/Huawei/以太网 Ethernet.md",
+    "网络/Huawei/Ensp.md",
+    "网络/Cisco/Cisco NSO.md",
+    "网络/Huawei/5G.md",
     "网络/Huawei/MAC地址.md",
     "网络/Huawei/HCNA.md",
-    "网络/Huawei/HICP 学习计划.md",
-    "网络/Huawei/Ensp.md",
+    "CSS/Tools.md",
+    "Windows/常见 CMD 命令.md",
+    "Untitled.md",
+    "CSS/伪类选择器.md",
+    "Windows",
+    "CSS/CSS未整理.md",
+    "网络/Huawei/企业网架构方法论.md",
     "网络/Huawei/FTTH.md",
-    "网络/Huawei/ARP协议.md",
-    "网络/Cisco/cisco_network_essentials_02.md",
-    "网络/Huawei/5G.md",
-    "网络/Cisco/Cisco NSO.md",
-    "网络/Cisco/cisco_network_essentials_01.md",
+    "网络/Huawei/链路聚合.md",
+    "网络/Huawei/勘察工具.md",
     "网络/中国移动.md",
     "网络/资料.md",
-    "网络/Huawei",
-    "网络/Cisco",
+    "网络/线缆.md",
     "网络",
-    "Windows/常见 CMD 命令.md",
-    "Windows",
-    "CSS/伪类选择器.md",
-    "Learning Path/asset/716EC310",
-    "Learning Path/asset/~$plan.xlsx",
-    "Network/Cisco/cisco_network_essentials_01.md",
-    "Network/Huawei/HCNA.md",
-    "Network/Huawei/HICP 学习计划.md",
     "Excel",
     "Learning Path/asset/91F1FC00",
     "Learning Path/asset/FC4A4500",
     "Learning Path/asset/EA594500",
+    "Learning Path/asset/2BFE6000",
+    "Learning Path/asset/3FBD1200",
+    "Learning Path/asset/E4BFD100",
+    "Learning Path/asset/AE5B8100",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
