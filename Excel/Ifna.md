@@ -3,5 +3,6 @@
 则使用INFA公式
 ```shell
 IFNA(#NA, "")
+IFNA(VLOOKUP(B2, table_name!A:B, 2, False), "")
 ```
 
