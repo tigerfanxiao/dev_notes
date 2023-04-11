@@ -10,3 +10,11 @@ ctrl + shift + arrow
 
 vertical Select
 alt + shift + insert 退出的化，再操作一次
+
+快速修复
+alt + Enter
+
+选中单词
+ctrl + w
+
+
