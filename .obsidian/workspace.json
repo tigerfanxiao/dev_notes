@@ -66,176 +66,9 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "5fdf617a4f964797",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/SqlAlchemy.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2a56610ba4d28a29",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/基础.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5cd4919961844546",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/os.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3c700dfae07fae9a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/slot-property.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "60532575b200b441",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Vue3/firebase.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a6fe5367ed54b4ac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/基础.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "15cf1c3c9c4d817f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NodeJS/模块引入.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8ed47e6e3d57dc4d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/zip.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a69891a4d4df5649",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/re.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "da0d0b877b7104e7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Excel/Ifna.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bea0c9f3bea92f52",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Design Pattern/Strategy Pattern.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8e88ac760d6256eb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Python/pycharm.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "96a825aa35074175",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/盒子模型.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "295f2d585c515e5b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CSS/单位.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -363,23 +196,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "faeec68bd0aeb84b",
+
+  "active": "3566c35c3e988b00",
   "lastOpenFiles": [
-    "Python/SqlAlchemy.md",
-    "CSS/CSS未整理.md",
-    "Learning Path/asset/FF494510",
-    "Learning Path/asset/A0004510",
-    "Learning Path/asset/2C31B410",
-    "Learning Path/asset/~$plan.xlsx",
+    "网络/Huawei/ARP协议.md",
+    "网络/Huawei/5G.md",
+    "网络/Huawei/HICP 学习计划.md",
+    "网络/Huawei/OSI 模型.md",
+    "网络/Huawei/VLAN.md",
+    "网络/Huawei/OSPF.md",
+    "网络/Huawei/介质.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
     "网络/Huawei/基础命令.md",
     "网络/Huawei/勘察工具.md",
     "网络/Huawei/链路聚合.md",
     "网络/Huawei/企业网架构方法论.md",
     "网络/Huawei/OSPF.md",
     "网络/Huawei/以太网 Ethernet.md",
-    "网络/Huawei/VLAN.md",
-    "网络/Huawei/介质.md",
-    "网络/Huawei/OSI 模型.md",
+    "网络/Huawei/Ensp.md",
+    "网络/Cisco/Cisco NSO.md",
     "网络/Huawei/MAC地址.md",
     "网络/Huawei/HCNA.md",
     "网络/Huawei/HICP 学习计划.md",
