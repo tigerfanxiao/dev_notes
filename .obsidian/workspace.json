@@ -4,95 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "49b6d0bdd0534c01",
+        "id": "28f43aaab0e47e53",
         "type": "tabs",
         "children": [
           {
-            "id": "f0f69ae20e31f566",
+            "id": "a8bab095a4728b9a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/HCNA.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2e51c119545280cd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/MAC地址.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8cb5c7fb1a1ab557",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/5G.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "50558802c6da6122",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Cisco/cisco_network_essentials_01.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3566c35c3e988b00",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/园区网企业网架构方法论.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9f76e48cd8877885",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/园区网企业网架构方法论.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6296dc4cec276c0e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/HCIE DataCom.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -158,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "网络/Huawei/园区网企业网架构方法论.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "网络/Huawei/园区网企业网架构方法论.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -197,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "网络/Huawei/园区网企业网架构方法论.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -219,15 +138,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9f76e48cd8877885",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
     "网络/Huawei/HCIE DataCom.md",
+    "网络/Huawei/介质.md",
+    "网络/Huawei/园区网企业网架构方法论.md",
     "网络/Huawei/华为基础命令.md",
     "网络/Huawei/HICP 学习计划.md",
     "网络/Huawei/HCNA.md",
     "网络/Huawei/以太网 Ethernet.md",
     "网络/Huawei/MAC地址.md",
-    "网络/Huawei/园区网企业网架构方法论.md",
     "网络/Huawei/5G.md",
     "网络/Huawei/VLAN.md",
     "网络/Huawei/FTTH.md",
@@ -237,7 +157,6 @@
     "网络/Huawei/通信基本概念和历史.md",
     "网络/Huawei/ARP协议.md",
     "网络/Huawei/OSPF.md",
-    "网络/Huawei/介质.md",
     "网络/Cisco/cisco_network_essentials_01.md",
     "网络/Huawei/Ensp.md",
     "网络/Cisco/Cisco NSO.md",
