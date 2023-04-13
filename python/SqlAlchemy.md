@@ -151,8 +151,10 @@ target_metadata = Base.metadata
 
 如果migration已经有了， 下面用来重构数据库
 ```shell
-# 应该是检查了类中的变化
+# 只有初始化的时候使用18
 alembic revision -m "init db" # 类似一个commit， -m后写commit的信息
+
+# 如果修改了model一定要用下面这个， 上面那个不会自动识别model的变化， 生成数据库变动脚本
 alembic revision --autogenerate -m "init db"
 
 # 把 version中的所有commit再跑一边
@@ -181,3 +183,5 @@ except (exc.IntegrityError, sqlite3.IntegrityError)as e:
 	print("Duplicated Device Name!")
 	session.rollback()
 ```
+
+
