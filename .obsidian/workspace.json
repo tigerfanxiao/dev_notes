@@ -11,8 +11,12 @@
             "id": "285090842ae9a1fe",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Python/re.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -44,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "field",
+                "query": "strategy",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -61,8 +65,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -82,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Python/re.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Python/re.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -119,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Python/re.md"
+              }
             }
           }
         ]
@@ -139,8 +146,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "285090842ae9a1fe",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "Design Pattern/Strategy Pattern.md",
     "Python/Dataclass.md",
     "Python/pycharm.md",
     "Python/SqlAlchemy.md",
@@ -166,7 +174,6 @@
     "网络/Huawei/通信基本概念和历史.md",
     "网络/Huawei/ARP协议.md",
     "网络/Huawei/OSPF.md",
-    "网络/Cisco/cisco_network_essentials_01.md",
     "Windows",
     "网络",
     "Excel",
