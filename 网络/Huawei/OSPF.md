@@ -206,9 +206,16 @@ Oracle 1521
 MySQL 3306
 MS SQL Server 1433
 
-# 选举
-OSPF DR BDR选举， router-id 越大越好
-BGP router-id 选举， 物理接口IP地址越大越好
+# 选举 DR BDR
+OSPF DR BDR选举在默认的情况下,  
+1. router-id 越大越好
+2. 最大的Loopback 接口变成 router-id
+3. 最大物理接口变成 router-id
+
+现网中我们会挑选性能比较好的设备被做DR 和 BDR 
+
+可以在接口下手动配置接口优先级来干预选举 `ip ospf priority <number>`. 默认情况下所有的设备 priority 是 1. 如果你设置成了 10, 那这台设备就是 DR, BDR 可以设置成为5. 
+也可以通过配置 priority 为 0, 主动退出选举. 比如这台设备已经承载了很多业务, 不希望这台设备称为 DR
 
 VLAN PRI 值越大越好
 VRRP 优先级越大越好，优先级一样时，实际接口IP地址越大优先级越高
@@ -248,3 +255,133 @@ ospf可以配置认证信息
 在建立邻居的过程中master和slave与DR和BDR没有关系
 Master指发出LSA信息的一方， 可以是DR/BDR或者是DRother
 比如我今天新接入网络几台设备， 这些设备会向DR和BDR发送链路信息， 此时这些新设备就是Master
+
+
+在实际配置的时候, 宣告网段有两种方法
+1. 在进程下宣告, 用wildcast(反掩码). 把多个接口涵盖进去, 前提是这些接口存在, 且为 up 状态. 
+2. 在接口下直接宣告, 加入 ospf
+
+反掩码的计算方法: 
+255.255.255.255 - 网段掩码 = 反掩码
+
+在OSPF 进程中配置
+```
+router ospf 1 # 1 表示 process id
+router-id 1.1.1.1
+network 10.1.1.0 0.0.0.255 area 0  # 这里不是直接宣告网段, 而是去看哪个 up 的接口 ip 地址在这个范围里, 然后把这个接口宣告出去
+network 0.0.0.0 255.255.255.255 area 0 # 把所有接口宣告出去
+passive-interface gig 0/1 # 如果这个接口连接一个 switch, 后面是很多终端, 并不建立邻居
+auto-cost reference-bandwidth 100000 # 把reference cost设置为 100G. 这里的单位是 Mega
+
+```
+
+在接口下宣告
+```
+int gig 0/2
+ip ospf 1 area 1
+```
+
+注意: ABR的 router-id换回口的要宣告在 Area1 里, 而不是 backbone 里
+
+`show ip protocols` 查看当前 ospf 的汇总信息, 因为有的网络是进程中宣告的, 一些是接口下宣告的
+`show ip ospf neighbor`
+`show ip ospf rib` 查看 ospf 写一下的路由表, 哪些加表到 ip routing table里
+`show ip ospf interface gig 0/1` 可以看到接口下的 cost 值
+
+# 路由过滤
+
+路由过滤分三种情况
+1. 过滤从从别的协议重分布进来的路由, 这个在 ASBR 重分布的时候做
+2. 过滤别的OSPF 边界区域传来的路由, 这个在 ABR 上用 `filter-list`做
+3. 过滤自己区域学到OSPF的路由, 用 `distribute-list` 阻止加表
+
+
+### 过滤别的OSPF 边界区域传来的路由, 在 ABR 上用 `filter-list`
+
+```
+ip prefix-list NO-Loopbacks seq 10 deny 2.2.2.2/32
+ip prefix-list NO-Loopbacks seq 20 deny 3.3.3.3/32
+ip prefix-list NO-Loopbacks seq 30 permit 0.0.0.0/0 le 32 # 需要放行所有
+
+router ospf 1
+area 0 filter-list prefix-list NO-Loopbacks in  # inbound into area 0
+```
+
+### 过滤自己区域学到OSPF的路由, 用 `distribute-list` 阻止加表. 
+此时这个路由还在 LSDB 里
+```
+ip prefix-list FILTER_10.2.2.0 seq 10 deny 10.2.2.0/24
+ip prefix-list FILTER_10.2.2.0 seq 20 permit 0.0.0.0/0 le 32 
+router ospf 1
+distribute-list prefix FILTER_10.2.2.0 in # inboud to ip routing table
+```
+
+# 路由汇总
+
+思科设备上 
+* 在 ABR上汇总, 用 `area range`
+* 在 ASBR 上汇总, 用 `summary-address`
+
+### 在 ABR上汇总, 用 `area range`
+```
+router ospf 1
+area 1 range 172.17.0.0 255.255.252.0  # 这些路由所在的 area
+```
+
+### 在 ASBR 上汇总, 用 `summary-address`
+```
+router ospf 1
+summary-address 172.18.0.0 255.255.252.0
+```
+
+# Virtual Link 虚链路
+
+默认情况下边界 Area 都需要和 Area0 连接. 但是在公司合并等场景中, 如果遇到了边界 Area 外又连接了一个边界 Area, 此时就需要用虚链路来把最外侧的 area 连接到 backbone Area 0.
+此时可以认为最外侧的 area 有一个 interface 在 area0 的边界上. 但是要保证中间的 area 不是 stub 类型区域. 
+
+```
+# ABR 上配置
+area 1 virtual-link <最外侧 area 的边界_router_id>
+
+# 最外侧和中间 area 的边界路由器上
+area 1 virtual-link <ABR_router_id>
+```
+
+
+# [OSPFv3](https://www.youtube.com/watch?v=b6RIqXo_qvA)
+传统的配置是在设备上运行两个 ospf进程, 一个给 v2, 一个给V3
+默认情况下, 思科的设备需要先使能ipv6
+```
+ipv6 unicast-routing
+ipv6 cef
+```
+
+### 传统配置(不推荐)
+不在进程下宣告网段了, 都要到接口下宣告
+
+```
+ipv6 router ospf 1
+```
+
+### address family 地址族配置
+* 两种配置认证的方法: 接口下, 或进程下
+```
+router ospfv3 1
+address-family ipv4
+address-family ipv6
+area 0 authentication ipsec spi 256 sha1 0123456 # 为整个 area 0 配置认证
+
+exit # 退一层
+
+
+int gig 0/1
+ospfv3 1 ipv4 area 0
+ospfv3 1 ipv6 area 0
+ospfv3 authentication ipsec spi 256 sha1 0123456  # 在接口下为某一条链路配置认证
+
+end # 退出所有
+
+show ospfv3 neighbor
+show ospfv3 database
+show crypto ipsec sa int gig 0/1  # 查看接口上被加密了多少包
+```
