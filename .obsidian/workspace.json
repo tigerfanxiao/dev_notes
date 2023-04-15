@@ -4,15 +4,64 @@
     "type": "split",
     "children": [
       {
-        "id": "a7b133197da0061a",
+        "id": "28f43aaab0e47e53",
         "type": "tabs",
         "children": [
           {
-            "id": "285090842ae9a1fe",
+            "id": "a8bab095a4728b9a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
+                "file": "网络/Huawei/OSPF.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3a8852d2b070b343",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/介质.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a571eaf6cb08f0ee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/面试问题.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "14d107cf6a967226",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/OSI 模型.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "04e795b66d52a84d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/Huawei/TCP.md",
                 "mode": "source",
                 "source": false
               }
@@ -47,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "strategy",
+                "query": "水平",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -84,11 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-                "file": "网络/Huawei/TCP.md",
-=======
-                "file": "Python/re.md",
->>>>>>> 30313ca76b3b024cb8fef01275541dda23786509
+                "file": "网络/Huawei/OSPF.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +150,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/re.md",
+                "file": "网络/Huawei/OSPF.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +173,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "网络/Huawei/TCP.md"
+                "file": "网络/Huawei/OSPF.md"
               }
             }
           }
@@ -153,32 +198,30 @@
   "lastOpenFiles": [
     "网络/Huawei/面试问题.md",
     "网络/Huawei/OSPF.md",
+    "网络/Huawei/TCP.md",
     "网络/Huawei/RIP.md",
     "网络/Huawei/ARP.md",
     "网络/Huawei/5G.md",
     "网络/Huawei/OSI 模型.md",
     "网络/Huawei/园区网企业网架构方法论.md",
-    "网络/Huawei/TCP.md",
-    "网络/Huawei/RIP.md",
-    "网络/Huawei/ICMP.md",
-    "网络/Huawei/ARP.md",
-    "网络/Huawei/HCIE DataCom.md",
     "网络/Huawei/介质.md",
-    "网络/Huawei/园区网企业网架构方法论.md",
+    "网络/Huawei/ICMP.md",
+    "网络/Huawei/MAC地址.md",
+    "网络/Huawei/HCIE DataCom.md",
     "网络/Huawei/华为基础命令.md",
     "网络/Huawei/HICP 学习计划.md",
     "网络/Huawei/HCNA.md",
     "网络/Huawei/以太网 Ethernet.md",
-    "网络/Huawei/MAC地址.md",
-    "网络/Huawei/5G.md",
     "网络/Huawei/VLAN.md",
     "网络/Huawei/FTTH.md",
-    "网络/Huawei/OSI 模型.md",
     "Untitled.md",
     "网络/Huawei/传输网勘察工具.md",
     "网络/Huawei/通信基本概念和历史.md",
-    "网络/Huawei/ARP协议.md",
-    "网络/Huawei/OSPF.md",
+    "网络/Cisco/cisco_network_essentials_01.md",
+    "网络/Huawei/Ensp.md",
+    "网络/Cisco/Cisco NSO.md",
+    "CSS/Tools.md",
+    "Windows/常见 CMD 命令.md",
     "Windows",
     "网络",
     "Excel",
