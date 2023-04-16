@@ -57,5 +57,3 @@ while True:
 
 window.close()
 ```
-
-```

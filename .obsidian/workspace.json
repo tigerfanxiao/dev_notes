@@ -4,119 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "28f43aaab0e47e53",
+        "id": "c65b55b5ae89a391",
         "type": "tabs",
         "children": [
           {
-            "id": "a8bab095a4728b9a",
+            "id": "d2160431991c2924",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "网络/Huawei/OSPF.md",
+                "file": "网络/OSPF.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "301b9e9cb4bc39bb",
+            "id": "0dd48b40d7200645",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Projects & Job Hunting/Data Center VXLAN project.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3a594bfabc0296a6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Projects & Job Hunting/找工作方法.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9b217fb496cb2c6e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Projects & Job Hunting/云服务 Unibox 项目.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f99124b0a73f58b9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3a8852d2b070b343",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/介质.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a571eaf6cb08f0ee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/面试问题.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "14d107cf6a967226",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/OSI 模型.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "04e795b66d52a84d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/Huawei/TCP.md",
+                "file": "网络/面试问题.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -145,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "水平",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -182,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
+                "file": "网络/面试问题.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -199,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
+                "file": "网络/面试问题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -222,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Projects & Job Hunting/自动化项目-文件上传.md"
+                "file": "网络/面试问题.md"
               }
             }
           }
@@ -243,35 +159,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f99124b0a73f58b9",
+  "active": "a3cd18eef25a5439",
   "lastOpenFiles": [
+    "网络/OSPF.md",
     "Projects & Job Hunting/云服务 Unibox 项目.md",
+    "Python/PySimpleGui.md",
+    "Python/zip.md",
+    "Ideas & Doubts.md",
     "Projects & Job Hunting/自动化项目-文件上传.md",
     "Projects & Job Hunting/找工作方法.md",
     "Projects & Job Hunting/Data Center VXLAN project.md",
     "Untitled.md",
     "Projects & Job Hunting",
-    "网络/Huawei/园区网企业网架构方法论.md",
-    "网络/Huawei/BGP.md",
-    "网络/Huawei/OSPF.md",
-    "网络/Huawei/面试问题.md",
-    "网络/Huawei/TCP.md",
-    "网络/Huawei/RIP.md",
-    "网络/Huawei/ARP.md",
-    "网络/Huawei/5G.md",
-    "网络/Huawei/OSI 模型.md",
-    "网络/Huawei/介质.md",
-    "网络/Huawei/ICMP.md",
-    "网络/Huawei/MAC地址.md",
-    "网络/Huawei/HCIE DataCom.md",
-    "网络/Huawei/华为基础命令.md",
-    "网络/Huawei/HICP 学习计划.md",
-    "网络/Huawei/HCNA.md",
-    "网络/Huawei/以太网 Ethernet.md",
-    "网络/Huawei/VLAN.md",
-    "网络/Huawei/FTTH.md",
-    "网络/Huawei/传输网勘察工具.md",
-    "网络/Huawei/通信基本概念和历史.md",
+    "网络/园区网企业网架构方法论.md",
+    "网络/BGP.md",
+    "网络/面试问题.md",
+    "网络/TCP.md",
+    "网络/RIP.md",
+    "网络/ARP.md",
+    "网络/5G.md",
+    "网络/OSI 模型.md",
+    "网络/介质.md",
+    "网络/ICMP.md",
+    "网络/MAC地址.md",
+    "网络/HCIE DataCom.md",
+    "网络/华为基础命令.md",
+    "网络/HICP 学习计划.md",
+    "网络/HCNA.md",
+    "网络/以太网 Ethernet.md",
+    "网络/VLAN.md",
     "Windows",
     "网络",
     "Excel",
