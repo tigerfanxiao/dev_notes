@@ -20,6 +20,54 @@
             }
           },
           {
+            "id": "301b9e9cb4bc39bb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Projects & Job Hunting/Data Center VXLAN project.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3a594bfabc0296a6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Projects & Job Hunting/找工作方法.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9b217fb496cb2c6e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Projects & Job Hunting/云服务 Unibox 项目.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f99124b0a73f58b9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "3a8852d2b070b343",
             "type": "leaf",
             "state": {
@@ -67,7 +115,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -133,7 +182,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "网络/Huawei/OSPF.md",
+                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +199,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "网络/Huawei/OSPF.md",
+                "file": "Projects & Job Hunting/自动化项目-文件上传.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +222,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "网络/Huawei/OSPF.md"
+                "file": "Projects & Job Hunting/自动化项目-文件上传.md"
               }
             }
           }
@@ -194,16 +243,23 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a8bab095a4728b9a",
+  "active": "f99124b0a73f58b9",
   "lastOpenFiles": [
-    "网络/Huawei/面试问题.md",
+    "Projects & Job Hunting/云服务 Unibox 项目.md",
+    "Projects & Job Hunting/自动化项目-文件上传.md",
+    "Projects & Job Hunting/找工作方法.md",
+    "Projects & Job Hunting/Data Center VXLAN project.md",
+    "Untitled.md",
+    "Projects & Job Hunting",
+    "网络/Huawei/园区网企业网架构方法论.md",
+    "网络/Huawei/BGP.md",
     "网络/Huawei/OSPF.md",
+    "网络/Huawei/面试问题.md",
     "网络/Huawei/TCP.md",
     "网络/Huawei/RIP.md",
     "网络/Huawei/ARP.md",
     "网络/Huawei/5G.md",
     "网络/Huawei/OSI 模型.md",
-    "网络/Huawei/园区网企业网架构方法论.md",
     "网络/Huawei/介质.md",
     "网络/Huawei/ICMP.md",
     "网络/Huawei/MAC地址.md",
@@ -214,14 +270,8 @@
     "网络/Huawei/以太网 Ethernet.md",
     "网络/Huawei/VLAN.md",
     "网络/Huawei/FTTH.md",
-    "Untitled.md",
     "网络/Huawei/传输网勘察工具.md",
     "网络/Huawei/通信基本概念和历史.md",
-    "网络/Cisco/cisco_network_essentials_01.md",
-    "网络/Huawei/Ensp.md",
-    "网络/Cisco/Cisco NSO.md",
-    "CSS/Tools.md",
-    "Windows/常见 CMD 命令.md",
     "Windows",
     "网络",
     "Excel",
@@ -231,7 +281,6 @@
     "Learning Path/asset/2BFE6000",
     "Learning Path/asset/3FBD1200",
     "Learning Path/asset/E4BFD100",
-    "Learning Path/asset/AE5B8100",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
