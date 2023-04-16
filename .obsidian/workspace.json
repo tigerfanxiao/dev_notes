@@ -13,19 +13,43 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "网络/OSPF.md",
+                "file": "Network/OSPF.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "0dd48b40d7200645",
+            "id": "49362902d793737b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "网络/面试问题.md",
+                "file": "Network/资料.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8d1417e15800593e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/网络工程师面试问题.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "71adee75571f3348",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/向招聘方提问.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "网络/面试问题.md",
+                "file": "Network/资料.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "网络/面试问题.md",
+                "file": "Network/资料.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "网络/面试问题.md"
+                "file": "Network/资料.md"
               }
             }
           }
@@ -159,10 +183,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0dd48b40d7200645",
+  "active": "49362902d793737b",
   "lastOpenFiles": [
+    "Network/BGP.md",
+    "images/Pasted image 20230416232210.png",
+    "Network/OSPF.md",
+    "Network/资料.md",
+    "Network/向招聘方提问.md",
+    "Network/链路聚合.md",
+    "Network/网络工程师面试问题.md",
+    "Learning Path/怎么复习.md",
+    "Algo/LRU Cache.md",
+    "Algo/Linked List.md",
+    "Algo/AlgoExpert.md",
+    "Markdown.md",
     "images/Pasted image 20230416213147.png",
-    "网络/OSPF.md",
     "Projects & Job Hunting/云服务 Unibox 项目.md",
     "Python/PySimpleGui.md",
     "Python/zip.md",
@@ -172,24 +207,14 @@
     "Projects & Job Hunting/Data Center VXLAN project.md",
     "Untitled.md",
     "Projects & Job Hunting",
-    "网络/园区网企业网架构方法论.md",
-    "网络/BGP.md",
-    "网络/面试问题.md",
-    "网络/TCP.md",
-    "网络/RIP.md",
-    "网络/ARP.md",
-    "网络/5G.md",
-    "网络/OSI 模型.md",
-    "网络/介质.md",
-    "网络/ICMP.md",
-    "网络/MAC地址.md",
-    "网络/HCIE DataCom.md",
-    "网络/华为基础命令.md",
-    "网络/HICP 学习计划.md",
-    "网络/HCNA.md",
-    "网络/以太网 Ethernet.md",
+    "Network/园区网企业网架构方法论.md",
+    "Network/TCP.md",
+    "Network/RIP.md",
+    "Network/ARP.md",
+    "Network/5G.md",
+    "Network/OSI 模型.md",
     "Windows",
-    "网络",
+    "Network",
     "Excel",
     "Learning Path/asset/91F1FC00",
     "Learning Path/asset/FC4A4500",
