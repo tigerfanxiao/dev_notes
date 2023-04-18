@@ -5,7 +5,7 @@ from typing import Callable, Any
 from functools import wraps
 
 def benchmark(func: Callable[..., Any]) -> Callable[..., Any]:  
-	@wraps(func) # 如果不这么写，在多个装饰器叠加时，在应用func名字时会错误
+	@wraps(func) # 如果不这么写，在多个装饰器叠加时，在引用func名字时会错误
     def wrapper(*args: Any, **kwargs: Any) -> Any:  
         start_time = perf_counter()  
         value = func(*args, **kwargs)  

@@ -44,6 +44,18 @@
             }
           },
           {
+            "id": "39863902551a6927",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Network/链路聚合.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "c3cf20adb6e1d92d",
             "type": "leaf",
             "state": {
@@ -73,14 +85,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Network/向招聘方提问.md",
+                "file": "Python/Pandas.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -109,7 +121,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "CSMA/CD",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -130,7 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 338.5
+    "width": 218.5
   },
   "right": {
     "id": "a3a9e42fc8f34cf7",
@@ -146,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Network/VXLAN.md",
+                "file": "Python/Pandas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Network/VXLAN.md",
+                "file": "Python/Pandas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Network/VXLAN.md"
+                "file": "Python/Pandas.md"
               }
             }
           }
@@ -207,46 +219,46 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d90112fd1c435de3",
+  "active": "71adee75571f3348",
   "lastOpenFiles": [
-    "Network/BGP.md",
+    "Network/中国移动.md",
+    "Network/OSI 模型.md",
+    "Network/介质.md",
+    "Network/以太网 Ethernet.md",
+    "Network/网络工程师面试问题.md",
+    "Network/华为基础命令.md",
+    "Network/资料.md",
+    "Network/链路聚合.md",
+    "Network/向招聘方提问.md",
+    "Python/Decorator.md",
+    "Python/re.md",
+    "Python/Random.md",
+    "Python/Pandas.md",
+    "Network/ARP.md",
+    "Network/5G.md",
+    "Devops/Terraform.md",
     "Network/VXLAN.md",
+    "Untitled",
+    "Network/BGP.md",
     "AWS",
     "Network/GRE.md",
     "Network/OSPF.md",
-    "Network/向招聘方提问.md",
-    "Network/网络工程师面试问题.md",
     "Network/园区网企业网架构方法论.md",
-    "Network/资料.md",
     "Network/MPLS.md",
     "Java",
     "images/Pasted image 20230416232210.png",
-    "Network/链路聚合.md",
     "Learning Path/怎么复习.md",
     "Algo/LRU Cache.md",
     "Algo/Linked List.md",
     "Algo/AlgoExpert.md",
-    "Markdown.md",
     "images/Pasted image 20230416213147.png",
-    "Projects & Job Hunting/云服务 Unibox 项目.md",
-    "Python/PySimpleGui.md",
-    "Python/zip.md",
-    "Ideas & Doubts.md",
-    "Projects & Job Hunting/自动化项目-文件上传.md",
-    "Projects & Job Hunting/找工作方法.md",
-    "Projects & Job Hunting/Data Center VXLAN project.md",
-    "Untitled.md",
     "Projects & Job Hunting",
-    "Network/TCP.md",
-    "Network/RIP.md",
-    "Network/ARP.md",
     "Windows",
     "Network",
     "Excel",
     "Learning Path/asset/91F1FC00",
     "Learning Path/asset/FC4A4500",
     "Learning Path/asset/EA594500",
-    "Learning Path/asset/2BFE6000",
     "images/Pasted image 20230325163946.png",
     "images/Pasted image 20230325163744.png",
     "images/Pasted image 20230221165652.png",
