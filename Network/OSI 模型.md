@@ -41,3 +41,34 @@ OSI 模型主要是分为
 0x0800 就是 ip 协议
 0x0806 就是ARP 协议
 0x86dd 就是 IPv6 协议
+
+# IP包头部
+整体的包结构
+```
+| L2 tailer | Data | L4 header | IP header | L2 header|
+```
+
+IP 包的头部是可变长的, 最小是 20 个字节, 最长是60 个自己
+```
+
+| version of IP | IHL | DSCP | ECN | Total Length | 
+| identification             | Flags | Fragment Offset |
+| TTL | Protocol | Header Checksum field |
+| Source IP|
+| Destination IP |
+| Optional |
+```
+字段说明
+* version: ipv4 = 0010, ipv6 = 0110, 长度是 4 个 bit
+* IHL Internet Header Length 长度是 4 个 bit. IPv4的包头是可变长的, 所以需要再 IHL 位置说明整个IP 头部的长度. 这个字段的最小值为 5, 表示 20 个字节, 最大为 15 表示 60 个字节. 4-byte increment
+* DSCP = Differentiated Services Code Point 长度是 6 个 bit, Used for QoS (Quality of Service)
+	used for prioritize delay-sensitive data (stream voice, video) 如果你加载网页慢一些, 不会有太大的影响, 但是如果你打电话或者视频通话卡顿就会有很严重的影响, 所以这里要调节 QoS
+* ECN = Explicit Congestion Notification 长度 2 个 bit. 在不掉包的情况下, 提供端到端的网络拥塞信号. 这个字段是可选的, 需要底层两端设备都支持. 
+* Total Length 长度是 16 个 bit, 表示整个IP 包的长度 = L3 header + L4 segment. 最小值是 20, 代表 20 个字节, 是最小的 IP 包长度, 其实包里面没有payload. 最大长度是65535
+* identification  长度是 16 个bit, 差错检验. 如果一个 ip 包被分片了, 这里标注了, 这个分片是属于哪一个 ip 包的. 属于同一个 ip 包的分片, 这里的字段的值是相同的. 超过 MTU 的包都会被分片.  一般情况下 MTU 的1500 bytes
+* Flags 长度是 3 个bit. 第一个 bit 位永远是 0, 第二个 bit 位称为Don't Fragment (DF)位, 如果这个位设置为 1, 表示不要对包进行分片. 第三个 bit 位称为More Fragment, 如果这个位设置为 1, 表示还有数据这个包的分片. 如果设置为 0, 表示这是这个包的最后一个分片了. 
+* Fragment Offset 标识当前的分片在原来的包中的位置
+*  TTL = Time to live . 有个 8 个 bit. Used to prevent infinite loops. 推荐的默认值是 64. 如果L4是 ICMP, 这里会设置成 255
+*  Protocal 8bit 标记 L4 协议, 比如 TCP = 6, UDP = 17, ICMP = 1, OSPF = 89
+*  Header Checksum 设备会计算 Checksum of header and compare with this field. 注意: 这里只是校验 IP 头部的信息. IP的 payload 的检验是通过 TCP 和 UDP 内的检查机制来实现.
+* Optional Field 长度为 0-320bit
