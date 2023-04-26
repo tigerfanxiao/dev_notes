@@ -24,7 +24,7 @@ meta = MetaData()
 workers = Table(  
     'workers', meta,  # 把workers注册到meta对象中
     Column('id', Integer, primary_key=True),  
-    Column('name', String),  
+    Column('name', String， default="default_value"),  # 设置默认值
 )
 
 meta.create_all(engine)  # 创建一个表
@@ -33,6 +33,21 @@ meta.create_all(engine)  # 创建一个表
 
 
 ## update
+```python
+
+config = session.query(Config).filter_by(device_name=ret.device_name).first()  
+
+if config is None:
+	config = Config()  # 如果元素不存在， 则新建
+	session.add(config)  
+
+# 如果元素以及存在， 则修改
+setattr(config, attribute_name, ret.config)  
+session.add(config)  # 可以把修改和创建的多个对象都放在一个session里
+
+
+session.commit()
+```
 
 ## select
 
