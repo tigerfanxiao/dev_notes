@@ -73,7 +73,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/importlib.md",
+                "file": "Network/MPLS.md",
                 "mode": "source",
                 "source": false
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "importlib",
+                "query": " ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -171,7 +171,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Python/importlib.md",
+                "file": "Network/MPLS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -188,7 +188,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Python/importlib.md",
+                "file": "Network/MPLS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -211,7 +211,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Python/importlib.md"
+                "file": "Network/MPLS.md"
               }
             }
           }
@@ -232,8 +232,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8d1417e15800593e",
+  "active": "7be2e8251b040f6f",
   "lastOpenFiles": [
+    "Python/importlib.md",
+    "Network/BGP.md",
+    "Network/MPLS.md",
+    "Network/5G.md",
     "Network/OSI 模型.md",
     "Network/TCP.md",
     "Network/网络工程师面试问题.md",
@@ -252,19 +256,15 @@
     "Python/re.md",
     "Python/Random.md",
     "Network/ARP.md",
-    "Network/5G.md",
     "Devops/Terraform.md",
     "Network/VXLAN.md",
-    "Network/BGP.md",
     "AWS",
     "Network/GRE.md",
     "Network/OSPF.md",
     "Network/园区网企业网架构方法论.md",
-    "Network/MPLS.md",
     "Java",
     "images/Pasted image 20230416232210.png",
     "Learning Path/怎么复习.md",
-    "Algo/LRU Cache.md",
     "images/Pasted image 20230416213147.png",
     "Projects & Job Hunting",
     "Windows",
