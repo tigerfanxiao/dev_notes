@@ -9,13 +9,21 @@ AD 值
 
 # BGP邻居建立状态
 * EBGP 的邻居建立手动指向的是对端的接口地址而不是 router-id
+* IBGP 的邻居建立虽然也可以指向对端的接口地址, 但是我们一般是指向router-id, 因为这样建立TCP-IP连接会比较稳定, 只要 router-id 之间的路由存在, 物理接口的 ip 地址变动, 不会影响 BGP邻居的变动
 
-1. idle 初始状态, 在没有建立邻接之前
-2. Connect 状态 发送建立 TCP 连接的请求
-3. Active 状态, 连接没有完成
-4. OpenSent状态 TCP 建立成功, 发送 Open 报文
-5. OpenConfirm状态 收到对端发来的 Open 报文, 发送 keepalive报文
-6. Established 状态. 邻居建立成功
+步骤
+1. 建立两个 Peer 之间的 TCP连接
+	1. idle 初始状态, 在没有建立邻接之前
+	2. Connect 状态 发送建立 TCP 连接的请求
+	3. Active 状态, 连接没有完成
+2. TCP 连接建立完成后(4 层传输层), 启动 BGP 会话建立(5 层会话层). 发送 Open 报文, 自己进入 OpenSent 状态. 在 Open 消息中包含很多 Capability 参数
+3. 收到对端的 Open 报文后, 如果认可 Open 消息中的 Capability 参数, 则进入 OpenConfirm 状态,并发送 keepalive 报文
+4. 收到对端发送的 keepalive报文进入 Established 状态, 邻接建立成功
+下图为 Open 报文. 可见在 IP 层后, 是 TCP 协议. TCP 协议之后BGP 的回话. 在Open 报文中包含了 Optional parameters 字段, 里面有 Capability参数. 其中指定了是否是 MP-BGP, 所属的 AS 号等信息
+![[Screenshot 2023-04-30 at 12.08.47.jpg]]
+
+下面是 keepalive 消息的报文
+![[Screenshot 2023-04-30 at 12.13.14.jpg]]
 
 # 四种报文
 * Open 报文: BGP version, Local AS 号, Hold Time, BGP Router-ID, Optional Parameters
