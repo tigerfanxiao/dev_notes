@@ -6,3 +6,9 @@ from hashlib import blake2b
 blake2b(new_password.encode('UTF-8')).hexdigest()
 
 ```
+
+
+做hash值
+```python
+hash(st)
+```

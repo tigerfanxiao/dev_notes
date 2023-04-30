@@ -13,106 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Python/importlib.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b4c665124ec887dc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "Python/SqlAlchemy.md",
                 "mode": "source",
                 "source": false
               }
             }
-          },
-          {
-            "id": "49362902d793737b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/BGP.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d90112fd1c435de3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/VXLAN.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "39863902551a6927",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/链路聚合.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c3cf20adb6e1d92d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/园区网企业网架构方法论.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8d1417e15800593e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/网络工程师面试问题.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "71adee75571f3348",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "57001e56df5e7ef8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Network/OSI 模型.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -240,11 +147,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b4c665124ec887dc",
+  "active": "d6b10e30ca78396b",
   "lastOpenFiles": [
-    "Python/OOD.md",
-    "Python/importlib.md",
+    "Python/hashlib.md",
+    "Python/SqlAlchemy.md",
+    "Python/datetime.md",
+    "Python/yaml.md",
     "Python/pyinstaller.md",
+    "Network/BGP.md",
+    "Python/importlib.md",
+    "Python/OOD.md",
     "Network/OSPF.md",
     "Network/中国移动.md",
     "Network/OSI 模型.md",
@@ -262,14 +174,10 @@
     "Network/5G.md",
     "Devops/Terraform.md",
     "Network/VXLAN.md",
-    "Network/BGP.md",
     "AWS",
     "Network/GRE.md",
-    "Network/园区网企业网架构方法论.md",
-    "Network/MPLS.md",
     "Java",
     "images/Pasted image 20230416232210.png",
-    "Learning Path/怎么复习.md",
     "images/Pasted image 20230416213147.png",
     "Projects & Job Hunting",
     "Windows",

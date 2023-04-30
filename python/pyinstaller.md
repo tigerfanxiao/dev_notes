@@ -6,7 +6,8 @@
 def get_app_running_path():
 	if getattr(sys, 'frozen', False):
 	    return os.path.dirname(sys.executable)  # 如果是exe运行
-	else os.path.dirname(__file__)  # 如果是本地调试
+	else:
+		return os.path.dirname(__file__)  # 如果是本地调试
 ```
 
 # Hidden Import
