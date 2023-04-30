@@ -5,6 +5,7 @@ python -m pip install sqlalchemy
 ```
 如果没有orm，只是手动创建一个表
 
+数据库文件一般是以 `.db` 结尾
 ```python
 from sqlalchemy import (  
     create_engine,  
@@ -24,7 +25,7 @@ meta = MetaData()
 workers = Table(  
     'workers', meta,  # 把workers注册到meta对象中
     Column('id', Integer, primary_key=True),  
-    Column('name', String),  
+    Column('name', String， default="default_value"),  # 设置默认值
 )
 
 meta.create_all(engine)  # 创建一个表
@@ -33,6 +34,21 @@ meta.create_all(engine)  # 创建一个表
 
 
 ## update
+```python
+
+config = session.query(Config).filter_by(device_name=ret.device_name).first()  
+
+if config is None:
+	config = Config()  # 如果元素不存在， 则新建
+	session.add(config)  
+
+# 如果元素以及存在， 则修改
+setattr(config, attribute_name, ret.config)  
+session.add(config)  # 可以把修改和创建的多个对象都放在一个session里
+
+
+session.commit()
+```
 
 ## select
 
@@ -57,7 +73,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 DB_FILE = 'DB_FILE_PATH'
-engine = create_engine(f'sqlite:///{DB_FILE}', echo=True)  # echo=True  
+engine = create_engine(f'sqlite:///{DB_FILE}', echo=True)  # 在运行sql语句的时候， 会有回显
 Session = sessionmaker(bind=engine) # 这是一个Session类
 
 # 如果要对数据库进行方位，需要构建一个Session对象
@@ -82,19 +98,10 @@ from sqlalchemy import (
 Base = declarative_base() 
 # 使用基类创建其他类
 class Person(Base):
-	__tablename__ = "people"
-	name = Column("name", String,  primary_key=True)
-	age = Column("age", Integer) 
-
-	# 需要初始化
-	def __init__(self, name, ip_address, device_type, connection, version="", username="", password=""):  
-    self.name = name  
-    self.ip_address = ip_address  
-    self.device_type = device_type  
-    self.connection = connection  
-    self.version = version  
-    self.username = username  
-    self.password = password
+	__tablename__ = "people" # 表明
+	name = Column("name", String,  primary_key=True) # 配置成主键
+	age = Column("age", Integer, default="28")  # 默认值
+	device = Column(Integer, ForeignKey('devices.name', ondelete="SET NULL"), unique=True) # 配置外键
 
 	def __repr__(self):  
     return f"{self.name} {self.ip_address} {self.device_type}"
@@ -114,6 +121,11 @@ date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对
 session.query(Person).filter(Person.lastname.Like("%An%"))
 
 session.query(Person).filter(Person.lastname.in(['Anna', 'Mike']))
+
+
+# 按照时间来过滤
+date_before = datetime.now() - timedelta(days=700)
+tasks = db_session.query(Task).filter(Task.create_date > date_before).all()
 ```
 
 关联查询
