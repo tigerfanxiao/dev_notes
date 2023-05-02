@@ -1,5 +1,4 @@
 
-
 ### MPLS 的本质是什么?
 本质上是一种隧道技术, 这种隧道也称为 LSP Label Switch Path
 
@@ -7,7 +6,12 @@
 所谓隧道, 在数据转发的时候, 它不再需要像普通的 IP 路由那样在每一跳路由器上都剥掉二层帧头, 基于 IP 地址, 通过查询路由表来进行选路. 在 MPLS 域中, 通过标签分发协议(一般情况下是 LDP)来建立起一条 LSP, 数据直接通过标签的交换就能到达 MPLS 域另一端的 PE 设备
 
 ### 标签是怎么形成的?
+标签是由 LDP 协议分发完成的
 
+### 什么控制层面和数据转发层面
+MPLS是一个很好的控制层面和转发层面分离的例子. 
+一般来说, 控制层面指的是路由前缀的传递. 比如两个 PE 设备的 VPNv4路由的传递. P设备之间基于 IGP 协议的路由前缀的传递. 
+数据转发层面则描述了数据传递过程中, 数据包真正的行为. 换句话说, 因为两个层面的分离, 即使在控制层面, 两台 PE 设备之间已经完成了路由前缀的传递, 但是也可能因为转发层面的问题, 造成数据无法传递. BGP 的路由黑洞问题就是一个很好的例子. BGP 的路由黑洞问题简单的说, MPLS 域中的三台设备, 两台 PE 设备之间建立的 iBGP 链接, 在控制层面传递了路由. 但是因为中间的P 设备没有运行 BGP 协议, 没有学到 BGP 路由. 数据在到达 P 设备后, 查询路由表无果, 进而将数据包丢弃, 形成路由黑洞. 
 
 
 ### 为什么有次末跳弹出机制 PHP
@@ -21,6 +25,13 @@ FIB 转发信息库: 基于思科的特快转发(Cisco Express Forwarding)为了
 LIB 标签信息库: 存放自己产生的和我收到的为某一条路由前缀捆绑的标签. 由 LDP 协议生成        
 LFIB: 由 FIB和 LIB 组成的表. 入栈标签, 出栈标签, 下一跳, 出接口
 
+# LDP
+LDP 协议是一种标签分发协议. 它由两个作用
+1. 为本机上所有 IGP 协议的路由前缀生成一个标签
+2. 通过建立 LDP 邻居, 将本机生成的标签分发给自己的 LDP 邻居
+
+* 基于 LDP 的机制, 我们将本机基于 IGP 前缀生成的标签称为 Input 标签, 而把从邻居收到的标签称为Output标签. 
+* 我们本地生成的标签, 永远是给别人用的. 换句话说, 我前面的邻居, 会剥掉它收到数据帧中的 LDP 报头, 压上我给它的 LDP 标签, 然后把新的数据帧发给我. 
 
 # MPLS的由来
 
@@ -62,7 +73,67 @@ MPLS 特征
 * 首先看控制层面
 在 MPLS 域的边界 PE 设备上, 因为要建立多个 VRF 来接受不同客户站点的路由, 且这些路由最终需要通过主设备的上 MP-BGP 协议来通告给MPLS 域另一端的 PE 设备. 因为客户不同站点的路由信息, 可能存在重复的情况(一般是客户内网 IP ), 所以通过在路由前缀的前面加上 RD (Route Distinguisher)值来区分. 此时 MP-BGP 协议传递的不再是IPv4的路由前缀, 而是被称为 VPNv4 的路由前缀, 长度为 96 位. 结构为`|RD| IPv4 prefix|` 
 
+因为 PE 设备建立的多个 VRF, 所以从 VRF 中学到的 BGP 路由是有 vrf 地址族在管理的. 我们需要将 vrf 地址族中的前缀放到 vpnv4 的地址族中, 然后当这些前缀到达 MPLS 域对端的 PE 设备时, 又要把这些前缀从 vpnv4地址族中取出来, 放到不同的 vrf 地址族中. 所以就需要设置 RT Router Target值. RT值需要配置两个参数, 即 import 和 export. 
+
+举个例子, 左侧的客户 A 通过 MPLS 域给另一侧的客户 A 站点传递路由前缀. 在把vrf 地址族中路由前缀放到 vpnv4 地址族时, 加上 RT 值 Export 标签 123. 对端设备配置 vrf A 的 RT Import 值为 123. 也就说, 它会从所有的 vpnv4地址族的路由前缀中, 把RT值为 123的前缀挑出来, 引入自己的 VRF A 中. 
+
+![[Pasted image 20230430123741.png]]
+
 RD 值和 RT 值的传播是基于 BGP Community 属性完成的. 
+RD 值的一般格式 `AS号:唯一标识`
+
+信息查看命令
+
+```shell
+show ip bgp vpnv4  # 查看vpnv4 路由
+show ip bgp vpnv4 rd x:y labels # 查看为 vpnv4路由分配的标签
+show ip bgp vpnv4 all summary # 查看 vpnv4的邻居
+debug ip bgp vpnv4 unicast updates
+
+```
+
+# MPLS中的 RR 设备
+
+PE 设备默认过滤 RT 值行为
+MPLS 域中, PE 设备的默认行为是过滤掉所有的 VPNv4前缀, 除非, 这些前缀中有 RT 值, 可以导入 VRF 的路由表中
+RR 设备不会过滤 VPNv4的前缀. 但是这种情况对 RR 的性能是一种挑战. 在现网架构中, 往往是双 RR, 两台 RR 分别反射不同的RT 值. 如下图: RR1 用来反射RT 值为偶数的前缀, RR2 用来反射 RT 值为奇数的前缀
+```shell
+no bgp default route-target filter # 关闭默认 RT 值过滤行为, 所有的路由都会放进设备.
+```
+
+![[Pasted image 20230501180404.png]]
+
+```shell
+router bgp 1
+address-family vpnv4
+bgp rr-group 1
+ip extcommunity-list 1 permit rt 1:1
+ip extcommunity-list 1 permit rt 1:3
+```
+
+BGP多路径负载
+* eBGP
+* iBGP
+* eiBGP 一条通过 eBGP 邻居收到的, 一条通过 iBGP 邻居收到的
+
+```shell
+router bgp 1
+address-family vpnv4
+maximum-path ebgp 4
+```
+
+如果在两台不同的 PE 设备上, 用相同的 RD 值创建 VRF.  RR 收到两条相同的路由前缀. 默认情况下, RR 会根据 13 条选路规则进行PK, 然后只反射Best前缀. 如果要想要反射两条路由, 建议选用不同的 RD 值. 以防止其中一台 PE 设备挂掉的时候, RR 不必等到收敛后才将新路由前缀反射出去. 
+
+
+# 重分布
+重分布在 vrf 地址组下做, 而不是 vpnv4 地址族下做
+
+
+
+# VRF
+子接口也可以划分到 VRF
+子接口单臂路由实验
+
 
 
 # MPLS 和 Segment Routing 的关系
