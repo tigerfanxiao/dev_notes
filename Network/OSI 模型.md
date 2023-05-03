@@ -32,15 +32,13 @@ OSI 模型主要是分为
 2. 如果目标地址是单播的, 但是不是自己的就会丢弃
 3. 如果目标地址是自己的, 就会完整性的校验, 如果数据帧完整就剥掉帧头部, 交给上层处理
 
-
-
-# 网络层
-
 网络设备如何确定以太网上层协议
 通过数据帧中的 type 字段来确定上层协议 
 0x0800 就是 ip 协议
 0x0806 就是ARP 协议
 0x86dd 就是 IPv6 协议
+
+# 网络层
 
 # IP包头部
 整体的包结构
@@ -59,7 +57,7 @@ IP 包的头部是可变长的, 最小是 20 个字节, 最长是60 个自己
 | Optional |
 ```
 字段说明
-* version: ipv4 = 0010, ipv6 = 0110, 长度是 4 个 bit
+* version: ipv4 = 0100, ipv6 = 0110, 长度是 4 个 bit
 * IHL Internet Header Length 长度是 4 个 bit. IPv4的包头是可变长的, 所以需要再 IHL 位置说明整个IP 头部的长度. 这个字段的最小值为 5, 表示 20 个字节, 最大为 15 表示 60 个字节. 4-byte increment
 * DSCP = Differentiated Services Code Point 长度是 6 个 bit, Used for QoS (Quality of Service)
 	used for prioritize delay-sensitive data (stream voice, video) 如果你加载网页慢一些, 不会有太大的影响, 但是如果你打电话或者视频通话卡顿就会有很严重的影响, 所以这里要调节 QoS
@@ -72,3 +70,5 @@ IP 包的头部是可变长的, 最小是 20 个字节, 最长是60 个自己
 *  Protocal 8bit 标记 L4 协议, 比如 TCP = 6, UDP = 17, ICMP = 1, OSPF = 89
 *  Header Checksum 设备会计算 Checksum of header and compare with this field. 注意: 这里只是校验 IP 头部的信息. IP的 payload 的检验是通过 TCP 和 UDP 内的检查机制来实现.
 * Optional Field 长度为 0-320bit
+
+DSCP 和 ECN 加在一起的 8 个 bit也称为 TOS 位
