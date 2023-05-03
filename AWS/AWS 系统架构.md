@@ -4,21 +4,15 @@
 
 1.  what is the differnce between Elastic Beanstalk and CloudFormation?
 2.  R53 躲在ELB之后， 分配流量
-
-# Basic Concepts
-
-### **Availability & Durability & Reliability**
-
-到底什么事高可用 HA High Availability ?
+3. 到底什么事高可用 HA High Availability ?
 
 
-### Subdomain vs Domain
-
-[google.com](http://google.com) is domain, [support.google.com](http://support.google.com) is subdomain
-
-### AWS Workspace
-
-Amazon WorkSpaces provides a Desktop as a Service (DaaS) solution
+# AWS 服务名字
+* storage Gateway Cache you file replicate file to S3
+* codeDeploy: deploy your code to EC2 instance
+* IoT Greengrass: Connect IoT device to AWS
+* AWS Workspace: Desktop as a Service (DaaS) solution
+* SES: email messaging platform for businesses and developers.
 
 ### APN Consulting Partners
 
@@ -28,50 +22,11 @@ are professional services firms that help customers of all types and sizes desig
 
 Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization.
 
-
-### 4 AWS Support packages
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/27e57958-e7d7-48db-b55e-0f4cbbbd0dfe/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/27e57958-e7d7-48db-b55e-0f4cbbbd0dfe/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7c9e407-f15e-4937-a3e9-8ad5857f6c9a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7c9e407-f15e-4937-a3e9-8ad5857f6c9a/Untitled.png)
-
-### Consulting Partner
-
-### AWS all tiers
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/30355926-7480-41c2-bd6c-eacb47f77f00/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/30355926-7480-41c2-bd6c-eacb47f77f00/Untitled.png)
-
-Difficulty of Exam
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1cd0bfa3-3a3c-4660-8b1a-b29f54d8cf0a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1cd0bfa3-3a3c-4660-8b1a-b29f54d8cf0a/Untitled.png)
-
-### 3 ways to connect AWS
-
-1.  Using the Console
-2.  Programtically (Using the command line)
-3.  Using the software Developer Kits (SDK)
-
-## Connect AWS with Putty
-
-1.  go to AWS create Key pairs
-2.  download .pem file
-3.  use PuttyGen to generate .ppk file and save it
-4.  configure Putty to access AWS
-
-Use puttyGen to transform .pem file to .ppk file
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/716193d4-f98a-44d5-a75e-562dddf64d10/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/716193d4-f98a-44d5-a75e-562dddf64d10/Untitled.png)
-
-configure priavate key
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e0bf1db4-6fa6-43a1-898a-0494c919ad1a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e0bf1db4-6fa6-43a1-898a-0494c919ad1a/Untitled.png)
-
-### connect AWS with terminal
-
-1.  downlaod .pem file
-2.  open terminal with the directory where you save the .pem file
+# MAC terminal 访问 ECS
 
 ```bash
+# 1. downlaod .pem file
+# 2. open terminal with the directory where you save the .pem file
 # 3. change the privilege of .pem file
 chmod 400 mykey.pem
 # 4. connect to EC2 
@@ -81,31 +36,10 @@ sudo su
 yum update 
 ```
 
-### generate keys by cmd line
 
-```bash
-ssh-keygen -y -f Mykey.pem > Mykey.pub # get public key
-ren Mykey.pem Mykey
-```
+# 全球服务 vs 非全球服务
 
-# AWS System Manager
-
-AWS system manager allows you to manage your EC2 instance at scale.
-
-A piece of sofware is installed on each VM
-
-Can be both inside AWS and on premise.
-
-Run Command is used to install, patch, uninstall software
-
-Integrates with CloudWatch to give you a dashboard of your entire estate
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2682dc9-1f92-48a6-899f-4ef517c7df54/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2682dc9-1f92-48a6-899f-4ef517c7df54/Untitled.png)
-
-### Global AWS Service Are Global
-
-Global Service
-
+全球服务
 -   IAM
 -   Route53
 -   CloudFront
@@ -113,128 +47,10 @@ Global Service
 -   SES
 
 Global views but regional
-
 -   S3
-
-# SES
-
-Amazon SES (Amazon Simple Email Service) is a flexible, affordable, and highly-scalable email messaging platform for businesses and developers.
-
-# AWS Personal Health Dashboard
-
-provides alerts and remediation guidance when AWS is experiencing events that may impact you. While the Service Health Dashboard displays the general status of AWS services, Personal Health Dashboard gives you a personalized view into the performance and availability of the AWS services underlying your AWS resources.
-
-# AWS Cost & Usage Report
-
-The AWS Cost & Usage Report contains the most comprehensive set of AWS cost and usage data available, including additional metadata about AWS services, pricing, and reservations (e.g., Amazon EC2 Reserved Instances (RIs)).
-
-# CloudWatch
-
-Amazon CloudWatch is a monitoring service to monitor your AWS resources, as well as the applications that you run on AWS.
-
--   CloudWatch is used for monitoring performance
--   CloudWatch can monitor most of AWS as well as your applications that run on AWS.
--   CloudWatch with EC2 will monitor events every 5 minutes by default
--   You can have 1 minute intervals by turning on detailed mornitoring
--   You can create CloudWatch alarms which trigger notiications
--   CloudWatch is all about performance. CloudTrail is all about auditing
-
-What can CloudWatch can monitor?
-
-Compute: EC2 Instance, Autoscaling Groups, Elastic Load Balancer, Route52 Health Checks
-
-Storage & Content Deliver, EBS Volumes, Storage Gateways, CloudFront
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2492d35c-4ce7-4fee-afc0-cea5f570b857/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2492d35c-4ce7-4fee-afc0-cea5f570b857/Untitled.png)
-
-also physical server: CPU, Network, Disk, Status Check
-
-### Set Billing Alarm
-
-1.  go to Cloud Watch
-2.  click billing
-3.  create alarm
-4.  set metric
-5.  create a new sns topic
-
-### 2 types of CloudWathch Monitoring
-
--   Standard Monitoring = 5 min
--   Detailed Monitoring = 1 min
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4207942f-8d88-45a1-9b13-94c689fe9bfb/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4207942f-8d88-45a1-9b13-94c689fe9bfb/Untitled.png)
-
-storage Gateway: Cache you file replicate file to S3
-
-codeDeploy: deploy your code to EC2 instance
-
-opsworks: deploy your code to EC2 or on-premise
-
-IoT Greengrass: Connect IoT device to AWS
-
-### Principal
-
-A Principal is a person or application that uses the AWS account root user, an IAM user, or an IAM role to sign in and make requests to AWS.
-
-### MFA
-
-download google authenticator to scan QR
-
-### Key Terminology For IAM
-
-**User**: End Users such as people, employees of an organization, etc.
-
-**Groups**: A collection of users. Each user in the group will inherit the permissions of the group.
-
-**Policies**: Policies are made up of documents, calle Policy documents. These documents are in a format called JSON and they give permissions as to what a User/Group/Role is able to do.
-
-**Roles**: You create roles and then assign them to AWS Resources
-
-### why use Roles
-
-It is not safe to save AK/SK in EC2 instance. In case, someone hack the EC2 instance, he can find the AK/SK file in home directory and control the root account of AWS
-
--   Roles are much more secure than using access key id's and secret access keys and are easier to manage
--   You can apply roles to EC2 instances at any time. When you do this the change takes place immediately.
--   Roles are universal. You do not need to specify what region they are in, similar to uses.
-
-steps
-
-1.  create a role in IAM and add some policy
-    
-2.  attach this role to EC2 instance
-    
-3.  if you in command line, make sure you delete all credentials saved in EC2 .aws directory. Then EC2 will access S3 by its role.
-    
-    ```bash
-    cd ~
-    rm -rf .aws
-    aws s3 ls
-    ```
-    
-
-### Key points
-
--   IAM is universal. It does not apply to regions at this time
--   The "root account" is simply the account created when first set up your AWS account. It has complete Admin access
--   New Users have No permission when first created
--   New Users are assigned AK/SK when first created
--   Always setup multifactor Authentication on your root account
 
 # S3
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bffe67f8-e610-42af-a3c1-6bae15ffb596/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bffe67f8-e610-42af-a3c1-6bae15ffb596/Untitled.png)
-
-S3-Charges
-
-you are charged for S3 in the following ways:
-
--   Storage
--   Request
--   Storage Management Pricing
--   Data Transfer Pricing
--   Transfer Acceleration
--   Cross Region Replication Pricing
 
 ### S3-Transfer Acceleration
 
@@ -263,10 +79,6 @@ SSL/TLS
 -   Server Side Encryption with Customer Provided Keys SSE-C
 
 ### Encryption at client Side
-
-### S3 Versioning
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eb444a63-30f8-4875-bb62-a27b7c758799/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eb444a63-30f8-4875-bb62-a27b7c758799/Untitled.png)
 
 Storage lifecycle
 
