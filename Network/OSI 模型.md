@@ -70,3 +70,5 @@ IP 包的头部是可变长的, 最小是 20 个字节, 最长是60 个自己
 *  Protocal 8bit 标记 L4 协议, 比如 TCP = 6, UDP = 17, ICMP = 1, OSPF = 89
 *  Header Checksum 设备会计算 Checksum of header and compare with this field. 注意: 这里只是校验 IP 头部的信息. IP的 payload 的检验是通过 TCP 和 UDP 内的检查机制来实现.
 * Optional Field 长度为 0-320bit
+
+DSCP 和 ECN 加在一起的 8 个 bit也称为 TOS 位
