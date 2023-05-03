@@ -1,47 +1,20 @@
 [[Dockerfile]]
 
-# Container
+# 名词解释
+* Container 容器可以把容器理解为一种运行环境 runtime 
+* Bare Metal 裸金属服务器, 也就是物理机
+* Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
-Containers are isolated execution environment that let us quickly and efficiently deploy exact copies of our desired environments. This is done by virtualizing at the operating system-level and isolating any libraries and applications within the container.
 
-**Bare Metal**: No virtualization - the application or service is deployed directly onto the machine
+docker和虚拟机的区别?
+1. docker 更轻量化吧
+2. 微服务其实也可以放在虚拟机上, 不一定是 docker
 
-### **Container VS virtual machine**
-
-### **Container Runtime**
-
--   docker (Most Popular)
-    
--   rkt
-    
-    Created by CoreOS, “designed with composability and security in mind.”
-    
--   containerd
-    
-    Emphasizes “simplicity, robustness, and portability"
-    
-
-### **Container Use Case**
-
--   Solving Dev/Prod Parity
--   Migrating Infrastructure
--   Microservice-Based Architectures
--   Elastic Architectures
--   Self-Healing Architectures
--   CI/CD pipeline
-
-# Docker
-
-## **Concepts**
-
--   Docker hub: online official docker image repository
--   Docker is primarily a container runtime.
-
-## **Uninstall old docker**
+# 安装docker
 
 ### **centos**
 
-```
+```shell
 sudo yum remove -y docker \\
                   docker-client \\
                   docker-client-latest \\
@@ -50,162 +23,66 @@ sudo yum remove -y docker \\
                   docker-latest-logrotate \\
                   docker-logrotate \\
                   docker-engine
-```
 
-## **Install docker**
 
-### **Centos**
-
-```
-sudo yum install -y yum-utils \\
-  device-mapper-persistent-data \\
-  lvm2
-```
-
-## **Install Docker CE**
-
-Add the Utilities needed for Docker:
-
-```
-sudo yum install -y yum-utils \\
-  device-mapper-persistent-data \\
-  lvm2
-```
-
-Set up the `stable` repository:
-
-```
-sudo yum-config-manager \\
-    --add-repo \\
-    <https://download.docker.com/linux/centos/docker-ce.repo>
-```
-
-Install Docker CE:
-
-[](https://docs.docker.com/engine/install/centos/)[https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/)
-
-```bash
-sudo yum-config-manager --add-repo <https://download.docker.com/linux/centos/docker-ce.repo>
+sudo yum install -y yum-utils, device-mapper-persistent-data, lvm2
+# 添加仓库
+sudo yum-config-manager --add-rep https://download.docker.com/linux/centos/docker-ce.repo 
+# 安装
 sudo yum install -y docker
-# start docker and check the status
+# 开启 docker 服务, 启用 docker
 sudo systemctl start docker && sudo systemctl enable docker
+# 把cloud_user放到 docker 组里, 以后运行 docker 命令, 不需要 sudo
+# 要使下面命令生效, 需要推出 shell
+sudo usermod -aG docker cloud_user 
 ```
 
-Add `cloud_user` to the `docker` group:
-
-```bash
-sudo usermod -aG docker cloud_user # to avoid issue docker run with sudo
-```
 
 ### **Ubuntu**
 
 Remove existing Docker installs. update the ubuntu
 
-```
+```shell
 sudo su
 sudo apt update
-```
-
-And then install any prerequisite packages.
-
-```
 sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-```
 
-Note that many of these packages are already installed on our Playground server.
-
-We can now add Docker's GPG key.
-
-```
 curl -fsSL <https://download.docker.com/linux/ubuntu/gpg> | sudo apt-key add -
-```
-
-And verify its configuration.
-
-```
 sudo apt-key fingerprint 0EBFCD88
-```
-
-To add the Docker repository, we now just need to run:
-
-```
 sudo add-apt-repository  "deb [arch=amd64] <https://download.docker.com/linux/ubuntu> $(lsb_release -cs) stable"
-```
-
-And update our server again.
-
-```
 sudo apt update
-```
-
-We can now install the necessary packages.
-
-```
 sudo apt install docker-ce docker-ce-cli containerd.io
-```
-
-To finish up, we want to add our `cloud_user` user to the `docker` group. Then you can run docker without `sudo`
-
-```
 sudo usermod cloud_user -aG docker
 ```
 
-Log out then log back in to refresh the Bash session before running any `docker` commands.
 
-## **Run Docker**
-
-```
-docker container ls -a
-```
-
-Now let's take a look at the output, starting at the steps provided after the `Hello from Docker!` message.
-
-```
-1. The Docker client contacted the Docker daemon.
-2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-3. The Docker daemon created a new container from that image which runs the executable that produces the output you are currently reading.
-4. The Docker daemon streamed that output to the Docker client, which sent it to your terminal.
-```
-
-To start (`1`), the Docker client takes our command and relays it to the Docker daemon, which then (`2`) looks for the `hello-world` image. An **image** is the base server configuration that our containers are based on. This defines the operating system, any packages, and more. For example, the `hello-world` image is specifically set up to send us the provided message, while the `ubuntu` image is just the stock version of the latest version of Ubuntu.
-
-```
-docker run <image-name>
-```
-
-```
-# list all the current running container
-docker container ls
-docker container ls -a  # list even stopped container
+# Docker 命令
+### 查看容器
+```shell
+docker container ls # 当前在运行的
+docker container ls -a  # 包含已经 stopped 的容器
 docker ps -a # same as "docker container ls -a"
-docker ps -aq # only show the hash code
+docker ps -aq # 不显示容器名, 只显示容器 hash code
 ```
 
-To launch a container and actually be able to work with it,
-
--   we can use the `i` or `-interactive`
--   `t` or `-tty` flags. `t` also make sure that the container will have persistent ip address
-
-```
+### 启动容器
+```shell
+# -i or -interactive 交互式的
+# -t or -tty 使用tty模式
+# --name bg-container 是container名字
+# alphine是image name
+# 容器会在推出交互时终止吗?
 docker run -it --name <container-alias> <image name>
-exit # exit the container
-```
 
-Note that we also assigned the container a name with `--name`.
-
--   `-restart allways` restart when the host server restart
--   `d` or `-detach`, which runs the container in the background
-
-```
+# -restart always 如果 container 挂了就重启
+# -d or -detach 在后台运行, 不是交互式的
 docker run -dt --name bg-container --restart always alpine
-# Publish to host port
+# -p 把container的端口映射到本地的 host_port
 docker run -p <host_port>:<container_port> --dt --name <container> <image-name>
-```
-
--   `-rm`Remove the container upon exit
-
-```
+# -rm  在推出交互模式后, 把容器销毁
 docker run -it --name <container_name> --rm <image>
+# 推出容器
+exit
 ```
 
 ### **restarting parameters**
@@ -231,6 +108,7 @@ docker restart <container_name>
 docker stop <container_name>
 # remove container
 docker rm <container_name>
+docker kill <container_name>
 # stop all the container
 docker kill $(docker ps -aq)
 # remove all stopped container
@@ -245,7 +123,7 @@ docker stats <container_name>
 ```
 
 # Configure Container
-
+查看docker file
 ```bash
 # view docker file json
 docker inspect <container_name>
@@ -253,130 +131,78 @@ docker inspect <container_name>
 docker inspect <container_name> | grep -i ip
 ```
 
-# Container Management
-
-```bash
-docker ps # same as docker container ls
-docker ps -a 
-
-docker container ls # show running container
-docker container ls -all # show running container including stopped ones
-
-docker stop <container> # stop the runing container
-docker start <container> 
-
-docker container start <container> # start one stopped container
-docker rm <container> # delete stopped container
-docker container rm <container> # remove one container
-
-docker container prune # remove all stopped container
-docker container kill <container> # kill running container
-```
-
-Run container
-
-```bash
-docker run -d -p 80:80 docker/getting-started # -d detached way in background
-docker run -p <host_port>:<container_port> --dt --name <container> <image-name>
-```
-
 # Image Management
-
+镜像管理
 ```bash
-docker image --help # 
+docker image --help 
 docker image ls # list all images download
-docker images # show local images
-
-# create container run image
-docker run <image-name>
+docker images   # show local images
 
 # remove one local image
 docker image rm <image_name>
-docker rmi <image_name> # remove specific image
+
 # remove all the images that no related to container
 docker image prune -a
 ```
 
-export images
+将一个正在运行的 container 保存为一个 image
 
 ```bash
-docker save -o <path_for_tar_file> <image_name> # export image as file
-docker load -i <path_for_tar_file> # load image file 
-
+# create image base on the container
+docker commit <container_name> <image_name>
+# export image as file
+docker save -o <path_for_tar_file> <image_name> 
+# load image file 
+docker load -i <path_for_tar_file> 
+```
+将 image 推送的docker hub上
+```bash
 # push image to docker hub
 docker login --username=<username>
 docker tag <image_name> <username>/<repo-name>:latest # tag image
 docker push <username>/<image_name> 
 ```
 
-将一个正在运行的 container 保存为一个 image
-
-```bash
-docker images --help
-
-# create image base on the container
-docker commit <container_name> <image_name>
-# 
-docker save -o <path_for_tar_file> <image_name> # export image as file
-
-docker load -i <path_for_tar_file> # load image file 
-```
-
 # Build Image
 
-创建一个镜像, 会从本地插在 dockerfile
-
-write a docker file
-
-```bash
-FROM node:10-alpine
+创建一个 nodejs 的运行环境
+```dockerfile
+# 初始的镜像
+FROM node:10-alpine 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app  # change directory, 后面的命令都会以这个目录为基础运行
-COPY package*.json ./ # Copies app package* files to the working directory
+# change directory, 后面的命令都会以这个目录为基础运行
+WORKDIR /home/node/app  
+# Copies app package* files to the working directory
+COPY package*.json ./ 
 RUN npm config set registry <http://registry.npmjs.org/>
 RUN npm install
 # copy the all the local files to the docker working directory and set the owner to node:node
 COPY --chown=node:node . .
 USER node
 EXPOSE 8080
-CMD [ "node", "index.js" ] # another way to run command
+# another way to run command
+CMD [ "node", "index.js" ]
 ```
 
 build image by docker file
 
-```powershell
-docker build . -t <image_name> # if the docker file in local dir
+```shell
+# 如果本地只有一个 dockerfile 文件, 不需要特别指定
+docker build . -t <image_name>  
+# 特别指定 dockerfile
 docker build <docker_file> -t <username>:<image_name>
 ```
 
 # Docker Volume
+用于挂载外部存储
 
-# Orchestration
+# Orchestration 编排器
 
-Kubernetes is Orchestration tool to manage container
-
-### **AWS EKS**
-
-Amazon Elastic Kubernetes Service (EKS) is a managed service that makes it easy for you to run Kubernetes on AWS without needing to install and operate your own Kubernetes control plane or worker nodes.
-
-### **Other Orchestration**
-
--   Marathon
-    
-    Based on Apache Mesos, offers APIs for integrating with other tools.
-    
--   Docker Swarm
-    
-    Docker Swarm Docker’s native container orchestration solution
-    
--   Nomad
-    
-    Open source and built by HashiCorp, designed to be simple and lightweight.
-    
+Kubernetes或者 AWS EKS 是 docker 的编排器
 
 # Scenario
 
-Zero-Downtime Deployments
+下面可以造点例子出来. Zero-Downtime Deployments
 
 A zero-downtime deployment (with containers) goes like this:
 

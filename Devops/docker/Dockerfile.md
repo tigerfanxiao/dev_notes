@@ -1,65 +1,38 @@
-all docker file will have name as `Dockerfile`
+默认命名 `Dockerfile`
 
-container for node
-
-```bash
+在 ubuntu镜像里安装 python
+```dockerfile
 FROM ubuntu:lastest
 RUN apt update
-RUN apt install python3 -y
+RUN apt install -y python3
 
 WORKDIR /usr/app.src
-
+# 将本地的 python 文件复制到 workdir下
 COPY print.py ./
-
+# 运行python文件
 CMD ["python3", "./print.py"]
 ```
 
-container for python
 
-create a folder and put the requirement.txt in it
+### RUN vs CMD
+* RUN 只在容器被创建时执行, 重启不会执行
+* CMD 每次容器重启都会运行
 
-make a requirement.txt file
-
-```
-requests
-```
-
-找一个官方python版本的image和tag
-
-RUN run the command one file when this container first created
-
-CMD run the command when the container is started, which means when we stop and restart the container the command will be re-run
-
-```
+python 环境
+``` dockerfile
 FROM python:3.9-slim-buster
 COPY ./requirements.txt ./requirements.txt
 COPY ./main.py ./main.py
 RUN pip3 install -r requirements.txt
 CMD ["python3", "./main.py"]
 ```
-
-Build image from dockerfile
-
+docker deamon 会自动读取当前目录下的 Dockerfile 文件, 然后创建一个image
 ```bash
-docker build -t <image-name> .  # docker deamon will pick the local Dockerfile 
+
+docker build -t <image-name> .  
 ```
-
-run the container from image
-
+在通过 image 创建容器
 ```bash
 docker run <image-name>
 ```
 
-without -d will run the container and get the result, the container will stop when you close the terminal
-
-CMD vs ENTRYPOINT
-
-```bash
-FROM ubuntu
-MAINTAINER sofija
-RUN apt-get update
-ENTRYPOINT ["echo", "Hello"]
-CMD ["World"]
-```
-
-ADD src .
