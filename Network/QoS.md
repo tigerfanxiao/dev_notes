@@ -1,4 +1,6 @@
+[参考视频](https://www.bilibili.com/video/BV1eb411j7Wp/?p=4&spm_id_from=333.880.my_history.page.click&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
 Quality of Service
+
 基调: 理论复杂, 配置简单! 取舍(可以管理的不公平, 一类业务的提高会影响另一类的业务的服务质量)
 
 工作中用的比较多的点

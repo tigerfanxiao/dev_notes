@@ -130,7 +130,11 @@ tasks = db_session.query(Task).filter(Task.create_date > date_before).all()
 
 关联查询
 ```python
-session.query(Echo, Device).filter(Echo.device_name == Device.name).filter(Device.tag == tag)
+# 这里关联了Echo 和 Device两张表
+
+session.query(Echo, Device)
+.filter(Echo.device_name == Device.name)  # 这里join的条件
+.filter(Device.tag == tag)  # 这里是过滤的条件
 ```
 # Alembic
 
