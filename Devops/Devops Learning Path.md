@@ -1,9 +1,11 @@
 
-四个工具可以一起学习
+四个工具可以一起学习， 这几个工具都可以在AWS上做实验吗
+AWS的学习路径SOA实验， AWS Sysadm， developer， SAP
 1. docker
 2. k8s
 3. terraform
 4. ansible
+
 
 技术栈
 1. Version Control: git/ AWS code commit

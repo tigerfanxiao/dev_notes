@@ -23,11 +23,11 @@ Terraform 主要是构建基础设施, 从无到有. 而 Ansible 是用来配置
 2. 重构基础设施, 用来做实验. 实验环境和生产环境用同样的基础设施
 
 ## Terraform的架构
-有两个组件: 一个是Terraform核心， 一个是Provider用来连接AWS， Azure这些
+有两个组件: 一个是Terraform核心， 一个是Provider用来连接AWS/Azure/K8S
 1. Core 核心, core 有两个输入. 分别代表着当前的状态和期望的状态.
-	1. TF-Config  定了我们需要部署什么, 代表期望的状态
-	2. State 当前的状态
-	Core 会比较最终状态和当前状态, 构建一个可以执行的 plan. 这个 Plan 里面包含了,哪些资源要被创建, 修改和销毁.
+	1. TF-Config  定了我们需要部署什么, 代表期望的状态 end state
+	2. State 当前状态， 通过query provider来实现
+	Core 会比较最终状态和当前状态, 构建 execution plan. 这个 Plan 里面包含了,哪些资源要被创建, 修改和销毁.
 
 
 # 安装 Terraform
@@ -67,4 +67,11 @@ terraform -install-autocomplete
 在 windows 上使用choco 作为包管理工具来安装
 这里省略了
 
+
+# Terraform命令
+
+refresh 查询provider得到state
+plan 创建一个execution plan, preview what will happen
+Apply 执行 execution plan
+destroy 销毁所有创建的基础设施
 
