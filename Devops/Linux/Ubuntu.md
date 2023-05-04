@@ -14,5 +14,7 @@ sudo su
 
 ```shell
 apt-get update
+
+apt update -y && apt upgrade -y && apt autoremove -y && apt clean && rm -rf /var/lib/apt/list*
 ```
 

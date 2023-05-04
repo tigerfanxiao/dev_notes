@@ -1,14 +1,13 @@
-[[Dockerfile]]
 
 # 名词解释
-* Container 容器可以把容器理解为一种运行环境 runtime 
+* Container 我们可以把每个 container 认为是一个进程
 * Bare Metal 裸金属服务器, 也就是物理机
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
 
 docker和虚拟机的区别?
-1. docker 更轻量化吧
-2. 微服务其实也可以放在虚拟机上, 不一定是 docker
+1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 在系统颗粒度上, 很容易造成系统的闲置和浪费. 因为在基础架构上, 有 hypervisor, hypervisor 上有guest os, guest os里面才是应用. 而 docker是跑在 docker engine 里, 多个容器共享一个操作系统内核.
+2. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
 
 # 安装docker
 
@@ -72,7 +71,8 @@ docker ps -aq # 不显示容器名, 只显示容器 hash code
 # --name bg-container 是container名字
 # alphine是image name
 # 容器会在推出交互时终止吗?
-docker run -it --name <container-alias> <image name>
+# bash表示 shell
+docker run -it --name <container-alias> <image name> bash
 
 # -restart always 如果 container 挂了就重启
 # -d or -detach 在后台运行, 不是交互式的
@@ -80,7 +80,7 @@ docker run -dt --name bg-container --restart always alpine
 # -p 把container的端口映射到本地的 host_port
 docker run -p <host_port>:<container_port> --dt --name <container> <image-name>
 # -rm  在推出交互模式后, 把容器销毁
-docker run -it --name <container_name> --rm <image>
+docker run -it --name <container_name>:tag --rm <image> bash 
 # 推出容器
 exit
 ```
@@ -93,9 +93,7 @@ exit
 -   `on-failure<:retries>` - Restart when the container fails; we can supply the maximum amount of retries
 
 ```bash
-# run command in container
-docker exec <conainter_name> <command>
-# interate with running container with specific shell
+# 当 container 已经启动后, 进入交互模式
 docker exec -it <container> <shell> # shell=/bin/bash
 docker exec -it <container> <command>
 # copy local file to container
@@ -131,42 +129,12 @@ docker inspect <container_name>
 docker inspect <container_name> | grep -i ip
 ```
 
-# Image Management
-镜像管理
-```bash
-docker image --help 
-docker image ls # list all images download
-docker images   # show local images
-
-# remove one local image
-docker image rm <image_name>
-
-# remove all the images that no related to container
-docker image prune -a
-```
-
-将一个正在运行的 container 保存为一个 image
-
-```bash
-# create image base on the container
-docker commit <container_name> <image_name>
-# export image as file
-docker save -o <path_for_tar_file> <image_name> 
-# load image file 
-docker load -i <path_for_tar_file> 
-```
-将 image 推送的docker hub上
-```bash
-# push image to docker hub
-docker login --username=<username>
-docker tag <image_name> <username>/<repo-name>:latest # tag image
-docker push <username>/<image_name> 
-```
 
 # Build Image
 
-创建一个 nodejs 的运行环境
-```dockerfile
+
+例子: 创建 nodejs 的运行环境
+```Dockerfile
 # 初始的镜像
 FROM node:10-alpine 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
