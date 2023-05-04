@@ -1,10 +1,11 @@
 
-Devops 学习计划
+四个工具可以一起学习
+1. docker
+2. k8s
+3. terraform
+4. ansible
 
-1. 首先， 会开发。 
-2. 会部署
-3. 自动化
-
+技术栈
 1. Version Control: git/ AWS code commit
 2. Linux
 3. Coding: golang, java, python, js

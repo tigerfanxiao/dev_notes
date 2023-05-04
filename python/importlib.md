@@ -9,6 +9,7 @@ import importlib
 # - design_file
 #  |- type1.py
 #  |- type2.py
+#  |- __init__.py 
 type2 = importlib.import_module('design_file.type2')
 
 # if you want a specific funtion
