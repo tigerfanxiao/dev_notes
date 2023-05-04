@@ -52,12 +52,6 @@ Global views but regional
 # S3
 
 
-### S3-Transfer Acceleration
-
-Amazon S3 Transfer Acceleration enales fast, easy, and secure transfers of files over long distance between your end users and an S3 bucket.
-
-Transfer Acceleration takes advantage of Amazon CloudFront's globally ditributed edge locations. As the data arrives at an edge location, data is routed to Amazon S3 over an optimized network path.
-
 ### Multipart uploads
 
 use multithreading to upload large files to S3 buckets in parallel (the parts of the file are uploaded in parallel).
@@ -81,22 +75,6 @@ SSL/TLS
 ### Encryption at client Side
 
 Storage lifecycle
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4fab9c36-c5f1-4d26-afb0-2984bf6aca4a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4fab9c36-c5f1-4d26-afb0-2984bf6aca4a/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/374e9108-2a6e-451a-8f06-955359886572/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/374e9108-2a6e-451a-8f06-955359886572/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b73783c4-6f06-4bd1-be26-492ce3339629/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b73783c4-6f06-4bd1-be26-492ce3339629/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ed714189-b417-4290-bfbd-25131fd20e58/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ed714189-b417-4290-bfbd-25131fd20e58/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/edff5515-e3b4-46c4-a943-86acf5504671/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/edff5515-e3b4-46c4-a943-86acf5504671/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/654c0b99-00ca-4459-9721-c989c08e520e/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/654c0b99-00ca-4459-9721-c989c08e520e/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e231664c-ea7f-4f85-a336-3060f501ff48/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e231664c-ea7f-4f85-a336-3060f501ff48/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1568143f-fc4f-4079-aed5-b7169ce5f5e6/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1568143f-fc4f-4079-aed5-b7169ce5f5e6/Untitled.png)
 
 ### Restricting Bucket Access
 
@@ -130,39 +108,7 @@ Use bucket policy to make entire S3 bucket to public
 }
 ```
 
-### Practice Scenarios
 
-S3 Scales automatically to meet your demand. Many enterprises will put static websites on S3 when they think there is going to be a large number of requests (such as for a movie preview for example)
-
-what are S3 prefixes?
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/edd86ab0-e99f-463a-a43b-b7d49110e455/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/edd86ab0-e99f-463a-a43b-b7d49110e455/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1b0cfb1-8736-43f3-870e-30ebc75a5106/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e1b0cfb1-8736-43f3-870e-30ebc75a5106/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71c55ad5-e590-41c6-830f-9f09bc886ba0/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71c55ad5-e590-41c6-830f-9f09bc886ba0/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/33d15dd3-792b-443d-adbe-3fadf44c5084/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/33d15dd3-792b-443d-adbe-3fadf44c5084/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/57d618a8-ffe3-46a8-a181-32658bb8ab10/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/57d618a8-ffe3-46a8-a181-32658bb8ab10/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/778d609b-8708-4688-bacc-7fb39d84445c/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/778d609b-8708-4688-bacc-7fb39d84445c/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e927b719-a1d7-4262-84d6-9532b2fb307e/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e927b719-a1d7-4262-84d6-9532b2fb307e/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b6023d25-0fc7-4f46-aea2-ad602d243fc7/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b6023d25-0fc7-4f46-aea2-ad602d243fc7/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fa49c056-11ee-4a84-9f3b-2548e9e38e7f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fa49c056-11ee-4a84-9f3b-2548e9e38e7f/Untitled.png)
-
-s3 select
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b25d86c-8f28-45f2-a944-e9883b47a38f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b25d86c-8f28-45f2-a944-e9883b47a38f/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b773ea2-69de-4439-b5b7-91d7fcaeea0e/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b773ea2-69de-4439-b5b7-91d7fcaeea0e/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/946d62f4-4abf-40d2-9498-a7d0c9c7959a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/946d62f4-4abf-40d2-9498-a7d0c9c7959a/Untitled.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/760a4b07-cb56-4ab3-884f-68ed2e91b712/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/760a4b07-cb56-4ab3-884f-68ed2e91b712/Untitled.png)
 
 # CloudFront
 

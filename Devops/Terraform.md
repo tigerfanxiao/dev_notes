@@ -41,7 +41,8 @@ sudo yum install -y yum-utils
 # 把仓库的地址添加到 yum-config-manager 中
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 # 下面是添加成功的回显
-Adding repo from: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+# Adding repo from: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
 # 安装 terraform
 sudo yum install -y terraform
 
@@ -49,7 +50,6 @@ terraform -help  # 测试 terraform 安装成功
 
 touch ~/.bashrc
 terraform -install-autocomplete  # enable tab 提示, 本质上是在 bashrc 中加一行
-
 
 ```
 
