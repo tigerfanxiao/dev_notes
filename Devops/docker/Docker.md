@@ -1,3 +1,9 @@
+09
+[B站视频](https://www.bilibili.com/video/BV1gr4y1U7CY?p=8&spm_id_from=pageDriver&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
+### Docker 架构
+Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Deamon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
+
+
 
 # 名词解释
 * Container 我们可以把每个 container 认为是一个进程
@@ -9,50 +15,6 @@ docker和虚拟机的区别?
 1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 在系统颗粒度上, 很容易造成系统的闲置和浪费. 因为在基础架构上, 有 hypervisor, hypervisor 上有guest os, guest os里面才是应用. 而 docker是跑在 docker engine 里, 多个容器共享一个操作系统内核.
 2. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
 
-# 安装docker
-
-### **centos**
-
-```shell
-sudo yum remove -y docker \\
-                  docker-client \\
-                  docker-client-latest \\
-                  docker-common \\
-                  docker-latest \\
-                  docker-latest-logrotate \\
-                  docker-logrotate \\
-                  docker-engine
-
-
-sudo yum install -y yum-utils, device-mapper-persistent-data, lvm2
-# 添加仓库
-sudo yum-config-manager --add-rep https://download.docker.com/linux/centos/docker-ce.repo 
-# 安装
-sudo yum install -y docker
-# 开启 docker 服务, 启用 docker
-sudo systemctl start docker && sudo systemctl enable docker
-# 把cloud_user放到 docker 组里, 以后运行 docker 命令, 不需要 sudo
-# 要使下面命令生效, 需要推出 shell
-sudo usermod -aG docker cloud_user 
-```
-
-
-### **Ubuntu**
-
-Remove existing Docker installs. update the ubuntu
-
-```shell
-sudo su
-sudo apt update
-sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-
-curl -fsSL <https://download.docker.com/linux/ubuntu/gpg> | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository  "deb [arch=amd64] <https://download.docker.com/linux/ubuntu> $(lsb_release -cs) stable"
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io
-sudo usermod cloud_user -aG docker
-```
 
 
 # Docker 命令
@@ -130,43 +92,6 @@ docker inspect <container_name> | grep -i ip
 ```
 
 
-# Build Image
-
-
-例子: 创建 nodejs 的运行环境
-```Dockerfile
-# 初始的镜像
-FROM node:10-alpine 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-# change directory, 后面的命令都会以这个目录为基础运行
-WORKDIR /home/node/app  
-# Copies app package* files to the working directory
-COPY package*.json ./ 
-RUN npm config set registry <http://registry.npmjs.org/>
-RUN npm install
-# copy the all the local files to the docker working directory and set the owner to node:node
-COPY --chown=node:node . .
-USER node
-EXPOSE 8080
-# another way to run command
-CMD [ "node", "index.js" ]
-```
-
-build image by docker file
-
-```shell
-# 如果本地只有一个 dockerfile 文件, 不需要特别指定
-docker build . -t <image_name>  
-# 特别指定 dockerfile
-docker build <docker_file> -t <username>:<image_name>
-```
-
-# Docker Volume
-用于挂载外部存储
-
-# Orchestration 编排器
-
-Kubernetes或者 AWS EKS 是 docker 的编排器
 
 # Scenario
 

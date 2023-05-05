@@ -45,6 +45,14 @@ docker inspect -f "{{ range .RootFS.Layers }}{{ println .}}{{ end }}" widgetfact
 docker run <image-name>
 ```
 
+# image CMD
+
+```Dockerfile
+USER node
+EXPOSE 8080
+# another way to run command
+CMD [ "node", "index.js" ]
+```
 
 # Image Management
 镜像管理
