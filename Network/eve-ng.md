@@ -30,3 +30,18 @@ mkdir /opt/unetlab/addons/qemu/<image_name>
 ```
 
 还需要做什么, 需要查询
+
+### vmdk
+vmdk 文件应该是需要转化成qcow2文件. 转化的时候, 可能需要配置 yml 文件
+
+```shell
+# 转化 vmdk 文件到 qcow2 文件的命令
+/opt/qemu/bin/qemu-img convert -f vmdk -O qcowe <vmdk> virtio.qcow2
+
+# 这里可能是放设备图标的地方
+/opt/unetlab/html/images/icons 
+```
+
+# wireshark 抓包问题
+用 putty 登录 eve 环境
+然后就能抓包了
