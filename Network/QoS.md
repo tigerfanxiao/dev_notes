@@ -1,28 +1,54 @@
 [参考视频](https://www.bilibili.com/video/BV1eb411j7Wp/?p=4&spm_id_from=333.880.my_history.page.click&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
 Quality of Service
 
-基调: 理论复杂, 配置简单! 取舍(可以管理的不公平, 一类业务的提高会影响另一类的业务的服务质量)
+基调:
+理论复杂, 
+配置简单! 
+取舍(可以管理的不公平 Managed unfairness, 一类业务的提高会影响另一类的业务的服务质量)
 
 工作中用的比较多的点
 1. 限速或者是队列
 
+### 常见的业务
+1. Data
+	* 对丢包不敏感, 由TCP 重传机制来保障, 比如 FTP 给多少带宽就用多少带宽, 也称为 greedy. 也可能突然流量暴增, 称为 bursty
+	* Delay Insensative. 但我们可以把 app 分为两类 Interactive 和 Non Interative. 对于要交互的应用, 比如 Telnet就对 delay 比较敏感
+2. Video
+	* Bursty, Greedy 动作片比静态图像更消耗带宽
+	* 类似 voice, delay and drop sensative. 
+	* 延迟< 150ms, jitter 小于 30ms, loss 小于 0.1~1%, bandwidth 384kbps-20Mbps
+	* 一般用 UDP 来传输. 
+3. Voice
+	* Delay sensative, drop sensative
+	* Require certain amount of bandwidth
+	* 一般用 UDP 来传输, 所以不存在重传. 
+	* 延迟小于 150ms, jitter 小于 30ms, loss 小于 1%, bandwidth 30-128kbps
+本质上, 我们会 prioritize 默写业务, 比如 video 和 voice, 然后给 FTP 降低优先级
+
+
 QoS 五个基本职能
-1. 分类和标识 Marking
-2. 拥塞管理 (队列)
+0. Admission control  电话是否能够接入 IP 网络
+1. Classification & Marking 设置优先级
+2. Congestion Management (队列)
 3. 拥塞避免 RED
 4. 限速 (监管 policing, 整形 shaping)
-5. 链路效率
+5. Link Specific Mechanism
+
+Trust Boundry
+指在数据传输的链路上, 哪些设备是被信任的. 这些被信任的设备连起来就是信任边界.
+如果设备不被信任, 那么它给出的 marking 也不被信任
+
 
 QoS 的分类站在TCP/IP角度来分类
-1. 2 层 QoS
+1. 2 层 QoS, COS位(3 bit)
 2. 3 层 IP 的 QoS
 3. MPLS 2.5 层的 QoS
 
 QoS 要解决的问题
 1. 带宽 bandwidth  FTP 对带宽有一定要求
-2. 时延 delay VoIP 语言流量对时延要求比较高
+2. 时延 delay VoIP 延迟低于 300ms
 3. 抖动 jitter 不平均, 不平稳的时延
-4. 丢包 drop 尾部丢弃
+4. 丢包 loss 主动丢包/被动丢包
 
 
 端到端的 QoS
@@ -122,3 +148,5 @@ AF4 dd
 AF43 丢弃可能性大于 AF21, 因为 3>1 
 拥塞避免 Congestion avoidance 针对不同的 AF 有不同的待遇
 
+# COS
+二层, 101, 110 表示语音
