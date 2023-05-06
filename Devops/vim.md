@@ -1,9 +1,12 @@
 # 模式
 vim 有下面 4 中模式
-* normal
-* Insert
-* visual 进入后, 可以通过移动光标来选中内容, 然后做操作
-* 命令模式
+|模式|作用|转换|注释|
+|---|---|---|---|
+|Normal|移动光标|`i` 转 Insert 模式||
+|Insert|键盘输入|`jj` 或者 `esc`退出 Insert 到 Normal||
+|Vistual|选择内容|`v` 进入或者退出 Visual 模式| ctrl + v block select|
+|Command|查找, 替换, 保存|||
+
 
 ## 模式转换
 ### Normal -> Insert
@@ -31,7 +34,7 @@ v
 :
 ### 命令模式 -> Normal
 esc
-
+保存和退出文件 ZZ 或者 `:wq`
 
 # 光标移动
 
@@ -40,6 +43,7 @@ esc
 文档头部 gg
 文档底部 G
 跳转到第 12 行 12G
+移动到文档 50%的地方 50%
 
 ### 命令模式下
 跳转到第 12 行 12
@@ -133,6 +137,7 @@ c Change 修改
 y yank 复制
 v visual 选中并进入 visual 模式
 u 撤销
+ctrl + r 重做
 
 dd 是删除一行
 cc 是删除当前行, 并进入写入模式
@@ -242,13 +247,19 @@ I 在前面删除
 
 cmd + shift + p -> focus termianl  或者用 空格 + t
 cmd  + 1 回到编辑器
-
+在设置中 <leader> 被定义为空格
 <leader><leader> s <char> 搜索一个字符
 
 
+vim中的查找 /<char>
+
+新增 4 个空行
+复制一个空行 yy 粘贴 4 次 4p
+
+把下面多行, 移动到当前行的末尾 J
 
 
+# 保存文件
 
-
-
-
+ctrl + g 查看当前 buffer
+:list 查看所有 buffer
