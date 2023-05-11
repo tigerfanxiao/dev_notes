@@ -20,20 +20,14 @@ def bubble_sort(arr):
 ### 解法二 递归解法
 ```python
 def bubble_sort_recursive(arr):
-    sub_arr_length = len(arr) - 1
-    if sub_arr_length > 0:
-        arr = bubble_sort_helper(arr, sub_arr_length)
-        sub_arr_length -= 1
-    return arr
-
-
-def bubble_sort_helper(arr, sub_arr_length):
-    for i in range(sub_arr_length):
-        if arr[i] > arr[i+1]:
-            arr[i], arr[i+1] = arr[i+1], arr[i]
-    return arr
-
-bubble_sort_recursive(test_array_1)
+    def bubble_sort_helper(arr, sub_arr_length):
+        if sub_arr_length > 1:
+            bubble_sort_helper(arr, sub_arr_length - 1)
+        if arr[sub_arr_length - 1] > arr[sub_arr_length]:
+            arr[sub_arr_length - 1], arr[sub_arr_length] = arr[sub_arr_length], arr[sub_arr_length - 1]
+        return arr
+    return bubble_sort_helper(arr, len(arr) - 1)
+    
 ```
 
 解法三 for loop

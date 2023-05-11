@@ -113,15 +113,12 @@ git stash clear
 ```
 
 
-
-
-
 # Best Practice
 
 -   merge the update locally
 -   Only commit the changes belong to one topic in one commit
 
-git rebase
+# git rebase
 
 -   Do not use rebase on commits that you're already pushed/shared on a remote repository. Instead, use it for cleaning up your local commit history before merge into a shared team branch.
 
