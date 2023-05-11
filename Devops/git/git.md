@@ -25,7 +25,6 @@ git commit -m 'initial commit'
 ```shell
 git branch  # list all branches
 
-
 ```
 
 
@@ -128,3 +127,42 @@ git rebase
 
 
 
+# Large File Error
+[参考文章](https://medium.com/analytics-vidhya/tutorial-removing-large-files-from-git-78dbf4cf83a)
+
+### 不要做
+不要直接删除文件，然后重新commit， 这样远程仓库还是会不断的提示你要上传那个巨大的文件
+
+### 最近一次commit上传大文件
+```shell
+git rm --cached csv_building_damage_assessment.csv  
+git commit --amend -C HEAD
+```
+
+
+### 在之前的commit中上传了大文件
+```shell
+git log --oneline
+git rebase -i 8464da4 # 找到上传大文件那次commit之前的commit
+# git rebase 执行后， 会有3个步骤
+```
+
+把上传文件的commit中的pick操作改成edit
+```shell
+edit d1bfae6 download data CSV  
+pick de69e51 preliminary exploratory data analysis  
+pick 099e6e4 update gitignore to ignore large data file
+```
+
+此时， 删除文件
+```shell
+git rm --cached csv_building_damage_assessment.csv  
+git commit --amend --allow-empty -C HEAD
+git rebase --continue
+# 如果操作成功返回
+# Successfully rebased and updated refs/heads/master.
+```
+
+
+# rebase -i
+可以用交互的方式修改之前的commit
