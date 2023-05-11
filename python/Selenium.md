@@ -49,8 +49,6 @@ driver = webdriver.Chrome(
 el_username = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "username")))
 el_username.send_keys("your name")  # 发送数据
 
-
-
 ```
 
 

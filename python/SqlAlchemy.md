@@ -33,8 +33,11 @@ meta.create_all(engine)  # 创建一个表
 ```
 
 
-## update
+## Update
+修改表中的数据
 ```python
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker(bind=engine) # 这是一个Session类
 
 config = session.query(Config).filter_by(device_name=ret.device_name).first()  
 
@@ -115,11 +118,14 @@ date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对
 
 ```
 
-## 查询
+## Filter
 
 ```python
+# 区分大小写匹配
 session.query(Person).filter(Person.lastname.Like("%An%"))
-
+# 字符串不区分大小写匹配
+session.query(Task).filter(Task.scene_name.ilike('%clear%'))
+# 字符在一个序列里
 session.query(Person).filter(Person.lastname.in(['Anna', 'Mike']))
 
 

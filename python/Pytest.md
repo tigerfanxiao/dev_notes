@@ -11,9 +11,10 @@ pip install pytest
 ```
 # Pytest VS Unittest
 1. pytest的文件同样用`test_`开头
-2. 不需要继承TestCase， 只要定义函数用`test_`开头
+2. Pytest 不需要继承TestCase， 只要定义函数用`test_`开头
 3. 函数中直接用Python关键词assert， 不像Unittest中用self.assert
 4. 在一个测试函数中可以写多个assert 
+
 ```python
 def test_foo():
 	assert 1 == 1
@@ -21,7 +22,7 @@ def test_foo():
 ```
 
 
-### Test Exception
+### 对异常进行测试
 
 ```python
 def test_configured_isis_with_value_error():  
@@ -31,6 +32,9 @@ def test_configured_isis_with_value_error():
 ```
 
 # Fixture
+Fixture的作用
+1. 创建公共的实例
+2. 创建setup和teardown
 
 ### 创建公用实例
 
