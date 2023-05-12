@@ -38,8 +38,7 @@ def validate_ip(string):
 				current_ip_address_parts[2] = string[j: k]  
 				current_ip_address_parts[3] = string[k:]  
 				if is_valid_part(current_ip_address_parts[2]) and is_valid_part((current_ip_address_parts[3])):  
-					ip_address_found.append(".".join(current_ip_address_parts))  
-  
+					ip_address_found.append(".".join(current_ip_address_parts)) 
 	return ip_address_found
   
 # one helper function

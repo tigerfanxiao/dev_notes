@@ -107,7 +107,7 @@ class Person(Base):
 	device = Column(Integer, ForeignKey('devices.name', ondelete="SET NULL"), unique=True) # 配置外键
 
 	def __repr__(self):  
-    return f"{self.name} {self.ip_address} {self.device_type}"
+	    return f"{self.name} {self.ip_address} {self.device_type}"
 ```
 
 field的条件限制
@@ -115,7 +115,6 @@ field的条件限制
 ```python
 name = Column(String(25), nullable=False, unique=True)
 date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对象
-
 ```
 
 ## Filter
