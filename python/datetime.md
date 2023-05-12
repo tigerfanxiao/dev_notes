@@ -28,8 +28,11 @@ from datetime import datetime
 
 date_str = '2023-02-28 14:30:00'
 date_format = '%Y-%m-%d %H:%M:%S' 
-date_obj = datetime.strptime(date_str, date_format) # convert string to datetime obn
+# convert string to datetime object
+date_obj = datetime.strptime(date_str, date_format) 
 
+# convert datetime obj to string
+datetime.strftime(one_device.create_date, '%Y-%m-%d %H:%M:%S')
 
 
 ```
