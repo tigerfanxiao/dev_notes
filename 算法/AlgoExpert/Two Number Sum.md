@@ -40,7 +40,6 @@ def two_number_sum_hashtable(array, target_sum):
 对序列排序复杂度 `O(nlogn)`
 这种左右指针的思路有点像数学中逼进方法。 
 
-
 ```python
 # time: O(nlog(n))
 # space: O(1)
