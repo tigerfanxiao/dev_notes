@@ -48,6 +48,10 @@ Control And Provisioning of Wireless Access Points Protocol Specification 无线
 2. AC 通过 CAPWAP 隧道对 AP 进行管理, 业务配置下发
 3. 当采用隧道转发模式时, AP 将 STA 发出的数据通过 CAPWAP隧道实现与 AC 之间的交互
 
+隧道有数据隧道和控制隧道. 
+数据隧道是可以通过 DTLS 加密的, AC 也可以建立 IPsec 的, 所以如果要将数据传出去的话, 也可以使用 IPsec 加密
+
+
 
 ### 部署架构
 
@@ -157,13 +161,51 @@ AC-DCN 数据中心 - iMaster NCE-Fabric 上一代产品称为 Agile Controller-
 使用控制器, 可以实现零配置上线. 
 
 WLAN 工作流程
-1. AP 上线, 通过 DHCP 来获取 IP 地址, 同时通过 DHCP Option 来获得 AC 的地址. 与 AC 建立 CAPWAP 隧道, 通过认证(在 AC 上配置 AP 的序列号)
-	AP 接上网线后, 会主动发送DHCP Discover. 
-	可以使用专门的 DHCP 服务器为 AP 分配 IP 地址, 或者 AC 做为 DHCP, 或者用路由器做 DHCP. 如果 AP 和 DHCP 不在同一个广播域, 要做 DHCP Relay 中继
-1. WLAN 业务配置下发
-2. STA 接入
-3. WLAN 业务数据转发
+1. AP 上线, 通过 DHCP 来获取 IP 地址, 同时通过 DHCP Option 来获得 AC 的地址. 与 AC 建立 CAPWAP 隧道, 通过认证(在 AC 上配置 AP 的序列号, 或者 AP 的 mac 地址)
+	1. AP 接上网线后, 会主动发送DHCP Discover. 
+		可以使用专门的 DHCP 服务器为 AP 分配 IP 地址, 或者 AC 做为 DHCP, 或者用路由器做 DHCP. 如果 AP 和 DHCP 不在同一个广播域, 要做 DHCP Relay 中继
+	2.  AP发现 AC 阶段 发送 Discovery Request 报文, 找到可用的 AC(CAPWAP)
+	3.  建立 CAPWAP 隧道. 有两个隧道, 数据隧道和控制隧道
+2. WLAN 业务配置下发
+3. STA 接入
+4. WLAN 业务数据转发
+
+```mermaid
+sequenceDiagram
+	Participant P as AP
+	participant C as AC
+	P->>C: Discovery Request
+	C->>P: Discovery Response
+	P->>C: Join Request 
+	C->>P: Join Response
+	P-->C: Image Data Request 版本不一致
+	C-->P: Image Data Response 重启,重复上面几步
+	P->>C: Keepalive 数据隧道周期发送
+	C->>P: Keepalive 
+	P->>C: Echo 控制隧道周期发送
+	C->>P: Echo 
+```
 
 
+### 配置 VAP
+1. 创建 SSID 模板
+2. 创建安全模板
+3. 创建 VAP 模板
+4. 配置数据转发方式
+5. 配置 VLAN
+6. 应用到 AP 组
 
+STA 键入3个认证阶段
+1. 扫描
+2. 链路认证
+3. 关联
+4. 接入认证: 802.1x, PSK
+5. DHCP
+6. 用户认证 Portal 认证
+
+
+802.1x = WPA2.-8021.x 是一种扩展认证方式, 可以选择各种各样的认证方式.  一般需要用户名和密码. 使用与大型企业. 需要安装客户端. 注意 win10 可以开启 802.1x 认证, 但是认证方式有限, 需要看 AP 的认证方式一致, 如果没有对应的认证机制, 需要安装额外的 802.1x 客户端
+PSK = WPA2-PSK 使用与中小型企业或者家用路由器
+
+mac 认证一般适合无线打印机, 扫描仪之类的
 
