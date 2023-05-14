@@ -8,8 +8,9 @@
 3. 这个算法的特点在于两个序列一起遍历
 
 ### 解法一
+需要独立控制母序列和子序列的迭代
 ```python
-# time: O(N) space: O(N)
+# time: O(N) space: O(1)
 
 def is_valid_subsequence(array, sequence):
     
@@ -29,7 +30,14 @@ is_valid_subsequence(array, subsequence)
 ```
 
 ### 解法二
-
+不控制母序列的迭代. 直接用 for 遍历
 ```python
-
+def is_valid_subsequence(array, sequence):
+	seq_idx = 0
+	for num in array:
+		if seq_idx == len(sequence): # already found all the elems in subseq
+			return True
+		if sequence[seq_idx] == num:
+			seq_idx += 1 # only control the idex of subseq
+	return seq_idx == len(sequence)
 ```

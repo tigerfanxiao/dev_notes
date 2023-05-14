@@ -28,10 +28,10 @@
 
 Ethernet ||
 |D.MAC| S.MAC| Type |  用户数据 |  FCS |
-* Type字段 0806 ARP, 0800 IPv5
+* Type字段 0806 ARP, 0800 IPv4
  
 IEEE 802.3
-|D.MAC| S.MAC| Length |  LLC | SNAP |用户数据 |  FCS |
+|D.MAC| S.MAC| Length |  LLC | SNAP | 用户数据 |  FCS |
 * SNAP = | Org Code | Type |
 
 ### MAC 地址
