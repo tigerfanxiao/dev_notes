@@ -23,7 +23,6 @@ def quick_sort(arr)
 ### 方法二
 
 * 对比方法一, 节约了空间. 因为没有构建新的序列, 而是在原有的序列上不断交换元素位置
-* 
 
 ```python
 def quick_sort(array):
@@ -31,10 +30,10 @@ def quick_sort(array):
     return array
 
 def quick_sort_helper(array, start, end):
-    if start >= end:
+    if start >= end:  # 因为 array长度没有变化, 只是内部元素位置变动,用 len()无意义
         return
     
-    pivot, left, right = start, start+1, end  # pivot is index of pivot
+    pivot, left, right = start, start + 1, end  # pivot is index of pivot
 
     while left <= right:
         if array[left] > array[pivot] and array[right] < array[pivot]:
