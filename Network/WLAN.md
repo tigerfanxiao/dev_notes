@@ -33,7 +33,7 @@ WLAN 约等于 wifi = 802.11
 * VR, AR 每个用户入门级 100M, 极致体验 1G 带宽
 
 ### CAPWAP 协议
-Control And Provisioning of Wireless Access Points Protocol Specification 无线接入点控制和配置协议
+Control And Provisioning of Wireless Access Points Protocol Specification 无线接入点控制和配置协议, 是一种三层隧道
 前身是思科私有的 Lapwap 协议
 
 * AC 和 AP 的通信使用 CAPWAP 协议. 本质上是一种隧道技术, 用来管理 AP 的. 
@@ -143,5 +143,27 @@ ESS 服务集 是对 BSS 进行扩展. 当用户从一个 BSS 移动到另一个
 采用相同的 SSID, 多个 BSS 组成的更大范围的虚拟 BSS. 用户在切换 AP 的过程中, 可能出现卡顿, 丢包. 
 
 漫游有分二层漫游和三层漫游. 三层漫游一般模拟器不能做, 要到真机上做
+
+敏分 AP, 也可以成为 RU. 可以理解成一个天线. 在没有敏分 AP 之前, AP 接在楼道里, 使用馈线接到房间, 馈线再连接天线. 传输激励短, 容易被干扰, 且比较贵. 现在敏分 AP 会可以当做天线直接放置到房间里. 且用双绞线连接, 不需要馈线. 中心的 AP, 不在需要无线射频能力. 相当于一个交换机了. 适合酒店和宾馆.  注意, 敏分 AP 是有特定的产品的, 不是所有 AP 都支持敏分
+华为产品 R230D, R450D
+
+# 园区网控制器
+是 SDN 控制器
+
+AC-WAN 运营商 iMaster NCE-WAN
+AC-Campus 园区网 iMaster NCE-Campus
+AC-DCN 数据中心 - iMaster NCE-Fabric 上一代产品称为 Agile Controller-DCN, 使用华为 Linux Euler, Gauss数据库
+
+使用控制器, 可以实现零配置上线. 
+
+WLAN 工作流程
+1. AP 上线, 通过 DHCP 来获取 IP 地址, 同时通过 DHCP Option 来获得 AC 的地址. 与 AC 建立 CAPWAP 隧道, 通过认证(在 AC 上配置 AP 的序列号)
+	AP 接上网线后, 会主动发送DHCP Discover. 
+	可以使用专门的 DHCP 服务器为 AP 分配 IP 地址, 或者 AC 做为 DHCP, 或者用路由器做 DHCP. 如果 AP 和 DHCP 不在同一个广播域, 要做 DHCP Relay 中继
+1. WLAN 业务配置下发
+2. STA 接入
+3. WLAN 业务数据转发
+
+
 
 
