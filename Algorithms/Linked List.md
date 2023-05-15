@@ -1,3 +1,38 @@
+单向链表
+```mermaid
+graph LR 
+A((A)) --> B((B)) --> C(( C )) --> D(( D )) --> E(( None ))
+```
+定义
+```python
+class Node:
+    def __init__(self, value) -> None:
+        self.value = value
+        self.next_node = None
+    
+    def __repr__(self) -> str:
+        return self.value
+
+
+node_a = Node('A')
+node_b = Node('B')
+node_c = Node('C')
+node_d = Node('D')
+
+node_a.next_node = node_b
+node_b.next_node = node_c
+node_c.next_node = node_d
+
+
+# 遍历单向链表
+
+cur_node = node_a
+while cur_node.next_node is not None:
+    print(cur_node)
+    cur_node = cur_node.next_node
+    
+```
+
 
 
 # Double Linked List
