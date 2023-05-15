@@ -76,7 +76,6 @@ def reverse_list(head):
 	return pre   # 注意因为循环结束的条件是 cur is None, 此时 prev 是 head
 	
 
-
 # 递归方法
 def reverse_list(head, prev=None):
 	if head is None:
@@ -87,14 +86,6 @@ def reverse_list(head, prev=None):
 	
 ```
 
-
-
-链表的定义
-
-```python
-
-
-```
 
 
 # Double Linked List

@@ -138,6 +138,7 @@ y yank 复制
 v visual 选中并进入 visual 模式
 u 撤销
 ctrl + r 重做
+r 替换单个字符
 
 dd 是删除一行
 cc 是删除当前行, 并进入写入模式
