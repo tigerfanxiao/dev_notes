@@ -9,7 +9,7 @@
 
 def insertion_sort(array): 
 	for i in range(1, len(array)  # 新元素从第二个元素开始
-		while i > 0 and array[i-1] > array[i]:
+		while i > 1 and array[i-1] > array[i]:
 			array[i-1], array[i] = array[i], array[i-1]
 			i -= 1
 	return array

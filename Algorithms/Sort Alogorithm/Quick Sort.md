@@ -6,8 +6,8 @@
 ### 方法一
 
 ```python
-def quick_sort(arr)
-	if len(arra) == 1:
+def quick_sort(arr):
+	if len(arr) <= 1:
 		return arr
 	left, right = [], []
 	pivot = arr.pop()
@@ -16,7 +16,7 @@ def quick_sort(arr)
 			left.append(num)
 		else:
 			right.append(num)
-	return [quick_sort(left) + [pivot] + quick_sort(right)]
+	return quick_sort(left) + [pivot] + quick_sort(right)
 
 ```
 

@@ -3,7 +3,7 @@
 graph LR 
 A((A)) --> B((B)) --> C(( C )) --> D(( D )) --> E(( None ))
 ```
-定义
+节点的定义
 ```python
 class Node:
     def __init__(self, value) -> None:
@@ -24,15 +24,77 @@ node_b.next_node = node_c
 node_c.next_node = node_d
 
 
-# 遍历单向链表
+# 迭代方法打印链表
+def print_linked_list(head):
+	cur_node = head
+	while cur_node.next_node is not None:
+	    print(cur_node)
+	    cur_node = cur_node.next_node
 
-cur_node = node_a
-while cur_node.next_node is not None:
-    print(cur_node)
-    cur_node = cur_node.next_node
+# 用递归的方式打印链表
+def print_linked_list(head):
+	if head is None:
+		return
+	print(head)
+	print_linked_list(head.next_node)
+
+# 找到链表中的第 n 个 元素并返回它的值
+# 迭代方法
+def get_node_value(head, index):
+	cur = head
+	while index > 0:
+		cur = cur_next_node
+		index -= 1
+	return cur.value
+
+# 递归方法
+def get_node_value(head, index):
+	if head is None:
+		return
+	if index == 0:
+		return head.value
+	return get_node_value(head.next_node, index - 1)
     
 ```
 
+## reverse linked list
+### 思维
+1. prev, cur, next 指向三个元素, 其中 prev 是空
+2. 每次迭代移动着三个指针, 知道 cur等于 None, prev 是最后一个元素
+```python
+# 迭代方法
+def reverse_list(head):
+	if head.next_node is None:
+		return head
+	prev = None
+	cur = head
+	while cur is not None: 
+		next = cur.next_node
+		cur.next_node = prev
+		prev = cur
+		cur = next
+	return pre   # 注意因为循环结束的条件是 cur is None, 此时 prev 是 head
+	
+
+
+# 递归方法
+def reverse_list(head, prev=None):
+	if head is None:
+		return pre
+	next = head.next_node
+	head.next_node = prev
+	return reverse_list(next, head)
+	
+```
+
+
+
+链表的定义
+
+```python
+
+
+```
 
 
 # Double Linked List

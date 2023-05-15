@@ -25,7 +25,7 @@ def validate_ip(string):
 	ip_address_found = []  
 	current_ip_address_parts = ["", "", "", ""]  
 	# min表示如果字符串短于4, 就应该字符串本身的长度。 
-	for i in range(1, min(len(string), 4)):  
+	for i in range(1, min(len(string) - 2, 4)):  
 		current_ip_address_parts[0] = string[:i]  
 		if not is_valid_part(current_ip_address_parts[0]):  
 			continue  
