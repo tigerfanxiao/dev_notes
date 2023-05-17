@@ -127,6 +127,8 @@ session.query(Task).filter(Task.scene_name.ilike('%clear%'))
 # 字符在一个序列里
 session.query(Person).filter(Person.lastname.in(['Anna', 'Mike']))
 
+# 查询 null 值
+session.queery(Person).filter(Person.age == None)
 
 # 按照时间来过滤
 date_before = datetime.now() - timedelta(days=700)
