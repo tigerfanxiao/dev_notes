@@ -31,7 +31,7 @@ def quick_sort(array):
     return array
 
 def quick_sort_helper(array, start, end):
-    if start >= end:  # 因为 array长度没有变化, 只是内部元素位置变动,用 len()无意义
+    if start >= end:  # 因为 array长度没有变化, 只是内部元素位置变动,用 len()无意
         return
     
     pivot, left, right = start, start + 1, end  # pivot is index of pivot

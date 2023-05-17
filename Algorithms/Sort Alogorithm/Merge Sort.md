@@ -14,11 +14,11 @@ def merge_sort(array):
 	left = array[:mid]
 	right = array[mid:]
 # merge是应用在拍好许多序列中, 所以用merge_sort(left) 来保证在递归中, 左右子序列已经排序
-	return merge(merge_sort(left), merge_sort(right))  
+	return merge_helper(merge_sort(left), merge_sort(right))  
 	
 
 # assum left and right are ordered array
-def merge(left, right):
+def merge_helper(left, right):
 	ordered_array = []
 	i, j = 0, 0
 	while i < len(left) and j < len(right):
