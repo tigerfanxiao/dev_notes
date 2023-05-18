@@ -45,12 +45,15 @@ if config is None:
 	config = Config()  # 如果元素不存在， 则新建
 	session.add(config)  
 
-# 如果元素以及存在， 则修改
-setattr(config, attribute_name, ret.config)  
-session.add(config)  # 可以把修改和创建的多个对象都放在一个session里
 
-
+for echo in echo_list:  
+	if session.query(Echo).filter(Echo.device_name == echo.device_name).first() is not None:  
+		setattr(echo, 'raw_echo', echo.raw_echo)  
+		session.merge(echo) # 如果元素以及存在， 则更新
+	else: 
+		session.add(echo)  # 如果元素不存在， 则修改
 session.commit()
+
 ```
 
 ## select
