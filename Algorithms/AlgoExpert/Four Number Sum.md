@@ -34,7 +34,7 @@ def four_sum(array, target_sum):
     # 第一个元素没有左侧元素, 所以此时all_pair_sum为空, 不需要参与迭代
     # 最后一个元素因为右侧元素为空, 也不需要参与迭代
     for i in range(1, len(array) - 1):
-        for j in range(i+1, len(array)):
+        for j in range(i + 1, len(array)):
             current_sum = array[i] + array[j]
             diff = target_sum - current_sum
             if diff in all_pair_sums:
