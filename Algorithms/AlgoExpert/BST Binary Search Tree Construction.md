@@ -49,11 +49,13 @@ class BST:
             if value < currentNode.value:
                 if currentNode.left is None:
                     currentNode.left = BST(value)
+                    break
                 else:
                     currentNode = currentNode.left
             else:
                 if currentNode.right is None:
                     currentNode.right = BST(value)
+                    break
                 else:
                     currentNode = currentNode.right
         return self  # 这样可以用链式法则来调用
