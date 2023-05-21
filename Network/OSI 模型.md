@@ -51,12 +51,12 @@ OSI 模型主要是分为
 IP 包的头部是可变长的, 最小是 20 个字节, 最长是60 个自己
 ```
 
-| version of IP | IHL | DSCP | ECN | Total Length | 
+| version of IP | IHL | DSCP | ECN | Total Length      | 
 | identification             | Flags | Fragment Offset |
-| TTL | Protocol | Header Checksum field |
-| Source IP|
-| Destination IP |
-| Optional |
+| TTL | Protocol | Header Checksum field               |
+|                  Source IP                           |
+|                Destination IP                        |                      
+|                   Optional                           |
 ```
 字段说明
 * version: ipv4 = 0100, ipv6 = 0110, 长度是 4 个 bit
