@@ -1,4 +1,3 @@
-
 # 二叉查找树的定义
 
 * 每个节点之多只有两个分支节点, 且分为左边和右边. 因为左右分支, 且左侧小于右边. 查找时就可以折半
@@ -11,7 +10,7 @@ graph TD
 	root((10)) --- l1_1((5))
 	root((10)) --- l1_2((15))
 	l1_1((5))  --- l2_1((2))
-	l1_1((5)) --- l2_2((5))
+	l1_1((5)) --- l2_2((6))
 	l1_2((15)) --- l2_3((13))
 	l1_2((15)) --- l2_4((22))
 	l2_1((2)) --- l3_1((1))
@@ -98,12 +97,12 @@ class BST:
                         currentNode.right = currentNode.right.right
                     
                     else:
-                        # delete bst self
+                        # 如果只有一个root节点
                         currentNode.value = None
 
-                elif parentNode.left == currentNode: # 目标节点只有左边分支节点
+                elif parentNode.left == currentNode: # 目标节点是父节点的左分支
                     parentNode.left = currentNode.left if currentNode.left is not None else currentNode.right
-                elif parentNode.right == currentNode:   # 目标节点只有右分支节点
+                elif parentNode.right == currentNode:   # 目标节点是父节点的右分支
                     parentNode.right = currentNode.left if currentNode.left is not None else currentNode.right
                 break # 必须有, 不然走到哪个叶子节点才停
         return self
