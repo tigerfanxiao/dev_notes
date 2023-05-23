@@ -6,9 +6,9 @@
 
 
 ```mermaid
-graph TD
+graph TB;
 	root((10)) --- l1_1((5))
-	root((10)) --- l1_2((15))
+	root --- l1_2((15))
 	l1_1((5))  --- l2_1((2))
 	l1_1((5)) --- l2_2((6))
 	l1_2((15)) --- l2_3((13))
@@ -32,7 +32,6 @@ Worst Case: Time O(n)
 	1. 根节点
 	2. 非根节点
 
-
 ```python 
 
 class BST:
@@ -47,13 +46,13 @@ class BST:
         while True:
             if value < currentNode.value:
                 if currentNode.left is None:
-                    currentNode.left = BST(value)
+                    currentNode.left = BST(value) # 用递归方式定义
                     break
                 else:
                     currentNode = currentNode.left
             else:
                 if currentNode.right is None:
-                    currentNode.right = BST(value)
+                    currentNode.right = BST(value) # 每个子节点也是一棵树
                     break
                 else:
                     currentNode = currentNode.right
