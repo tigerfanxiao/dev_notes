@@ -23,13 +23,10 @@ re.findall(r'\D(\d{5})\D?', s)  # ['56789', '01234']
 ```
 
 
-Named Caputure Group
+### Named Caputure Group
 ```python
 import re
 match = re.search('(?P<name>.*) (?P<phone>.*)', 'John 123456')
 match.group('name') # 'John'
-
-
-
 
 ```

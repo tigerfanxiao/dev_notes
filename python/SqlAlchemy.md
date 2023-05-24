@@ -210,3 +210,14 @@ except (exc.IntegrityError, sqlite3.IntegrityError)as e:
 ```
 
 
+报错
+
+```shell
+
+# 如果连续运行两次 alembic revision --autogenerate -m 
+# 但是没有做 alembic upgrade head
+FAILED: Target database is not up to date.
+
+# 使当前数据库为最新
+alembic stamp head
+```
