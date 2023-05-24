@@ -1,5 +1,6 @@
 
-[参考视频](https://www.youtube.com/watch?v=k7GkEbECZK0)
+[参考视频](https://www.youtube.com/watch?v=k7GkEbECZK0) 
+1. 模拟了元素进栈和出栈的过程
 
 ```mermaid
 graph TD

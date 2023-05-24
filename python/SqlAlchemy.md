@@ -53,7 +53,6 @@ for echo in echo_list:
 	else: 
 		session.add(echo)  # 如果元素不存在， 则修改
 session.commit()
-
 ```
 
 ## select
@@ -67,8 +66,8 @@ with engine.connect() as conn:
     wk = workers.select()  
     conn.commit()  
     print(conn.execute(wk).fetchall())  # 打印出sql
-    
 ```
+
 # ORM
 
 ## 创建数据库
