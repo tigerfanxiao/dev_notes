@@ -1,4 +1,19 @@
 
+# 处理内容
+
+```
+Value Required device_name ([\w+-_]+)  
+Value license (\w+)  
+  
+Start  
+^<${device_name}>display\s+license  
+^\s+Active\s+License\s+:\s+\w+   # 原来回显的内容不能省略
+^\s+License state : ${license} -> Record
+```
+
+
+# 处理表格
+
 
 ### 多状态
 转移到item状态， 可以去掉不匹配表头， 在结尾写了 Record时才能匹配记录
@@ -19,6 +34,10 @@ Item
 ```
 
 
+有两种返回方式
+* 返回序列
+* 返回字典序列
+
 ```python
 def parse_table_test():  
 temp = TextFSM(open(template))  
@@ -28,4 +47,21 @@ fsm = temp.ParseText(content)  # 返回列表
 my_dict = temp.ParseTextToDicts(raw)  # 返回字典
 print(temp.states)  # 可以有多状态
 
+```
+
+
+```
+Value Required SLOT (\w\d)  
+Value SENSOR (\w+\s\w+|\w+\s\:\s\w+|\w+\:\s\w+\s\d|\w+\:\s\w+\s\S+|\w+\:\s\S+|\S+|\w+\:\s+\w+\s+\w+)  
+Value CURRENT_STATE (\w+\s\w+\s\S+|\w+)  
+Value READING (\d+\s+\w\s\w+|\d+\s+\w+|\d\s+\w|\d+\w+)  
+Value MINOR (\d+|\d+\s+|\-\d+\s+)  
+Value MAJOR (\d+|\d+\s+)  
+Value CRITICAL (\d+|\d+\s+)  
+Value SHUTDOWN (\d+|\d+\s+)  
+  
+Start  
+^\s${SLOT}\s+${SENSOR}\s+${CURRENT_STATE}\s+${READING}\s+\(${MINOR},${MAJOR},${CRITICAL},${SHUTDOWN}\) -> Record  
+^\s${SLOT}\s+${SENSOR}\s+${CURRENT_STATE}\s+${READING}\s+\(${MINOR},${MAJOR},${CRITICAL}\) -> Record  
+^\s${SLOT}\s+${SENSOR}\s+${CURRENT_STATE}\s+${READING}\s+na -> Record
 ```

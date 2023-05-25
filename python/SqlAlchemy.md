@@ -90,6 +90,7 @@ session.query(Echo).filter(Echo.device_name == 'MA9763RT1').first()
 ## 创建表
 引入一个基类， 需要创建表的对象都继承这个基类
 ```python
+from dataclasses import dataclass
 from sqlalchemy.orm import declarative_base  
 from sqlalchemy import (  
     Column,  
@@ -98,15 +99,19 @@ from sqlalchemy import (
     ForeignKey,  
     TEXT,  
     Boolean,  
+    UniqueConstraint,
 )
 
 Base = declarative_base() 
 # 使用基类创建其他类
+@dataclass
 class Person(Base):
 	__tablename__ = "people" # 表明
-	name = Column("name", String,  primary_key=True) # 配置成主键
-	age = Column("age", Integer, default="28")  # 默认值
-	device = Column(Integer, ForeignKey('devices.name', ondelete="SET NULL"), unique=True) # 配置外键
+	name: str = Column("name", String,  primary_key=True) # 配置成主键
+	age: str = Column("age", Integer, default="28")  # 默认值
+	device: str = Column(Integer, ForeignKey('devices.name', ondelete="SET NULL"), unique=True) # 配置外键
+
+	__table_args__ = (UniqueConstraint('name', 'device'),) # 联合索引，用列名而不是字段名
 
 	def __repr__(self):  
 	    return f"{self.name} {self.ip_address} {self.device_type}"
