@@ -1,3 +1,4 @@
+OSI 是 ISO 国际标准化组织制定的
 OSI 模型主要是分为
 
 1. 物理层,  将数据转换为 bit 流, 提供机械和电气的规约. 放到传输介质上传输 PDU 单位是 bit 
@@ -95,8 +96,6 @@ OSI:  数据链路层 + 物理层 = TCP/IP 网络接入层
 ### TCP/IP 对等模型 5 层
 把标准模型的网络成拆开为数据链路层和物理层
 
-
-# TCP/IP 协议
 应用层: Telnet 23 , FTP, SNMP, HTTP, SMTP, DNS, DHCP, BGP, RIP
 传输层: TCP, UDP, OSPF
 网络层: ICMP, IGMP, IPv4, IPv6, ISIS, VRRP, ARP
@@ -111,6 +110,7 @@ FTP 有两个端口 20 作为传输, 21 作为管理
 
 为什么说 OSPF 是传输层的?
 为什么 BGP 和 RIP 是应用层的?
+
 
 # 标准化组织
 ### IETF
