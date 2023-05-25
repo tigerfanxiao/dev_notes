@@ -146,9 +146,14 @@ tasks = db_session.query(Task).filter(Task.create_date > date_before).all()
 ```python
 # 这里关联了Echo 和 Device两张表
 
-session.query(Echo, Device)
+entries = session.query(Echo, Device)
 .filter(Echo.device_name == Device.name)  # 这里join的条件
 .filter(Device.tag == tag)  # 这里是过滤的条件
+
+# access entry
+entry.Echo.device_name 
+entry.Device.device_name 
+
 ```
 # Alembic
 
@@ -161,7 +166,7 @@ python -m pip install alembic
 数据库初始化, 运行下面这条命令后，会在项目目录下创建migration文件夹
 
 ```shell
-# 这个会在项目路径下创建一个migrations 文件夹
+# 这个会在项目路径下创建一个migrations 文件夹， 放数据库更新版本
 # 在项目的路径下会创建一个 alembic.ini文件
 alembic init migrations  
 ```
@@ -181,21 +186,17 @@ target_metadata = Base.metadata
 
 如果migration已经有了， 下面用来重构数据库
 ```shell
-# 只有初始化的时候使用18
-alembic revision -m "init db" # 类似一个commit， -m后写commit的信息
+# 只会创建alembic version table， 不创建模型
+alembic revision -m "init db"  # 查询到多少个模型
+alembic upgrade head # 给每一个模型创建一个表
 
-# 如果修改了model一定要用下面这个， 上面那个不会自动识别model的变化， 生成数据库变动脚本
-alembic revision --autogenerate -m "init db"
+# 创建模型表
+alembic revision --autogenerate -m "create model tables"
+alembic upgrade head
 
 # 把 version中的所有commit再跑一边
 alembic upgrade heads  
 
-# merge head
-alembic merge -m "merge" <commit1> <commit2>
-
-
-# 查看提交历史
-alembic history
 ```
 
 
@@ -225,4 +226,20 @@ FAILED: Target database is not up to date.
 
 # 使当前数据库为最新
 alembic stamp head
+```
+
+
+# alembic
+
+```shell
+alembic history # 查询所有提交记录
+
+alembic current # 查询连接数据库的情况
+alembic downgrade -1 # 回退到上一个版本
+
+# This will reset your entire database in just one statement!
+alembic downgrade base && alembic upgrade head
+
+# merge head
+alembic merge -m "merge" <commit1> <commit2>
 ```
