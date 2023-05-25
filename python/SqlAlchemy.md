@@ -110,8 +110,9 @@ class Person(Base):
 	name: str = Column("name", String,  primary_key=True) # 配置成主键
 	age: str = Column("age", Integer, default="28")  # 默认值
 	device: str = Column(Integer, ForeignKey('devices.name', ondelete="SET NULL"), unique=True) # 配置外键
-
-	__table_args__ = (UniqueConstraint('name', 'device'),) # 联合索引，用列名而不是字段名
+	
+	# 联合索引，用列名而不是字段名
+	__table_args__ = (UniqueConstraint('name', 'device'),) 
 
 	def __repr__(self):  
 	    return f"{self.name} {self.ip_address} {self.device_type}"

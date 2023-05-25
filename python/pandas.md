@@ -47,8 +47,6 @@ df = df[["Device Name", "Product Name", "Product Version"]]
 df = df.fillna('')  # 把na都变成空字符
 ```
 
-```
-
 
 # 统计
 
@@ -61,11 +59,11 @@ df.groupby('Year')['Height'].mean()  # group by
 ### 合并两个 DF
 ```python
 # combine two dataframes, ignore index， 两个dataframe结构一致
+# 纵向叠加两个表
 df_interface = pd.concat([df1, df2], ignore_index=True)
 
 
-# join 两个df
-
+# join 关联两个表
 pd.merge(df1, df2, on='business_id', how='outer')
 ```
 
@@ -87,7 +85,19 @@ table_df = pd.read_sql_table(
 	con=engine  
 	)
 ```
+# 透视表
+本质上要找两个categorize的分类。 
+index是左边纵向的序列， columns是上面的分类， 合计的计算公式可以自己定义， 不定义的话， 默认是mean
+* 生成pivot表之后， 上面会有multindex， 不能和直接和其他的df进行关联
+* 需要去掉一层level后才能关联
 
+```python
+pivot_table = df.pivot_table(index='Device Name', columns=['Item Name'], values=['Value'], aggfunc=lambda x: x)
+
+# 去掉上层的level
+pivot = pivot_table['Value']
+
+```
 
 # 输出
 ### excel
