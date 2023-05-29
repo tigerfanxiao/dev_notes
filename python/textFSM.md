@@ -29,7 +29,7 @@ LANG2XGEPAY01 Resource 1 ATN 910C 2*10GE Port RTU
 LANG1588ACR01 Function YES ATN 910C 1588V2 ACR Function License  
 LANG1588V201 Function YES ATN 910C 1588V2 Packet Synchronization Function License
 ```
-去掉表头
+通过设置两个状态， 然后跳转阶段来去掉表头
 ```
 Value Required item_name (\w+)  
 Value ITEM_TYPE ([\w+-]+)  
@@ -42,23 +42,6 @@ Start
 Item  
 ^\s+${item_name}\s+${ITEM_TYPE}\s+${VALUE}\s+${DESCRIPTION}\s+ -> Record
 
-```
-
-### 案例: 只匹配配置了IP地址的接口
-
-```
-Value Required interface (\S+)  
-Value description ([\S|\s]+)  
-Value ipv4_addr (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})  
-Value ipv4_mask (\S+)  
-Value circuit_type (\S+)  
-  
-Start  
-^interface\s+${interface}  
-^\s*description\s+${description}  
-^\s*ip address\s+${ipv4_addr}\s+${ipv4_mask}  
-^\s*isis circuit-type ${circuit_type} -> Record 只有匹配到上这些内容
-^# -> Record 
 ```
 
 
