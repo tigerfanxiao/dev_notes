@@ -5,7 +5,7 @@
 构建一个空列表初值
 
 ```python
-from dataclass import dataclass, field
+from dataclasses import dataclass, field
 
 @dataclass
 class Email:

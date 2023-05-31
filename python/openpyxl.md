@@ -13,7 +13,13 @@ wb = load_workbook(file_path, data_only=True)
 
 ```
 
-### 表格属性
+
+### workbook 属性
+```python
+wb.active # 当前活动sheet
+```
+
+### Sheet 属性
 ```python
 # 表格最后一个非空行
 ws.max_row
