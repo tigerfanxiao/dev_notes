@@ -1,6 +1,8 @@
+
 ### 行列计数
-单元格的行和列是从1开始计数的
-* 列计数从0开始
+
+* 必须要要用cell方法
+* 行列技术都从1开始
 
 ### 读出表格中的内容，而不是公式
 ```python
@@ -11,7 +13,14 @@ wb = load_workbook(file_path, data_only=True)
 
 ```
 
+### 表格属性
+```python
+# 表格最后一个非空行
+ws.max_row
+# 当前活动页
 
+
+```
 
 ### 创建新的文件
 ```python
@@ -26,6 +35,7 @@ ws.title = 'Fruit'
 wb = openpyxl.Workbook()
 wb.create_sheet('sheet name')  # create new sheet
 
+# 操作cell只能用cell方法
 ws.cell(row=2, column=2).value = 2  # save value to cell
 
 wb.save(filepath)

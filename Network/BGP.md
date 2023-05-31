@@ -123,3 +123,8 @@ BGP 的 Community 属性可以包含很多信息
 在 MPLS VPN 中, Community属性可以包含一下信息
 1. RT 值
 2. IGP 比如 OSPF 的一些信息, 比如 Area 信息
+
+
+
+# BGP Anycast
+主要用户DNS或者CDN场景， 可以允许客户访问服务器时找到离自己物理地址最近的节点。 同时当节点宕机时，也能重新计算到新节点的最短路径
