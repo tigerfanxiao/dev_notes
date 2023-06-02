@@ -29,3 +29,22 @@ for attr, value in apple.__dict__.items():
 
 
 ```
+
+
+### anotation
+可以规避下面这种错误， 就是再用B的时候， B还没有定义
+
+```python
+from __future__ import annotations  # 必须放在首行
+
+class C:
+    @classmethod
+    def from_string(cls, source: str) -> C:
+        ...
+
+    def validate_b(self, obj: B) -> bool:
+        ...
+
+class B:
+	..
+```
