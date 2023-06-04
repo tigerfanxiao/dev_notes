@@ -2,8 +2,8 @@
 # reduce
 
 ```python
-# 检查一个序列一定时递增的
-bool(lambda test_list: reduce(lambda i, j: j if i < j else 9999, test_list) != 9999)
+# 16 把一个序列累加和
+list_a = [1, 2, 3, 4]
+reduce(lambda i, j: i + j, list_a, 10)  # 这里10是初始值
 
-# 这里 reduce(lambda i, j: j if i < j else 9999, test_list) 的结果时序列最后一个元素或者是9999
 ```

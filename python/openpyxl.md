@@ -17,6 +17,7 @@ wb = load_workbook(file_path, data_only=True)
 ### workbook 属性
 ```python
 wb.active # 当前活动sheet
+wb.sheetnames # 所有的sheet
 ```
 
 ### Sheet 属性

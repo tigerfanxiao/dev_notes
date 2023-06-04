@@ -1,5 +1,5 @@
 
-
+### 查找和设置对象属性
 ### getattr setattr
 
 ```python
@@ -11,7 +11,8 @@ setattr(object, "attribute_name", value)
 ```
 
 
-### vars
+###  获得所有属性
+vars
 ```python
 from dataclasses import dataclass
 
@@ -23,6 +24,9 @@ class Fruit:
 apple = Fruit(name='apple', color='red')
 vars(apple)  # 转为一个dict， 已经包含了key和value
 apple.__dict__  # 返回 key值， 不包括dunnder属性
+
+Fruit.__annotations__.keys() # 获取类的属性值
+
 
 for attr, value in apple.__dict__.items():
         print(attr, value)
