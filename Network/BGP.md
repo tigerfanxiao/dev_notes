@@ -40,6 +40,8 @@ show ip bgp neighbors # 查看capability参数
 
 ### BGP 邻接建立中的 4 种报文
 * Open 报文: BGP version, Local AS 号, Hold Time, BGP Router-ID, Capability参数 
+> 注意： 如果没有手动配置router-id， BGP会选择最小的环回口作为router-id
+> 但是如果没有配置环回口的ip地址， BGP获取不到router-id， 连接建立失败
 * Keepalive报文 A message header that keep the Holdtime timer from expiring. keepalive 每个 60 秒发一个. Holdtime 是 180s. 也就是说 180 秒没有收到 keepalive 报文, 就认为邻居挂了
 * Update 报文 包含新增或者删除的路由, 路径信息和 NLRI
 * Notification Message 各种错误信息
