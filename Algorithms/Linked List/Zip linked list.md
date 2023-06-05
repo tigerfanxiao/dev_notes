@@ -26,7 +26,7 @@ node_r.next_node = node_s
 
 ```
 ### 方法一
-1. 直接修改两个链表的节点
+1. 两个链表只用一个 cur 指针
 
 ```python
 def zip_linked_list(head_a, head_b):
@@ -52,7 +52,6 @@ zipped_linked_list = zip_linked_list(node_a, node_q)
 ### 方法二
 
 1. 两个链表各自用一个 cur_node 指针遍历
-2. 合并的链表用 tail 指针跟踪
 
 ```python
 # time: O(min(n, m))

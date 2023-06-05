@@ -16,6 +16,36 @@ def reverse_link_list(head):
 		cur.next = prev
 		prev = cur
 		cur = next
-	return cur
+	return prev
 ```
 
+
+递归方式
+
+```python
+
+def reverse_list(head, prev=None):
+	if head is None:
+		return prev  # prev 是逆序以后的第一个元素
+	next = head.next_node
+	head.next_node = prev
+	return reverse_list(next, head)
+
+# 构造链表
+node_a = Node('A')
+node_b = Node('B')
+node_c = Node('C')
+node_d = Node('D')
+
+node_a.next_node = node_b
+node_b.next_node = node_c
+node_c.next_node = node_d
+
+# 逆序
+ret = reverse_list(node_a)
+# 打印逆序后的链表
+while ret is not None:
+	print(ret)
+	ret = ret.next_node
+
+```

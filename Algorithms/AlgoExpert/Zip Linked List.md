@@ -35,9 +35,9 @@ def split_linked_list(head):
 		slow_pointer = slow_pointer.next  
 		fast_pointer = fast_pointer.next.next  
 		  
-		second_half_list = slow_pointer.next  
-		slow_pointer.next = None  
-		return second_half_list  
+	second_half_list = slow_pointer.next  
+	slow_pointer.next = None  
+	return second_half_list  
   
   
 def reverse_linked_list(head):  

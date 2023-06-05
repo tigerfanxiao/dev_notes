@@ -101,7 +101,7 @@ ODF 架: 一般在数据中心中用于设备之间的互联
 以太网有两种帧格式Ethernet || 和 IEEE 802.3
 
 Ethernet ||
-|D.MAC| S.MAC| Type |  用户数据 |  FCS |
+| D.MAC | S.MAC | Type |  用户数据 |  FCS |
 * Type字段 0806 ARP, 0800 IPv4
  
 IEEE 802.3
@@ -126,7 +126,7 @@ MAC 地址可以分单播, 组播, 广播
 * 交换转发数据帧的行为
 	1. 泛洪 Flooding 将一个接口收到的数据, 发给剩余的接口
 	2. 转发 forwarding  将一个接口的数据发给一个特定的接口
-	3. 丢弃 Discarding 
+	3. 丢弃 Discarding 发现源 mac 和目的 mac 对应同一个接口时
 
 * 交换机默认处理组播也是泛洪处理. 也有特殊的机制, 发送给组播的接口
 * 当交换机收到的帧, 目的 mac 地址是收到帧的接口, 会丢弃. 往往是有环路

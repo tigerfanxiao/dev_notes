@@ -1,5 +1,5 @@
 
-
+双向链表
 ```python
 class Node:  
 	def __init__(self, value):  
