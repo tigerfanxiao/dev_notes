@@ -35,6 +35,11 @@ ws.max_row
 wb = openpyxl.Workbook()
 ws = wb['Sheet']
 ws.title = 'Fruit'
+
+
+# 删除sheet
+default_sheet = wb.get_sheet_by_name('Sheet')
+wb.remove_sheet(default_sheet)
 ```
 
 创建出了默认sheet之外的文件
@@ -49,3 +54,11 @@ wb.save(filepath)
 
 ```
 
+
+### 单元格
+
+空单元格的value属性是None
+```python
+ws.cell(row=2, column=2).value is None
+
+```
