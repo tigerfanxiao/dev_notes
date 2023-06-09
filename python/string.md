@@ -7,3 +7,11 @@ def get_random_string(length)
 	# 重复取length次
 	return ''.join(ranndom.choice(letters) for i in range(length))
 ```
+
+
+字母表 Alphabet
+
+```python
+import string
+list(string.ascii_uppercase)
+```

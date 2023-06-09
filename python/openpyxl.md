@@ -10,7 +10,6 @@ from openpyxl import load_workbook
 
 # 读出单元格中的内容，而不是公式
 wb = load_workbook(file_path, data_only=True)
-
 ```
 
 
@@ -25,7 +24,11 @@ wb.sheetnames # 所有的sheet
 # 表格最后一个非空行
 ws.max_row
 # 当前活动页
+ws.max_col
 
+# 控制列宽
+col_id = 1
+ws.column_dimensions[string.ascii_uppercase[col_id]].width = 30
 
 ```
 
