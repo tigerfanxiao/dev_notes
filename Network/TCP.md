@@ -52,12 +52,15 @@ TCP 四次挥手过程
 |                            Acknowledgement number             |
 | Header Length  |  Reserved | Control bits| Window |
 |           Checksum         |             Urgent                        |
-* 三次握手中的 ACK, SYN 位都在 Control Bits 的 8 位中
+|                                        Options                                  |
+|                                      Data                                          |
+* 三次握手中的 ACK, SYN 位都在 Control Bits 的 6 位中
 
 ### UDP头部
 最小 6或者8 个字节, 因为 CheckSum是可选的
 |          Source Port       |        Destination Port           |
 |          Length                |            Checksum (可选)     |
+|                              Data   (if any)                                 |
 
 # UDP
 UDP只是把数据通过网卡发出去, 所以性能损耗少, CPU 等资源占用率低. 但是不能保证丢包. 
