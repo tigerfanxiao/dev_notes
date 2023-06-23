@@ -20,8 +20,14 @@ os.path.realpath(PATH)
 # 查询父路径
 os.path.dirname(__file__)
 
-# 创建文件见
+# 打印路径中的文件名
+os.path.basename(path)
+
+# 创建文件夹
 os.mkdir(path)
+
+# 列出目录下的所有文件和子目录
+os.listdir(path) 
 
 
 ```

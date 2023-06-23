@@ -19,6 +19,7 @@
 ```python
 
 class Singleton:
+	# __new__ 会在 __init__前运行
 	def __new__(cls, *args, **kwargs):
 		if not hasattr(cls, "_instance"):
 			cls._instance = super(Singleton, cls).__new__(cls)

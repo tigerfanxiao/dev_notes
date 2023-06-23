@@ -10,7 +10,6 @@ from openpyxl import load_workbook
 
 # 读出单元格中的内容，而不是公式
 wb = load_workbook(file_path, data_only=True)
-
 ```
 
 
@@ -25,7 +24,11 @@ wb.sheetnames # 所有的sheet
 # 表格最后一个非空行
 ws.max_row
 # 当前活动页
+ws.max_col
 
+# 控制列宽
+col_id = 1
+ws.column_dimensions[string.ascii_uppercase[col_id]].width = 30
 
 ```
 
@@ -35,6 +38,11 @@ ws.max_row
 wb = openpyxl.Workbook()
 ws = wb['Sheet']
 ws.title = 'Fruit'
+
+
+# 删除sheet
+default_sheet = wb.get_sheet_by_name('Sheet')
+wb.remove_sheet(default_sheet)
 ```
 
 创建出了默认sheet之外的文件
@@ -49,3 +57,11 @@ wb.save(filepath)
 
 ```
 
+
+### 单元格
+
+空单元格的value属性是None
+```python
+ws.cell(row=2, column=2).value is None
+
+```
