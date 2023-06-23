@@ -1,6 +1,7 @@
 
 ### join()
 join默认是放序列的，但是也可以放 comprehesion
+
 ```python
 def get_random_string(length)
 	letters = string.ascii_lowercase
@@ -13,5 +14,6 @@ def get_random_string(length)
 
 ```python
 import string
-list(string.ascii_uppercase)
+list(string.ascii_uppercase)  # 大写字母
+list(string.ascii_lowercase)  # 小写字母
 ```
