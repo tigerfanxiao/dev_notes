@@ -22,23 +22,34 @@ sequenceDiagram
 
 # 配置方法
 
+地址池为当前接口网段内的
 
-简单方式
+```shell
+dhcp enable
+int g0/0/0
+ip add 192.168.1.254 255.255.255.0
+dhcp selelct interface 
+```
+
+
+更多配置
+保留地址, 应对有些服务器的IP是静态的, 不要分配出去
 ```shell
 dhcp enable
 int g0/0/0
 ip add 192.168.1.1 255.255.255.0
 dhcp select interface
-dhcp server excluded-ip-address 192.168.1.100 192.168.1.199
+dhcp server excluded-ip-address 192.168.1.100 192.168.1.199 # 保留,不分出去
 dhcp server dns-list 8.8.8.8
 
 
 ```
 
 
-DHCP 中继
-因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 需要在沿途路由器上配置DHCP 中继
+### DHCP 中继
+因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 或者三层交换机的vlanif, 就要把三层交换机或者路由器配置成DHCP 中继. 把广播变成到DHCP服务器的单播. 
 
+中继设备配置
 ```shell
 dhcp enable
 int g0/0/0
@@ -49,4 +60,26 @@ dhcp select relay  # 入方向
 dhcp relay server-ip 23.1.1.3 # 指向 dhcp 服务器地址
 ```
 
+注意: 如果是子接口或者vlanif口, 则在子接口和vlanif口下配置 
 
+服务器配置
+```shell
+
+ip pool vlan 20 
+network 192.168.20.0 mask 24
+gateway-list 192.168.20.1 
+dns-list 114.114.114.114
+lease day 0 hour 8  # 8 小时, 默认是1天
+option # 
+
+ip pool vlan 30
+network 192.168.30.0 mask 24
+gateway-list 192.168.30.1 
+dns-list 114.114.114.114
+lease day 0 hour 8  # 8 小时, 默认是1天
+option # 
+
+int g0/0/0  # 服务器的目标接口
+dhcp select global # 全局地址池 使用2个, 根据relay的源地址所在网段来分配
+
+```
