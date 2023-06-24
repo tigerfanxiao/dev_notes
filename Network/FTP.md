@@ -56,4 +56,5 @@ acl number 3000
 rule 5 permit icmp
 rule 10 permit tcp destination-port eq ftp  # 这个是控制 21
 rule 15 permit tcp destination-port eq ftp-data # 这个是数据端口 20
+rule 1000 deny ip
 ```
