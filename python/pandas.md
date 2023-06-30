@@ -38,14 +38,41 @@ df = df.loc[:, df.columns != 'ID']
 
 # 取出部分列
 df = df[["Device Name", "Product Name", "Product Version"]] 
+
+
+df.append(row, ignore_index=True)  # 增加一个字典来增加一行
 ```
+
+
+面向对象
+```python
+user_input_df.T.to_dict()
+```
+
+# 查找
+
+
+```python
+# 查找单个元素
+df.loc[df['column_name'] == some_value]  
+
+# 多个条件
+df.loc[(df['column_name'] >= A) & (df['column_name'] <= B)]
+
+# 定位一个df中第一行的某个元素
+df.iloc[0]['colname']  # 这里0是行数
+
+# 判断df是否数据为空
+df.empty
+```
+
 
 # 修饰
 
 ```python
-```python
 df = df.fillna('')  # 把na都变成空字符
-```
+
+ ```
 
 
 # 统计
@@ -91,12 +118,14 @@ table_df = pd.read_sql_table(
 ```python
 
 conn = sqlite3.connect(sqlite_path)  
-dfs_dict = pd.read_excel(xlsx_path, sheet_name=None, header=header, dtype=str)  
+# head = 0 将excel表头保存为sqlite中的表头
+# head = None 把excel表头保存为表的第一行
+dfs_dict = pd.read_excel(xlsx_path, sheet_name=None, header=0, dtype=str)  
 
 for sheet, df in dfs_dict.items():  # 遍历所有的sheet
 	df.to_sql(sheet, con=conn, if_exists='replace', index=False)  # 将df转到SQLite
 	print(f'insert table {sheet} {df.shape[0]} rows')  
-	  
+
 conn.close()
 ```
 
@@ -112,7 +141,6 @@ pivot_table = df.pivot_table(index='Device Name', columns=['Item Name'], values=
 
 # 去掉上层的level
 pivot = pivot_table['Value']
-
 ```
 
 # 输出
@@ -126,4 +154,5 @@ df.to_excel(path, sheet_name='sheet name', index=False)
 with pd.ExcelWriter(file_path) as writer:
 	data_frame1.to_excel(writer, sheet_name, index=False)
 	data_frame2.to_excel(writer, sheet_name, index=False)
+
 ```
