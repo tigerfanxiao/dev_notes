@@ -85,6 +85,22 @@ table_df = pd.read_sql_table(
 	con=engine  
 	)
 ```
+
+从DF转到SQLite
+
+```python
+
+conn = sqlite3.connect(sqlite_path)  
+dfs_dict = pd.read_excel(xlsx_path, sheet_name=None, header=header, dtype=str)  
+
+for sheet, df in dfs_dict.items():  # 遍历所有的sheet
+	df.to_sql(sheet, con=conn, if_exists='replace', index=False)  # 将df转到SQLite
+	print(f'insert table {sheet} {df.shape[0]} rows')  
+	  
+conn.close()
+```
+
+
 # 透视表
 本质上要找两个categorize的分类。 
 index是左边纵向的序列， columns是上面的分类， 合计的计算公式可以自己定义， 不定义的话， 默认是mean
