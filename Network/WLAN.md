@@ -2,17 +2,10 @@
 ### 名词解释
 STA 无线终端
 信道: 传输介质
-信宿: AP
-
-
-无线出货量大, 比较赚钱
-
-WLAN 是无线局域网. 和无线广域网技术没有关系
-
-AP 可以理解是Hub, 所以一个终端收到的信号, 会被辐射给其他的终端
-无安全不无线: 在部署无线网络的时候, 一定会有安全措施. 
-
+信宿: AP. AP 可以理解是Hub, 所以一个终端收到的信号, 会被辐射给其他的终端
+WLAN 是无线局域网, 应用在企业网中. 和无线广域网技术没有关系
 WLAN 约等于 wifi = 802.11
+
 ### 无线技术的发展
 802.11 本质上属于数据链路层和物理层技术, 网络层依旧使用 IP
 物理层: 空口中传输的比特率, 频段
@@ -25,11 +18,14 @@ WLAN 约等于 wifi = 802.11
 * 802.11ac Wave1  Wifi 5 频段 5GHz, 速率 1.3Gbps -- 企业主流
 * 802.11ac  Wave2 Wifi 6 频段在 5GHz, 速率 3.47Gbps  --企业主流 
 * 802.11ax  Wifi 6 频段在 2.4GHz 或 5GHz,速率 10Gbps
->如果交换机接口的速率低于无线路由器的接口, 造成无法享受慢速的无线带宽. 所以要使用 Wifi6, 就需要更换交换机. 华为提供了多速率端口的交换机. 一个端口可以配置 5G 和 2.5G, 可以适配 802.11ac Wave2 和 Wave 1
->
+
+# 产品和工程应用场景
+
+### 交换机接口速度小于无线路由器接口
+如果交换机接口的速率低于无线路由器的接口, 造成无法享受满速的无线带宽. 所以要使用 Wifi6, 就需要更换交换机. 华为提供了多速率端口的交换机. 一个端口可以配置 5G 和 2.5G, 可以适配 802.11ac Wave2 和 Wave 1
 
 
-业务对带宽的需求
+### AR VR场景对带宽的需求
 * VR, AR 每个用户入门级 100M, 极致体验 1G 带宽
 
 ### CAPWAP 协议
@@ -209,3 +205,58 @@ PSK = WPA2-PSK 使用与中小型企业或者家用路由器
 
 mac 认证一般适合无线打印机, 扫描仪之类的
 
+
+
+# 配置
+
+```shell
+AP上线配置
+1.设置隧道地址
+capwap source interface vlan 1   用vlan1作为和ap通信的地址，隧道地址
+wlan  进入wlan模式
+2.接入方式无认证
+ap auth-mode no-auth   设置ap接入的时候不做认证
+
+# 设置国家码
+regulatory-domain-profile name 123 # 123 是 profile的名字
+country-code CN # CN 是国家码
+ ap-group name default  关联域
+
+regulatory-domain-profile 123  # 关联国家码profile到domain
+
+
+无线设置
+1.#wifi名称模板
+ssid-profile name n1  设置wifi设置列表
+ssid shuan   设置wifi名字为shuan
+
+2.#设置密码方式
+security-profile name2 n
+security wpa psk pass-phrase 00000000 aes
+
+3.# vap模板（最终绑定）
+vap-profile name n3
+forward-mode direct-forward  本地转发
+service-vlan vlan-id 20   绑定ssid关联的vlan
+security-profile n2  绑定安全密码信息
+ssid-profile n1 绑定ssid名称
+
+4.#针对ap组下发
+ap-group name default  进入到默认的组，默认ap上线都在里面
+vap-profile n3 wlan 1 radio all   关联vap模板到所有射频卡
+
+```
+
+在AC上查询AP状态
+```shell
+ # 查看ap是否有上线
+display ap all 
+#  查看无线关联用户的状态
+display station all  
+```
+
+# 无线安全
+无安全不无线: 在部署无线网络的时候, 一定会有安全措施. 
+
+# 售前
+无线出货量大, 比较赚钱
