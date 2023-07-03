@@ -31,7 +31,7 @@ len(df.index)
 
 ```
 
-### 改造df
+### 过滤 DF
 ```python
 # 去掉 ID 列
 df = df.loc[:, df.columns != 'ID'] 
@@ -43,11 +43,36 @@ df = df[["Device Name", "Product Name", "Product Version"]]
 df.append(row, ignore_index=True)  # 增加一个字典来增加一行
 ```
 
-
 面向对象
 ```python
+# 把df转变为字典， 且字典的key是列名
 user_input_df.T.to_dict()
 ```
+
+迭代
+```python
+
+# 迭代df
+
+df = pd.DataFrame({'c1': [10, 11, 12], 'c2': [100, 110, 120]})
+df = df.reset_index()  # make sure indexes pair with number of rows
+
+for index, row in df.iterrows():
+    print(row['c1'], row['c2'])
+
+
+# 迭代 Series
+for table_name in all_tables_df['name']:  # 这里all_tables_df['name']是Series
+	print(table_name)
+```
+
+### 运算
+```python
+# 将计算后的列插入df
+# 这里函数 get_new_tunnel_id 也是一个df
+te_tunnel_df['new_tunnel_id'] = te_tunnel_df['Tunnel ID'].apply(get_new_tunnel_id)
+```
+
 
 # 查找
 
@@ -68,9 +93,13 @@ df.empty
 
 
 # 修饰
+### 填充
 
 ```python
-df = df.fillna('')  # 把na都变成空字符
+df = df.fillna('') 
+
+# 删除 id列
+df = df.drop(columns=["id"])
 
  ```
 
