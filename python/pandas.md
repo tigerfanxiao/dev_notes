@@ -39,6 +39,12 @@ df = df.loc[:, df.columns != 'ID']
 # 取出部分列
 df = df[["Device Name", "Product Name", "Product Version"]] 
 
+# 使用 == 来过滤
+mask = user_input_df['Peer Device Role'] == 'OLD_POP' # mask是所有过滤出来的行   
+user_input_df.loc[mask, 'Source'] = 'remove_old_pop' # 对过滤出来的行来赋值
+
+# 使用query来过滤， 速度比 == 快一倍， 但是需要写查询语句
+user_input_df.query('`Peer Device Role`=="OLD_POP"') 
 
 df.append(row, ignore_index=True)  # 增加一个字典来增加一行
 ```
@@ -67,10 +73,27 @@ for table_name in all_tables_df['name']:  # 这里all_tables_df['name']是Series
 ```
 
 ### 运算
+apply最慢， 因为是调用python语法逐行计算的。 向量化的方法都比较快，因为是调用c 代码执行的
 ```python
 # 将计算后的列插入df
 # 这里函数 get_new_tunnel_id 也是一个df
 te_tunnel_df['new_tunnel_id'] = te_tunnel_df['Tunnel ID'].apply(get_new_tunnel_id)
+```
+
+```python
+# Python 3.6.5, NumPy 1.14.3, Pandas 0.23.0
+
+np.random.seed(0)
+N = 10**5
+
+%timeit list(map(divide, df['A'], df['B']))                                   # 43.9 ms
+%timeit np.vectorize(divide)(df['A'], df['B'])                                # 48.1 ms
+%timeit [divide(a, b) for a, b in zip(df['A'], df['B'])]                      # 49.4 ms
+%timeit [divide(a, b) for a, b in df[['A', 'B']].itertuples(index=False)]     # 112 ms
+%timeit df.apply(lambda row: divide(*row), axis=1, raw=True)                  # 760 ms
+%timeit df.apply(lambda row: divide(row['A'], row['B']), axis=1)              # 4.83 s
+%timeit [divide(row['A'], row['B']) for _, row in df[['A', 'B']].iterrows()]  # 11.6 s
+
 ```
 
 
