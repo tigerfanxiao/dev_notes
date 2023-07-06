@@ -70,5 +70,23 @@ ws.cell(row=2, column=2).value is None
 ### 下拉框 Data Validation
 
 ```python
-import 
+import openpyxl
+from openpyxl.worksheet.datavalidation import DataValidation
+
+wb = openpyxl.load_workbook(TEST_EXCEL)  
+sheet = wb.active  
+  
+valid_options = '"Not started, In Progress, Completed"'  
+rule = DataValidation(type='list', formula1=valid_options, allow_blank=True) 
+
+rule.error = 'Your entry is not valid'  
+rule.errorTitle = 'Invalid Entry'  
+  
+rule.prompt = 'Please select from the list.'  
+rule.promptTile = 'select Option'  
+
+sheet.add_data_validation(rule)  
+rule.add('c2:c100')  # 在指定的区域设置数据验证
+wb.save('file.xlsx')   # 修改后的文件另存为新的文件
+
 ```
