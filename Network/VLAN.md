@@ -72,10 +72,22 @@ vlanif up的条件
 ### 命令
 
 ```shell
-display vlan # 查看所有vlan
+# 查看所有vlan
+display vlan 
+# 批量创建vlan
+vlan batch 10 20 30
 
 # 查看mac地址表
 display mac-address
+```
+
+access口相关命令
+
+```shell
+# acces 口划分 vlan
+int g0/0/3
+port link-type access # 修改为 access 接口
+port default vlan 20 #  收到包后打上 tag 20, 发出的时候剥离20
 
 # 将access口改为trunk
 int g0/0/0

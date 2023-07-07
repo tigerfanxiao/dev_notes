@@ -4,6 +4,8 @@
 
 构建一个空列表初值
 
+`__post_init__` 这个方法只能用在dataclass包装的类里面
+
 ```python
 from dataclasses import dataclass, field
 
