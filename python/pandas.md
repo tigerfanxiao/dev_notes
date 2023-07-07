@@ -31,8 +31,29 @@ len(df.index)
 
 ```
 
+### 构建DF
+
+```python
+# 构建只有一列的df
+PATH_LIST = 'W-2_LTE,W-2_LTE_PRT,W-4_5G,W-4_5G_PRT'.split(',')
+path_type_df = pd.DataFrame(PATH_LIST, columns=['path_type'])  # 需要定义列名 path_type
+```
+
+### 构建Series
+
+```python
+sr = pd.Series([1, 2, 3])
+
+df['OLD_POP']  # 如果取出一列，则是 Series
+
+
+```
+
 ### 过滤 DF
 ```python
+# 如果只有一列的df
+df.loc[:, ['OLD_POP']] 
+
 # 去掉 ID 列
 df = df.loc[:, df.columns != 'ID'] 
 
@@ -42,6 +63,9 @@ df = df[["Device Name", "Product Name", "Product Version"]]
 # 使用 == 来过滤
 mask = user_input_df['Peer Device Role'] == 'OLD_POP' # mask是所有过滤出来的行   
 user_input_df.loc[mask, 'Source'] = 'remove_old_pop' # 对过滤出来的行来赋值
+
+# 用 endswith
+df["col"].str.lower().str.endswith('word', na=False) # 如果单元格为空返回False
 
 # 使用query来过滤， 速度比 == 快一倍， 但是需要写查询语句
 user_input_df.query('`Peer Device Role`=="OLD_POP"') 
