@@ -32,21 +32,28 @@ len(df.index)
 ```
 
 ### 构建DF
-
+从字典构建df
+```python
+df1 = pd.DataFrame({'A':[3,4],'B':[5,6]})
+```
+从序列构建df
 ```python
 # 构建只有一列的df
 PATH_LIST = 'W-2_LTE,W-2_LTE_PRT,W-4_5G,W-4_5G_PRT'.split(',')
 path_type_df = pd.DataFrame(PATH_LIST, columns=['path_type'])  # 需要定义列名 path_type
 ```
 
-### 构建Series
 
+### 构建Series
+从序列构建series
 ```python
 sr = pd.Series([1, 2, 3])
-
 df['OLD_POP']  # 如果取出一列，则是 Series
+```
 
-
+将serious变为list
+```python
+sr.tolist()
 ```
 
 ### 过滤 DF
@@ -110,7 +117,9 @@ te_tunnel_df['new_tunnel_id'] = te_tunnel_df['Tunnel ID'].apply(get_new_tunnel_i
 np.random.seed(0)
 N = 10**5
 
+# map的参数时Series
 %timeit list(map(divide, df['A'], df['B']))                                   # 43.9 ms
+
 %timeit np.vectorize(divide)(df['A'], df['B'])                                # 48.1 ms
 %timeit [divide(a, b) for a, b in zip(df['A'], df['B'])]                      # 49.4 ms
 %timeit [divide(a, b) for a, b in df[['A', 'B']].itertuples(index=False)]     # 112 ms
