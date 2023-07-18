@@ -1,6 +1,5 @@
 模型
 
-
 Background Question
 Problem Question 问题式提问
 Impact Question 影响式提问
