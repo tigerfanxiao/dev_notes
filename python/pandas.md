@@ -22,6 +22,8 @@ df.dtypes
 df.size
 # 查询列数和行数
 df.shape
+# 获得列名序列
+list(df.columns)
 
 # 查看头部
 df.head()
