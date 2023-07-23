@@ -17,6 +17,11 @@ alt + Enter
 选中单词
 ctrl + w
 
+# windows
+alt + F12 打开 terminal
+esc 回到代码编辑窗口
+
+
 # mac
 ### 代码编辑
 option + up 选中整个单词
@@ -28,3 +33,5 @@ cmd + delete 删除完整一行
 ctrl + tab 在打开的标签页中切换
 
 
+### 代码跳转
+cmd + b 跳转到变量定义的地方
