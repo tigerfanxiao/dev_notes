@@ -35,3 +35,14 @@ ctrl + tab 在打开的标签页中切换
 
 ### 代码跳转
 cmd + b 跳转到变量定义的地方
+
+
+# Terminal
+
+在 Terminal 下面运行 python 解释器是在虚拟环境里
+
+### 可以在虚拟环境中加载某一个 .py文件
+
+```shell
+python -i  module.py
+```
