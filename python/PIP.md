@@ -5,6 +5,8 @@ pip install <PACKAGE_NAME>==1.0.0
 pip install ––upgrade <PACKAGE_NAME
 pip list  # show all installed package
 
+pip freeze | grep netmiko # 查询当前安装的包版本
+
 ```
 
 
