@@ -1,5 +1,5 @@
 
-### 查看系统信息 
+### 文件系统
 
 - **/bin**: Pronounced "bin," this directory is where most of the binary files are stored. Inside it, you typically find the Linux terminal commands such as cd (change directory), pwd (print working directory), and mv (move).
     
@@ -31,27 +31,65 @@
     
 - **/var**: Here you find files of variable lengths, usually log files of the installed software.
 
-### cd
+### 切换目录cd
 
 ```shell
 cd - # 回到刚才的目录
 cd # 直接回到home目录
 ```
 
-
+### 查看系统信息 
 ```shell
 # 查询 redhat 版本
 cat /etc/redhat-release
 CentOS Linux release 7.9.2009 (Core)  # 版本为 7
 
-uname -r  # 内核
+# 查看内核版本
+uname -r  
 3.10.0-1160.88.1.el7.x86_64  
 
+# 查看环境变量
+env
+
+# 打印变量
+a=test
+cisco@cisco:~$ echo $a
 
 ```
 
-### su
+# 文件
 
+### 创建文件夹
+```shell
+mkdir -p ./a/b/c # 会把子目录一起创建出来
+```
+
+### 文件权限
+
+```shell
+-rw-rw-r-- # 三个组 User Group Other
+```
+
+```shell
+chmod u+x filename.txt # 给 user 添加执行权限
+chmod go+x filename.txt # 给 group 和 other 增加执行权限
+```
+### 复制文件
+
+```shell
+# 复制文件到指定目录下
+cp file folder
+```
+
+
+### 用户权限 su
+`#` 表示当前用户为 root 账户
+`$` 表示当前用户是普通用户
+
+
+su 是用来切换成 root 账户
+sudo 不切换账户, 当时可以用 root 的权限
+注意: 如果要运行某个 sudo 命令, 要先确保当前用户在 `sudoers` 文件中配置
 ```shell
 # 查询userid, groupid
 id
@@ -103,3 +141,14 @@ ssh -t cloud_user@<SECOND_PUBLIC_IP_ADDRESS> free >> server_health.txt
 问题
 echo export = .bash_profile 是什么意识?用冒号分割是什么意思
 
+# Bash
+Bourne Again Shell
+Bash 的 script 要用 `#!`开头, 表示调用`/bin/bash`来运行这个脚本
+
+### 执行 bash 脚本
+```bash
+# 先检查脚本文件有没有执行权限
+chmod +x bashfile.sh 
+# 执行脚本
+sh bashfile.sh  
+```
