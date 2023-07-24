@@ -1,4 +1,5 @@
 
+### 查看系统信息 
 ```shell
 # 查询 redhat 版本
 cat /etc/redhat-release
