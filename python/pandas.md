@@ -234,6 +234,7 @@ pd.merge(df1, df2, on='business_id', how='outer')
 # 构建新的DF
 
 ### explode
+如果某一列的元素是一个列表， explode可以对这一列做叉积
 
 ```python
 
