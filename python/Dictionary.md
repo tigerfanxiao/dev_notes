@@ -23,6 +23,12 @@ my_dict = {'name': 'xiao', 'age': 20}
 my_dict.pop('age')  # 去掉一个键值对, 并把去掉的值返回
 ```
 
+
+使用zip构建字典
+```python
+my_dict = zip(key_list, value_list)
+```
+
 使用 fromkeys方法可以去重, 且保持原来的序列的顺序. 而 set 则无法保证顺序
 ```python
 

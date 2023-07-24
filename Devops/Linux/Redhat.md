@@ -1,5 +1,44 @@
 
 ### 查看系统信息 
+
+- **/bin**: Pronounced "bin," this directory is where most of the binary files are stored. Inside it, you typically find the Linux terminal commands such as cd (change directory), pwd (print working directory), and mv (move).
+    
+- **/boot**: Contains the files necessary for Linux to boot.
+    
+- **/dev**: Here you find your mounted physical devices such as your hard drives, USB drives, and optical drives.
+    
+- **/etc**: This directory is where the configuration files of the installed software are located.
+    
+- **/home**: The home directory contains a directory for each user with the user's files and directories. The figure shows the directories of the user _Cisco_.
+    
+- **/lib**: Contains libraries that are usually downloaded with software. They are necessary for the programs to work.
+    
+- **/media**: Here you might find the mounted USB drives, but it depends on the Linux distribution.
+    
+- **/mnt**: When mounting a device in Linux, you use the _mnt_ directory.
+    
+- **/opt**: Contains optional software.
+    
+- **/proc**: The processes directory contains files for the core operating system (kernel) to work.
+    
+- **/root**: For a user, the home directory is _/home/username_. For the superuser, the home directory is /root.
+    
+- **/sbin**: Dedicated to a command that the superuser (root) can run, similar to /bin.
+    
+- **/tmp**: Files that are used only temporarily are stored in this directory. The content of the directory is deleted on shutdown.
+    
+- **/usr**: Used for sharing files between users.
+    
+- **/var**: Here you find files of variable lengths, usually log files of the installed software.
+
+### cd
+
+```shell
+cd - # 回到刚才的目录
+cd # 直接回到home目录
+```
+
+
 ```shell
 # 查询 redhat 版本
 cat /etc/redhat-release
@@ -11,7 +50,7 @@ uname -r  # 内核
 
 ```
 
-### 用户
+### su
 
 ```shell
 # 查询userid, groupid

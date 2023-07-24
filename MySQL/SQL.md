@@ -35,3 +35,9 @@ JOIN student_course
 JOIN course
 	ON course.id = student_course.course_id;
 ```
+
+# 操作表本身
+
+```SQL
+DROP TABLE table_name  -- 删除表， 表结构一起删除。 
+```

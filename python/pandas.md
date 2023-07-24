@@ -22,6 +22,8 @@ df.dtypes
 df.size
 # 查询列数和行数
 df.shape
+# 获得列名序列
+list(df.columns)
 
 # 查看头部
 df.head()
@@ -54,7 +56,11 @@ df = pd.DataFrame({'name': ['John', 'Mike'], 'age': [25, 30]})
 # new_row 是 series
 new_row = pd.Series(['Sam', 31], index=df.columns)
 ```
-修改表格中的一列数据
+
+获得一列数据
+```python
+df['col1'].values.tolist()
+```
 
 
 ### 构建Series
@@ -227,7 +233,16 @@ pd.merge(df1, df2, on='business_id', how='outer')
 
 # 构建新的DF
 
+### explode
+如果某一列的元素是一个列表， explode可以对这一列做叉积
 
+```python
+
+df = pd.DataFrame({ 'card': ['1971 Nolan Ryan', '1928 Ogden Don Bradman', '1909 T206 Ty Cobb', '1887 Lone Jack Ben Franklin', '2005 Topps Justin Verlander'], 'properties': [['Baseball', 'Vintage', 'Pitcher'], ['Cricket', 'Pre War'], ['Baseball', 'Pre War', 'Batter'], ['Non Sports', 'Pre War'], ['Baseball', 'Modern', 'Pitcher']] })
+
+# 可以发现 properties里面保存的是一个列表
+df = df.explode('properties')  # 会把properties中每一行的展开为多行
+```
 
 # 读取sqlite
 
@@ -262,6 +277,8 @@ conn.close()
 df.to_dict('records')
 
 ```
+
+
 
 
 # 透视表
