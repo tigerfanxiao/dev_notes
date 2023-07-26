@@ -24,3 +24,6 @@ Sharing
 [DevNet NP的页面](https://developer.cisco.com/certification/devnet-professional/#professional-exam-topic-section)
 
 [DevNet培训资料列表](https://learningnetwork.cisco.com/s/devnet-training-videos?ccid=devnetassociate&dtid=website&oid=cdc-devnetsassociate-step3)
+
+[DevNet购买课程的商店](https://learningnetworkstore.cisco.com/devnet)
+
