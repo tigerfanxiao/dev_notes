@@ -106,6 +106,24 @@ sudo -i # swith to root
 sudo dnf update # 如果 root 一样运行 dnf update 命令
 ```
 
+### 包管理
+
+#### YUM
+yum是一个包管理工具， 安装包是 `.rpm` 结尾的
+```shell
+# 如果已经连接了互联网
+sudo yum install tracertoute
+# 如果没有连接互联网， 安装的包已经下载到本地
+sudo rpm -i <pckage-name>.rpm
+```
+
+DPKG
+```shell
+sudo apt-get install traceroute # 下载并安装
+sudo apt install traceroute # 下载并安装
+sudo dpkg -i <package-name>.deb  # 本地安装
+```
+
 ### Network
 
 ```shell
