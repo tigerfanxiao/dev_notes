@@ -1,9 +1,8 @@
 
 ### 文件系统
 
-- **/bin**: Pronounced "bin," this directory is where most of the binary files are stored. Inside it, you typically find the Linux terminal commands such as cd (change directory), pwd (print working directory), and mv (move).
-    
-- **/boot**: Contains the files necessary for Linux to boot.
+- **/bin**  存储 cd, mv 等命令的 2 进制代码
+- **/boot** 存放开机启动需要的程序
     
 - **/dev**: Here you find your mounted physical devices such as your hard drives, USB drives, and optical drives.
     
@@ -170,3 +169,24 @@ chmod +x bashfile.sh
 # 执行脚本
 sh bashfile.sh  
 ```
+
+
+# 进程
+什么是守护进程
+
+```shell
+top  # 查询当前 CPU 占用, 每个进程对进程的占用, 是 realtime实时的信息, 所以清单会变动, 更具 CPU 占用的比例排序. 当然, 你可以指定排序为 CPU 占用, 内存占用或者 runtime
+htop # human easily read 允许下滑表单,杀死进程
+
+ps   # 查询当前正在活动的进程, 与 top 相比可以接受更多的参数
+ps aux | grep firefox  # 查询所有的进程
+ps aux -sort=-pcpu,+pmem # 根据cpu 占用和内存占用排序
+
+kill <pid>  # 杀死一个进程
+killall firefox # 杀死 firefox 这个进程的所有实例
+pkill # 按进程名删除进程
+
+
+```
+
+
