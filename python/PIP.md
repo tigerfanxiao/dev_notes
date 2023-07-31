@@ -1,6 +1,6 @@
 ```shell
 
-pip search <PACKAGE_NAME>  
+pip search <PACKAGE_NAME>  # 查找包的安装地址
 pip install <PACKAGE_NAME>==1.0.0
 pip install ––upgrade <PACKAGE_NAME
 pip list  # show all installed package

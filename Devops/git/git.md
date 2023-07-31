@@ -1,9 +1,22 @@
 
 # 概念
+git分为四个地方. 
+* 本地 working directory. 其实是当前我们在编程的环境. `git add .` 后放入 stage
+* 本地 stage, 只有被追踪的文件才会被放在 stage 中
+* 本地 repo, 这两面才存在多个不能的代码版本
+* 远程 repo, 这是提交到远端服务器的代码
 
+### 复制仓库
 
-# 编辑代码
+```shell
+git fetch # 把远端的仓库复制到本地的 repository
+git clone <local/path.git> # 只要clone本地项目的git文件, 就能复制项目
+git clone <url>  # 复制远端仓库, 其实也是.git 的文件
 
+```
+
+### fork
+fork将 github 上别人的仓库, 复制到我的空间中, 且保留之前仓库的所有commit
 
 文件状态分为
 * untracked 没有git观察的
@@ -19,6 +32,18 @@ git status
 git commit -m 'initial commit'
 ```
 
+###  查看提交历史
+```shell
+git log -1 # 最近的一次提交
+git log --patch -1 # 第一次的提交修改的具体细节
+git log --oneline # 一行显示
+```
+
+### git diff
+
+```shell
+git diff origin master # 对比远端和本地
+```
 
 # 分支
 本地默认有一个分支, 就是 master, 有些情况下, 会改为 main
