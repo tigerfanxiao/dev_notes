@@ -111,7 +111,14 @@ r = requests.get('https://netlive-de.gts.huawei.com/fbb', verify=False)
 import json
 import requests   
 from requests.auth import HTTPBasicAuth
+# 关闭所有告警
 requests.packages.urllib3.disable_warnings() 
+
+# 关闭 http访问的告警
+from urllib3.exceptions import InsecureRequestWarning  
+from urllib3 import disable_warnings  
+disable_warnings(InsecureRequestWarning)
+
 
 AUTH = HTTPBasicAuth('cisco', 'cisco') # 输入验证
 HEADERS = {'Accept': 'application/yang-data+json',

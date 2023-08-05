@@ -31,3 +31,15 @@ os.listdir(path)
 
 
 ```
+
+# 读取文件夹列表
+
+读取一层
+
+```python
+import os
+
+# 返回但是dir对象， 里面有name属性
+for dir_path in os.scandir(ATTACHMENT_FOLDER):
+	dir_path.name
+```

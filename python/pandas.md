@@ -33,6 +33,11 @@ len(df.index)
 
 ```
 
+读取excel
+```python
+excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
+```
+
 ### 构建DF
 从字典构建df
 ```python
@@ -280,7 +285,6 @@ df.to_dict('records')
 
 
 
-
 # 透视表
 本质上要找两个categorize的分类。 
 index是左边纵向的序列， columns是上面的分类， 合计的计算公式可以自己定义， 不定义的话， 默认是mean
@@ -306,4 +310,14 @@ with pd.ExcelWriter(file_path) as writer:
 	data_frame1.to_excel(writer, sheet_name, index=False)
 	data_frame2.to_excel(writer, sheet_name, index=False)
 
+```
+
+# 压制warning
+
+```python
+import warnings
+
+with warnings.catch_warnings(record=True):  
+	warnings.simplefilter("always")  
+	offboard_df = pd.read_excel(file_path, sheet_name='sheet', engine="openpyxl")
 ```
