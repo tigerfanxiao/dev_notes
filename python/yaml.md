@@ -1,3 +1,24 @@
+# YAML 语法
+
+### 转义
+- 因为 ansible 已经是用 `:[]{}>` 如果要使用这些字符原来的意义, 需要转义
+- YAML 支持直接读取 True 和 False. 如果要读成字符串, 需要双引号
+- YAML 支持直接读取数字. 如果要读成字符串, 需要双引号
+- 
+
+
+用 `>` 来换行
+
+```yaml
+- name: write the apache config file
+- template: src/srv/httpd.js dest=/etc/httpd.conf
+
+# 上面一行可以写成
+- template: >
+	src/srv/httpd.js
+	dest=/etc/httpd.conf
+```
+
 安装包依赖
 ```
 pip install pyyaml
