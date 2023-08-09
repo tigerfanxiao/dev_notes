@@ -148,7 +148,7 @@ Playbook 中的元素
 ---
 - name: playbook name
   hosts: iox-xe # 在 inventory 文件中定义的组或者单台设备, ip 地址, 或者 hostname
-  connection: network_cli # Ansible使用的连接设备的模块
+  connection: network_cli # Ansible core 使用的SSH连接设备的模块
   gather_facts: no  # 是否保存设备的 meta 信息
 
   tasks: # 任务列表
@@ -184,6 +184,8 @@ csr1kv3  node_id=3
 
 ### Ad-Hoc Command
 `-v` 表示 verbose
+`-i` 表示 inventory 文件
+`--check` 表示 dry mode
 
 ```shell
 ansible-playbook -i inventory playbook_name.yml -v 
@@ -192,20 +194,33 @@ ansible-playbook -i inventory playbook_name.yml -v
 
 # 案例
 
-playbook
+ios_config 参数
+`before` 只有在变化的时候, 才会在 commands 执行前运行. 一般和 `match: exact` 连用. 保证 commands 中的内容和顺序不变
+`match` 与 `before` 连用
+`replace: block` 可以替代`match` 与 before 连用. 表示 `before` 执行完之后, `commands` 整理输出
+
 ```yaml
 ---
+  - name: MANAGE ACLS
+    hosts: all
+    connection: network_cli
+    gather_facts: no
 
-- name: MAKE CONFIG CHANGES USING HOST_VARS AND GROUP_VARS
-  hosts: all
-  connection: network_cli
-  gather_facts: no
+    tasks:
 
-  tasks:
-
-    - name: CONFIGURE HOSTNAME USING VARIABLES STORED IN HOST_VARS
-      ios_config:
-        commands: "hostname nycr-{{ node_id }}"
+      - name: Configure ACL on IOSXE 
+        ios_config: 
+          parents: ip access-list extended INBOUND 
+          commands: 
+            - permit ip host 172.16.2.2 any log 
+            - permit ip host 172.16.1.1 any log 
+            - permit ip host 172.16.3.3 any log 
+            - permit ip host 172.16.4.4 any log 
+            - permit ip host 172.16.5.5 any log 
+            - permit ip host 172.16.6.6 any log
+          before: no ip access-list extended INBOUND 
+          replace: block
+          # match: exact
 ```
 
 变量
