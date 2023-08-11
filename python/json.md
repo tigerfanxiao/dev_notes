@@ -37,7 +37,10 @@ json.dumps(one_python_obj, indent=4) # 添加缩进
 
 ```
 
-
+存储到文件
+```python
+json.dump(one_python_obj, file_handler, indent=4) # 写入文件
+```
 ### Deserialization
 反序列化: 将文本发序列化为 python 对象
 ```python

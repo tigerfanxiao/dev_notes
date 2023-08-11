@@ -256,3 +256,39 @@ cisco的模型不只是 ios_config 还有 iosxr等
 ```shell
 ansible-doc ios_config
 ```
+
+## 思科 Ansible组件
+- ios_config
+- ios_fact 用来采集设备信息
+
+### ios_fact 组件
+专门用来采集用了ios系统的思科设备。他的所有 key值都是下面形式 `ansible_net_<fact>`
+- 使用dubug关键词可以用来打印回显的json对象
+- 使用register关键词可以用来把回显的json对象保存在某个变量里
+
+```yaml
+---
+
+  - name: GATHER FACTS FROM CISCO DEVICES
+    hosts: all
+    connection: network_cli
+    gather_facts: no
+
+    tasks:
+      - name: GATHER ALL FACTS
+        ios_facts: # 使用ios_facts组件，采集设备信息
+        gather_subset: all
+        
+	  - name: Gather everything except for hardware
+	    ios_facts:
+	    gather_subset: "!hardware"  # 除了hardware的信息
+
+	  - name: Only gather interface
+	    ios_facts:
+	    gather_subset: "interfaces"
+
+      - name: ACCESS FACTS VARIABLES
+        debug:
+          var: ansible_net_version  # 这里的变量名是iso_facts中定义好的变量名
+
+```
