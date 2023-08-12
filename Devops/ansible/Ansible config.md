@@ -257,11 +257,22 @@ cisco的模型不只是 ios_config 还有 iosxr等
 ansible-doc ios_config
 ```
 
-## 思科 Ansible组件
-- ios_config
-- ios_fact 用来采集设备信息
 
-### ios_fact 组件
+## Anisble自有模块
+
+- debug
+	- var
+	- msg
+- register
+
+- set_fact
+	- table 
+## 思科 Ansible 模块
+- ios_config
+- ios_facts 用来采集设备信息
+- ios_command 里面可以直接下发 show 命令
+
+### ios_facts 组件
 专门用来采集用了ios系统的思科设备。他的所有 key值都是下面形式 `ansible_net_<fact>`
 - 使用dubug关键词可以用来打印回显的json对象
 - 使用register关键词可以用来把回显的json对象保存在某个变量里
@@ -277,11 +288,17 @@ ansible-doc ios_config
     tasks:
       - name: GATHER ALL FACTS
         ios_facts: # 使用ios_facts组件，采集设备信息
-        gather_subset: all
+        gather_subset: all  # 默认值是 !config
         
 	  - name: Gather everything except for hardware
 	    ios_facts:
-	    gather_subset: "!hardware"  # 除了hardware的信息
+		    gather_subset: 
+		      - "!hardware"  # 除了hardware的信息
+		register: not_hardware
+
+	  - name: VIEW CONFIG
+	    debug: 
+	      var: not_hardware # 打印 not_hardware
 
 	  - name: Only gather interface
 	    ios_facts:
@@ -292,3 +309,71 @@ ansible-doc ios_config
           var: ansible_net_version  # 这里的变量名是iso_facts中定义好的变量名
 
 ```
+
+### ios_command 模块
+
+debug可用的参数有 var 和 msg
+- msg 用于输出定制化的字符串
+- var 只用于输出定义好的变量
+
+```yaml
+---
+
+  - name: OPERATIONAL COMMANS ON CISCO
+    hosts: all
+    connection: network_cli
+    gather_facts: no
+
+    tasks:
+
+      - name: SEND A SINGLE COMMAND
+        ios_command:
+          commands: show version # 可以放列表和单个元素
+        register: output  # 把结果保存在 output变量中
+
+      - name: VIEW FIRST ELEMENT OF A LIST
+        debug:
+          var: output['stdout'][0]  # 变量的结果在 stdout 键下的第一个元素
+
+      - name: SEND LIST OF COMMANDS
+        ios_command:
+          commands:  # 可以放列表
+            - show version
+            - show ip interface brief
+        register: output
+
+      - name: VIEW SECOND ELEMENT OF A LIST
+        debug: 
+          var: output['stdout'][1]  # 这是第二个元素
+
+	  - name: STORE DATA IN A FILE
+	    copy: 
+	      content: "{{ output['stdout'][1] }}"
+	      dest: ./outputs/{{ inventory_hostname }}.txt  # 这里 inventory_hostname 是默认的变量. 有多少设备就会写多少个文件
+	  
+	  - name: CREATE TABLE
+        set_fact:  # 创建表格
+          table: |
+
+                  +----------+--------------+
+                  |  HOST    |  {{ inventory_hostname }}     |
+                  +----------+--------------+
+                  | VERSION  | {{ ansible_net_version }}     |
+                  +----------+--------------+
+                  | SERIAL#  | {{ ansible_net_serialnum }}  |
+                  +----------+--------------+
+                  | MODEL    | {{ ansible_net_model }}     |
+                  +----------+--------------+
+
+      - name: VIEW TABLE
+        debug:
+          msg: "{{ table.split('\n') }}"  # 这里支持 python 语法
+	      
+	      
+```
+
+
+### Ansible辅助工具
+
+td4a 是一个渲染 ansible 模板的工具, 且是开源的, 值得研究
+https://github.com/cidrblock/td4a/
