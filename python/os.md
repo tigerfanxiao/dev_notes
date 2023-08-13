@@ -8,6 +8,7 @@ CONFIG_FILE_PATH = os.path.join(os.path.dirname(__file__), 'config.ini')
 
 # 查看文件是否存在
 os.path.isfile(CONFIG_FILE_PATH)
+
 # 查看文件夹是否存在
 os.path.isdir(DIR)
 
@@ -41,5 +42,22 @@ import os
 
 # 返回但是dir对象， 里面有name属性
 for dir_path in os.scandir(ATTACHMENT_FOLDER):
-	dir_path.name
+	dir_path.name  # 变量所有文件夹
+```
+
+
+### 读取所有文件， 但是不包含文件夹
+```python
+
+
+files = (file for file in os.listdir(path) 
+         if os.path.isfile(os.path.join(path, file)))
+
+
+# 生成器
+def list_only_files(path):
+    for file in os.listdir(path):
+        if os.path.isfile(os.path.join(path, file)):
+            yield file
+
 ```
