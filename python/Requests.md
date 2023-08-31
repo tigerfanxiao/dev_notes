@@ -111,8 +111,7 @@ r = requests.get('https://netlive-de.gts.huawei.com/fbb', verify=False)
 import json
 import requests   
 from requests.auth import HTTPBasicAuth
-# 关闭所有告警
-requests.packages.urllib3.disable_warnings() 
+
 
 # 关闭 http访问的告警
 from urllib3.exceptions import InsecureRequestWarning  
