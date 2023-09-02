@@ -188,3 +188,8 @@ git rebase --continue
 
 # rebase -i
 可以用交互的方式修改之前的commit
+
+
+# git bash
+windows上的git bash
+如果要配置开机启动
