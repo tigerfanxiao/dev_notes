@@ -2,6 +2,7 @@
 
 ```python
 from enum import Enum
+
 class Weekday(Enum):
 	MONDAY = 1
 	TUESDAY = 2

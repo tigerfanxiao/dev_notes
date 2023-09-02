@@ -18,7 +18,7 @@ from sqlalchemy import (
     CHAR,  
 )
  # 创建一个数据库，或者连接一个数据库
-engine = create_engine('sqlite:///work.db', echo=True) 
+engine = create_engine('sqlite:///work.db', echo=True)  # 打印日志 INFO
 # 创建了一张表 workers
 meta = MetaData()
 

@@ -1,4 +1,19 @@
 
+### format
+
+固定长度字符串
+```python
+'| {:^10} | {:^10} |'.format(col1, col2)
+```
+
+
+两个字符串拼接
+```python
+my_string = "123" "/223" # = 123223
+print(my_string)
+```
+
+
 ### join()
 join默认是放序列的，但是也可以放 comprehesion
 

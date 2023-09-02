@@ -22,6 +22,8 @@ df.dtypes
 df.size
 # 查询列数和行数
 df.shape
+# 获得列名序列
+list(df.columns)
 
 # 查看头部
 df.head()
@@ -29,6 +31,11 @@ df.head()
 # 查看有多少行
 len(df.index)
 
+```
+
+读取excel
+```python
+excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
 ```
 
 ### 构建DF
@@ -54,7 +61,11 @@ df = pd.DataFrame({'name': ['John', 'Mike'], 'age': [25, 30]})
 # new_row 是 series
 new_row = pd.Series(['Sam', 31], index=df.columns)
 ```
-修改表格中的一列数据
+
+获得一列数据
+```python
+df['col1'].values.tolist()
+```
 
 
 ### 构建Series
@@ -227,7 +238,16 @@ pd.merge(df1, df2, on='business_id', how='outer')
 
 # 构建新的DF
 
+### explode
+如果某一列的元素是一个列表， explode可以对这一列做叉积
 
+```python
+
+df = pd.DataFrame({ 'card': ['1971 Nolan Ryan', '1928 Ogden Don Bradman', '1909 T206 Ty Cobb', '1887 Lone Jack Ben Franklin', '2005 Topps Justin Verlander'], 'properties': [['Baseball', 'Vintage', 'Pitcher'], ['Cricket', 'Pre War'], ['Baseball', 'Pre War', 'Batter'], ['Non Sports', 'Pre War'], ['Baseball', 'Modern', 'Pitcher']] })
+
+# 可以发现 properties里面保存的是一个列表
+df = df.explode('properties')  # 会把properties中每一行的展开为多行
+```
 
 # 读取sqlite
 
@@ -264,6 +284,7 @@ df.to_dict('records')
 ```
 
 
+
 # 透视表
 本质上要找两个categorize的分类。 
 index是左边纵向的序列， columns是上面的分类， 合计的计算公式可以自己定义， 不定义的话， 默认是mean
@@ -289,4 +310,14 @@ with pd.ExcelWriter(file_path) as writer:
 	data_frame1.to_excel(writer, sheet_name, index=False)
 	data_frame2.to_excel(writer, sheet_name, index=False)
 
+```
+
+# 压制warning
+
+```python
+import warnings
+
+with warnings.catch_warnings(record=True):  
+	warnings.simplefilter("always")  
+	offboard_df = pd.read_excel(file_path, sheet_name='sheet', engine="openpyxl")
 ```
