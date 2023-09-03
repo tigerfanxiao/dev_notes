@@ -101,10 +101,10 @@ AC 可以主备部署, 也可以负载分担部署
 
 ```shell
 
-# 查看射频卡
+# 查看射频卡信息
 dis int br
-WLAN RADIO 0/0/0 # 是2.4G 射频卡
-WLAN RADIO 0/0/1 # 是5G的射频卡
+WLAN RADIO 0/0/0 # 一般来说, 0 对应2.4G 射频卡
+WLAN RADIO 0/0/1 # 1对应5G的射频卡
 
 ```
 
@@ -232,6 +232,7 @@ mac 认证一般适合无线打印机, 扫描仪之类的
 
 
 # 配置
+#AP配置思路 
 
 ```shell
 AP上线配置
@@ -249,13 +250,13 @@ country-code CN # CN 是国家码
 regulatory-domain-profile 123  # 关联国家码profile到domain
 
 
-无线设置
+AC无线设置
 1.#wifi名称模板
 ssid-profile name n1  设置wifi设置列表
 ssid shuan   设置wifi名字为shuan
 
 2.#设置密码方式
-security-profile name2 n
+security-profile name n2
 security wpa psk pass-phrase 00000000 aes
 
 3.# vap模板（最终绑定）
@@ -271,11 +272,12 @@ vap-profile n3 wlan 1 radio all   关联vap模板到所有射频卡
 
 ```
 
-配置结构
+#AC配置思路
+ssid: wifi名字, security profile: 密码, Service vlan: VLAN
 ```mermaid
 flowchart LR 
 A[ap-group] --> vap --> B[ssid profile]
-A --> regularity
+A --> E[regularity]
 vap --> C[security profile]
 vap --> D[Service vlan]
 
