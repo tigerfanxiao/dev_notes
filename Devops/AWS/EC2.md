@@ -4,6 +4,9 @@ EC2的集中类型
 3. Spot bid出来的
 4. Dedicated Hosts 裸金属的机子
 
+EC2 计费
+按照小时和分钟计算
+1 个 EC2实例运行 24 个小时的价格和 24 个EC2实例运行 1 个小时一样
 # MAC terminal 访问 ECS
 
 ```bash
