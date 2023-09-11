@@ -23,6 +23,7 @@ ELB VPC Endpoint 允许负载均衡器连接 VPC 内部组件
 
 ### SR-IOV
 
+
 SR-IOV, or Single Root I/O Virtualization, is a feature of Enhanced Networking used to provide higher networking performance. On a normal EC2 instance, multiple EC2 instances may share a single physical network interface on the EC2 Host. SR-IOV effectively dedicates the interface to a single instance, and bypasses parts of the Hypervisor, allowing for better performance
 
 
