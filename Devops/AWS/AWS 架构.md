@@ -49,12 +49,19 @@ AWS DataSync 也是将本地存储传到AWS 云. 速度是普通的 10 倍
 AWS Transfer Family 使用 FTP, SFTP 传输文件给 AWS
 ### Database
 RDS 关系型数据库
-Aurora DB 可以 multi-AZ 备份的数据库
+Aurora DB 支持 Mysql 和 Postgre 可以 multi-AZ 备份的数据库
+Amazon Redshift 数据湖
 Amazon DocumentDB 兼容 MongoDB
 DynamoDB 适合存 IoT设备的小数据
-ElastiCache 数据库缓存, 相当于 Memcached 可以给 RDS 做缓存
+ElastiCache 数据库缓存, 相当于 Memcached/Redis 可以给 RDS 做缓存
  
-
+### Network
+VPC
+AWS Transit Gateway 可以将多个本地和多个 vpc 进行互联
+AWS PrivateLink 本地专线连接 VPC
+AWS Direct Connect Gateway 本地专线连接 AWS, 不经过 internet
+Route53 DNS
+AWS Global Accelerator 利用AWS 全球网络来加速
 ### Edge
 AWS Snow Family 
 AWS Outpost 私有本地的 AWS 云
@@ -71,17 +78,44 @@ Lambda Serviceless
 
 
 ### CDN
-CloudFront CDN 技术
-
-### DNS
-Route 53
+AWS CloudFront CDN 技术
 
 ### 负载均衡
 ELB 接受用户请求, 将请求发给EC2
-ALB
+ALB 后面可以跟 Lambda
 
+
+### Account Management Service
+AWS Control Tower 创建和管理多账户环境
+AWS Organization 集中管理多个 AWS 账户
+AWS Budget 管理开销
+
+### Provision Service
+AWS CloudFormation 自动化部署 AWS 资源, Infrastructure as Code
+AWS Service Catalog 管理你的 AWS 产品
+AWS OpsWork 自动化部署工具,类似 puppet 和 chef
+AWS Marketplace 购买第三方软件的地方
+
+### Operation Service
+Amazon CloudWatch 监控你的服务和日志
+AWS Config 评估你对 AWS 资源的配置
+AWS CloudTrail 记录所有用户的行为
+AWS System Manager 可以用来给 EC2 批量打补丁
+Amazon X-ray 帮助我们 debug 自己搭建的应用
+
+### Machine Learning
+Amazon Kendra 智能查询
+Amazon Personalize 基于个人特性的推荐系统
+Amazon Lookout for metrics 数据分析, 发现数据的突然变化, 并找出原因
+Amazon forecast 建立预测模型
+Amazon Fraud Detector 发现潜在的欺诈
+Amazon Rekogition 从图片和视频中抓取信息
+Amazon Polly 将文本转化为语音
+Amazon Transcribe 将语音转化为文本
+Amazon Lex 聊天机器人 chat bot
+AWS DeepRacer 自动驾驶小车
+CodeGuru 代码审查工具
 
 AWS
 Fargate
-Lambda
 SQS
