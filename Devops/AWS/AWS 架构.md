@@ -15,7 +15,7 @@ Global views but regional
 # Data Protection
 
 Amazon Macie 保护敏感信息
-AWS Key Management Service 保存加密秘钥
+AWS Key Management Service 保存加密秘钥. 数据在传输过程中加密
 AWS CloudHSM 保存基于硬件的的秘钥
 AWS Certificate Manager 部署和管理 SSL 和 TLS 认证
 AWS Secrets Manager 管理或者循环秘钥. 比如连接数据库的秘钥
