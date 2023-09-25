@@ -77,7 +77,7 @@ ipconfig
 ipconfig /all # 查看详细信息包括, dns, dhcp server, lease
 nslookup  # dns
 
-
+ipconfig /flushdns # 刷新dns
 ```
 ping 和 traceroute
 ```shell
