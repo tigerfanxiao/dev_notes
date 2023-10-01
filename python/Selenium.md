@@ -51,7 +51,6 @@ el_username.send_keys("your name")  # 发送数据
 
 ```
 
-
 # 键盘输入
 
 ```python
