@@ -1,4 +1,11 @@
 
+# 安装
+```shell
+# 在centos下用yum安装git
+
+sudo yum install git -y
+
+```
 # 概念
 git分为四个地方. 
 * 本地 working directory. 其实是当前我们在编程的环境. `git add .` 后放入 stage
