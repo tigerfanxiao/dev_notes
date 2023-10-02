@@ -31,6 +31,7 @@ protocol inbound ssh
 ```shell
 # 第一次
 ssh client first-time enable 
+# 在system-view模式下
 stelnet 192.168.1.1
 # 输入用户名和密码
 ```
