@@ -1,7 +1,13 @@
 
-1. 如果交换机已经上电, 不需要对交换机下电
+1. 如果交换机已经上电, 不需要对交换机下电。 重启设备
+```shell
+reboot 
+reboot fast # 不保存配置， 直接重启
+```
 2. ctrl + B 进入 bootrom
-3. 默认bootrom密码是 Admin@huawei.com 
+3. 默认bootrom密码需要查看产品手册
+	V200R003: huawei
+	V200R005C00 and later versions: Admin@huawei
 4. 清除console密码
 ```shell
             MAIN  MENU  
