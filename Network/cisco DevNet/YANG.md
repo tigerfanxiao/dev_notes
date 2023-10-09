@@ -30,7 +30,7 @@ list vlan {
    key "id"; 
    leaf id { 
        type int; 
-       range 1..4094; 
+       range 1..4094; # 1 到 4094
    } 
    leaf name { 
        type string; 

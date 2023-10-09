@@ -11,24 +11,24 @@
 
 
 NAPT 网络地址端口访问
-
+用ACL把内网流量一起通过某个接口转换
 
 ```shell
-# 首先定义一个外网IP的地址族
-
-# 定义一个抓取内网流量的ACL
+# 定义一个ACL抓取内网流量
+acl 2000
+rule 5 permit source 192.168.1.0 0.0.0.255
 
 int g0/0/0
-nat outbound 2000 address-group 0 
+ip add 12.1.1.1 24  # 外网IP
+nat outbound 2000
 ```
 
-easy IP
-不用地址池了, 就用一个公网地址, 然后端口转换来连接外网
+### easy IP 
+不用地址池了, 就用一个公网地址, 进行一对一的映射
 瓶颈是并发端口超过65535
 
-nat server
 ```shell
-# 只映射一台设备
+# 把公网100.1.1.1地址, 映射到内网192.168.1.1
 nat server global 100.1.1.1 inside 192.168.1.1 
 
 ```
