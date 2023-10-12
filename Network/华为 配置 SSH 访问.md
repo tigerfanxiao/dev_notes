@@ -8,7 +8,10 @@ rsa local-key-pair create # 后面选 1024 bit
 2. 创建账户
 ```shell
 aaa
-local-user your_username privelege level 15 password cipher your_password
+local-user your_username privilege level 15 password cipher Huawei@123
+# 或者
+local-user your_username privilge level 15 irreversible-cipher Huawei@123
+# 注意这里 irreversible-cipher 是不可逆的密码
 local-user your_username service-type ssh
 quit
 
