@@ -8,7 +8,12 @@ rsa local-key-pair create # 后面选 1024 bit
 2. 创建账户
 ```shell
 aaa
-local-user your_username privelege level 15 password cipher your_password
+local-user your_username privilege level 15 password cipher Huawei@123
+# 或者
+local-user your_username privilge level 15 irreversible-cipher Huawei@123
+# 注意这里 irreversible-cipher 是不可逆的密码
+local-user your_username service-type ssh
+quit
 
 ```
 3. 启动ssh server
@@ -21,9 +26,16 @@ stelnet server enable
 user-interface vty 0 4
 authentication-mode aaa
 protocol inbound ssh
+quit
+
 ```
 
-配置完成
+5. 配置ssh属性
+```shell
+ssh user your_username authentication-type password # 配置用户ssh认证为密码
+ssh user service-type stelnet # 配置ssh服务类型为stelent
+ssh server port 22622 # 配置ssh登陆端口为22622
+```
 
 
 ### 其他用户访问指定设备

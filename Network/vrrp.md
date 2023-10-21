@@ -3,7 +3,8 @@ VRRP的组播是地址224.0.0.18. 作用是在两个vrrp设备之间建立通信
 
 
 VRRP的主要目的是防止单点故障. 一般是为下行的联络提供出口网关
-将两个网关, 虚拟成一个网关
+将两个网关, 虚拟成一个网关. 同时为这个网关构造一个虚拟的mac地址. 
+0000-5e00-开头
 可以在物理接口下配置, 也可以在vlanif下配置. 但是在接口地下需要有IP地址
 默认的接口vrrp优先级是100, 优先级范围是0-254. 越高越优先
 如果设备挂掉, 设备的优先级会下降10
@@ -36,10 +37,11 @@ vrrp vrid 1 virtual-ip 192.168.1.254 # 在同一个vrid组里
 ```
 
 ### 查看命令
+
 ```shell
 display vrrp verbose 
 display vrrp 
-### 回显
+### 这是在backup设备上看到的回显
 [SW2]display  vrrp
   Vlanif10 | Virtual Router 10
     State : Backup
