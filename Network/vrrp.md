@@ -21,19 +21,12 @@ vrrp vrid 1 virtual-ip 192.168.1.254
 vrrp vrid 1 priority 105
 # 如果主设备的某个接口挂了, 则会降低优先级. 备设备抢占
 vrrp vrid 1 track interface g0/0/0 reduce 10 # 如果接口挂了, 优先级降低10
-
+vrrp vrid 1 preempt-mode timer delay 120 # 抢占延迟120秒
 # backup device
 interface G0/0/0
 ip address 192.168.1.4
 vrrp vrid 1 virtual-ip 192.168.1.254 # 在同一个vrid组里
 
-```
-
-
-
-```shell
- vrrp vrid 1 preempt-mode timer delay 120 # 抢占延迟120秒
- 
 ```
 
 ### 查看命令

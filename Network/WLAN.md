@@ -1,10 +1,10 @@
 
 ### 名词解释
-STA 无线终端
-```shell
-# 查看无线终端的命令
-display station all 
 
+**STA 无线终端**
+```shell
+# hawei 查看无线终端的命令
+display station all 
 ```
 信道: 传输介质
 信宿: AP. AP 可以理解是Hub, 所以一个终端收到的信号, 会被辐射给其他的终端
@@ -169,11 +169,16 @@ BSS Basic Service Set 多个AP一起组成的区域。
 定向天线, 可以用来做 AP 与 AP 之间的桥接. 
 一个 BSS 的服务区内, STA 可以相互通信
 
-BSSID 用 AP 的 Mac 地址来表示, 一个无线网络的标识符
-SSID Service Set Identifier 无线网络的身份标识. 为了用户辨识不同的无线网络, 用 SSID 代替 BSSID
+## SSID
+SSID Service Set Identifier 无线网络的身份标识. 
+### BSSID
+- BSSID 用 AP 的 Mac 地址来表示, 一个无线网络的标识符. 
+- 为了用户辨识不同的无线网络, 用 SSID 代替 BSSID
 
+### VAP
 现在的 AP 上可以创建多个 VAP, 相当于 VLAN. 每个 VAP都有各自的 SSID
 
+### ESS 服务集 
 ESS 服务集 是对 BSS 进行扩展. 当用户从一个 BSS 移动到另一个 BSS 上, 不能感知 SSID 的变化.
 采用相同的 SSID, 多个 BSS 组成的更大范围的虚拟 BSS. 用户在切换 AP 的过程中, 可能出现卡顿, 丢包. 
 
