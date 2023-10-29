@@ -51,7 +51,20 @@ Global views but regional
 -  DynamoDB
 
 
-# Data Protection
+# AWS 服务
+
+
+### 情景分类
+
+### API
+
+### Webhook
+使用Amazon API Gateway
+### On-premise
+- 对on-premise设备上的指标metrics进行监控. 用 AWS Application Discovery Agent
+- 对On-premise的迁移方案进行分析 AWS Migration Hub
+
+### Data Protection
 
 Amazon Macie 保护敏感信息
 AWS Key Management Service 保存加密秘钥. 数据在传输过程中加密
