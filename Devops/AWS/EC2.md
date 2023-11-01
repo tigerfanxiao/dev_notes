@@ -90,3 +90,6 @@ ssh ec2-user@34.229.236.39 -i mykey.pem
 sudo su
 yum update 
 ```
+
+# Auto Scaling Group
+Auto Scaling Group的实例可以跨多个AZ

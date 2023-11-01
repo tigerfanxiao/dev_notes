@@ -1,6 +1,13 @@
 AWS 架构学习 可以 查找 [AWS Architecture BLOG](https://aws.amazon.com/cn/blogs/architecture/)
 
 # 概念
+
+CSP Cloud Service Provider
+DR Disaster Recovery 灾备
+RTO Recovery Time Objective 灾难发生后, 多少时间可以恢复服务
+RPO Recovery Point Objective 灾难发生前, 多少时长的数据可以被丢失
+SAML Security Assertion Markup Language 允许用同一个账户密码访问多个网站
+
 ### 传统时间和AWS世界
 
 - 在传统世界做Devops不是不可能，而是非常困难。 基本上只能做到局部或者一个很小范围的自动化。 因为:
