@@ -8,6 +8,8 @@
 2. 快速在其他 region 构建备份站点
 
 
+区分 Template和Stack
+
 
 DeletionPolicy 控制用户不能随便删除资源
 
@@ -23,3 +25,6 @@ DeletionPolicy 控制用户不能随便删除资源
     }
 }
 ```
+
+
+可以用AWS Service Catelog 分享 Portfolio的方法, 分享基础设施, 环境的构建方案

@@ -1,0 +1,1 @@
+AWS CodeDeploy有agent可以装在EC2上, 也可以直接坐在AMI里面, 用来Deploy code

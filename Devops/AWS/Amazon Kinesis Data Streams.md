@@ -1,0 +1,1 @@
+用来realtime处理采集到的sensor数据. 如果处理完的数据需要存储, 则用 Kinesis Data Firehose去接受这些数据存储到别的地方去

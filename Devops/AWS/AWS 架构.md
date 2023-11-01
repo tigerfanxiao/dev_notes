@@ -8,6 +8,9 @@ RTO Recovery Time Objective 灾难发生后, 多少时间可以恢复服务
 RPO Recovery Point Objective 灾难发生前, 多少时长的数据可以被丢失
 SAML Security Assertion Markup Language 允许用同一个账户密码访问多个网站
 
+# 产品
+Grafana 使用Data Visualizaion 工具. AWS提供了 Grafana workspace 
+Splunk 大数据分析平台
 ### 传统时间和AWS世界
 
 - 在传统世界做Devops不是不可能，而是非常困难。 基本上只能做到局部或者一个很小范围的自动化。 因为:

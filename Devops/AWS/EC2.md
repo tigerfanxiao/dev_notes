@@ -34,7 +34,7 @@ EC2的集中类型
 	2. Partial upfront 支付部分
 	3. No upfront 不支付
 3. Spot Market  
-4. Saving Plans 承诺最低消费. 可以有优惠
+4. Compute Saving Plans 承诺最低消费. 可以有优惠
 	1. 计算Saving Plans 最高可以节省 66%
 	2. EC2实例 最高到72%
 5. Dedicated Hosts 裸金属的机子
@@ -93,3 +93,5 @@ yum update
 
 # Auto Scaling Group
 Auto Scaling Group的实例可以跨多个AZ
+Auto Scaling Group 有template
+

@@ -3,20 +3,11 @@
 RDS支持的数据库引擎
 - MySQL
 - MariaDB
-- Microfit SQLserver
+- Microfit SQL server
 - Postgre SQL
 - Oracle
 - Amazon Aurora
 
-
-## Aurora
-Amazon Aurora is belong to RDS
-Amzon Aurora is 5 times faster than MySQL
-By default, RDS has 16TB volume
-Two key features
--   Multi-AZ-For Disaster Recovery
--   Read Replicas-For Performance
--   6 copies by default
 
 ### OLTP vs OLAP
 OLTP是写操作比较多， OLAP是读操作比较多

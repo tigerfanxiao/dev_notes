@@ -1,0 +1,1 @@
+如果遇到DDos攻击. 比如发现大量API验证请求来瘫痪API服务. 且这些Fail的请求都来自500个IP地址. 可以使用Web ACL将他们block掉. Web ACL则部署在ALB上
