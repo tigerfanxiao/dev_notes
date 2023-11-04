@@ -59,8 +59,12 @@ the types of data being transmitted, and the latency created by the number of ne
 Latency is the amount of time, including delays, for data to travel from one given point to another.
 
 
-**延迟**
-Delay是指网络两个节点之间数据传输的延迟, 用Latency来度量(数据从一个节点到另一个节点所需要的时间)
+**延迟Latency**
+延迟是指网络两个节点之间数据传输的延迟, 用Latency来度量(数据从一个节点到另一个节点所需要的时间)
+
+**抖动**
+抖动是指延迟的变化. 比如一个时间点上链路的延迟是 10ms, 另一个时间点上同一个链路的延迟还 15ms. 那么我们称抖动为 5ms
+
 
 What are the most used wireless technology?
 WiFi, Bluetooth, NFC (Near Field Communication), GPS
