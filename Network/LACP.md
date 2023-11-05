@@ -1,6 +1,6 @@
-Link Aggregation 把多个物理接口合并成一个接口, 用来扩大带宽
-以太网的捆绑技术, 在华为中称为 Ethernet Trunk或者Eth-Trunk
 
+静态和动态
+mode lacp-static
 
-
-bggto]
+LACP 主备模式， 备链路只在主链路断的时候才激活
+LACP 负载分担模式， 2 条 GE 电缆链路
