@@ -28,13 +28,29 @@ ip address dhcp-alloc
 ```
 # DHCP 服务器
 
-地址池为当前接口网段内的
+### 使用接口网段为地址池
 
 ```shell
 dhcp enable
 int g0/0/0 # 可以直接在物理口下做, 也能在vlanif下做
 ip add 192.168.1.254 255.255.255.0
-dhcp selelct interface 
+dhcp selelct interface  # 这里interfacw指接口的地址池
+
+```
+
+### 配置全局地址池
+```shell
+ip pool office
+network 10.1.1.0 mask 255.255.255.128
+dns-list 10.1.2.3
+gateway-list 10.1.1.1
+lease day 10
+quit
+
+# 调用地址池
+interface vlanif 10
+dhcp select global # 这里global指全局地址池
+
 ```
 
 
