@@ -1,4 +1,3 @@
-
 静态和动态
 mode lacp-static
 
