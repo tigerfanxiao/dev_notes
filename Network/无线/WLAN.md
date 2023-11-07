@@ -273,33 +273,38 @@ mac 认证一般适合无线打印机, 扫描仪之类的
 AP上线配置
 1.设置隧道地址
 capwap source interface vlan 1   用vlan1作为和ap通信的地址，隧道地址
-wlan  进入wlan模式
+
 2.接入方式无认证
-ap auth-mode no-auth   设置ap接入的时候不做认证
+wlan  进入wlan模式
+ ap auth-mode no-auth   设置ap接入的时候不做认证
 
 # 设置国家码
-regulatory-domain-profile name 123 # 123 是 profile的名字
-country-code CN # CN 是国家码
- ap-group name default  关联域
+wlan
+ regulatory-domain-profile name 123 # 123 是 profile的名字
+ country-code CN # CN 是国家码
+ 
+ ap-group name default  # 创建一个ap组, 叫default
 
 regulatory-domain-profile 123  # 关联国家码profile到domain
 
 
-AC无线设置
-1.#wifi名称模板
+# 1. 配置ssid模板
 ssid-profile name n1  设置wifi设置列表
 ssid shuan   设置wifi名字为shuan
+quit
 
-2.#设置密码方式
+# 2. 配置wifi密码
 security-profile name n2
-security wpa psk pass-phrase 00000000 aes
+security wpa psk pass-phrase 12345678 aes
+quit
 
-3.# vap模板（最终绑定）
+# 3. vap模板（最终绑定）
 vap-profile name n3
-forward-mode direct-forward  本地转发
-service-vlan vlan-id 20   绑定ssid关联的vlan
-security-profile n2  绑定安全密码信息
-ssid-profile n1 绑定ssid名称
+forward-mode direct-forward  # 默认是本地转发, 可以不配置
+service-vlan vlan-id 20   # 绑定ssid关联的vlan
+security-profile n2  # 绑定安全密码信息
+ssid-profile n1 # 绑定ssid名称
+quit
 
 4.#针对ap组下发
 ap-group name default  进入到默认的组，默认ap上线都在里面
