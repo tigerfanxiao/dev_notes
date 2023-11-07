@@ -58,6 +58,15 @@ ZTP: 零配置开局
 ### CAPWAP 协议
 Control And Provisioning of Wireless Access Points Protocol Specification 无线接入点控制和配置协议, 是一种三层隧道。 前身是思科私有的 Lapwap 协议
 因为是一种三层隧道技术， 所以AP和AC都需要IP地址来通信实现带外管理。 但是终端用户的流量是二层的
+注意: CAPWAP协议是不打标签的. 所以AP交换机的接口trunk时, 要把默认vlan改为AC和AP的管理VLAN
+```shell
+# 核心交换机连接AP的接口trunk配置
+int g0/0/1
+port link-type trunk
+port trunk pvid vlan 20 # vlan 20为 AP和AC之间的通信的vlan, 不打标签
+
+```
+
 
 * AC 和 AP 的通信使用 CAPWAP 协议. 本质上是一种隧道技术, 用来管理 AP 的. 
 * 可以承载 802.11 帧做数据转发. 

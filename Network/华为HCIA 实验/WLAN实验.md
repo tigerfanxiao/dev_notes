@@ -1,6 +1,6 @@
 
 # 场景描述
-1. 实现AC和两个AP的二层互联
+1. 实现AC和两个AP的二层互联. 业务流量不经过AC, 走核心交换机
 2. 核心交换机下连两台AP, 且有有线连接
 3. 允许无线终端设备连接两台AP组成的BSS
 
@@ -18,7 +18,7 @@
 ### 核心交换机配置
 1. 在交换机上创建3个vlan
 	1. vlan 10 用户给物理连线的用户使用
-	2. vlan 20 用于AC和AP之间的管理流量, 一般这种流量是不打标签的
+	2. vlan 20 用于AC和AP之间的管理流量. CAPWAP流量不打标签
 	3. vlan 30 用户给无线终端的流量, 这些流量会被打上标签30
 2. 开启dhcp
 	1. 给AP分配ip地址
@@ -30,7 +30,7 @@ sysname SW1
 dhcp enable  # 开启
 vlan batch 10 20 30
 
-ip pool sta
+ip pool sta # 交换机给给无线终端分配地址
 gateway-list 192.168.30.1
 network 192.168.30.0 mask 24
 
@@ -56,10 +56,13 @@ interface g0/0/1
 port link-type access
 port default vlan 10
 
-# 对端接AP1, 带外管理
+# 对端接AP1, 
+# 带外管理, 必须要配置pvid出去vlan20的标签, 因为CAPWAP是不用标签的. 
 int g0/0/2
+# 必须配置成trunk, 因为管理流量vlan20和业务流量vlan30都要走这个接口
 port link-type trunk
-port trunk pvid vlan 20  # 配置默认vlan是20, 这是AP的管理流量. 如果收到流量打上20的tag, 出去的话, 剥离20
+# 配置默认vlan是20, 这是AP的管理流量. 如果收到流量打上20的tag, 出去的话, 剥离20
+port trunk pvid vlan 20 
 port trunk allow-pass vlan all # 放通所有vlan, 2 到 4094
 
 # 对端接AP2
@@ -148,3 +151,10 @@ dis int br
 display station all
 display ap all 
 ```
+
+
+
+# 排错
+
+1. 如果STA没有获得IP地址, 则在手机上看到的图标是一个感叹号
+2. 
