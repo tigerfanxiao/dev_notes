@@ -27,8 +27,46 @@ nat outbound 2000
 不用地址池了, 就用一个公网地址, 进行一对一的映射
 瓶颈是并发端口超过65535
 
+用ip地址配置
 ```shell
 # 把公网100.1.1.1地址, 映射到内网192.168.1.1
 nat server global 100.1.1.1 inside 192.168.1.1 
 
+```
+
+**在接口下通过抓取流量来配置** 
+这种方法不再局限于单个流量入口
+```shell
+# 通过一个acl把需要出去的流量抓出来
+
+acl number 2001  
+ rule 5 permit source 192.168.10.0 0.0.0.255 
+ rule 10 permit source 192.168.11.0 0.0.0.255 
+ rule 15 permit source 192.168.20.0 0.0.0.255 
+ rule 20 permit source 192.168.30.0 0.0.0.255 
+#
+
+interface g0/0/7
+undo portswitch
+description TO_INET
+ip add 178.19.44.122 255.255.255.248  # /29 的ip地址
+nat outbound 2001 # 把 Acl 2001的流量做nat地址转换
+
+# 运营商一般要求调整速率
+undo negotiation auto
+speed 1000
+
+```
+
+
+### 查看NAT状态
+```shell
+<AR_backup>dis nat outbound 
+ NAT Outbound Information:
+ --------------------------------------------------------------------------
+ Interface                     Acl     Address-group/IP/Interface      Type
+ --------------------------------------------------------------------------
+ GigabitEthernet0/0/7         2001                        0.0.0.0    easyip  
+ --------------------------------------------------------------------------
+  Total : 1
 ```

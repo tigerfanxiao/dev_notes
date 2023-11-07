@@ -44,7 +44,7 @@ rule 5 permit tcp source 192.168.1.2 0 destination 192.168.2.1 0 destination-por
 入站时, 先查ACL, 如果允许再查路由表
 在出站时, 先查路由表, 再查ACL
 
-```
+```shell
 在入方向
 acl 2000
 rule 10 deny 192.168.1.1 0.0.0.0
