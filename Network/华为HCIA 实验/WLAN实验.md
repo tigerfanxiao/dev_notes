@@ -6,6 +6,7 @@
 
 
 # 拓扑
+
 ![[Pasted image 20230703010610.png]]
 
 # 配置
@@ -25,17 +26,17 @@
 	2. 给无线终端分配ip地址
 
 ```shell
-sysname SW1
+sysname SW_CORE
 
-dhcp enable  # 开启
+dhcp enable  # 开启DHCP给AP分配IP地址
 vlan batch 10 20 30
 
 ip pool sta # 交换机给给无线终端分配地址
 gateway-list 192.168.30.1
 network 192.168.30.0 mask 24
 
-ip pool vlan20  # 创建global 地址池
-gateway-list 192.168.20.1
+ip pool vlan20  # 创建global地址池
+gateway-list 192.168.20.1 # 网关为AC的地址
 network 192.168.20.0 mask 24
 
 # 作为vlan10的网关
@@ -45,7 +46,8 @@ ip add 192.168.10.1 255.255.255.0
 # 给AP分配IP地址, 否则无法被AC发现, 地址和AC在同一个广播域内
 interface vlanif20  
 ip add 192.168.20.1 255.255.255.0
-dhcp select global  # 配置自己称为dhcp server, 这里会根据vlanif接口的已经配置的ip地址, 自动找到地址池. 
+dhcp select global  
+# 根据当前接口ip地址所在的网段, 找到已经设置的地址池, 进行ip地址分配
 
 interface vlan 30
 ip add 192.168.30.1 255.255.255.0
@@ -80,25 +82,22 @@ port default vlan 20
 
 
 ### AC的配置
+
 ```shell
-# AC配置
 
 # 因为 AC和AP通过vlan 20互联
 vlan batch 20
-
-
-# 这个接口是用来和vlanif10通信的
-interface Vlanif20                        
- ip address 192.168.20.200 255.255.255.0
-
-
 # 在vlan 20中和AP交互
 interface GigabitEthernet0/0/1
  port link-type access
  port default vlan 20
 
-# 因为实现pc telnet AC, 需要配置一条默认路由指向SW
+# 这个接口是用来和管理的
+interface Vlanif20                        
+ ip address 192.168.20.200 255.255.255.0
+# 需要配置一条默认路由指向SW_CORE
 ip route-static 0.0.0.0 0 192.168.20.1
+
 ```
 
 ### 在AC上配置wifi
