@@ -42,6 +42,7 @@ dhcp selelct interface  # 这里interfacw指接口的地址池
 
 ### 配置全局地址池
 ```shell
+dhcp enable
 ip pool office
 network 10.1.1.0 mask 255.255.255.128
 dns-list 8.8.8.8
@@ -59,8 +60,7 @@ dhcp select global # 这里global指全局地址池
 因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 或者三层交换机的vlanif, 就要把三层交换机或者路由器配置成DHCP 中继. 把广播变成到DHCP服务器的单播. 
 
 中继设备配置
-```shell
-dhcp enable
+```shelldhcp enable
 int g0/0/0
 dot1q termination vid 20
 ip add 192.168.20.1 255.255.255.0
