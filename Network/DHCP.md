@@ -34,6 +34,8 @@ ip address dhcp-alloc
 dhcp enable
 int g0/0/0 # 可以直接在物理口下做, 也能在vlanif下做
 ip add 192.168.1.254 255.255.255.0
+dhcp server excluded-ip-address 192.168.1.100 192.168.1.199 # 保留,不分出去
+dhcp server dns-list 8.8.8.8  # 配置dns
 dhcp selelct interface  # 这里interfacw指接口的地址池
 
 ```
@@ -42,7 +44,7 @@ dhcp selelct interface  # 这里interfacw指接口的地址池
 ```shell
 ip pool office
 network 10.1.1.0 mask 255.255.255.128
-dns-list 10.1.2.3
+dns-list 8.8.8.8
 gateway-list 10.1.1.1
 lease day 10
 quit
@@ -52,20 +54,6 @@ interface vlanif 10
 dhcp select global # 这里global指全局地址池
 
 ```
-
-
-更多配置
-保留地址, 应对有些服务器的IP是静态的, 不要分配出去
-```shell
-dhcp enable
-int g0/0/0
-ip add 192.168.1.1 255.255.255.0
-dhcp select interface
-dhcp server excluded-ip-address 192.168.1.100 192.168.1.199 # 保留,不分出去
-dhcp server dns-list 8.8.8.8
-
-```
-
 
 ### DHCP 中继
 因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 或者三层交换机的vlanif, 就要把三层交换机或者路由器配置成DHCP 中继. 把广播变成到DHCP服务器的单播. 
