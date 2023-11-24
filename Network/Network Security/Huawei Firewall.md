@@ -274,9 +274,33 @@ HRP 配置方法
 
 ```shell
 
-hrp enable # 在主备设备上都要开启
+hrp enable # 在主备设备上都要开启. 在主备设备没有联通的情况下, 都是 standby
 hrp interface g0/0/7 # 在主备设备上互相指对方是心跳口. 主要物理连线正常
 
 int g0/0/7
-ip add 192.168.2.2 24 p
+ip add 192.168.2.1 30
+
+firewall zone trust
+add interface g0/0/7  # 两个
+
+dis hrp state  # 查看 hrp 状态, 主设备会显示 master
+
+```
+
+
+### NAT 配置方法
+1. 配置 address-group. 如果是两条出口链路, 需要独立创建两个zone
+
+```shell
+
+nat address-group group1
+route enable 
+# 这里指 192.168.1.2 到 192.168.1.5 三个 ip 地址
+section 0 192.168.1.2 192.168.1.5 # 做源 NAT 转换
+
+nat-policy
+rule name policy-nat1
+source-zone trust
+destination-zone untrust
+action source-nat address group1 # 这里引用 address-group
 ```
