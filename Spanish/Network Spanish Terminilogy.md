@@ -17,6 +17,9 @@
 我们有内部流程无法跳过 tenemos procedimientos internos que no podemos saltarnos
 尽快 a la mayor brevedad 
 注意 Ten en cuenta
+塑料板 pladur
+玻璃墙  un muro de cristal
+
 
 ### 仓库
 仓库的横梁 vigas
