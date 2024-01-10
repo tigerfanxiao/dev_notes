@@ -90,6 +90,7 @@
 DIA Fibra Dedicada
 宽带 banda ancha
 单模光纤 mediante fibra monomodo
+验证光纤 Certificar la fibra
 
 ### 无线
 AP Punto de acceso

@@ -235,7 +235,7 @@ display version
 ```
 
 huawei 企业网 e.huawei.com -> 技术支持 ->产品和解决方案支持 -> 安全
-<<<<<<< HEAD
+
 
 
 
@@ -303,4 +303,47 @@ rule name policy-nat1
 source-zone trust
 destination-zone untrust
 action source-nat address group1 # 这里引用 address-group
+```
+
+
+IP link 
+探针检测
+
+```shell
+ 
+ip-link check enable
+ip-link name to-dia
+ destination 8.8.8.8 interface GigabitEthernet0/0/4 mode icmp next-hop 192.168.4.1
+
+
+ip route-static 0.0.0.0 0.0.0.0 192.168.4.1 track ip-link to-dia
+ip route-static 0.0.0.0 0.0.0.0 192.168.0.1 preference 61 
+
+nat address-group ftth
+mode pat 
+route enable 
+section 0 192.168.4.242 192.168.4.242
+
+nat address-group 5g
+mode pat 
+route enable 
+section 1 194.168.0.242 194.168.0.242
+
+nat-policy
+rule name nat_ftth
+ source-zone trust
+ destination-zone untrust
+ source-address 192.168.20.0 255.255.255.0
+ source-address 192.168.30.0 255.255.255.0
+ source-address 192.168.40.0 255.255.255.0
+ action source-nat address-group ftth
+ 
+rule name nat_5g
+ source-zone trust
+ destination-zone untrust
+ source-address 192.168.20.0 255.255.255.0
+ source-address 192.168.30.0 255.255.255.0
+ source-address 192.168.40.0 255.255.255.0
+ action source-nat address-group 5g
+
 ```

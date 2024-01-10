@@ -52,6 +52,7 @@ quit
 
 # 调用地址池
 interface vlanif 10
+ip add 10.1.1.1 24
 dhcp select global # 这里global指全局地址池
 
 ```
