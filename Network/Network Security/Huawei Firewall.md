@@ -312,11 +312,11 @@ IP link
 ```shell
  
 ip-link check enable
-ip-link name to-dia
- destination 8.8.8.8 interface GigabitEthernet0/0/4 mode icmp next-hop 192.168.4.1
+ip-link name to-ftth
+ destination 8.8.8.8 interface wan0/0/0 mode icmp next-hop 192.168.4.1
+# display ip-link # 查看ip-link是否配置成功
 
-
-ip route-static 0.0.0.0 0.0.0.0 192.168.4.1 track ip-link to-dia
+ip route-static 0.0.0.0 0.0.0.0 192.168.4.1 track ip-link to-ftth
 ip route-static 0.0.0.0 0.0.0.0 192.168.0.1 preference 61 
 
 nat address-group ftth
