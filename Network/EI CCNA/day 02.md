@@ -135,3 +135,5 @@ switchport mode access
 switchport access vlan 10
 
 ```
+
+注意一个点, 当你把两个接口划分到一个 vlan 中后, 并不会马上就通. 因为交换机默认是开启生成树. 它会有个判断是否有环路, 过一阵后才能处于转发状态. 
