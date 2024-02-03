@@ -53,7 +53,8 @@ MPLS 的含义
 MPLS 特征
 * 标签对应的是目的地址的路由前缀. 
 * MPLS 依赖 IP 路由即 CEF 交换. 因为标签是基于路由生成的. 需要打开 ip cef
-
+注: CEF Cisco Express Forwarding 快速转发表. 保存在内存中的 routing table
+NSF No Stop Forwarding: makes the routing information maintained by CEF available to the backup route procesor.
 
 # MP-BGP
 在 MPLS 网络中, 我们通过 VRF 来接受和隔离不同客户的内网路由. 这里我们面对两个问题: 
