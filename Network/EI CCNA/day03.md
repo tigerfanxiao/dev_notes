@@ -57,3 +57,8 @@ route print
 ```shell
 show arp # 查看交换机上的 arp
 ```
+
+三层交换机工作原理
+1. 先看路由
+2. 在看 arp
+3. 再看 mac 地址表
