@@ -87,8 +87,11 @@ UDP 是允许丢包的. TCP 有重传的机制
 TCP 用端口号来标识应用, 源端口号是大于 1023 的随机端口, 目的端口一般是约定的
 TCP 经典的三次握手
 
+以下是 TCP 三次握手包的查询方式
+
 ```shell
 wireshark
 tcp.port == 443
-tcp.flags.syn == 2 # 2=01
+tcp.flags.syn == 2 # 2=01 因为 TCP 的 SYN 包的 flag 置位是 01
 ```
+
