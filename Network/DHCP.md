@@ -1,7 +1,7 @@
 DHCP 流程
 1. Client 发送 DHCP Discovery 广播
 2. DHCP Server 发送 DHCP Offer 单播 携带分配的 IP 地址, 服务器的 IP 地址(Option43 包括DNS, email服务器地址, 网关, AC, 云管平台等信息) 
-3. 客户发送 DHCP Request 广播. 因为网络中可能存在多个DHCP服务器给我发了offer, 所以我要广播一下我决定使用那个Offer中IP. 然后其他DHCP服务器就会收回发给的我offer中的IP地址
+3. 客户发送 DHCP Request 广播. 因为网络中可能存在多个DHCP服务器给我发了offer, 所以我要广播一下我决定使用那个Offer中IP. 然后其他DHCP服务器就会收回发给的我offer中的IP地址(一般情况下谁先来就用谁的)
 4. 真正的DHCP, 会保留发送的IP地址和租期, 服务器发送 DHCP Ack
 
 ```mermaid
@@ -58,8 +58,10 @@ dhcp select global # 这里global指全局地址池
 ```
 
 ### DHCP 中继
-因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 或者三层交换机的vlanif, 就要把三层交换机或者路由器配置成DHCP 中继. 把广播变成到DHCP服务器的单播. 
+DHCP 中继是一种常见的技术
+因为路由器隔绝广播域, 所以如果要使DHCP dicover 穿越路由器, 或者三层交换机的vlanif, 就要把三层交换机或者路由器配置成DHCP 中继. 把广播变成指向DHCP服务器的单播. 
 
+在网络中也可以使用服务器来做 DHCP Server
 中继设备配置
 ```shelldhcp enable
 int g0/0/0
