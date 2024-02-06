@@ -8,7 +8,6 @@ SASE 包含了 SD-WAN
 # 在三层交换机上配置把二层口切换成三层
 int g0/0/1
 no switchport 
-
 ```
 
 
