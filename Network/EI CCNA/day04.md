@@ -94,3 +94,36 @@ tcp.port == 443
 tcp.flags.syn == 2 # 2=01 因为 TCP 的 SYN 包的 flag 置位是 01
 ```
 
+
+```shell
+# 查看 nat 会话映射 137.78.1.100 是目标网段
+show ip nat translation  | in 137.78.1.100 
+```
+
+一般能买到的域名是二级域名 即 cisco.com在这个基础上可以做三级域名, 比如 `mail.cisco.com`, `www.cisco.com`
+
+```shell
+# 路由器连接公网的接口上
+int e0/2
+ip add 202.100.10.254 255.255.255.0
+ip nat outside
+
+# 路由器连接核心交换机的接口上
+int g0/0
+ip add 10.1.1.254 255.255.255.0
+ip nat inside  # 所有的内网流量都会走到这个物理接口
+
+# 流量的三个来源
+ip access-list standard xiao_pat
+permit 10.1.10.0 0.0.0.255 
+permit 10.1.20.0 0.0.0.255
+permit 10.1.100.0 0.0.0.255
+
+ip nat inside source list xiao_pat interface e0/2 overload
+```
+
+
+把内网的 ip 地址映射到可以给外网访问
+```shell
+ip nat inside source static 10.1.100.100 202.100.10.100
+```
