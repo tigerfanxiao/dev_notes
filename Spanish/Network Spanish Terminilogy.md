@@ -68,6 +68,7 @@
 电线 Manguera eléctrica
 仓库的灯 faco
 电工合格凭证 boletín de electricista
+插排 schuko , regleta con 6 echufe
 
 ### 会面
 告诉我们会面的时间点 indica el horario de visita 
