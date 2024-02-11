@@ -12,6 +12,15 @@
 为您们服务 a vuestra disposition
 满足你的需求  cubrir tu demando
 注册资金 Capital Social
+预付款 para proceder al pago anticipado
+预付款发票 factura proforma
+我们有内部流程无法跳过 tenemos procedimientos internos que no podemos saltarnos
+尽快 a la mayor brevedad 
+注意 Ten en cuenta
+塑料板 pladur
+玻璃墙  un muro de cristal
+
+
 ### 仓库
 仓库的横梁 vigas
 桥架 Bandeja de canalizacion
@@ -59,6 +68,7 @@
 电线 Manguera eléctrica
 仓库的灯 faco
 电工合格凭证 boletín de electricista
+插排 schuko , regleta con 6 echufe
 
 ### 会面
 告诉我们会面的时间点 indica el horario de visita 
@@ -80,6 +90,8 @@
 ### 网络
 DIA Fibra Dedicada
 宽带 banda ancha
+单模光纤 mediante fibra monomodo
+验证光纤 Certificar la fibra
 
 ### 无线
 AP Punto de acceso
@@ -93,6 +105,7 @@ AP Punto de acceso
 室内装修 diseño interior / interiorismo
 我需要电视机的尺寸 necesito medidas de los televisores
 报价和初步布局设计 os enviamos oferta económica junto con el planteamiento de distribución preliminar.
+过道 zonas de tránsito
 
 ### 安防
 防入侵系统 Sistema anti intrucsión
