@@ -95,3 +95,5 @@ tcp.port == 443
 tcp.flags.syn == 2 # 2=01 因为 TCP 的 SYN 包的 flag 置位是 01
 ```
 
+一般三层交换机都不支持NAT
+
