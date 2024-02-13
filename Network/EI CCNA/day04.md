@@ -8,7 +8,6 @@ SASE 包含了 SD-WAN
 # 在三层交换机上配置把二层口切换成三层
 int g0/0/1
 no switchport 
-
 ```
 
 
@@ -95,5 +94,51 @@ tcp.port == 443
 tcp.flags.syn == 2 # 2=01 因为 TCP 的 SYN 包的 flag 置位是 01
 ```
 
+<<<<<<< HEAD
 一般三层交换机都不支持NAT
 
+=======
+
+```shell
+# 查看 nat 会话映射 137.78.1.100 是目标网段
+show ip nat translation  | in 137.78.1.100 
+```
+
+一般能买到的域名是二级域名 即 cisco.com在这个基础上可以做三级域名, 比如 `mail.cisco.com`, `www.cisco.com`
+
+```shell
+# 路由器连接公网的接口上
+int e0/2
+ip add 202.100.10.254 255.255.255.0
+ip nat outside
+
+# 路由器连接核心交换机的接口上
+int g0/0
+ip add 10.1.1.254 255.255.255.0
+ip nat inside  # 所有的内网流量都会走到这个网关
+
+# 流量的三个来源
+ip access-list standard xiao_pat
+permit 10.1.10.0 0.0.0.255 
+permit 10.1.20.0 0.0.0.255
+permit 10.1.100.0 0.0.0.255
+
+# 从 inside 接口来的原地址可以匹配 xiao_pat 列表的流量, 复用 e0/2 接口的 IP 地址
+ip nat inside source list xiao_pat interface e0/2 overload
+```
+
+
+思科叫静态转换. 把内网的 ip 地址映射到可以给外网访问
+而且是双向的, 就是内网 10.1.100.100 的流量出去转为 202.100.10.100. 如果外网访问 202.100.10.100 则转为内网地址 10.1.100.100
+注意: 这个 202.100.10.100 并不是某个接口地址, 而是在公网地址相同的网段上
+```shell
+int e0/2
+
+ip nat inside source static 10.1.100.100 202.100.10.100
+```
+
+注意: 国内防火墙厂商, 只管目的, 就是只转换到进来的, 出去的不管
+
+这个静态转换有问题? 还要再看
+静态转换比动态转换优先
+>>>>>>> 8c24ceab035e42ceb688423c66994ed333384729
