@@ -19,3 +19,24 @@ Central NAT 貌似是在一个集中的地方做 SNAT
 1. 防火墙可以控制大量下载
 2. 每个用户的最大并发数量
 
+在配置静态 NAT 时候, 防火墙默认是否是支持代理 ARP 的? 可能需要手工激活. 因为我们也没法查看ISP网关的 ARP 表
+
+
+接口下 dhcp 配置方法
+
+```shell
+config system dhcp server 
+    edit 1  
+        set dns-service default  
+        set default-gateway 192.168.1.1  
+        set netmask 255.255.255.0  
+        set interface "port1"  
+            **config ip-range**  
+                edit 1  
+                    set start-ip 192.168.1.2  
+                    set end-ip 192.168.1.254  
+                next  
+            end  
+    next  
+end
+```
