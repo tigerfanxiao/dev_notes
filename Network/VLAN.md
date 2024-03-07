@@ -103,7 +103,7 @@ port default vlan 20 #  收到包后打上 tag 20, 发出的时候剥离20
 # 将access口改为trunk
 int g0/0/0
 undo port default vlan # 注意这里不要加vlan 编号， undo port default vlan 10会报错
-port type trunk 
+port link-type trunk 
 ```
 
 ```shell
@@ -125,18 +125,14 @@ undo port link-type
 
 ![[Pasted image 20230825203402.png]]
 PC1(左边)要访问 PC2. 首先判断 PC2 的 IP 地址和自己是不是在一个网段中. 如果在, 则使用广播来请求 192.168.1.2 的 MAC 地址. 但是因为 192.168.1.2 在 vlan20 中, 和 vlan10 不是同一个广播域, 所以收不到广播. 
-如果把 PC2 的 IP 地址改为 192.168.1.2, 此时 PC1 发现目标地址和自己不在一个网段中, 就会把包发给网关. 如果在网关上有对应路由, 则会经过网关走三成转发. 
+如果把 PC2 的 IP 地址改为 192.168.2.1, 此时 PC1 发现目标地址和自己不在一个网段中, 就会把包发给网关. 如果在网关上有对应路由, 则会经过网关走三成转发. 
 
 ### 给交换机接口转化为三层
 
 ```shell
 # 先创建vlan
 vlan batch 12
-int vlan 12
+int vlan 12 # 创建 vlanif
 ip add 192.168.12.1 24
 
-# 将物理接口划分近vlan
-int g0/0/1
-port link-type access
-port default vlan 12
 ```
