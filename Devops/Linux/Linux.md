@@ -128,6 +128,18 @@ sudo dpkg -i <package-name>.deb  # 本地安装
 ```shell
 #  查询 ip 地址
 ip a s 
+
+# 查看状网卡接口状态
+nmcli
+
+# 查看网卡信息, 是否会开机启动
+cat /etc/sysconfig/network-scripts/ifcfg-enp0s3
+# 把 onboot 改为 yes
+
+# 重启网卡
+systemctl restart network.service
+
+
 ```
 
 ssh
