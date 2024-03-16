@@ -110,3 +110,26 @@ DHCP 容易引发的故障
 在一个DHCP的网络中，广播网络中， 如果设置了几个固定IP地址，在网络设备重启后， 重新分配IP地址后， 可能会和固定的IP地址产生冲突， 造成在固定IP地址上配置的服务无法访问。 
 案例：
 在监控设备的vlan中， 摄像头的IP地址是DHCP获取的。 但是摄像头的服务器是固定IP的。 DHCP的服务端如果发生重启， 则会重新给摄像头分配IP地址，造成IP地址冲突，服务器IP地址漂移。 
+
+
+# 华为交换机 DHCP IP MAC 地址绑定
+
+```shell
+# 回收已经被分配的 IP 地址
+reset ip pool interface valn22 192.168.45.170
+
+# 清楚 mac 地址对应 ARP 表
+reset arp dynamic ip 192.168.45.170
+
+# 在地址池中绑定 mac 地址
+interface vlan22
+dhcp server static-bind ip-address 192.168.45.170 mac-address 0050-58ac-111e
+
+
+
+# 查看 DHCP 地址池分配情况
+display ip pool interface vlan22 all
+
+
+
+```
