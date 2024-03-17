@@ -2,9 +2,28 @@
 打好授权后, 需要配置登录密码
 
 # 命令
-用 show 开头是看配置
+
+配置输出
+```shell
+# 一次性输出所有配置
+config system console
+set output standard
+end
+# 查看所有配置
+show full-configuration
+# To change it back to the default:  
+
+# 用more的方法输出配置, 默认模式
+config system console
+set output more
+end  
+
+```
+
 用 get 开通是看状态
 ```shell
+
+
 # 查看所有接口配置
 show system interface
 
