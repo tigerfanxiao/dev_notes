@@ -1,3 +1,3 @@
 # Windows
 
-Ping info view 
+Ping info view  长 ping 工具
