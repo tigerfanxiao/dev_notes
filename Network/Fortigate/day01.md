@@ -9,6 +9,7 @@
 config system console
 set output standard
 end
+
 # 查看所有配置
 show full-configuration
 # To change it back to the default:  
