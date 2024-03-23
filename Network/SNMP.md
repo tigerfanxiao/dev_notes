@@ -1,5 +1,7 @@
 SNMP 主要用来从被管理设备中获得诸如 IP address, CPU usage, temperature, interface status 这些信息
 
+Simple Network Management Protocol
+
 SNMP 演进了 3 个版本. 其中 SNMP v1 基本用的比较少了, 功能比较有限 
 
 V2c 是用的比较多的版本, 主要的问题是没有做加密
