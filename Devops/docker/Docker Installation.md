@@ -1,6 +1,6 @@
 # 安装docker
 
-### **centos**
+### centos
 
 ```shell
 sudo yum remove -y docker \\
@@ -26,7 +26,7 @@ sudo usermod -aG docker cloud_user
 ```
 
 
-### **Ubuntu**
+### Ubuntu
 
 Remove existing Docker installs. update the ubuntu
 

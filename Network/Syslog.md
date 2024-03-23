@@ -47,7 +47,8 @@ logging synchronous
 
 # timestamps 和 datetime 是否显示是可以配置的
 service timestamps log datetime # 事件发生的时间
-service timestamps log uptime # 从设备启动到事件发生的时间
 
+# 以下两个配置很少使用
+service timestamps log uptime # 从设备启动到事件发生的时间
 service sequence-numbers # 显示序列号, 意义不大
 ```

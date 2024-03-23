@@ -1,7 +1,7 @@
-09
+ 09
 [B站视频](https://www.bilibili.com/video/BV1gr4y1U7CY?p=8&spm_id_from=pageDriver&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
 ### Docker 架构
-Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Deamon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
+Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
 
 
 
@@ -11,10 +11,19 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
 
-docker和虚拟机的区别?
-1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 在系统颗粒度上, 很容易造成系统的闲置和浪费. 因为在基础架构上, 有 hypervisor, hypervisor 上有guest os, guest os里面才是应用. 而 docker是跑在 docker engine 里, 多个容器共享一个操作系统内核.
-2. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
+### Docker和虚拟机的区别?
+虚拟化的颗粒度不同
+1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 简单地理解就是多个 docker 共享一个操作系统内核, 特别是 linux 尽管有这么多不同的版本, 但是 linux 内核是各种版本共用的. 但是类似 Vmware 这样的虚拟机, 每一个虚拟机就有独立的操作系统内核, 说一容易造成资源限制
+2. Docker 的构建是由 Docker File 完成的, 构建的过程可以被描述. 虚拟机则是原始装了一个系统后, 在系统内部做各种不可描述的操作
+3. Docker 的使用方法, 往往是需要的时候启动一个, 不需要的时候, 则废弃. 而不是进入 docker 内部去操作. 进入 docker 内部更多是为了排障. 虚拟的使用方法往往是进入虚拟机内部去操作
 
+### 微服务
+1. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
+
+### Docker Operation
+1. 创建 Dockerfile 文件
+2. 用 Docker File 文件构建镜像
+3. Docker Run 镜像
 
 
 # Docker 命令
@@ -22,8 +31,13 @@ docker和虚拟机的区别?
 ```shell
 docker container ls # 当前在运行的
 docker container ls -a  # 包含已经 stopped 的容器
+
+
 docker ps -a # same as "docker container ls -a"
 docker ps -aq # 不显示容器名, 只显示容器 hash code
+
+# 查看容器的日志
+docker logs <container id> 
 ```
 
 ### 启动容器

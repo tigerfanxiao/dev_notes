@@ -1,6 +1,3 @@
-# 问题
-我怎么查看基础镜像的内容?
-
 
 ## 镜像的分层
 一个镜像是又很多层构成, 每一层称为一个 Layer. 在构建镜像的时候, 每个 `RUN`命令会创建一个 layer, 而每一个 layer 都会扩大镜像的体积, 所以一般在 `RUN` 命中放了很多用`&&`连接的命令
@@ -17,12 +14,14 @@
 
 例子: 创建一个 python image
 ``` dockerfile
-FROM python:3.9-slim-buster
+# 使用 python 3.9 的基础镜像
+FROM python:3.9-slim-buster 
 # COPY的第一个参数, 是本地文件相对于 Dockerfile 文件所在的位置
 # COPY的第二个参数, 容器中文件相对于WORKDIR 目录的位置
 COPY ./requirements.txt ./requirements.txt
 COPY ./main.py ./main.py
-RUN pip3 install -r requirements.txt
+# 创建 python 环境
+RUN pip3 install -r requirements.txt 
 CMD ["python3", "./main.py"]
 ```
 
@@ -35,9 +34,9 @@ docker build -t image_name:0.1  .
 docker images # 查看本地镜像列表, 一般会看到基础镜像, 和基于基础镜像构建的新镜像
 
 # 查看镜像的大小. 注意使用
-docker inspect -f "{{ .Size }}" widgetfactory:0.1
+docker inspect -f "{{ .Size }}" image_name:0.1
 # 查看 layer
-docker inspect -f "{{ range .RootFS.Layers }}{{ println .}}{{ end }}" widgetfactory:0.1
+docker inspect -f "{{ range .RootFS.Layers }}{{ println .}}{{ end }}" image_name:0.1
 ```
 
 # create container
