@@ -1,4 +1,6 @@
 
+Simple Network Management Protocol
+
 SNMP 演进了 3 个版本. 其中 SNMP v1 基本用的比较少了, 功能比较有限 
 
 当被管理的设备有异常发生时, 网络管理工作站将会收到哪种SNMP报文
