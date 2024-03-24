@@ -116,9 +116,11 @@ sudo yum install tracertoute
 sudo rpm -i <pckage-name>.rpm
 ```
 
-DPKG
+### DPKG
 ```shell
 sudo apt-get install traceroute # 下载并安装
+
+
 sudo apt install traceroute # 下载并安装
 sudo dpkg -i <package-name>.deb  # 本地安装
 ```
