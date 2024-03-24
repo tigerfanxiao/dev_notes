@@ -34,7 +34,8 @@ Note: Do not choose "Reboot" or power off the device, otherwise this operation w
 ```shell
 sys
 user-interface console 0
-authentication-mode password cipher Huawei@123
+authentication-mode password
+set authentication password cipher Huawei@123
 ```
 
 不设置console密码
@@ -42,6 +43,11 @@ authentication-mode password cipher Huawei@123
 system-view
 user-interface console 0
 authentication-mode none
+
 quit
 save
 ```
+
+
+
+Cainiao@88
