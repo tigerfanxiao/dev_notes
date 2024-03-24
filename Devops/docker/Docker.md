@@ -1,6 +1,6 @@
  09
 [B站视频](https://www.bilibili.com/video/BV1gr4y1U7CY?p=8&spm_id_from=pageDriver&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
-### Docker 架构
+ ### Docker 架构
 Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
 
 
