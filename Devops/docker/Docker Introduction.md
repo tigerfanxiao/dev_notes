@@ -27,38 +27,82 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 
 
 # Docker 命令
-### 查看容器
+
+[命令参考文档](https://docs.docker.com/reference/cli/docker/container/run/)
+
+### 镜像相关命令
+
+在 docker hub 上搜索官方镜像
+
 ```shell
-docker container ls # 当前在运行的
-docker container ls -a  # 包含已经 stopped 的容器
+docker pull centos:8 # tag 指定了版本. 如果不填就是最新的
 
+# 查看所有 centos 的镜像, 所有不同的版本
+docker images centos 
 
+docker images -aq # 所有 image 的 ID
+docker images --digest # 查看image的hash值
+docker rmi centos:7 # 删除镜像
+docker rmi 590dd # 根据简写的 ID 来删除镜像
+docker rmi 590d 4540d # 删除多个镜像
+docker rmi -f $(docker images -aq) # 删除所有镜像
+  
+```
+注意:
+1. tag 不同, 但是镜像可能是相同的. 可以通过hash 值来判断两个镜像是否相同
+2. 不同镜像的有些层是一样的, docker 不会重复拉. 所以两个镜像真正占据的磁盘空间是小于纸面上两个镜像大小的和
+### 容器相关命令 
+docker run 的命令一般用在调试阶段. 调试结束后更多地使用 docker compose 用 yaml 文件来拉起容器. 且多个容器可以一起启动
+
+```shell
+docker ps # 查看正在运行的容器
 docker ps -a # same as "docker container ls -a"
 docker ps -aq # 不显示容器名, 只显示容器 hash code
 
-# 查看容器的日志
-docker logs <container id> 
 ```
 
-### 启动容器
-```shell
-# -i or -interactive 交互式的
-# -t or -tty 使用tty模式
-# --name bg-container 是container名字
-# alphine是image name
-# 容器会在推出交互时终止吗?
-# bash表示 shell
-docker run -it --name <container-alias> <image name> bash
+注意: docker run 只负责运行 docker 中的命令CMD, 如果命令运行完了, 就会整个 container 一起退出. 所以正常容器需要一个程序顶在 console 口运行, 这个程序挂了, 容器就挂了
 
+```shell
+# 交互式运行
+docker run -it --name <container-alias> <image name> bash
+# bash表示 shell
+# -i or -interactive 交互式的
+# -t or -vty 使用vty模式
+
+# 后台运行
+docker run -d --name <container-alias> --restart always <image name>
 # -restart always 如果 container 挂了就重启
 # -d or -detach 在后台运行, 不是交互式的
-docker run -dt --name bg-container --restart always alpine
+
 # -p 把container的端口映射到本地的 host_port
-docker run -p <host_port>:<container_port> --dt --name <container> <image-name>
+docker run -p <host_port>:<container_port> --d --name <container> <image-name>
+
 # -rm  在推出交互模式后, 把容器销毁
 docker run -it --name <container_name>:tag --rm <image> bash 
-# 推出容器
-exit
+
+
+# 停止正在运行的容器
+docker kill <container_id>
+
+# 进入容器的console, 一般情况下是被主进程锁死的. 所以和容器进行交互是使用 vty 的
+docker attach <container_name> 
+# ctrl + p,q 退出
+
+# 查看容器的日志, 不用进入 console 口查看运行状态
+docker logs <container id> 
+
+# 进入容器的 vty 链路, 进到交互式界面做操作. 不会影响到主进程, 但是可以做修改
+docker exec -it <container_id> /bin/bash 
+
+# 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
+docker rm <container_id> 
+
+# 强行删除一个正在运行的容器
+docker rm -f <container_id>
+
+# 删除所有的容器
+docker rm -f $(ps -aq)
 ```
 
 ### **restarting parameters**
