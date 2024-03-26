@@ -63,16 +63,6 @@ cisco@cisco:~$ echo $a
 mkdir -p ./a/b/c # 会把子目录一起创建出来
 ```
 
-### 文件权限
-
-```shell
--rw-rw-r-- # 三个组 User Group Other
-```
-
-```shell
-chmod u+x filename.txt # 给 user 添加执行权限
-chmod go+x filename.txt # 给 group 和 other 增加执行权限
-```
 ### 复制文件
 
 ```shell
@@ -87,7 +77,7 @@ cp file folder
 
 
 su 是用来切换成 root 账户
-sudo 不切换账户, 当时可以用 root 的权限
+sudo 不切换账户, 但是可以用 root 的权限
 注意: 如果要运行某个 sudo 命令, 要先确保当前用户在 `sudoers` 文件中配置
 ```shell
 # 查询userid, groupid
@@ -202,5 +192,7 @@ pkill # 按进程名删除进程
 
 
 ```
+
+
 
 

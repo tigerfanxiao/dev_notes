@@ -16,6 +16,7 @@
 ``` dockerfile
 # 使用 python 3.9 的基础镜像
 FROM python:3.9-slim-buster 
+WORKDIR / 
 # COPY的第一个参数, 是本地文件相对于 Dockerfile 文件所在的位置
 # COPY的第二个参数, 容器中文件相对于WORKDIR 目录的位置
 COPY ./requirements.txt ./requirements.txt
