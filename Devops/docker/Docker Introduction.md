@@ -64,7 +64,7 @@ docker ps -aq # 不显示容器名, 只显示容器 hash code
 注意: docker run 只负责运行 docker 中的命令CMD, 如果命令运行完了, 就会整个 container 一起退出. 所以正常容器需要一个程序顶在 console 口运行, 这个程序挂了, 容器就挂了
 
 ```shell
-# 交互式运行
+ # 交互式运行
 docker run -it --name <container-alias> <image name> bash
 # bash表示 shell
 # -i or -interactive 交互式的
@@ -82,8 +82,14 @@ docker run -p <host_port>:<container_port> --d --name <container> <image-name>
 docker run -it --name <container_name>:tag --rm <image> bash 
 
 
-# 停止正在运行的容器
+# 强制关闭容器, 类似拔电源
 docker kill <container_id>
+# 正常关机
+docker stop <container_id>
+# 从中断中恢复
+docker start <container_id>
+# 重启 
+docker restart <container_id>
 
 # 进入容器的console, 一般情况下是被主进程锁死的. 所以和容器进行交互是使用 vty 的
 docker attach <container_name> 
