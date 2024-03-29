@@ -3,7 +3,7 @@
  ### Docker 架构
 Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
 
-
+注意: 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
 
 # 名词解释
 * Container 我们可以把每个 container 认为是一个进程
@@ -91,15 +91,21 @@ docker start <container_id>
 # 重启 
 docker restart <container_id>
 
-# 进入容器的console, 一般情况下是被主进程锁死的. 所以和容器进行交互是使用 vty 的
+# 进入容器的console, 一般情况下是被主进程锁死的. 不建议使用, 容易被主进程顶死
 docker attach <container_name> 
-# ctrl + p,q 退出
+# 进入容器的 vty 链路, 进到交互式界面做操作. 不会影响到主进程, 但是可以做修改
+docker exec -it <container_id> /bin/bash 
+docker exec -it <container_id> ip add # 直接执行 ip add 命令返回结果
+
+# 如果在 docker 的交互界面里
+ctrl + p,ctrl + q  # 可以挂起退出
+docker attach <container_name> # 重新进入交互模式
 
 # 查看容器的日志, 不用进入 console 口查看运行状态
 docker logs <container id> 
+docker logs -tf <container id > # 打印日志不停
 
-# 进入容器的 vty 链路, 进到交互式界面做操作. 不会影响到主进程, 但是可以做修改
-docker exec -it <container_id> /bin/bash 
+
 
 # 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
 docker rm <container_id> 
@@ -109,51 +115,38 @@ docker rm -f <container_id>
 
 # 删除所有的容器
 docker rm -f $(ps -aq)
-```
 
-### **restarting parameters**
-
--   `no` - Never restart
--   `always` - Always restart when stopped
--   `unless-stopped` - Restart unless manually stopped
--   `on-failure<:retries>` - Restart when the container fails; we can supply the maximum amount of retries
-
-```bash
 # 当 container 已经启动后, 进入交互模式
 docker exec -it <container> <shell> # shell=/bin/bash
 docker exec -it <container> <command>
+
 # copy local file to container
 docker cp <local_file> <container_name>:<container_file_path>
-# copy file in container to local directory
-docker cp <container_name>:<container_file_path> <local_directory>
-# Stop and restart a container
-docker start <container_name>
-docker restart <container_name>
-docker stop <container_name>
-# remove container
-docker rm <container_name>
-docker kill <container_name>
-# stop all the container
-docker kill $(docker ps -aq)
-# remove all stopped container
+# copy file from container to local directory
+docker cp <container_name>:<container_file_path> 
+<local_directory>
+
 docker container prune
-docker rm $(docker ps -aq)
 # rename container
 docker rename <old_name> <new_name>
+
 # view all containers status
 docker stats
 # vieww specific container status
 docker stats <container_name>
-```
 
-# Configure Container
-查看docker file
-```bash
 # view docker file json
 docker inspect <container_name>
 # view container ip
 docker inspect <container_name> | grep -i ip
 ```
+
+### `docker restart` parameters
+
+-   `no` - Never restart
+-   `always` - Always restart when stopped
+-   `unless-stopped` - Restart unless manually stopped
+-   `on-failure<:retries>` - Restart when the container fails; we can supply the maximum amount of retries
 
 
 

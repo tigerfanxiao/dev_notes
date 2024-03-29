@@ -196,7 +196,7 @@ BSS Basic Service Set 多个AP一起组成的区域。
 ## SSID
 SSID Service Set Identifier 无线网络的身份标识. 
 ### BSSID
-- BSSID 用 AP 的 Mac 地址来表示, 一个无线网络的标识符. 
+- BSSID 是基于天线的. 2.5G 和 5G 射频有不同的 BSSID
 - 为了用户辨识不同的无线网络, 用 SSID 代替 BSSID
 
 ### VAP
