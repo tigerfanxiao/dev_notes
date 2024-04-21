@@ -1,5 +1,6 @@
 
 Forse quit: cmd + option + esc
+Desktop: 
 
 ### Terminal
 ```shell

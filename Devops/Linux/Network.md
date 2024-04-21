@@ -1,7 +1,13 @@
-### 查询接口
+# 工具
+### ifconfig 安装
 Centos 8 之后, 系统默认是没有`ifconfig` 命令的, 需要安装 net-tools
 ```shell
+# centos
 yum -y install net-tools 
+
+# debian
+apt install net-tools
+
 
 # 查询本机接口的 ip 地址
 ifconfig
