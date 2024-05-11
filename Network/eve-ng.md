@@ -10,6 +10,9 @@ ip add | grep 192.
 ```
 eve 页面的登录`admin/eve`
 
+### Telnet 
+- 不需要用户名密码
+- 用 SecureCRT 登录, 端口号从 32769 开始
 
 # 添加镜像
 

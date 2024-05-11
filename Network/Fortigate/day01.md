@@ -66,7 +66,7 @@ execute ping 10.1.1.1
 ```shell
 config router static # 配置静态路由
 edit 1
-set device port 4 # 4 号接口
+set device port4 # 4 号接口
 set dst 0.0.0.0 0.0.0.0
 set gateway 202.100.1.1
 next 
