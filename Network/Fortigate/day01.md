@@ -9,31 +9,30 @@
 
 # 命令
 
-配置输出
+### 防火墙配置输出
 ```shell
 # 一次性输出所有配置
 config system console
-set output standard
+set output standard # 配置输出方式为全部输出
 end
 
 # 查看所有配置
 show full-configuration
 # To change it back to the default:  
 
-# 用more的方法输出配置, 默认模式
+# 用 more 的方法输出配置, 默认模式
 config system console
-set output more
+set output more 
 end  
 
 ```
 
 用 get 开通是看状态
 ```shell
-
-
 # 查看所有接口配置
 show system interface
 
+# 修改接口.
 edit port6
  set vdom root # 类似于 vrf, 这里默认没有 vrf 的话就是 root
  set type physical
@@ -41,6 +40,7 @@ edit port6
 
 # 查看单个接口配置
 show system interface port1
+
 ```
 
 

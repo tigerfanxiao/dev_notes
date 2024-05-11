@@ -1,10 +1,14 @@
 
-ubuntu 的登录 root/eve
+EVE-NG 承载在 ubuntu 的上
+ubuntu 上的管理员密码是 `root/eve`
 登录的目的是增加配置镜像
-在登录页面可以看到 eve 的 ip 地址 192.168.247.128
+启动 eve-ng 镜像后, 可以看到 eve-ng 所运行的 IP 地址
 
-eve 页面的登录
-admin/eve
+```shell
+# 查询 eve 运行的本地 ip 地址
+ip add | grep 192.
+```
+eve 页面的登录`admin/eve`
 
 
 # 添加镜像
