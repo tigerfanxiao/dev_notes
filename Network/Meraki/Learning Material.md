@@ -73,3 +73,45 @@ vpn hub 和 spoke 的区别
 | - Act as central routing point in topology<br>    <br>- Builds VPN tunnels to both hubs and spokes<br>    <br>- Can be utilized as an “exit” point in the VPN topology<br>    <br>- Allows for full mesh topology | - Fewer routing decisions<br>    <br>- Only builds tunnels to hubs<br>    <br>- Less resource intensive<br>    <br>- Can select hub appliance as exit point in VPN topology |
 
 ![[Pasted image 20240512233550.png]]
+
+
+# Wireless
+
+Steering from 2.4Gz to 5 Gz
+
+Spatial stream 空间流
+This transmission across multiple spatial streams to a single client is known as Single-user multiple input multiple output (SU-MIMO).
+
+Doubling the number of spatial streams effectively doubles the available throughput. 
+MIMO also allows access points to use different spatial streams to transmit to multiple clients simultaneously, known as downlink multi-user MIMO (DL-MU-MIMO).
+
+The latest technology with wireless downlink (DL) and uplink (UL) multi-user transmissions using MIMO (DL/UL-MU-MIMO) enables multiple clients to transmit or receive simultaneously across different spatial streams.
+
+With Meraki’s power sharing, while operating both mGig Ethernet ports:
+
+- Two 802.3af power sources are combined to provide 802.3at power.
+    
+- Two 802.3at power sources are combined to provide 802.3bt power.
+
+Meraki access points can be powered in multiple ways and will use link layer discovery protocol (LLDP) to negotiate for additional power
+
+In addition to the tri-band radios that provide fast user connectivity, Meraki access points are furnished with a Bluetooth Low Energy radio, allowing them to listen for and locate nearby Bluetooth Low Energy devices. This feature can be used to identify and track Bluetooth Low Energy asset tags, fitness monitors, smartphones, and other Bluetooth Low Energy-enabled devices.
+
+Meraki access points feature a dedicated Air Marshal scanning and security radio, which enables continuous RF scanning and threat mitigation (containment) without impacting data traffic or access point throughput. Flagship Meraki access points offer 2.4 GHz, 5 GHz, and 6 GHz tri-band Air Marshal WIDS/WIPS scanning, along with spectrum analysis and location analytics.
+
+Air Marshal is Meraki’s wireless intrusion prevention system (WIPS) that strategically observes and mitigates threats occurring in the RF airspace. Once a threat has been detected, Air Marshal can enact powerful policies, including intelligent auto-disablement of access points matching a pre-defined criteria and generating different tiers of e-mail alarms based on the type of threat in your airspace.
+
+Wi-Fi 6E takes wireless connectivity into the 6 GHz band, adding 1200 MHz of RF spectrum—more than twice the available capacity of the 2.4 and 5 GHz bands combined.
+
+Meraki’s 6E access points offer an extended 1,200 MHz of spectrum in the U.S. and 500 MHz in Europe, with even more wireless channels—goodbye crowded RF spectrum and hello to open Wi-Fi airspace!
+
+WPA3 offers heightened security measures against password and brute force attacks, as well as improved encryption protocols for secure device-to-device communication. While not mandatory, WPA3 is required for 6 GHz wireless deployments to mitigate potential security risks
+
+Meraki access points include Advanced Encryption Standard (AES) hardware-based encryption, where transferred data is automatically encrypted and decrypted through an AES hardware chip built into Meraki access points. This is faster and more secure than a software-based encryption system, where data is encrypted and decrypted through a running program.
+
+The Extensible Authentication Protocol (EAP) is used by 802.1X to create a secure tunnel between parties participating in an authentication exchange. Meraki access points support various EAP types with 802.1X authentication to connect with on-premises RADIUS servers. Meraki's cloud-first tools enable the live testing of RADIUS reachability and functionality across all access points in a Meraki network with a single click.
+
+
+- Be powered with two AA batteries (up to five years), or via direct power from a USB-C connection (5V; 0.2A)
+- - Proactively alert with notifications via email, SMS, push notifications, and webhooks
+- 
