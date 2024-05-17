@@ -15,6 +15,7 @@ Firmware rollout process has three stages:
 固件升级可以在 14 天之内rollback
 
 
+# MX Security Appliance
 # Group Policy
 在某个时间段, 对一些用户进行流量整形
 对 MX Security Appliance 来说, 可以通过 vlan 和 client 来做
@@ -114,4 +115,5 @@ The Extensible Authentication Protocol (EAP) is used by 802.1X to create a secur
 
 - Be powered with two AA batteries (up to five years), or via direct power from a USB-C connection (5V; 0.2A)
 - - Proactively alert with notifications via email, SMS, push notifications, and webhooks
-- 
+
+
