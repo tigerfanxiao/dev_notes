@@ -1,4 +1,11 @@
 
+
+```
+^  # 行首
+$  # 行尾
+\D # 非数字
+\d # 单个数字
+```
 ### re.findall()
 ```python
 
@@ -23,7 +30,9 @@ re.findall(r'\D(\d{5})\D?', s)  # ['56789', '01234']
 ```
 
 
-### Named Caputure Group
+### Named Capture Group
+
+把匹配到的内容存入变量中
 ```python
 import re
 match = re.search('(?P<name>.*) (?P<phone>.*)', 'John 123456')
