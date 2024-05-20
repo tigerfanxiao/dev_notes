@@ -6,7 +6,7 @@ Centos 8 之后, 系统默认是没有`ifconfig` 命令的, 需要安装 net-too
 yum -y install net-tools 
 
 # debian
-apt install net-tools
+apt-get install net-tools
 
 
 # 查询本机接口的 ip 地址
@@ -104,6 +104,7 @@ iface eth0 inet static # 静态配置 IP 地址
       up ip route add 172.16.10.0/24 via 192.168.1.25 dev eth2
       up ip route add 10.10.10.0/24 via 192.168.1.35 dev eth3
 
+# 配置接口 dhcp
 auto eth1
 iface eth1 inet dhcp
 ```
@@ -112,7 +113,18 @@ iface eth1 inet dhcp
 ```shell
 sudo nano /etc/netplan/01-network-manager-all.yaml
 ```
-内容可能如下. 如果你修改了文件配置 `sudo netplan apply` 使其生效
+内容可能如下
+```shell
+network:
+	version: 2
+	ethernets:
+		ens18:
+			dhcp4: true
+
+```
+
+
+如果你修改了文件配置 `sudo netplan apply` 使其生效
 ```shell
 network:
   version: 2
