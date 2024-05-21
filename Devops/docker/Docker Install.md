@@ -1,5 +1,11 @@
 
 ```shell
+sudo apt install docker.io
+
+```
+
+
+```shell
 
 # 安装完成后启动 docker 服务
 systemctl start docker 

@@ -6,8 +6,6 @@
 - [ ] 复制九章twitter项目 
 
 过程
-- [x] 本地项目初始化
-- [x] 安装MySQL数据库
 - [x] 在本地安装redis
 - [ ] 在本地安装Memchaced
 - [ ] 
