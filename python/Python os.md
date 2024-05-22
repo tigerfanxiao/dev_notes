@@ -1,7 +1,11 @@
 
+# 路径相关的
+
 ```python
 # constant.py
 import os
+
+os.getcwd() # 获得当前路径
 
 # 把config.ini位置固定在constant同级
 CONFIG_FILE_PATH = os.path.join(os.path.dirname(__file__), 'config.ini')
@@ -30,7 +34,8 @@ os.mkdir(path)
 # 列出目录下的所有文件和子目录
 os.listdir(path) 
 
-
+# 删除文件
+os.remove(filename)
 ```
 
 # 读取文件夹列表
@@ -60,4 +65,11 @@ def list_only_files(path):
         if os.path.isfile(os.path.join(path, file)):
             yield file
 
+```
+
+# 命令行
+
+```python
+import os
+os.popen("ifconfig en0").read()
 ```
