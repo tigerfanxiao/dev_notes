@@ -1,4 +1,6 @@
 
+# 路径相关的
+
 ```python
 # constant.py
 import os
@@ -63,4 +65,11 @@ def list_only_files(path):
         if os.path.isfile(os.path.join(path, file)):
             yield file
 
+```
+
+# 命令行
+
+```python
+import os
+os.popen("ifconfig en0").read()
 ```
