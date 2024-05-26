@@ -1,3 +1,12 @@
+在 range 很大的时候, 会节约内存. 
+```python
+def my_range():
+	 for i in range(3):
+		 yield i
+
+
+```
+
 
 这些函数的作用对象都是list
 

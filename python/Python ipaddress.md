@@ -1,4 +1,8 @@
 
+### 两个实例创建方法
+- `ipaddress.ip_network()` 构建
+- `ipaddress.ip_address()` 构建 `IPv4Address`类
+
 ```python
 import ipaddress
 

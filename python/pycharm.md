@@ -46,3 +46,12 @@ cmd + b 跳转到变量定义的地方
 ```shell
 python -i  module.py
 ```
+
+
+### 把目录引入 sys.path
+
+![[Pasted image 20240526230710.png]]
+
+### python 脚本模板
+
+![[Pasted image 20240526233255.png]]

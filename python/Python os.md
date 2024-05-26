@@ -19,7 +19,7 @@ os.path.isdir(DIR)
 # 查看文件的绝对路径
 os.path.abspath(CONFIG_FILE_PATH)
 
-# 如果文件时软链接，也可以得到正真的文件路径
+# 如果文件是软链接，也可以得到正真的文件路径
 os.path.realpath(PATH)
 
 # 查询父路径
@@ -68,7 +68,7 @@ def list_only_files(path):
 ```
 
 # 命令行
-
+运行命令行
 ```python
 import os
 os.popen("ifconfig en0").read()
