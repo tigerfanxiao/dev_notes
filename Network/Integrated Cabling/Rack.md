@@ -5,3 +5,11 @@
 - UPS接市电. 机柜中的插排电源线接UPS
 - 一般每个设备之间都需要空一U, 方便布置机柜的时候伸手
 - 从ODF架到下方机柜理线架
+
+电源标准
+
+配置设备的时候, 注意要指定 U13 的接口
+
+[https://www.worldstandards.eu/electricity/plugs-and-sockets/](https://www.worldstandards.eu/electricity/plugs-and-sockets/)
+
+

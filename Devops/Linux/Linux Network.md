@@ -33,6 +33,7 @@ traceroute
 
 
 
+
 ```shell
 
 
@@ -75,9 +76,6 @@ sudo ifdown eth1
 sudo ifup eth1 
 
 # 
-netstat -i # 显示本地所有连接的统计信息
-netstat -r # 显示路由表
-# 
 dig www.cisco.com # 查询 DNS 信息
 
 host cisco.com  # DNS 解析 cisco.com 站点
@@ -94,6 +92,13 @@ arp -s LOCAL_MACHINE 50:51:52:53:54:55  # 静态将 hostname 设置 mac 地址
 
 ### 网络配置的持久化
 Persistent Networking Configuration
+
+```shell
+# 首先要看设备中网卡的名字
+ip add
+# 在 /etc/network/interfaces 中找到这个网卡
+```
+
 接口和路由信息的持久化在 `/etc/network/interfaces`
 ```shell
 auto eth0 #  auto 表示重启后会自动配置这个接口
@@ -101,6 +106,7 @@ auto eth0 #  auto 表示重启后会自动配置这个接口
 iface eth0 inet static # 静态配置 IP 地址
       address 192.168.1.50  # 重启后 eth0 会被配置 ip 地址和下面的掩码
       netmask 255.255.255.0
+	  # 配置静态路由
       up ip route add 172.16.10.0/24 via 192.168.1.25 dev eth2
       up ip route add 10.10.10.0/24 via 192.168.1.35 dev eth3
 
@@ -179,4 +185,12 @@ cat /run/systemd/resolve/resolv.conf # 这是/etc/reolv.conf 的软连接
 ```shell
 sudo service networking restart
 sudo systemctl restart networking
+```
+
+
+# Routing table
+
+```shell
+netstat -i # 显示本地所有连接的统计信息
+netstat -r # 显示路由表
 ```
