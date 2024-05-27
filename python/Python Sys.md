@@ -5,9 +5,16 @@
 如果要引入一个本地的包, 可以在目录中添加一个路径
 
 ```python
+
 # 在模块运行完之后这个变量不会变化
 sys.path.append('/test') # 添加一个模块的目录
 print(sys.path)
+
+sys.path.insert(1, '/sdf') # 插入在指定位置上
+# 先要修改 sys.path
+# 再 import
+import thirdpartypackage
+
 ```
 
 在 linux 下查看所有的环境变量
@@ -16,6 +23,12 @@ env
 ```
 
 
+```python
+sys.platform # 返回 linux 版本或者 windows
+sys.version # python 的版本
+
+
+```
 
 # `sys.stdout()`
 

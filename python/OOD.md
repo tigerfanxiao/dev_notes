@@ -1,4 +1,17 @@
 
+
+### print instance
+```python
+
+class Person():
+	def __init__(self, name, age):
+		self.name = name
+		self.age = age
+		
+	def __str__(self):
+			return f"name: {self.name} color: {self.color}"
+```
+
 ### 查找和设置对象属性
 ### getattr setattr
 
@@ -20,6 +33,7 @@ from dataclasses import dataclass
 class Fruit:
 	name: str
 	color: str
+
 
 apple = Fruit(name='apple', color='red')
 vars(apple)  # 转为一个dict， 已经包含了key和value
