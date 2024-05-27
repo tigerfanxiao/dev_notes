@@ -53,5 +53,26 @@ python -i  module.py
 ![[Pasted image 20240526230710.png]]
 
 ### python 脚本模板
+只有在 Linux 下生效
+
+- 指定解释器
+- 指定编码
+
+```python
+#!/usr/bin/env python3
+# -*- coding=utf-8 -*-
+
+# 指定 python3 为解释器, 可以直接执行, 需要给文件执行权限 chmod +x file.py
+# 在目录下 ./file.py 直接运行. 
+# 可以用 python3 file.py 执行, 手动指定解释起
+# 保证中文不出现乱码
+
+if __name__ == '__main__':
+    pass
+```
 
 ![[Pasted image 20240526233255.png]]
+
+
+在 pycharm 中 module 和 package 可以互转
+
