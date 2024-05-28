@@ -1,3 +1,12 @@
+不需要装 python 环境, 可以直接给 windows 用户使用
+
+```shell
+pip install pyinstaller
+
+pyinstaller --onefile -w .\example.py
+
+# 生成的exe 文件在 dist 目录下
+```
 
 
 # App 路径问题
