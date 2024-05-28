@@ -27,9 +27,36 @@ env
 sys.platform # 返回 linux 版本或者 windows
 sys.version # python 的版本
 
+sys.modules # 返回模块名和具体路径的字典
+list(sys.modules.keys())  # 模块名
+sys.modules.get('datetime')  # 如果没有返回值表示没有加载这个模块
+
+
+sys.argv # 显示由字符串组成的列表和命令行参数
+sys.argv[1] # 参数引用是从1 开始的, 而不是 0
 
 ```
 
+# 标准流
+
+```python
+sys.stdin
+sys.stdout
+sys.stderr
+
+```
 # `sys.stdout()`
 
 `print` is wrapper of `sys.stdout()`
+
+
+# 强行退出程序
+
+
+```python
+# 会直接将 python 程序终止, 之后的所有代码都不会继续执行
+os._exit()
+
+# 常用 , 会引发一个异常: SystemExit 如果这个异常没有被捕获, 那么 python 解释器将会退出. 如果有捕获此异常的代码, 那么这些代码还是会执行
+sys.exit() 
+```

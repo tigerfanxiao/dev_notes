@@ -193,4 +193,7 @@ sudo systemctl restart networking
 ```shell
 netstat -i # 显示本地所有连接的统计信息
 netstat -r # 显示路由表
+
+# 查看这个机器上的程序, 相应的进程号, 端口号 
+netstat -tulnp 
 ```
