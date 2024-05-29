@@ -14,7 +14,6 @@ print(datetime.now() - timedelta(days=2))
 ```
 
 
-
 ### 比较两个时间
 ```python
 # 是不是之前的时间
@@ -32,7 +31,29 @@ date_format = '%Y-%m-%d %H:%M:%S'
 date_obj = datetime.strptime(date_str, date_format) 
 
 # convert datetime obj to string
-datetime.strftime(one_device.create_date, '%Y-%m-%d %H:%M:%S')
+datetime.strftime(datetime_obj, '%Y-%m-%d %H:%M:%S')
 
 
+# 得到一个时区对象
+gmt_1 = datetime.timezone(datetime.timedelta(hours=1))
+# 把当前时间指定到某个时区
+print(now.astimezone(gmt_1)) 
+
+
+```
+
+### 第三方模块
+
+```shell
+pip3 install python-dateutil
+
+```
+
+
+```python
+from dateutil import parser
+from datetime import datetime
+strtime = str(datetime.now())
+
+i = parser.parse(strtime)  # 将字符串转化为时间对象
 ```
