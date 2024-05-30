@@ -3,6 +3,7 @@ install
 ```shell
 python -m pip install sqlalchemy
 ```
+### 手动创建表非 ORM
 如果没有orm，只是手动创建一个表
 
 数据库文件一般是以 `.db` 结尾
@@ -28,7 +29,7 @@ workers = Table(
     Column('name', String， default="default_value"),  # 设置默认值
 )
 
-meta.create_all(engine)  # 创建一个表
+meta.create_all(engine)  # 创建一个表, 如果表已经存在就不再创建
 
 ```
 
@@ -87,7 +88,6 @@ session = Session()
 session.query(Echo).filter(Echo.device_name == 'MA9763RT1').first()
 ```
 
-## 创建表
 引入一个基类， 需要创建表的对象都继承这个基类
 ```python
 from dataclasses import dataclass
@@ -101,7 +101,7 @@ from sqlalchemy import (
     Boolean,  
     UniqueConstraint,
 )
-
+# 创建一个基类
 Base = declarative_base() 
 # 使用基类创建其他类
 @dataclass
@@ -116,7 +116,36 @@ class Person(Base):
 
 	def __repr__(self):  
 	    return f"{self.name} {self.ip_address} {self.device_type}"
+
+
+
+if __name__ == '__main__':
+	# 必须放在这里, 否则每次运行程序都会创建新表
+	# checkfirst = True 同名表不再创建
+	Base.metadata.create_all(engine, checkfirst=True)
+	
 ```
+
+创建条目
+
+```python
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+qinke = User(
+			 usename='qinke',
+			 password='Cisco0123',
+			 realname='qingke',
+			 email='colin@gmail.com'
+			)
+session.add(qinke)
+session.commit()
+
+
+```
+
+
 
 field的条件限制
 
