@@ -35,6 +35,9 @@ meta.create_all(engine)  # 创建一个表, 如果表已经存在就不再创建
 
 
 ## Update
+
+- `filter_by` 是 python 风格的
+- `filter` 是 sql 风格的
 修改表中的数据
 ```python
 from sqlalchemy.orm import sessionmaker
@@ -46,6 +49,8 @@ if config is None:
 	config = Config()  # 如果元素不存在， 则新建
 	session.add(config)  
 
+
+# filter 是 sql 风格的
 
 for echo in echo_list:  
 	if session.query(Echo).filter(Echo.device_name == echo.device_name).first() is not None:  
@@ -140,6 +145,10 @@ qinke = User(
 			 email='colin@gmail.com'
 			)
 session.add(qinke)
+
+# 删除条目
+qinke.delete()
+
 session.commit()
 
 
@@ -156,6 +165,8 @@ date_created = Column(Datetime(), default=datetime.utcnow()) # 返回datetime对
 
 ## Filter
 
+- filter 可以使用 link 
+
 ```python
 # 区分大小写匹配
 session.query(Person).filter(Person.lastname.Like("%An%"))
@@ -163,9 +174,12 @@ session.query(Person).filter(Person.lastname.Like("%An%"))
 session.query(Task).filter(Task.scene_name.ilike('%clear%'))
 # 字符在一个序列里
 session.query(Person).filter(Person.lastname.in(['Anna', 'Mike']))
-
+# and 条件
+session.query(Person).filter(User.username.like('qin%'), User.email=='xiao@gmail.com')
+# or 条件
+session.query(Person).filter(or_(User.username.like('qin%'), User.email='xiao@gmail.com'))
 # 查询 null 值
-session.queery(Person).filter(Person.age == None)
+session.query(Person).filter(Person.age == None)
 
 # 按照时间来过滤
 date_before = datetime.now() - timedelta(days=700)
