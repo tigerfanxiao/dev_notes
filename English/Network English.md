@@ -1,5 +1,5 @@
 
-### 商业
+### Business
 
 Purchase contract 采购合同
 VAT 增值税
@@ -8,7 +8,7 @@ Target markup 目标毛利率
 timely solution 及时的方案
 MSA master service agreement 框架合同
 
-### 光纤
+### Fiber
 
 pigtail 尾纤
 Optical Transceiver 光模块

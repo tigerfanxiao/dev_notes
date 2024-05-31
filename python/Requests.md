@@ -4,7 +4,8 @@ Requests包难以完成页面跳转登录的功能，可能selenium更适合
 
 ```python
 import requests
-response = requests.get('url')
+response = requests.get('url') # 得到 200
+response_html = response.text
 # Headers
 response.headers  
 # 返回值的 json 格式, 是 dict
@@ -30,6 +31,8 @@ response.raise_for_status
 3. 基于 token 的, 就是API 服务器给一个动态 token
 
 #### Base64验证
+base64 编码生成网站
+base64encode.org
 使用 python 生成 Base64 秘钥
 ```python
 import base64
