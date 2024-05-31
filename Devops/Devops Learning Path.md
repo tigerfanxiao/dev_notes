@@ -62,3 +62,11 @@ python build and package tools
 
 
 
+
+
+# 学习资料
+
+## 书
+devops handbook
+https://github.com/rootusercop/Free-DevOps-Books-1/blob/master/book/The%20DevOps%20Handbook%20-%20How%20to%20Create%20World-Class%20Agility%2C%20Reliability%2C%20and%20Security%20in%20Technology%20Organizations.epub
+
