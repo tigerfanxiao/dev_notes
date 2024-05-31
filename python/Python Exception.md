@@ -5,7 +5,6 @@
 ```python
 
 try: 
-
 	pass
 except TypeError as mytype_err:
 	print(str(mytype_err))

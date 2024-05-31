@@ -1,6 +1,19 @@
 
+# 2024规划
+
+5 月 20 日启动
+1. Python 基础知识复习 5 月 20日 - 5 月 30 日
+2. Docker 
+3. 
+
+
+
+
+
+
+
 四个工具可以一起学习， 这几个工具都可以在AWS上做实验吗
-AWS的学习路径SOA实验， AWS Sysadm， developer， SAP
+AWS的学习路径SOA实验， AWS SysAdm， developer， SAP
 1. docker
 2. k8s
 3. terraform
@@ -10,7 +23,7 @@ AWS的学习路径SOA实验， AWS Sysadm， developer， SAP
 技术栈
 1. Version Control: git/ AWS code commit
 2. Linux
-3. Coding: golang, java, python, js
+3. Coding: Golang, java, python, js
 4. Agile Development
 5. Operations: AWS/Azure
 6. Container: Docker, Kubernetes
@@ -58,6 +71,18 @@ Adminster Devops Tools - jenkins/ kubernets
 
 git
 python build and package tools
+
+
+# Python
+### Python 学习材料
+- Qytang NetDevOps Python 基础班
+
+
+# Docker
+### Docker 学习材料
+- Qytang Docker 2021 VIP 课
+
+
 
 
 
