@@ -109,3 +109,8 @@ https://www.youtube.com/watch?v=H3XIJYEPdus
 
 Linux
 https://www.youtube.com/watch?v=WQSbuEi61ug
+
+
+SQL
+https://www.youtube.com/watch?v=-fW2X7fh7Yg
+
