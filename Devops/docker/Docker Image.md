@@ -6,7 +6,7 @@
 
 * 删除镜像中的内容, 并不是真的删除. 而是叠加新的一层, 伪装成删除的样子. 这是 AUFS 的特性. 一种类似 git 所使用的文件系统. 
 
-
+注意: Image 文件的每一行都等于一层
 # 步骤
 1. 创建`Dockerfile` 文件
 2. 执行 `docker build`命令 
@@ -27,12 +27,31 @@ CMD ["python3", "./main.py"]
 ```
 
 ### Build Image
-```bash
+通过本地的 dockerfile 文件来构建镜像
+
+```shell
 # image-name 是自己起的名字
 # -t 表示除了镜像名之外还要加上一个版本号 tag, 比如 0.1
 # . 表示docker deamon 会在本地目录下寻找 Dockerfile 文件
 docker build -t image_name:0.1  .
+
+```
+
+
+
+```bash
+
 docker images # 查看本地镜像列表, 一般会看到基础镜像, 和基于基础镜像构建的新镜像
+
+# 查看所有的镜像 ID
+docker images -aq
+
+# 通过镜像名来删除镜像
+docker rmi centos
+# 查看 images 的 hash
+docker images --digest
+# 删除所有的image, 包括正在运行容器的镜像
+docker rmi -f $(docker images -aq)
 
 # 查看镜像的大小. 注意使用
 docker inspect -f "{{ .Size }}" image_name:0.1

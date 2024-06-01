@@ -42,3 +42,35 @@ sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io
 sudo usermod cloud_user -aG docker
 ```
+
+
+docker 安装完成后
+
+```shell
+# 启动 docker
+systemctl start docker
+
+# 激活这个服务, 每次开机都会启动
+systemctl enable docker
+
+# 查看 docker 的版本
+systemctl status docker
+docker version 
+
+
+```
+
+### 配置阿里云镜像加速器
+
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json << -'EOF'
+{
+	"registry-mirrors": ["https://0a041wc3.mirror.aliyuncs.com"]
+}
+EOF
+# 重启docker的守护进程
+sudo systemctl daemon-reload 
+sudo systemctl restart docker
+
+```

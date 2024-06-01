@@ -95,3 +95,17 @@ python build and package tools
 devops handbook
 https://github.com/rootusercop/Free-DevOps-Books-1/blob/master/book/The%20DevOps%20Handbook%20-%20How%20to%20Create%20World-Class%20Agility%2C%20Reliability%2C%20and%20Security%20in%20Technology%20Organizations.epub
 
+
+
+# 视频
+AWS Bootcamp`
+https://www.youtube.com/watch?v=zA8guDqfv40&t=191787s
+
+Software Interview
+https://www.youtube.com/watch?v=1qw5ITr3k9E
+
+Javascript
+https://www.youtube.com/watch?v=H3XIJYEPdus
+
+Linux
+https://www.youtube.com/watch?v=WQSbuEi61ug
