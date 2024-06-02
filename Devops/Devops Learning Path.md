@@ -98,19 +98,47 @@ https://github.com/rootusercop/Free-DevOps-Books-1/blob/master/book/The%20DevOps
 
 
 # 视频
+## AWS
+
+AWS Certificate explain
+https://www.youtube.com/watch?v=hHEhwvrWISg&t=9s
+
 AWS Bootcamp`
 https://www.youtube.com/watch?v=zA8guDqfv40&t=191787s
 
+## Interview
 Software Interview
 https://www.youtube.com/watch?v=1qw5ITr3k9E
 
-Javascript
+## Javascript
+JS
 https://www.youtube.com/watch?v=H3XIJYEPdus
+NextJS
+https://www.youtube.com/watch?v=zfAb95tJvZQ
+React NextJS
+https://www.youtube.com/watch?v=kPKXmEp_wfU
+HTML/CSS/JS
+https://www.youtube.com/watch?v=J7_Ru2uuBV4
+React NextJS 
+https://www.youtube.com/watch?v=tki4ktdQEKs
 
-Linux
+## Linux
 https://www.youtube.com/watch?v=WQSbuEi61ug
 
 
-SQL
+## SQL
 https://www.youtube.com/watch?v=-fW2X7fh7Yg
 
+## docker
+docker file
+https://www.youtube.com/watch?v=yd7yfzT35sM
+
+### K8S
+https://www.youtube.com/watch?v=d6WC5n9G_sM
+
+## JS
+
+# 娱乐
+### 凡人修仙传
+
+104, 

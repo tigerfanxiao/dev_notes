@@ -20,6 +20,8 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 5. 服务会随着主进程的奔溃而奔溃. 但是虚拟机不会因为服务奔溃而奔溃 
 6. 容器一般是不需要登录的, 而是编辑 docker file. 虚拟机一般是登录后操作的
 7. 容器一般是要让一个程序在 console 口顶着运行, 而一般虚拟机是中的 web 服务是在后台运行的
+8. 容器适合做单进程, 且所在前台顶着 console 口. 可以利用 docker swam 或者 k8s 做负载. 虚拟机则是运行多进程
+
 
 ### 微服务
 1. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
@@ -137,12 +139,9 @@ docker rename <old_name> <new_name>
 # view all containers status
 docker stats
 # vieww specific container status
-docker stats <container_name>
+docker status <container_name>
 
-# view docker file json
-docker inspect <container_name>
-# view container ip
-docker inspect <container_name> | grep -i ip
+
 ```
 
 ### `docker restart` parameters
