@@ -31,10 +31,27 @@ services:
 运行docker compose
 
 ```shell
-docker compose up -d
 # 第一次运行需要下载镜像
+# 文件名必须是 docker-compose.yml
+docker compose up -d
+# 指定文件名
+docker compose up -d -f docker-compose.yml
+
+# 关闭 docker compose 想关的容器
+docker compose down 
+
 docker ps
 
 
 
+```
+
+
+
+```yml
+
+depends_on: 
+	- "dyt-django"
+
+restart: always # 如果因为依赖的容器没起来, 自己也没起来, 就会自动重启
 ```
