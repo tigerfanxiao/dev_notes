@@ -14,7 +14,7 @@ Docker File 的难度是 Linux 的水平问题
 3. 通过镜像来创建容器
 
 例子: 创建一个 python image
-``` dockerfile
+``` Dockerfile
 # 使用 python 3.9 的基础镜像
 FROM python:3.9-slim-buster 
 WORKDIR / 
@@ -33,7 +33,14 @@ CMD ["python3", "./main.py"]
 # image-name 是自己起的名字
 # -t 表示除了镜像名之外还要加上一个版本号 tag, 比如 0.1
 # . 表示docker deamon 会在本地目录下寻找 Dockerfile 文件
-docker build -t image_name:0.1  .
+docker build -t xiao/image_name:0.1  .
+# 在当前目录中找指定文件名的 Dockerfile 文件
+docker build -t xiao/image_name:0.1 -f my_docker_file_name.Dockerfile .
+
+# 传入环境变量 IF_NAME=lo0
+docker run --rm --name qyt-dockerfile -e IF_NAME=lo0 xiao/centos_ifconfig
+# 最后传入的命令, 可以把定义在 CMD 中的命令覆盖掉
+docker run --rm --name qyt-dockerfilexiao/centos_ifconfig ls 
 
 ```
 
@@ -50,6 +57,7 @@ VOLUME # 设置卷, 挂载主机目录
 ENV # 设置环境变量
 EXPOSE # 声明提示要暴露的端口号, 没什么用. 更多的是给别人看文档用的. 真正起作用的是 docker run 设定
 CMD # 指定容器启动后要做的事情
+ENTRYPOINT # 类似于 CMD, 但是不会被 docker run 最后的命令覆盖, 且最后输入的内容会作为 Entrypoint 中命令的参数传递进去
 
 ```
 
@@ -91,7 +99,22 @@ ENV IF_NAME=eth0 SSH_PORT=22 # 等号表示默认值
 ENV <key> <value> # 必须强制要传值
 ```
 
-卷
+### Volume
 ```dockerfile
 VOLUME /qytang # 把/qytang 的中文件挂载到镜像上
 ```
+
+### Entrypoint
+且最后输入的内容会作为 Entrypoint 中命令的参数传递进去
+```Dockerfile
+ENTRYPOINT ["ifconfig"]
+```
+
+构建容器
+```shell
+docker run --rm --name qyt-dockerfilexiao/centos_ifconfig eth0
+```
+
+### CMD
+如果你自己的 Dockerfile 中不写 CMD, 就会集成基础镜像中的 CMD
+CMD + 环境变量是比 Entrypoint 用的更多的, 更标准的做法

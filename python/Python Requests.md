@@ -4,7 +4,7 @@ Requests包难以完成页面跳转登录的功能，可能selenium更适合
 
 ```python
 import requests
-response = requests.get('url') # 得到 200
+response = requests.get('www.google.com') # 得到 200
 response_html = response.text
 # Headers
 response.headers  
