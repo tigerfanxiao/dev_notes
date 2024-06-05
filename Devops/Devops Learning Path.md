@@ -3,13 +3,7 @@
 
 5 月 20 日启动
 1. Python 基础知识复习 5 月 20日 - 5 月 30 日
-2. Docker 
-3. 
-
-
-
-
-
+2. Docker 6月 1 日, 到 6 月 4 日, 看完视频, 还需要做实验练习
 
 
 四个工具可以一起学习， 这几个工具都可以在AWS上做实验吗
@@ -51,7 +45,7 @@ AWS的学习路径SOA实验， AWS SysAdm， developer， SAP
 如果是network engineer
 1. cloud network engineer - AWS 的network 专业课
 2. network in VMs, containers , 比如docker和k8s 内的网络
-3. Bash， python
+3. Bash, python
 
 Linux
 * OS Basic
