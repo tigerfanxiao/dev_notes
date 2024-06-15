@@ -6,3 +6,6 @@ Pod 是 K8S 最小的管理单元. 一个 Pod 中可以有多个容器. 一个 P
 Node 是计算节点, 可以是物理机, 也可以是虚拟机
 
 Service 有 Service 的 IP 地址, 由 Service的 IP 地址来接受请求, 然后做负载均衡, 发送给 Pod
+
+
+Istio 是一种 K8S 生态中的一部分
