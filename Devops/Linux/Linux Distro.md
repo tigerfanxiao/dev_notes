@@ -1,32 +1,36 @@
+### debian based
+- debian
+- ubuntu
+- mint
+
+RPM based
+- Red hat
+- centos
+- fedora
+- opensuse
+
+Arch 非常小的 linux 版本, 极高的定制化, 多用于 docker 镜像
+
 
 ### 文件系统
-
-- **/bin**  存储 cd, mv 等命令的 2 进制代码
-- **/boot** 存放开机启动需要的程序
     
 - **/dev**: Here you find your mounted physical devices such as your hard drives, USB drives, and optical drives.
     
 - **/etc**: This directory is where the configuration files of the installed software are located.
     
-- **/home**: The home directory contains a directory for each user with the user's files and directories. The figure shows the directories of the user _Cisco_.
     
 - **/lib**: Contains libraries that are usually downloaded with software. They are necessary for the programs to work.
     
-- **/media**: Here you might find the mounted USB drives, but it depends on the Linux distribution.
-    
-- **/mnt**: When mounting a device in Linux, you use the _mnt_ directory.
+- **/mnt**: When mounting a device in Linux, you use the _mnt_ directory
     
 - **/opt**: Contains optional software.
     
 - **/proc**: The processes directory contains files for the core operating system (kernel) to work.
     
 - **/root**: For a user, the home directory is _/home/username_. For the superuser, the home directory is /root.
-    
-- **/sbin**: Dedicated to a command that the superuser (root) can run, similar to /bin.
+
     
 - **/tmp**: Files that are used only temporarily are stored in this directory. The content of the directory is deleted on shutdown.
-    
-- **/usr**: Used for sharing files between users.
     
 - **/var**: Here you find files of variable lengths, usually log files of the installed software.
 
