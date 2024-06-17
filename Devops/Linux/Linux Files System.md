@@ -5,7 +5,7 @@
 /usr  # used for sharing files between users
 /media # usb 介质
 /home # 有多少个普通用户, 下面就有多好个文件夹
-
+/etc # 程序使用的配置文件
 /boot # 存放开机启动需要的程序
 ```
 

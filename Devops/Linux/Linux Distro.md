@@ -16,7 +16,6 @@ Arch 非常小的 linux 版本, 极高的定制化, 多用于 docker 镜像
     
 - **/dev**: Here you find your mounted physical devices such as your hard drives, USB drives, and optical drives.
     
-- **/etc**: This directory is where the configuration files of the installed software are located.
     
     
 - **/lib**: Contains libraries that are usually downloaded with software. They are necessary for the programs to work.
