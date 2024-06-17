@@ -135,3 +135,19 @@ result = json.loads(response.text)
 # 注意: data 接受的是 string类型,所有要用 json.dumps 转化
 esponse = requests.post(url, data=json.dumps(payload), headers=headers, auth=auth, verify=False)
 ```
+
+# API Call
+```python
+import requests
+
+url = "https://openapiv1.coinstats.app/coins"
+# return json
+headers = {
+    "accept": "application/json",
+    "X-API-KEY": "ZufUoOV21Q7FuKb9HLM/UfJ5EgRNjp0tTm7w6q3kO/4="
+}
+
+response = requests.get(url, headers=headers)
+
+print(response.text)
+```

@@ -11,7 +11,10 @@ apt-get install net-tools
 
 # 查询本机接口的 ip 地址
 ifconfig
-ifconfig eth1  # 查看接口下的信息
+ifconfig eth1  # 查看某一个网口
+# 可以查看接口收到和发出多少个包
+ifconfig eth1 | grep inet
+
 ```
 
 系统默认有IP命令可替换`ipconfig`命令
@@ -25,9 +28,16 @@ ip addr add 192.168.1.50/24 dev eth1
 ip route add 172.16.10.0/24 via 192.168.200.t0 dev eth1
 ```
 
-### 测试连通性
+### `host`
+```shell
+hostname # 查看的hostname 是包含有 domain, 如果没有配置 domain 就是.local
+hostname -s # 看看除了 domain 之外的 hostname
+hostname -i # 返回 hostname 的 ip 地址
+
+```
+### `ping`
 ```python
-ping 
+ping -c 5 www.google.com # ping 5 个包
 traceroute
 ```
 
