@@ -1,4 +1,4 @@
-waterfall approach 的问题是, 因为需求被钉死了之后才开始做研发投入. 往往在最后的阶段才发现需求已经变更了. 而且前期在架构上如果有设计问题, 也无法做变更
+waterfall approach 的问题是, 因为需求被定死了之后才开始做研发投入. 往往在最后的阶段才发现需求已经变更了. 而且前期在架构上如果有设计问题, 也无法做变更
 
 working in small batch means delivery something useful quickly 
 Minimum Viable product (MVP) - The cheapest and easiest thing you can build to test your hypothesis.
