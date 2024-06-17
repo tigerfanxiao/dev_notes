@@ -76,6 +76,7 @@ touch file\ with\ space.txt # 有空格的文件
 
 < # redirect file content to standard input
 sort < data.txt
+tr “[a-z]” “[A-Z]” < a_text_file.txt
 ```
 
 
@@ -98,6 +99,9 @@ command line arguments
 ```shell
 ./myshell.sh arg1 arg2
 
+# 在脚本中用
+$1 
+$2 
 ```
 
 command execution mode
@@ -110,6 +114,13 @@ command1; command2
 
 # concurrent mode
 command1 & command2
+```
+
+# String
+
+```shell
+today=$(date +%Y%m%d)
+weather_report=raw_data_$today # 字符串的拼接
 ```
 
 condition
@@ -152,6 +163,17 @@ else
 fi
 ```
 
+```shell
+for file in $(ls) # [TASK 9]
+do
+	if (( `date -r $file +%s` > $yesterdayTS ))
+
+	then
+
+	fi
+done
+```
+
 logical operators
 ```shell
 $a == 2
@@ -163,7 +185,7 @@ a -ge 3 # 大于等于
 a -gt 3 # 大于
 ```
 
-arrays
+# arrays
 ```shell
 my_array=(1 2 "three" "four" 5)
 declare -a empty_array
@@ -180,7 +202,7 @@ echo ${my_array[@]}
 
 ```
 
-for loop
+# for loop
 ```shell
 for item in ${my_array[@]}; do
   echo $item
@@ -196,6 +218,15 @@ for (( i=0; i<=$N; i++ )) ; do
   echo $i
 done
 
+# 0, 1, 2, 3, 4, 5
+for i in {0..5}; do
+    echo "this is iteration number $i"
+done
+
+# 文件列表
+for file in $(ls);do
+
+done
 ```
 
 for loop example

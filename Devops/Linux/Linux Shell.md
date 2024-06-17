@@ -10,7 +10,6 @@ ps # running process
 top # running process and resource usage, cpu, memory, io
 df # mounted file system 
 man # reference manuel
-date # print date
 cp # copy file
 mv # move file
 rm # remove file
@@ -37,7 +36,6 @@ gzip
 hostname 
 ping 
 ifconfig # 需要安装 nettools
-curl # display contents of file at a URL, 类似浏览器答应出 html
 wget # download file from URL
 
 ```
@@ -160,7 +158,18 @@ date "+%T"
 %H # Displays the hour
 
 
-date -r <file_name> # 查看文件的日期
+date -r <file_name> +%s # timestamp
+date +%Y%m%d # 20240611
+
+
+# 设置时区
+TZ='Morocco/Casablanca' 
+date -u +%
+
+date
+Mon Feb 13 11:28:12 EST 2023
+date -u
+Mon Feb 13 16:28:16 UTC 2023
 ```
 
 ```shell
@@ -227,6 +236,7 @@ curl --request GET \
      --header 'X-API-KEY: ZufUoOV21Q7FuKb9HLM/UfJ5EgRNjp0tTm7w6q3kO/4=' \
      --header 'accept: application/json'
 
+curl wttr.in/$city --output $weather_report # 保存草一个文件
 ```
 
 ### `tar`
@@ -249,8 +259,8 @@ unzip notes.zip # 解压 zip 文件
 
 zip -l notes.zip # 查看 zip 文件中的结构
 unzip -o bin.zip # 解压文件 -o 表示 overwrite
-
-
+# overwrite and not restore original modified date
+unzip -DDo important-documents.zip
 ```
 # Bash Script
 
@@ -259,4 +269,27 @@ bash 脚本基本格式
 #! /bin/bash 
 
 echo "Hello Network!"
+```
+
+# tr
+删除重复出现的字符
+```shell
+echo "There are    too    many spaces in this    sentence." | tr -s " "
+# 删除收尾的空格
+echo " Never start or end a sentence with a space. " | xargs 
+# 倒叙
+echo ".sdrawkcab saw ecnetnes sihT" | rev
+
+# print the last field of the string 
+echo "three two one" | rev | cut -d " " -f 1 | rev
+
+
+# Unfortunately, this prints the last field of the string, which is empty:
+echo "three two one " | rev | cut -d " " -f 1 | rev
+# But if you trim the trailing space first, you get the expected result:
+echo "three two one " | xargs | rev | cut -d " " -f 1 | rev
+
+obs_tmp=$(head -1 temperatures.txt | tr -s " " | xargs | rev | cut -d " " -f2 | rev)
+
+fc_temp=$(head -3 temperatures.txt | tail -1 | tr -s " " | xargs | cut -d "C" -f2 | rev | cut -d " " -f2 | rev)
 ```
