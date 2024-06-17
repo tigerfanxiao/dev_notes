@@ -86,6 +86,12 @@ $(command)
 `command`
 
 here=$(pwd) # 把命令的结果保存到变量中
+
+# 在数学运算中需要用(())
+sum=$(($n1+$n2))
+
+# 注意 ${} 是打印用的
+echo "${varaible_name}"
 ```
 
 command line arguments
@@ -116,11 +122,14 @@ else
   echo "number of arguments is not equal to 2"
 fi
 
-if [ $string_var == "Yes" ]
+if [ "$string_var" == "Yes" ]
 then 
 	echo "the string is equal"
-else
+elif [ "$string_var" == "No" ]
+then
 	echo "the string is not equal"
+else
+	echo "no response is correct"
 fi
 ```
 and
@@ -149,7 +158,9 @@ $a == 2
 a != 2
 a <= 3
 a -le 3 # 小于等于
-
+a -lt 3 # 小于
+a -ge 3 # 大于等于
+a -gt 3 # 大于
 ```
 
 arrays
@@ -161,7 +172,7 @@ my_array+=("six")
 my_array+=(7)
 
 # print the first item of the array:
-echo ${my_array[0]}
+echo "${my_array[0]}" 
 # print the third item of the array:
 echo ${my_array[2]}
 # print all array elements:
@@ -204,4 +215,9 @@ for i in ${!my_array[@]}; do
 done
 echo $count
 echo $sum
+```
+
+cut 的列变成数列
+```shell
+col0=($(cut -d "," -f1 $csv_file))
 ```
