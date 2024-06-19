@@ -1,5 +1,4 @@
 
-Docker File 的难度是 Linux 的水平问题
 ## 镜像的分层
 一个镜像是又很多层构成, 每一层称为一个 Layer. 在构建镜像的时候, 每个 `RUN`命令会创建一个 layer, 而每一个 layer 都会扩大镜像的体积, 所以一般在 `RUN` 命中放了很多用`&&`连接的命令
 如果要构建一个镜像. 创建`Dockerfile` 文件
@@ -10,7 +9,7 @@ Docker File 的难度是 Linux 的水平问题
 注意: Image 文件的每一行都等于一层
 # 步骤
 1. 创建`Dockerfile` 文件
-2. 执行 `docker build`命令 
+2. 执行 `docker build`命令来构建容器
 3. 通过镜像来创建容器
 
 例子: 创建一个 python image
@@ -81,8 +80,6 @@ RUN yum -y update && \
 	yum -y install vim net-tools && \
 	yum install -y epel-release && \
 	yum -y install nginx
-# 如果是网络上的资源, 可以用 wget, curl 下载下来
-# 如果是网络上的代卖, 可以用 git clone 下载下来
 
 ```
 

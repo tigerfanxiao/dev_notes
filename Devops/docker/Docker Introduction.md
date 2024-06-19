@@ -7,7 +7,6 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 
 # 名词解释
 * Container 我们可以把每个 container 认为是一个进程
-* Bare Metal 裸金属服务器, 也就是物理机
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
 

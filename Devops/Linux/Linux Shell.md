@@ -143,7 +143,6 @@ paste -d "," a.txt b.txt # 两个文件合并的时候, 用逗号分割
 
 ```
 
-
 ### `date`
 ```shell
 date "+It's %A, %j day of %Y"
@@ -220,6 +219,12 @@ cp -r <dir/> <dir/>  # 把目录下的文件 copy 到另一个目录下
 
 ```
 
+# directory 
+
+```shell
+# 如果 CC201 文件夹不存在
+[ ! -d 'CC201' ] && git clone https://github.com/ibm-developer-skills-network/CC201.git
+```
 ### `curl`
 
 ```shell
@@ -236,7 +241,10 @@ curl --request GET \
      --header 'X-API-KEY: ZufUoOV21Q7FuKb9HLM/UfJ5EgRNjp0tTm7w6q3kO/4=' \
      --header 'accept: application/json'
 
-curl wttr.in/$city --output $weather_report # 保存草一个文件
+curl wttr.in/shanghai --output <report_name> # 保存为一个文件
+
+curl localhost:8080 # 用于在shell 里查看 web 服务状态
+
 ```
 
 ### `tar`
