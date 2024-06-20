@@ -1,4 +1,24 @@
 
+```shell
+kubectl get node # check node information
+kubectl get service
+kubectl get svc # get the service
+
+kubectl get node -o wide
+
+
+kubectl --help # 
+kubectl get --help
+kubectl describe service <service_name> 
+
+kubectl logs <podname>
+kubectl logs <podname> -f # stream the log
+
+
+
+```
+
+
 | Command                         | Description                                                               |
 | ------------------------------- | ------------------------------------------------------------------------- |
 | **for …do**                     | Runs a for command multiple times as specified.                           |
