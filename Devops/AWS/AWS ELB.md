@@ -20,3 +20,8 @@ Selecting between the ELB service types is done by determining which feature is 
 | Redirects                                                                                   | ✔                         |                       |
 | Fixed response                                                                              | ✔                         |                       |
 | User authentication                                                                         | ✔                         |                       |
+
+# Error
+504 Gateway Timeout 服务器故障
+502 Bad Gateway ELB 无法和服务器沟通. 可能是 Security Group 的问题
+503 Service Unavailable 服务器没有在 ELB 上注册
