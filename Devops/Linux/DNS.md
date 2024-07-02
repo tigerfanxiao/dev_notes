@@ -1,3 +1,17 @@
+# DNS Concepts
+
+A record 是域名到 ip 地址的映射
+Alias record /ANAME 是域名到另外一个域名的映射
+CNAME record 也是域名到另一个域名的映射
+
+区别
+CNAME record不用用在 root level of domain, 也不能和 A, MX record 共存
+- Use for subdomains like `blog.example.com` pointing to `example.blogspot.com`.
+- Suitable for internal DNS redirection within a company's domain hierarchy.
+
+ALIAS
+- Use for root domains like `example.com` pointing to another domain name.
+- Helpful for integrating with cloud services or CDNs where the underlying IP address changes frequently.
 
 Bind9 是常见的 DNS 工具
 

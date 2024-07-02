@@ -50,7 +50,8 @@ git config user.email "tigerfanxiao@gmail.com"
 ```
 推送本地文件到远端
 ```shell
-git remote add origin git@github.com:tigerfanxiao/dev_notes.git
+# 默认情况下, remote_repo 是 origin
+git remote add <remote_repo> git@github.com:tigerfanxiao/dev_notes.git
 git branch -M main
-git push -u origin main
+git push -u <remote_repo> main
 ```

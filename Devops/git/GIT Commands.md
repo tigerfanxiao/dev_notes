@@ -1,16 +1,14 @@
 
-# 安装
+# Install git on centos
 ```shell
 # 在centos下用yum安装git
-
 sudo yum install git -y
-
 ```
 # 概念
 git分为四个地方. 
 * 本地 working directory. 其实是当前我们在编程的环境. `git add .` 后放入 stage
 * 本地 stage, 只有被追踪的文件才会被放在 stage 中
-* 本地 repo, 这两面才存在多个不能的代码版本
+* 本地 repo, 这两面才存在多个不同的代码版本
 * 远程 repo, 这是提交到远端服务器的代码
 
 ### 复制仓库
@@ -56,7 +54,11 @@ git diff origin master # 对比远端和本地
 本地默认有一个分支, 就是 master, 有些情况下, 会改为 main
 ```shell
 git branch  # list all branches
+# create new branch and switch to it
+git checkout -b 
 
+# delete branch
+git branch -d <branch_name>
 ```
 
 
@@ -82,8 +84,6 @@ git add folder # 只是把folder中的文件都加入staing area
 ```
 
 
-
-
 # merge
 merge操作也会生成一次 commit
 
@@ -98,8 +98,14 @@ conflict 文件样式
 
 ```
 
+```shell
+# 先切换到主要的 branch 上
+git checkout master
+git merge <branch_name> 
+```
 
-# .gitignore
+
+# gitignore
 `.gitignore`只对于 untrack 状态的文件生效. 如果是已经添加进 staging area 的文件. 需要使用下面命令从 staging area 删除, 变成 untrack 状态
 ```shell
 git rm --cache file
@@ -200,3 +206,13 @@ git rebase --continue
 # git bash
 windows上的git bash
 如果要配置开机启动
+
+
+# reset
+
+```shell
+# 删除 working directory 和 staging area 中的变化, 完全恢复到最后一次 commit 的状态
+git reset --hard HEAD
+
+git revert HEAD --no-edit # HEAD 表示最近的一次 commit
+```
