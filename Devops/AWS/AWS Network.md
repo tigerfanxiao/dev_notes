@@ -4,3 +4,7 @@
 - **Scope**: Security groups apply at the instance level, while network ACLs apply at the subnet level.
 - **Rules**: Security groups only support allow rules, default reject all, while network ACLs support both allow and deny rules.
 - **Evaluation**: Security groups evaluate all rules collectively, whereas network ACLs evaluate rules in numerical order, when hit then return
+
+SG chain
+3-tier app 每一层都有的组件都有自己的 SG. 下一层允许上一层的 SG, 就是是 SG Chain
+

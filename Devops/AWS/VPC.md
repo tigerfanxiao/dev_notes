@@ -42,7 +42,7 @@ SR-IOV, or Single Root I/O Virtualization, is a feature of Enhanced Networking u
 
 ### ENI vs ENA vs EFA
 
-**ENI**: Elastic Network Interface 本质上是虚拟的网卡
+**ENI**: Elastic Network Interface 本质上是虚拟的网卡, 可以浮动的. 比如我有EC2 的集群, 一个 EC2 挂了, 新拉起的 EC2可以使用同一个 ENI 网卡
 
 **EN**: Enhanced Networking. Uses single root I/O virtualization (SR-IOV) to provide high-performance networking capabilities on supported instance types.
 
