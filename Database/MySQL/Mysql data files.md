@@ -9,14 +9,11 @@ sudo rsync -av --dry-run /var/lib/mysql /mnt/new_mysql_data
 
 ```
 
+修改mysql 配置文件 `/etc/mysql/mysql.conf.d/mysqld.cnf`
 
 ```shell
-
 [mysqld]
 datadir = /mnt/new_mysql_data/mysql
-
-
-
 ```
 
 

@@ -24,7 +24,7 @@ reboot fast # 不保存配置， 直接重启
   
 Enter your choice(1-9):8  # 选择8清除console密码
 Note: Clear password for console user? Yes or No(Y/N): y      
-  
+# 必须要选 1 不要选 8
 Clear password for console user successfully. Choose "1" to boot, then set a new  password  
 Note: Do not choose "Reboot" or power off the device, otherwise this operation will not take effect
 ```

@@ -122,7 +122,6 @@ VPC
 AWS Transit Gateway 可以将多个本地和多个 vpc 进行互联
 AWS PrivateLink 本地专线连接 VPC
 AWS Direct Connect Gateway 本地专线连接 AWS, 不经过 internet
-Route53 DNS
 AWS Global Accelerator 利用AWS 全球网络来加速
 ### Edge
 AWS Snow Family 
@@ -181,3 +180,20 @@ CodeGuru 代码审查工具
 AWS
 Fargate
 SQS
+
+
+# 架构分析方法
+
+- 成本优化
+	- 分析支出和确定支出归属
+	- 使用经济高效的资源
+- 可靠性
+	- 从故障恢复, 测试恢复的过程
+- 性能效率
+	- 减少延迟, 使用无服务架构
+	- 纳入监控, 资源的饱和度
+- 卓越运营
+	- 利用代码执行运营, 自动化
+- 可持续性
+	- 最大限度的提高资源利用率
+
