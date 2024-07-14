@@ -1,34 +1,22 @@
+Provision AWS Resource
 实现了 Infrastructure as Code 通过模板来构建基础设施. 而所谓的模板是文本文件
 - 用 yaml 或者 json 来管理配置
 - 用 git 来记录配置变动的版本
 - 支持模板嵌套
 
-最佳实践
+功能
 1. 快速构建测试床, 在测试完成后, 又可以马上删除, 来节约资源
 2. 快速在其他 region 构建备份站点
 
 
 区分 Template和Stack
 
-
-DeletionPolicy 控制用户不能随便删除资源
-
-在创建资源前先创建 stack
-把配置保存在文件中
-创建 S3 Bucket
-```json
-{
-    "Resources": {
-        "catpics": {
-            "Type": "AWS::S3::Bucket"
-        }
-    }
-}
-```
+### Stack
+- Parameters  在交互界面可以选择
+- Mappings 要怎么用???
 
 
-可以用AWS Service Catelog 分享 Portfolio的方法, 分享基础设施, 环境的构建方案
-
+下面是创建 stack 的例子
 ```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Description: "Deploys basic networking and an EC2 instance"
@@ -261,3 +249,9 @@ Resources:
 			- Key: Test
 			  Value: MyInstanceTest
 ```
+
+
+### DeletionPolicy 
+控制用户不能随便删除资源
+
+可以用AWS Service Catalog 分享 Portfolio的方法, 分享基础设施, 环境的构建方案
