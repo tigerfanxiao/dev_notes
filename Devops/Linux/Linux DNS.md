@@ -1,17 +1,14 @@
 # DNS Concepts
 
-A record 是域名到 ip 地址的映射
-Alias record /ANAME 是域名到另外一个域名的映射
-CNAME record 也是域名到另一个域名的映射
+A record: Address Name 域名到 ip 地址的映射
+Alias record:  AWS 独有的的. 可以做一个域名到另外一个域名的映射. 甚至是两个 zone Apex 不同的域名. 比如 a.com 到 b.com
+CNAME record 只能做子域名到另一个子域名的映射. 比如 mobile.a.com 到 m.a.com
+Zone Apex 比如 acloud.guru
+SOA Record: Start of Authority Records 即使如果你去.com 的根服务器, 根服务器会给你 SOA, 告诉你那个 DNS 是可性的机构去解析 .com 的地址
+NS Record: DNS 服务器的名字
 
-区别
-CNAME record不用用在 root level of domain, 也不能和 A, MX record 共存
-- Use for subdomains like `blog.example.com` pointing to `example.blogspot.com`.
-- Suitable for internal DNS redirection within a company's domain hierarchy.
-
-ALIAS
-- Use for root domains like `example.com` pointing to another domain name.
-- Helpful for integrating with cloud services or CDNs where the underlying IP address changes frequently.
+实践
+我们可以使用 Alias 把一个正常的域名www.example.com 映射到 AWS ELB的域名上 elb1234.elb.amazonaws.com
 
 Bind9 是常见的 DNS 工具
 

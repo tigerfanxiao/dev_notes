@@ -8,7 +8,6 @@
 
 在 linux 中运行的 shell 脚本
 
-
 ```shell
 #! /bin/bash
 ```
