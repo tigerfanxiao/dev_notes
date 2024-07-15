@@ -5,6 +5,13 @@
 - In terms of scalability, ELB automatically scales to meet the demand of the incoming traffic. It handles the incoming traffic and sends it to your backend application.
 
 
+ELB Types
+- Application Load Balancers
+- Network Load Balancers
+- Classic Load Balancers (legacy)
+- Gateway Load Balancers 第三方应用
+
+X-Forwarded-For 是 http 的 header 可以保存发送请求的用户的真实 IP 地址. 经过 ELB 透传到EC2 上
 ## SELECT BETWEEN ELB TYPES
 
 Selecting between the ELB service types is done by determining which feature is required for your application. Below you can find a list of the major features that you learned in this unit and the previous.
