@@ -250,11 +250,11 @@ curl localhost:8080 # 用于在shell 里查看 web 服务状态
 ### `tar`
 ```shell
 tar -cf note.tar notes # 把 notes 文件夹打包成 note.tar
-tar -czf note.tar.gz ntoes # 把 notes 文件夹打包压缩成 note.tar.gz
+tar -cvzf note.tar.gz ntoes # 把 notes 文件夹打包压缩成 note.tar.gz
 
 tar -tf note.tar # 查看包中文件结构
 
-tar -xf note.tar notes # 把包 note.tar 解开到 notes
+ar -xvzf bigfile.tar.gz -C /folder/subfolder/ # 解压到指定目录
 tar -xzf note.tar.gz notes # 把包 note.tar.gz 解压到 notes 中
 ```
 
