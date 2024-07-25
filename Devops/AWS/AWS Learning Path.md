@@ -1,6 +1,17 @@
+
+[[AWS考试背题方法]]
+
+
+
+# 学习材料
+Acloudguru
+乾颐堂
+
 # AWS Repost
 
+
 https://repost.aws/
+
 
 
 # 需要学习
