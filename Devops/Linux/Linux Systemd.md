@@ -24,6 +24,7 @@ CentOS7 以后就用 target
 
 # 命令
 
+### Centos7 之前
 ```shell
 # set and queries runlevel settings for services
 # 设置 httpd 服务在 run level 3 启动
@@ -32,18 +33,41 @@ chkconfig --list | less
 service httpd restart
 ```
 
-```shell
-cd /etc/systemd/system
+# `systemctl`
 
+```shell
+# 查看默认的 target
+systemctl get-default 
+# multi-user.target # 正常多人访问的服务
+# 如果是使用 gui 则反馈
+# graphical.target 
+
+# 把默认 target 设置为 graphical.target
+sytemctl set-default graphical.target
+ 
+# 查看所有的loaded target
+systemctl list-unit --type target
+#只跑 multi-user.target 及所依赖的 target, 其他的 target 都停止
+systemctl isolate multi-user.target
+# 启动服务 查看服务状态
+systemctl start custom.service
+systemctl status custom.service
 ```
 
 
-custom service
+# Custom Service
+
 ```bash
+vim penguin.target
+
+# 文件内容
 [Unit] 
-Description=Custom 
-Service Wants=network-online.target 
-After=network-online.target
+Description=Penguin Target
+Requires=multi-user.target # 依赖于 multi-user.target 
+Wants=pengguin.service
+Conflicts=rescue.service rescue.target
+After=multi-user.target rescue.service rescue.target # 先等 multi-user.target 运行完成后再运行
+AllowIsolate=yes
 
 [Service] 
 Type=forking 
@@ -52,10 +76,25 @@ ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 
 [Install] 
 WantedBy=default.target
+
+
 ```
 
-
 ```shell
-systemctl start custom.service
-systemctl status custom.service
+# 系统定义的 target 都定义在这个目录中
+cd /usr/lib/systemd/system
+cat multi-user.target # 查看 target
+
+# 自定义 Target 的
+cd /etc/systemd/system
+ls multi-user.target.wants
+
+
+mkdir penguin.target.wants
+cd penguin.target.wants
+sudo ln -s /usr/lib/systemd/system/httpd.service .
+
+
+
+
 ```

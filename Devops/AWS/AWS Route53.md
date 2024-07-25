@@ -13,4 +13,6 @@ Routing Policy
 - latancy-based
 - multivalue answer 随机从 8 个 records 中选择
 - weighted 总共 255. 也是不同 region 之间
-- 
+
+A Record can be used on-premise
+Alias Record can only be used in cloud
