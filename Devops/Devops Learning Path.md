@@ -1,4 +1,4 @@
-I would like to find a position as devops or SRE site reliability engineer. 
+I would like to find a position as DevOps or SRE site reliability engineer. 
 The idea I am interested in is IaC. Infrastructure as Code
 
 # Questions
@@ -53,6 +53,8 @@ A tool to implement IaC
 ## Ansible
 More like a execution tool to maintain servers 
 ## Linux
+- Systemd
+
 ### Bind 
 DNS for Linux, I think it is quite important as, even in K8S, we need dns for pod 
 ### SSH
