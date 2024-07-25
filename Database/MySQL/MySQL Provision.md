@@ -7,6 +7,7 @@ sudo apt-get install mysql-server
 # 不是必须的安装 mysql utility tool
 sudo mysql_secure_installation utility
 
+
 # 允许远程访问
 sudo ufw enable 
 sudo ufw allow mysql
