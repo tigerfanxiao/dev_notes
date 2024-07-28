@@ -1,4 +1,32 @@
+Fortigate 上可以 OSPF, RIP, BGP, 也可以做路由重分布
+```shell
+# 配置一个接口
 
+config system global
+set hostname FW
+end
+config system interface
+set ip 202.100.2.30 255.255.255.0
+set allowaccess ping http ssh https
+
+config router ospf
+set router-id 3.3.3.3
+config area
+edit 0.0.0.0
+next
+config network
+set prefix 202.100.2.0 255.255.255.0
+set area 0.0.0.0
+next
+end
+
+# 查询 OSPF 邻居
+get router info ospf neighbor
+get routter info routing-table all
+
+```
+在图形界面上配置
+![[Pasted image 20240728190649.png]]
 VIP 也称为 Virtual IP, 用于外网访问内网. 一般做的是一对一的转换, 然后做端口映射. 
 比如外部一个终端要telnet内网的服务器. telnet 一个公网地址, 端口号为 2323. 防火墙将这个流量映射内网 DMZ 区域的服务器上, 将端口 2323 映射为 23
 
