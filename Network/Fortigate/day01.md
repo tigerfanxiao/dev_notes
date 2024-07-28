@@ -1,16 +1,30 @@
+# 设备初始化解
+1. 初始登录账户 admin, 没有密码
 
-先要连接上公网, 配置完管理页面, 才能打授权. 初始登录账户 admin, 没有密码. 
+### 授权
+先要连接上公网, 配置完管理页面, 才能打授权. 
 打好授权后, 需要配置登录密码
 
 # web 页面管理
-有两种管理模式, 
+有两种管理模式,  console 或者 mgmt 口
 一般不用 console 口, 而是插Mgmt 口. 
 
+默认情况下的, 管理口 IP 为 `192.168.1.99`
 在本端配置 192.168.1.97
-然后用浏览器访问 `192.168.1.99`
+然后用浏览器访问 
 
 
 # 命令
+
+```shell
+# 查看所有配置
+show full-configuration
+# 查询所有接口配置
+show system interface 
+
+# 查看指定接口下的配置
+show system interface port1
+```
 
 ### 防火墙配置输出
 ```shell
@@ -19,8 +33,7 @@ config system console
 set output standard # 配置输出方式为全部输出
 end
 
-# 查看所有配置
-show full-configuration
+
 # To change it back to the default:  
 
 # 用 more 的方法输出配置, 默认模式
