@@ -20,12 +20,42 @@ Best practice for root user
 
 ### Policy
 Policy 有 AWS 在维护的, 也有用户自己定义的
-Policy 不能单独使用, 需要 attach 到 Group 或者 User 上
+Policy 不能单独使用, 需要 attach Entity
+- Vendor Managed 厂商提供的
+- Customer Manage 由用户创建, 可以被分享给别人, 但是还没有 attach
+- Inline 当这个 policy is attached to a user 就称为 Inline-policy
 Policy 怎么组成
 - Sid
 - Effect: Allow 还是 Deny
 - Action: 资源的 API
 - Resource 
+
+Policy 例子
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Action": [
+				"iam:GetContextKeysForCustomPolicy",
+				"iam:SimulateCustomPolicy",
+				"iam:SimulatePrincipalPolciy"
+			],
+			"Effect": "Allow",
+			"Resource": "*"
+		
+		}
+	
+	]
+}
+```
+
+# Entity
+- User
+- Group
+- Role
+	- 临时的, 好像带了一顶帽子. Entity can assume roles at temporary basis. you are allowed to do the action defined by role 
+	- user or service can assume a role. for example a lambda function can assume a role
 
 ### Role Based Access in AWS
 IAM Roles
