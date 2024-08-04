@@ -1,4 +1,6 @@
 
+# Concepts
+
 账户有两种
 - 一种是 root user, 要用邮箱登录, 平时操作不要使用
 - IAM user 
@@ -15,6 +17,15 @@ Best practice for root user
 - Disable or delete the access keys associated with the root user. 现在默认不创建了. 可以在My Security Credential 中修改
 - 使用 MFA
 - 创建一个 IAM User
+
+### Policy
+Policy 有 AWS 在维护的, 也有用户自己定义的
+Policy 不能单独使用, 需要 attach 到 Group 或者 User 上
+Policy 怎么组成
+- Sid
+- Effect: Allow 还是 Deny
+- Action: 资源的 API
+- Resource 
 
 ### Role Based Access in AWS
 IAM Roles
