@@ -75,25 +75,33 @@ Byte由8个bit组成, 用来表示数字和字母
 在网络传输中一般用bit来标记数据量. 
 
 
-# windows命令
+# Trouble Shooting on Windows
 ```shell
 ipconfig
 ipconfig /all # 查看详细信息包括, dns, dhcp server, lease
-nslookup  # dns
 
-ipconfig /flushdns # 刷新dns
-```
-ping 和 traceroute
-```shell
-ping url/ip
+# dns 解析
+nslookup www.baidu.com
+
+# 刷新dns
+ipconfig /flushdns 
+
+# ping 测试
+ping www.baidu.com
+
+# 微软的tracert 是用 icmp 协议的
 tracert url/ip
+tracert -d -w 100 www.baidu.com
+# traceroute 是用 udp 协议的
+
 ```
+
 ping是基于icmp 协议
 **禁ping的情况**
 * 设备本身是block icmp echo request. 
 * 设备前面的防火墙禁ping
 
-**traceroute机制**
+**tracert机制**
 traceroute也是基于icmp协议. 首先发ttl=1的请求到网关, 网关把TTL改成0, 返回. 则第一条成功验证. 然后发TTL=2的请求, 得到验证后发送TTL等于3的请求
 
 point-of-presence (POP) of ISP. The POP devices connect users to an ISP network.
