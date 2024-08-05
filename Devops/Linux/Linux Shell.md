@@ -108,13 +108,13 @@ uniq pets.txt # 这是去除连续的重复的行
 ```shell
 grep ch pets.txt # 在 pets.txt 文件中查找有 ch 字符的行
 grep -i ch petx.txt # 不区分大小写
-grep "not installed" /var/log/bootstrap.log # 查询字符串
+grep "not installed" /var/log/bootstrap.log # 查询带有空格字符串
 grep not installed /var/log/bootstrap.log # 查询包含 not 或者包含 installed
+
+ps aux | grep xfce4-session | grep -v grep # 不包含grep的进程
 
 -n # Along with the matching lines, also print the line numbers|
 -c # Get the count of matching lines|
--i # Ignore the case of the text while matching|
--v # Print all lines which do not contain the pattern|
 -w # Match only if the pattern matches whole words|
 
 
