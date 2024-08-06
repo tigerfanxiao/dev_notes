@@ -1,6 +1,14 @@
 I would like to find a position as DevOps or SRE site reliability engineer. 
 The idea I am interested in is IaC. Infrastructure as Code
 
+# Cloud Computing
+### AWS Certificate
+
+SAA
+SOA
+SAP
+DEP
+
 # Questions
 1. There are many topics to learn, but I only have 3 months, so I need help from professional or market aspect to identify which topics is more important than others. I would like to make some project to present my skill, in this project I also want to include those important skill stacks. 
 2. Maybe I still missing some topic is quite important, so could you help to revise my learning list. 
