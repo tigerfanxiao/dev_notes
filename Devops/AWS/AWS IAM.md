@@ -43,9 +43,7 @@ Policy 例子
 			],
 			"Effect": "Allow",
 			"Resource": "*"
-		
 		}
-	
 	]
 }
 ```
