@@ -22,10 +22,41 @@ check desired state and actual state
 
 ```yaml
 apiVersion: app/V1
-kind: Service
+kind: Deployment
 metadata:
-	name: nginx-service
+	name: my-deployment
+	labels:
+	  app: my-deployment
 spec:
+	replicas: 2
 	selector: 
-	ports:
+	  matchLabels:
+	    app: my-deployment
+	temlate:
+	  metadata:
+	    labels:
+	      app: my-deployment
+	  spec:
+	    containers:
+		- name: nginx
+		  image: nginx:1.14.2
+		  ports:
+		  - containerPort: 80
+```
+
+
+# pods
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+sepc:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort:80
+  restartPolicy: OnFailure
 ```
