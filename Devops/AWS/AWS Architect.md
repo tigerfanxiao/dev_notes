@@ -1,9 +1,9 @@
 AWS 架构学习 可以 查找 [AWS Architecture BLOG](https://aws.amazon.com/cn/blogs/architecture/)
 
-# 概念
+# Concepts
 
-CSP Cloud Service Provider
-DR Disaster Recovery 灾备
+CSP Cloud Service Provider 
+DR Disaster Recovery 
 RTO Recovery Time Objective 灾难发生后, 多少时间可以恢复服务
 RPO Recovery Point Objective 灾难发生前, 多少时长的数据可以被丢失
 SAML Security Assertion Markup Language 允许用同一个账户密码访问多个网站
@@ -138,14 +138,6 @@ EKS  用 K8S 管理 docker
 Lambda Serviceless
 
 
-### CDN
-AWS CloudFront CDN 技术
-
-### 负载均衡
-ELB 接受用户请求, 将请求发给EC2
-ALB 后面可以跟 Lambda
-
-
 ### Account Management Service
 AWS Control Tower 创建和管理多账户环境
 AWS Organization 集中管理多个 AWS 账户
@@ -184,16 +176,19 @@ SQS
 
 # 架构分析方法
 
-- 成本优化
+### 5 Pillars of Design
+
+- Cost Optimization 成本优化
 	- 分析支出和确定支出归属
 	- 使用经济高效的资源
-- 可靠性
+- Reliability 可靠性
 	- 从故障恢复, 测试恢复的过程
-- 性能效率
+- Performance efficiency 性能效率
 	- 减少延迟, 使用无服务架构
 	- 纳入监控, 资源的饱和度
-- 卓越运营
+- Operational Excellence 卓越运营
 	- 利用代码执行运营, 自动化
 - 可持续性
 	- 最大限度的提高资源利用率
+- Security 安全性
 
