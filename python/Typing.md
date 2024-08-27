@@ -14,6 +14,15 @@ List[int]
 ```
 
 
+
+### Optional
+```python
+from typing import Optional
+
+# specific Type or None
+def my_func(a: Opitional[int]):
+	pass
+```
 # 检查 Mypy
 mypy是一个可以检查python type的包
 
