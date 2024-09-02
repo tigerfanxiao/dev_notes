@@ -13,6 +13,7 @@ def my_func(x:List[str]):
 # 整数序列
 List[int]
 
+my_tuple:tuple[str, ...] = ('one', 'two') 
 ```
 
 ### Dictionary
