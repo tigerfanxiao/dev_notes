@@ -12,6 +12,5 @@ kubectl log -n kube-system <api_server_pod_name>
 
 查看 container log
 ```shell
-
-kubectl logs
+kubectl logs <pod_name> -c <coantianer_name>
 ```
