@@ -1,6 +1,20 @@
 
+# Deployment
+
+```shell
+
+# 查看 user-db deployment
+# 查看 deployment label
+kubectl get deployment user-db -o yaml
+
+```
 
 
+# namespace
+```shell
+# 创建 namespace
+kubectl create namesapce <namespace_name>
+```
 
 ```shell
 kubectl get node # check node information

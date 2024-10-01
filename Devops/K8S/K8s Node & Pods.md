@@ -65,3 +65,19 @@ spec:
         ports:
         - containerPort: 80
 ```
+
+
+# busybox
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-svc-test-new-namespace
+  namespace: new-namespace
+spec:
+  containers:
+  - name: busybox
+    image: radical/busyboxplus:curl
+    command: ['sh', '-c', 'while true; do sleep 10; done']
+
+```
