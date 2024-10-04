@@ -17,7 +17,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-#
+# route
 @app.get("/")
 def home():
 	return {"Data": "TEST"}
@@ -28,7 +28,7 @@ run server
 # working是文件名, app 是 FastAPI 实例名
 uvicorn working:app --reload
 ```
-查看自动生成的文档
+查看自动生成的API文档
 ```
 127.0.0.1/docs 
 ```
