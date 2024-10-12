@@ -2,7 +2,7 @@
 1. 怎么在vscode中集成mypy
 
 
-# Examples
+### Typing List & Tuple
 ```python
 from typing import List
 
@@ -16,7 +16,8 @@ List[int]
 my_tuple:tuple[str, ...] = ('one', 'two') 
 ```
 
-### Dictionary
+### Typing Dictionary
+```python
 from typing import TypedDict
 
 class Interface(TypedDict):  
@@ -24,6 +25,8 @@ class Interface(TypedDict):
     ip: str
 
 assert Interface(name='int1', ip='192.168.1.1') == dict(name='int1', ip='192.168.1.1') # True
+```
+
 ### Optional
 ```python
 from typing import Optional

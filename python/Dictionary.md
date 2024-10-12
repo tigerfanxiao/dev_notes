@@ -49,9 +49,7 @@ pprint(my_list)  # 自动换行, 缩进
 
 使用 fromkeys方法可以去重, 且保持原来的序列的顺序. 而 set 则无法保证顺序
 ```python
-
 # 去重并保证顺序
-
 items = ['a', 'b', 'c', 'a']
 unique_items = list(dict.fromkeys(my_items))
 ```

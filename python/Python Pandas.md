@@ -1,9 +1,8 @@
-# 概念
+# Concepts
 
-## Dataframe 和 Series
+## `Dataframe` 和 `Series`
 
-读取csv
-
+### read csv
 ```python
 
 import pandas as pd
@@ -256,7 +255,7 @@ import pandas as pd
 
 engine = create_engine(f'sqlite:///{DB_FILE}')
 table_df = pd.read_sql_table(  
-	'license_item',  
+	'license_item',  # table name
 	con=engine  
 	)
 ```
