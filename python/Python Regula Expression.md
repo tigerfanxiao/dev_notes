@@ -28,13 +28,30 @@ root|Root # 匹配 root 或者 Root 中的一个
 
 ```
 
-### `re.match()`
+### `re.match()` & `groups()`
 如果匹配不到, 则返回 `None`
 ```python
 result = re.match(regex, content) # 如果是 none 就没有返回
 result.groups() # 返回所有匹配中的结果, 是一个序列
 ```
-### re.findall()
+
+### `group()`
+```python
+import re
+
+pattern = r"(\d{4})-(\d{2})-(\d{2})"
+string = "Today's date is 2024-10-12"
+
+matched = re.search(pattern, string)
+
+if matched:
+    print(matched.group(0))  # Entire match: '2024-10-12'
+    print(matched.group(1))  # First group: '2024'
+    print(matched.group(2))  # Second group: '10'
+    print(matched.group(3))  # Third group: '12'
+```
+
+### `re.findall()`
 ```python
 
 import re
@@ -45,6 +62,11 @@ re.findall(r'\D(\d{5})\D?', s)  # ['56789', '01234']
 注意： 
 `findall`中不能使用 `^`或者`$`作为正则，因为匹配的可能是字符串的最末尾。如果要匹配字符串内的换行，用 `\n` 来匹配
 
+### `re.search()`
+只要能找到, 就返回非空
+```python
+re.search('[a-zA-Z]', password)
+```
 
 # Positive Lookahead
 

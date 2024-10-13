@@ -1,8 +1,9 @@
 # Concepts
 
-## `Dataframe` 和 `Series`
 
-### read csv
+## `Dataframe` & `Series`
+
+### csv
 ```python
 
 import pandas as pd
@@ -12,11 +13,27 @@ specific_cols_names = ['col1', 'col2']
 # 对于一些欧洲字符
 df = pd.read_csv(csv_file_path,  encoding='iso8859-1', usecols=specific_cols_names)
 
+
+wine_reviews = pd.read_csv("path", index_col=0)
+
+# 输出到 csv
+df.to_csv('path')
+```
+
+### read excel
+```python
+excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
+```
+
+### DataFrame meta info
+```python
+
 # get how much rows and columns 
 print(df)
 
 # check all the columns name
 df.dtypes
+
 # 查看有多少单元格
 df.size
 # 查询列数和行数
@@ -24,24 +41,34 @@ df.shape
 # 获得列名序列
 list(df.columns)
 
-# 查看头部
+# 查看头部10 行数据
 df.head()
 
 # 查看有多少行
 len(df.index)
-
 ```
 
-读取excel
-```python
-excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
-```
-
-### 构建DF
-从字典构建df
+### Create DF
+从字典构建df, 本质上是按照列来构建的
 ```python
 df1 = pd.DataFrame({'A':[3,4],'B':[5,6]})
 ```
+
+|     | A   | B   |
+| --- | --- | --- |
+| 0   | 3   | 5   |
+| 1   | 4   | 6   |
+可以给每一行加一个 index
+```python
+pd.DataFrame({'Bob': ['I liked it.', 'It was awful.'], 
+              'Sue': ['Pretty good.', 'Bland.']},
+             index=['Product A', 'Product B'])
+```
+
+|           | Bob           | Sue          |
+| --------- | ------------- | ------------ |
+| Product A | I liked it.   | Pretty good. |
+| Product B | It was awful. | Bland.       |
 从序列构建df
 ```python
 # 构建只有一列的df
@@ -67,12 +94,21 @@ df['col1'].values.tolist()
 ```
 
 
-### 构建Series
+### Create Series
 从序列构建series
 ```python
 # 从序列构建Series
-sr = pd.Series([1, 2, 3])
+sr = pd.Series([1, 2, 3], name='my_series')
+''' 
+0    1
+1    2
+2    3
+dtype: int64
+'''
+```
 
+Dataframe中每一列是一个 Series, 但是 Series 没有列名. 因为只有 Dataframe 才有列的概念
+```python
 df['OLD_POP']  # 如果取出一列，返回 Series
 ```
 
@@ -174,7 +210,54 @@ row_copy['Source'] = 'undo_path' # 修改里面一个字段
 df = df.append(row_copy)  # 把修改后的行添加到原来df的最后
 ```
 
-# 查找
+# Indexing, Selecting, Assigning
+```python
+# 取一列
+df.['col_name']
+df.col_name
+
+# 取一个值, index其实是行号
+df.['col_name']['index']
+
+### index-based selection 只能放列的编号, 不能放列名
+# 取出第一行
+df.iloc[0]
+# 定位一个df中第一行的某个元素
+df.iloc[0]['colname']  # 这里0是行数
+df.colname[0]
+df.colname.loc[0]
+# 选择第0 列, 所有的行. 也就是第一列所有元素
+df.iloc[:, 0]
+# 选择第0 列, 0-2行
+df.iloc[:3, 0]
+# 选择指定行
+df.iloc[[0, 1, 2], 0]
+# 选择倒数 5 行, 所有列
+df.iloc[-5:]
+
+### Label-based selection 可以放列名
+# 选择第 0 行, country 列
+df.loc[0, 'country']
+# 选在所有行, 指定列
+df.loc[:, ['taster_name', 'taster_twitter_handle', 'points']]
+```
+
+注意: 在 loc 中的 0:10 其中 10 是包含能选到的
+iloc 中的 0:10 其中 10 是选不到的
+
+### Condition
+
+```python
+reviews.country == 'Italy'
+"""
+0          True
+1         False
+          ...  
+129969    False
+129970    False
+Name: country, Length: 129971, dtype: bool
+"""
+```
 
 
 ```python
@@ -183,35 +266,229 @@ df.loc[df['column_name'] == some_value]
 
 # 多个条件
 df.loc[(df['column_name'] >= A) & (df['column_name'] <= B)]
+df.loc[(df['column_name'] >= A) | (df['column_name'] <= B)]
+# 在一个序列里
+df.loc[reviews.country.isin(['Italy', 'France'])]
 
+# 非空的行
+df.loc[reviews.price.notnull()]
 # 判断df是否数据为空
 df.empty
 
-# 定位一个df中第一行的某个元素
-df.iloc[0]['colname']  # 这里0是行数
+```
 
-# 取出第一行
-df.iloc[0]
+对列赋值
+```python
+# 每一行的值都是 everyone
+reviews['critic'] = 'everyone'
+```
 
-# 取出第二行后面所有的行
-df[1:]
+```python
 
-# 取出最后一行， 返回Series
-df.iloc[-1]
+# 数字类型
+reviews.points.describe()
+"""
+count    129971.000000
+mean         88.447138
+             ...      
+75%          91.000000
+max         100.000000
+Name: points, Length: 8, dtype: float64
+"""
+# 取和
+reviews.points.sum()
+# 取平均
+reviews.points.mean()
+# 取中位数
+median_points = reviews.points.median()
+# 去重
+countries = reviews.country.unique()
+# 列中内容重复重现的次数, 类似与 groupby 的统计
+reviews.taster_name.value_counts()
+# 最大值的 index, 对 NaN 过滤了
+bargain_idx = (reviews.points / reviews.price).idxmax()
+bargain_wine = reviews.loc[bargain_idx, 'title']
+
+# mapping 
+# map是对 Series 的函数, 对一列中的每一个元素进行操作
+review_points_mean = reviews.points.mean()
+reviews.points.map(lambda p: p - review_points_mean)
+
+# apply 是对 DF 操作的函数
+# apply 使用的函数的入参是行, 可以返回行
+def remean_points(row):
+    row.points = row.points - review_points_mean
+    return row
+
+# 也可以返回数值
+def rate_star(row):
+    if row.country == 'Canada':
+        return 3
+    if row.points >= 95:
+        return 3
+    if row.points >= 85:
+        return 2
+    return 1
+# 对列进行操作
+reviews.apply(func, axis='columns') # 或者 axis=1
+# 对行进行操作
+reviews.apply(func, axis='index') # 或者 axis=0
+# 字符类型
+reviews.taster_name.describe()
+"""
+count         103727
+unique            19
+top       Roger Voss
+freq           25514
+Name: taster_name, dtype: object
+"""
+
+
+```
+
+### 列操作
+```python
+# 列数字操作
+review_points_mean = reviews.points.mean()
+reviews.points - review_points_mean
+
+# 列的字符串拼接
+reviews.country + " - " + reviews.region_1
+```
+
+### Group by
+
+- `count()`只和 `groupby()`连用. 如果只是列的技术用 `value_counts()`
+```python
+# groupby 之后 呈现 points 的计数
+reviews.groupby('points').points.count()
+# groupby 之后, 只要计数, 不用显示某一列的数据
+reviews.groupby('taster_twitter_handle').size()
+
+```
+
+对两列进行 groupby
+```python
+# 可以对两列进行 groupby
+# 取 points 的最大值
+reviews.groupby(['country', 'province']).apply(lambda df: df.loc[df.points.idxmax()])
+
+```
+
+![[Pasted image 20241013060619.png]]
+
+
+```python
+reviews.groupby(['country']).price.agg(["len", "min", "max"])
+
+```
+
+![[Pasted image 20241013060712.png]]
+
+Multi-indexes
+```python
+countries_reviewed = reviews.groupby(['country', 'province']).description.agg([len])
+countries_reviewed
 ```
 
 
-# 修饰
-### 填充
+![[Pasted image 20241013060757.png]]
 
 ```python
-df = df.fillna('') 
+countries_reviewed.reset_index(
+
+```
+![[Pasted image 20241013060824.png]]
+
+```python
+countries_reviewed = countries_reviewed.reset_index()
+
+```
+
+### Sorting index
+```python
+countries_reviewed.sort_values(by='len')
+
+countries_reviewed.sort_values(by='len', ascending=False)
+
+countries_reviewed.sort_index()
+countries_reviewed.sort_values(by=['country', 'len']
+# 把 price 作为 index, 也是分组的对象. 对标的数值是 points且已经每个分组找到 max
+# 最后对 price 这个 index 排序
+best_rating_per_price = reviews.groupby('price').points.max().sort_index()
+```
+
+# Data Types
+
+```python
+# show all columns data type
+reviews.dtypes
+# show one column data type
+reviews.price.dtype
+# convert data type
+reviews.points.astype('float64')
+
+```
+
+# Fill NULL
+- fill null的操作返回是Series
+- fil null的操作不会影响原表的列
+```python
+reviews[reviews.price.isnull()]
+reviews[pd.isnull(reviews.country)]
+
+# count 空值
+len(reviews[reviews.price.isnull()])
+reviews.price.isnull().sum()
+
+# fill
+reviews.region_2.fillna("Unknown")
+# replace
+reviews.taster_twitter_handle.replace("@kerinokeefe", "@kerino")
+```
+
+# 操作 DF
+### Rename
+```python
+reviews.rename(columns={'points': 'score'})
+reviews.rename(index={0: 'firstEntry', 1: 'secondEntry'})
+```
+
+
+```python
+reviews.rename_axis("wines", axis='rows').rename_axis("fields", axis='columns')
+
+```
+![[Pasted image 20241013075821.png]]
+### Delete column
+
+```python
+
 
 # 删除 id列
 df = df.drop(columns=["id"])
 
  ```
+### Combining
+```python
+# combine two dataframes, ignore index， 两个dataframe结构一致
+# 纵向叠加两个表
+df_interface = pd.concat([df1, df2], ignore_index=True)
 
+
+# join 关联两个表
+pd.merge(df1, df2, on='business_id', how='outer')
+
+
+```
+
+join 的时候, 确保两个表的 index 是对应的
+```python
+left_df = canadian_youtube.set_index(['title', 'trending_date'])
+right_df = british_youtube.set_index(['title', 'trending_date'])
+
+left_df.join(right_df, lsuffix='_CAN', rsuffix='_UK')
+```
 
 # 统计
 
@@ -221,16 +498,6 @@ df['field'].mean()  # 平均值
 df.groupby('Year')['Height'].mean()  # group by
 ```
 
-### 合并两个 DF
-```python
-# combine two dataframes, ignore index， 两个dataframe结构一致
-# 纵向叠加两个表
-df_interface = pd.concat([df1, df2], ignore_index=True)
-
-
-# join 关联两个表
-pd.merge(df1, df2, on='business_id', how='outer')
-```
 
 
 
