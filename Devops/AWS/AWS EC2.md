@@ -66,7 +66,8 @@ User Data
 yum install -y python3
 ```
 
-
+# ENI
+primary ENI 是不能删除, 不能动的. 在低端的 EC2中, 网卡数量有限制
 ### Metadata
 metadata token reponse hop limit 令牌只有一跳
 ```shell

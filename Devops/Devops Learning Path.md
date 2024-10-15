@@ -1,14 +1,25 @@
 I would like to find a position as DevOps or SRE site reliability engineer. 
 The idea I am interested in is IaC. Infrastructure as Code
 
+
+# Job Description
+K8s 很重要
+AWS production Experience很重要
+GCD 很重要, 除了 AWS 之外, 用的也比较多
+IaC 很重要
+有的需要 React 和 TypeScript 经验
+Linux 和 Containerization 很重要
+编程语言 Python
+
 # Cloud Computing
 ### AWS Certificate
 
-SAA
-SOA
-SAP
-DEP
-
+SAA 通过
+SOA 通过
+SAP 通过
+DOP
+Network Speciality
+Security Speciality Zero Trust
 # Questions
 1. There are many topics to learn, but I only have 3 months, so I need help from professional or market aspect to identify which topics is more important than others. I would like to make some project to present my skill, in this project I also want to include those important skill stacks. 
 2. Maybe I still missing some topic is quite important, so could you help to revise my learning list. 
