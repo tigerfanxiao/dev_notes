@@ -1,5 +1,5 @@
 
-# Install git on centos
+# Install git
 ```shell
 # 在centos下用yum安装git
 sudo yum install git -y
@@ -9,15 +9,21 @@ git分为四个地方.
 * 本地 working directory. 其实是当前我们在编程的环境. `git add .` 后放入 stage
 * 本地 stage, 只有被追踪的文件才会被放在 stage 中
 * 本地 repo, 这两面才存在多个不同的代码版本
-* 远程 repo, 这是提交到远端服务器的代码
+* remote repo 也称为 origin 或者 upstream
 
-### 复制仓库
+### copy repo
 
 ```shell
-git fetch # 把远端的仓库复制到本地的 repository
+
 git clone <local/path.git> # 只要clone本地项目的git文件, 就能复制项目
 git clone <url>  # 复制远端仓库, 其实也是.git 的文件
 
+```
+
+### get changes
+```shell
+git fetch # 只是把变动拉下来, 但是不会自动 merge, 需要手动 merge
+git pull # 会自动 merge 到 branch
 ```
 
 ### fork

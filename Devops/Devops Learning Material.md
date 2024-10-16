@@ -68,5 +68,3 @@ https://www.youtube.com/watch?v=x6-SfRSp28M
 Chagpt OpenAI
 https://www.youtube.com/watch?v=uRQH2CFvedY
 
-
-## JS
