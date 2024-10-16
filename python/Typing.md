@@ -28,12 +28,24 @@ assert Interface(name='int1', ip='192.168.1.1') == dict(name='int1', ip='192.168
 ```
 
 ### Optional
+
+Optional for function
 ```python
 from typing import Optional
 
 # specific Type and default value is None
-def my_func(a: Opitional[int]):
+def my_func(a: Opitional[int] = None):
 	pass
+
+```
+
+```python
+from typing import Optional
+
+def greet(name: Optional[str]) -> str:
+    if name is None:
+        return "Hello, Guest!"
+    return f"Hello, {name}!"
 ```
 # Check Typing with `mypy`
 

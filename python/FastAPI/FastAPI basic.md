@@ -25,8 +25,8 @@ def home():
 
 run server
 ```shell
-# working是文件名, app 是 FastAPI 实例名
-uvicorn working:app --reload
+# main是 py 文件名, app 是 FastAPI 实例名
+uvicorn main:app --reload
 ```
 查看自动生成的API文档
 ```

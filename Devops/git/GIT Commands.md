@@ -11,15 +11,6 @@ git分为四个地方.
 * 本地 repo, 这两面才存在多个不同的代码版本
 * remote repo 也称为 origin 或者 upstream
 
-### copy repo
-
-```shell
-
-git clone <local/path.git> # 只要clone本地项目的git文件, 就能复制项目
-git clone <url>  # 复制远端仓库, 其实也是.git 的文件
-
-```
-
 ### get changes
 ```shell
 git fetch # 只是把变动拉下来, 但是不会自动 merge, 需要手动 merge
@@ -53,7 +44,8 @@ git log --oneline # 一行显示
 ### git diff
 
 ```shell
-git diff origin master # 对比远端和本地
+git diff origin master # 对比远端和本地master
+
 ```
 
 # 分支
@@ -79,10 +71,9 @@ git checkout 1a
 git checkout master
 ```
 
-
-### 区分git add -u, git add -A, git add folder
+# Staging Area
 ```shell
-git add . # 把当前目录下的文件加入git
+git add . # 把当前目录下的文件加入 staging area
 git add file01, file02 # 指定几个文件
 git add -A # 把working tree里的文件都加入staging area, 这是默认操作
 git add -u # 只是把deleted, modified 文件加入staging area, 对于untracked的文件不做操作
@@ -110,26 +101,6 @@ git checkout master
 git merge <branch_name> 
 ```
 
-
-# gitignore
-`.gitignore`只对于 untrack 状态的文件生效. 如果是已经添加进 staging area 的文件. 需要使用下面命令从 staging area 删除, 变成 untrack 状态
-```shell
-git rm --cache file
-```
-
-`.gitignore` 文件样例
-```gitignore
-fodername 
-filename 
-*.pyc # all file with pyc extension
-```
-
-查看 ignore 文件的列表
-
-```shell
-# 查看当前的 .gitignore文件中的规则可以过滤哪些文件? windows 不适用 
-git check-ignore
-```
 
 # Stash
 Stash 默认情况下, 不会关注 untrack 的文件
