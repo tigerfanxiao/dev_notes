@@ -24,7 +24,7 @@ Two key features
 - 默认情况下, 每天都会有 30 分钟备份快照, 你可以指定时间, 选择读写压力小的时候. 不会断网, 但是会影响性能
 - 如果需要创建多AZ 的 RDS 实例, 需要创建 Subnet Group
 
-# Connect RDS
+### Connect RDS
 
 使用 EC2 直接连接 RDS postgre
 ```shell
@@ -74,3 +74,8 @@ for i in result:
 conn.commit()
 conn.close()
 ```
+
+
+# DynamoDB
+自带auto-scaling
+如果请求量徒增, 可以使用 DynamoDB Accelerator DAX来加速

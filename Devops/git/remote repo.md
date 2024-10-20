@@ -1,5 +1,5 @@
 
-
+# Remote Repo
 ### clone
 - 复制本地代码仓库
 ```shell
@@ -46,9 +46,12 @@ git remote rm <repo_name> # 删除连接的仓库
 
 
 # pull request
-
+如果你想要把自己的修改, 提交到最原始的代码库, 使用自己仓库页面上的 pull request
 原始 repo -> fork 后放我自己的 repo -> clone 到本地我的仓库 -> commit / push 到我自己的 repo -> pull request 合并到原始的 repo
 
+```shell
+git request-pull
+```
 ### .gitignore
 
 在 git repo目录下创建 `.gitignore` 文件
@@ -76,4 +79,70 @@ filename
 ```shell
 # 查看当前的 .gitignore文件中的规则可以过滤哪些文件? windows 不适用 
 git check-ignore
+```
+
+
+# Local Repo
+
+## branch
+本地默认有一个分支, 就是 master, 有些情况下, 会改为 main
+```shell
+git branch  # list all branches
+# create new branch and switch to it
+git checkout -b 
+# switch branch
+git checkout <branch_name>
+# delete branch
+git branch -d <branch_name>
+
+# 如果我现在在分支 shipping_calculator_fixes 上
+# 我同样把本地的 branch 推到 origin 上
+# 在之后的 pull 和 push 时, 在这个 branch 上就只要用 push 和 pull 了, 不用指明 branch
+git push --set-upstream origin shipping_calculator_fixes
+
+```
+
+### revert
+如果你对最近的一次 commit 不满意, 用 git revert 可以撤销最近 commit 的改动, 并把撤销作为一个新的 commit 提交. 不是很推荐, 会造成 commit 记录太多
+```shell
+# HEAD 是当前 branch 中最近的一次 commit
+# --no-edit 表示
+git revert HEAD --no-edit 
+git checkout main
+git merge <branch_b>
+git log --oneline # 可以看到在 branch_b 上提交的两次 commit
+```
+
+```shell
+git diff <modified_file>
+```
+# Roles
+
+- developer
+	- git clone, git pull, git push, and git request-pull
+- integrator
+	- Reviews and integrate changes
+	- Use git pull, git revert, and git push
+- repository administrator
+	- Structure repository organization and interaction
+	- Configure server
+	- Define email and index setting
+	- Manage the look and feel of the application
+
+# ssh
+
+```shell
+
+ssh-keygen -t rsa -b 4096 -C "<your email address>"`
+cd ~/.ssh
+ls
+# 其实 id_rsa 是私钥
+# id_rsa.pub 是公钥
+
+# 打开 ssh-agent
+eval "$(ssh-agent -s)"
+# 把私钥加入 ssh-agent
+ssh-add ~/.ssh/id_rsa
+# 复制公钥, 复制到github 页面上
+cat ~/.ssh/id_rsa.pub | clip
 ```

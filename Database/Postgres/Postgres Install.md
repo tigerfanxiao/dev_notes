@@ -19,7 +19,10 @@ pip3 install psycopg2-binary
 查询
 ```shell
 \l # 查看所有的数据库
-\c postgres # 连接 postgres 数据库
+\c webdeb # 连接 webdeb 数据库
+\dt # 查看 webdeb中的所有表格
+
+\q # 退出postgre
 
 ```
 

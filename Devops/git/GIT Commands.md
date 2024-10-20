@@ -9,7 +9,10 @@ git分为四个地方.
 * 本地 working directory. 其实是当前我们在编程的环境. `git add .` 后放入 stage
 * 本地 stage, 只有被追踪的文件才会被放在 stage 中
 * 本地 repo, 这两面才存在多个不同的代码版本
-* remote repo 也称为 origin 或者 upstream
+* remote repo 
+	* upstream or original upstream 指的是最原始的别人的代码库
+	* origin 一般是指你fork 的代码库
+	
 
 ### get changes
 ```shell
@@ -48,17 +51,6 @@ git diff origin master # 对比远端和本地master
 
 ```
 
-# 分支
-本地默认有一个分支, 就是 master, 有些情况下, 会改为 main
-```shell
-git branch  # list all branches
-# create new branch and switch to it
-git checkout -b 
-
-# delete branch
-git branch -d <branch_name>
-```
-
 
 ## checkout
 
@@ -67,15 +59,13 @@ git branch -d <branch_name>
 git log --oneline
 # check out commit with tag 1a 
 git checkout 1a 
-# check out branch master 
-git checkout master
 ```
 
 # Staging Area
 ```shell
 git add . # 把当前目录下的文件加入 staging area
 git add file01, file02 # 指定几个文件
-git add -A # 把working tree里的文件都加入staging area, 这是默认操作
+git add -A # 把repo主目录下的所有文件都加入staging area, 这是默认操作
 git add -u # 只是把deleted, modified 文件加入staging area, 对于untracked的文件不做操作
 git add folder # 只是把folder中的文件都加入staing area
 ```
@@ -95,10 +85,14 @@ conflict 文件样式
 
 ```
 
+如果要把 branch B 合并到 Brach A 中, 就要先切换到 Branch A 来操作 merge
 ```shell
 # 先切换到主要的 branch 上
 git checkout master
-git merge <branch_name> 
+git merge <branch_B> 
+
+# 同理如果要删除 branch B, 则登录 main branch
+git branch -d <branch_B>
 ```
 
 

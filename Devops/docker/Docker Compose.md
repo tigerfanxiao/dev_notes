@@ -6,7 +6,6 @@ Dockerfile 和 Docker Compose 的区别
 
 docker compose 文件
 ```yaml
-
 version: '3.1'
 services:
 	qytpg:
@@ -28,12 +27,20 @@ services:
 ```
 
 
+首先要创建 `docker-compose.yml` 文件
+
+```shell
+# 文件名必须是 docker-compose.yml
+# build image
+docker-compose build 
+
+# 运行容器 detach 模式
+docker compose up -d
+```
 运行docker compose
 
 ```shell
-# 第一次运行需要下载镜像
-# 文件名必须是 docker-compose.yml
-docker compose up -d
+
 # 指定文件名
 docker compose up -d -f docker-compose.yml
 
