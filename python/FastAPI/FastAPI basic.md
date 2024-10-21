@@ -4,7 +4,9 @@
 
 # Installation
 ```shell
+# 安装包
 pip install fastapi
+# 安装服务器
 pip install uvicorn
 ```
 
@@ -25,14 +27,15 @@ def home():
 	return {"Data": "TEST"}
 ```
 
-run server
+### run app
 ```shell
 # app是文件夹名, main 是 py 文件名 :app FastAPI 实例名
 unicorn app.main:app
 # 自动 reload
 uvicorn app.main:app --reload
 ```
-查看自动生成的API文档
+
+# Documentation
 ```
 127.0.0.1/docs 
 ```

@@ -22,6 +22,28 @@ Linux 和 Containerization 很重要
 # Project 项目
 ## 项目想法
 
+# API 开发
+- FastAPI 开发
+	- CRUD
+		- ORM
+	- Authentication
+	- Validation
+	- Documentation
+- 代码结构
+- CICD, github Action
+- Pytest TDD
+
+
+
+# 数据分析项目
+
+### Petal Search Click Stream 分析
+分析用户行为 behavior, purchase habit
+Pipeline使用 kafka, Apache Spark
+### 运营商项目
+A telecommunication company collects network usage data through each day at a rate of several thousand of data points each second. The company runs an application to process the usage data in real time. the company aggregates and stores the data in an Amazon Aurora DB instance. Sudden drops in network usage usually indicate a network outage. The company must be able to identify sudden drops in network usage so the company can take immediate remedial actions. 
+Create an AWS Lambda function within the Database Activity Streams feature of Aurora to detect drops in network usage.
+
 # 西班牙分拣中心Meraki 基础网络改造项目
 1. 项目管理 
 	1. 专线和 FTTO 主备线路寻源
@@ -42,6 +64,8 @@ Linux 和 Containerization 很重要
 6. 采集设备状态信息和配置信息, 进行数据分析. 是不是考虑是 data steam的状态信息分析
 7. 项目体现数据库的设计, 选型. NoSQL 还是 SQL
 	- 通过数据库的表设计, foreigin key 来减少代码?主要体现 IaC 的思想
+
+
 
 # Cloud Computing
 ### AWS Certificate
