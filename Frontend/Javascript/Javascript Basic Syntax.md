@@ -1,23 +1,448 @@
 # VSCode Configuration
 
 插件
-code runner
+code runner 可以在 vscode 里直接运行 js 代码 `control + option + n`
 
 
+### console.log
+```javascript
+// print with style in browser
+console.log("%cHello, World", "color: blue; font-size: 40px");
+
+// print one line, seperate by space
+console.log("Hello ", "there, ", "World")
+
+```
+
+### comments
+
+```javascript
+
+// one line commments
+
+/*
+multiple line comments
+*/
+
+
+```
 ### String
 ```javascript
+// Concatinate String
+"xiao" + "fan"
+"xiao".concat("fan")
 
-'xiao'.toUpperCase() 
+'xiao'.toUpperCase();
+'XIAO'.toLowerCase();
+'xiao'.indexOf('x') // 0
+'h0-ho'.split("-")
+// length of string
+"ABCD".length
+// index of string
+"ABC"[1]
+
+// search for string
+"hello".match("hel") //[ 'hel', index: 0, input: 'hello', groups: undefined ]
 ```
+### template literals
+```javascript
+let name = 'Xiao';
+console.log(`Hello, World!${name}`);
+
+let multiple_line = `
+   fan
+   xiao
+`;
+console.log(multiple_line);
+
+```
+
 ### Array
 ```javascript
-// pop the first ele
-arr.shift()
+
 
 // add ele to the end
-arr.push()
+arr.push();
+// remove the last element
+fruits.pop();
+// pop the first element
+arr.shift();
+
+```
+Array iteration
+forEach
+```javascript
+// forEach 
+const fruits = ['kiwi','mango','apple','pear'];
+function appendIndex(fruit, index) {
+	console.log(`${index}. ${fruit}`)
+}
+fruits.forEach(appendIndex);
+
+// forEach with index
+const veggies = ['onion', 'garlic', 'potato'];
+veggies.forEach( function(veggie, index) {
+	console.log(`${index}. ${veggie}`);
+});
+```
+filter
+```javascript
+const nums = [0,10,20,30,40,50];
+
+nums.filter( function(num) {
+	return num > 20;
+})
+
+```
+map
+```javascript
+[0,10,20,30,40,50].map( function(num) {
+	return num / 10
+})
+```
+### Map
+与 Object 的区别在于没有继承性, 没有prototype, 像是字典
+```javascript
+let bestBoxers = new Map();
+
+bestBoxers.set(1, "The Champion");
+bestBoxers.set(2, "The Runner-up");
+bestBoxers.set(3, "The third place");
+
+console.log(bestBoxers);
+bestBoxers.get(1); // 'The Champion'
+```
+### Set
+```javascript
+const repetitiveFruits = ['apple','pear','apple','pear','plum', 'apple'];
+const uniqueFruits = new Set(repetitiveFruits);
+console.log(uniqueFruits);
+
+// add number to set
+let set = new Set();
+set.add(1);
+set.add(2);
+```
+### spread operator
+
+```javascript
+const myArray = [1, 3];
+function add(a, b) {
+	return a + b;
+}
+
+let result = add(...myArray);
+console.log(result);
+
+```
+concatenate two array
+```javascript
+const fruits = ['apple', 'pear', 'plum']
+const berries = ['blueberry', 'strawberry']
+const fruitsAndBerries = [...fruits, ...berries]
+```
+convert string to array
+```javascript
+const greeting = "Hello";
+const arrayOfChars = [...greeting];
+
+console.log(arrayOfChars); //  ['H', 'e', 'l', 'l', 'o']
+```
+concatenate two object
+```javascript
+const flying = { wings: 2 }
+const car = { wheels: 4 }
+const flyingCar = {...flying, ...car}
+
+console.log(flyingCar) // {wings: 2, wheels: 4}
+```
+copy object
+```javascript
+const car1 = {
+	speed: 200,
+	color: 'yellow'
+}
+
+const car 2 = {...car1}
 ```
 
+### rest operator
+```javascript
+const meal = ["soup", "steak", "ice cream"]
+let [starter] = meal;
+
+console.log(starter); // soup
+```
+
+### Variable
+
+```javascript
+// 声明变量
+var v_1; 
+var v_1 = 'xiao'; // global scope
+const v_1 = 'fan'; // block scope, assign during declaration. cannot change
+let v_2; // block scope
+
+
+style = `color: ${color}`;
+```
+
+### Scope
+```javascript
+var globalVar = 77;
+function scopeTest() {
+	var localVar = 88; // var also has block scope inside of bracket
+}
+
+console.log(localVar); // localVar is not defined
+```
+
+### Object
+```javascript
+var user = {
+	property_1: 1
+	property_2: "xiao"
+};
+
+// add more properties to the object
+var house2 = {};
+house2["rooms"] = 4;
+house2['color']= "pink";
+
+// call the property
+houre2.rooms // 4
+
+// define method
+car.lightsOn = function() {
+	console.log("The lights are on.")
+}
+
+
+typeof('hello') // String
+```
+### Math
+
+```javascript
+// between 0 and 0.99
+Math.random();
+Math.ceil(2.1) // 3
+
+```
+### Empty Values
+null 没找到
+```javascript
+var letter = 'abc';
+letters.match(/d/); // 没找到, 返回 null
+```
+undefined 没有定义. 所有函数返回 undefined
+```javascript
+var a;
+a // undefined
+
+```
+
+### Datatype
+```javascript
+typeof(11) == number
+typeof('hello') == string
+typeof(null) == null
+typeof(undefined) = undefined
+// ES6 之后出现的 Data type
+BigInt 
+
+Symbol
+```
+
+### Operation
+```javascript
+
+a > 5 && a < 10
+a > 5 || a > 10
+!(a > 5)
+
+10 == "10" // convert type, true
+10 === "10" // not convert type, false
+!== // not equal
+
+```
+
+### Condition
+```javascript
+if (condition == true) {
+	// execute code
+} else if (condition == true) {
+   // code
+} else {
+
+}
+```
+
+### switch
+```javascript
+
+switch(h1.innerText) {
+	case arr[0]:
+		h1.innerText = arr[1]
+		break
+	case arr[1]:
+		h1.innerText = arr[2]
+		break
+	default:
+		h1.innerText = arr[0]
+}
+
+```
+
+### Loop
+
+```javascript
+var i = 1;
+while (i< 4) {
+	console.log(i);
+	i += 1;
+}
+
+for (var i = 1; i <= 3; i++) {
+	console.log(i);
+}
+
+```
+### for - of loop
+for-of loop used for iterable data type
+```javascript
+// Prototype only has engine property
+const car = {
+	engine: true
+}
+
+const sportsCar = Object.create(car); 
+sportsCar.speed = "fast"; // add speed property to sportsCar object
+console.log(sportsCar); // {speed: "fast"}
+
+// for-in loop will also go through prototype
+for (prop in sportsCar) {
+	console.log(prop); // speed, engine 
+}
+// for-of loop will only loop current obejct
+for (prop of Object.keys(sportsCar)) {
+	console.log(prop, sportsCar[prop]); // speed: fast
+}
+```
+### Function
+
+```javascript
+
+function myFunc() {
+ console.log('hello world');
+}
+
+myFunc();
+```
+
+### Error Handling
+```javascript
+try {
+	// do 
+} catch (err) {
+	// do 
+}
+
+// throw a error obejct
+throw new ReferenceError();
+
+```
+### Class
+```javascript
+class Car {
+	constructor(color, speed) {
+		this.color = color;
+		this.speed = speed;
+	}
+	// method
+	turboOn() {
+		console.log("turbo is on!")
+	}
+}
+
+new Car('red', '100')
+```
+
+class inheritance
+```javascript
+class Animal {
+	constructor(color = 'yellow', energy = 100) {
+		this.color = color;
+		this.energy = energy;
+	}
+
+	isActive() {
+		if(this.energy > 0) {
+			this.energy -= 20;
+			console.log('Energy is decreasing, currently at:', this.energy)
+		} else if(this.energy == 0){
+			this.sleep();
+		}
+	}
+
+	sleep() {
+		this.energy += 20;
+		console.log('Energy is increasing, currently at:', this.energy)
+	}
+
+	getColor() {
+		console.log(this.color)
+	}
+
+}
+
+class Cat extends Animal {
+	constructor(sound = 'purr', canJumpHigh = true, canClimbTrees = true, color, energy) {
+	super(color, energy);
+	this.sound = sound;
+	this.canClimbTrees = canClimbTrees;
+	this.canJumpHigh = canJumpHigh;
+}
+
+	makeSound() {
+		console.log(this.sound);
+	}
+
+}
+```
+
+### De-structure
+```javascript
+
+let { PI } = Math
+console.log(PI)
+```
+
+### Object 
+object.create()
+```javascript
+const car = {
+	enginee: true, 
+	steering: true, 
+	speed: "slow"
+}
+
+const sportsCar = Object.create(car)
+```
+
+Object.keys(), Object.values(), and Object.entries().
+```javascript
+var clothingItem = 
+	price: 50,
+	color: 'beige',
+	material: 'cotton',
+	season: 'autumn'
+
+}
+
+for(const key of Object.keys(clothingItem) ) {
+	console.log(key, ":", clothingItem[key])
+}
+```
 
 ### Proxy
 Proxy有点像是python中的dunner方法，或者getter， setter方法，用来增加或者扩展对象的基本行为。
@@ -54,4 +479,54 @@ Vue使用了proxy做数据的双向绑定
 
 ```javascript
 setTimeout(callback, 3000)  // 3秒后运行
+```
+
+# DOM
+
+```javascript
+document // DOM 
+document.querySelector('p') // get the first found p tag
+document.querySelectorAll('p') // get all p tags
+document.getElementById('id')
+document.getElementByClassName('myClass')
+
+
+```
+
+add element
+```javascript
+var h1 = document.createElement('h1')
+h1.innerText = answer;
+h1.setAttribute('type', 'text')
+
+document.body.appendChild(h1);
+```
+
+element value
+```javascript
+var input = document.createElement('input')
+input.setAttribute('type', 'text')
+var a = input.value
+
+})
+```
+# Module
+
+# Events
+event type: click
+```javascript
+const target = document.querySelector('body');
+function handleClick() {
+	console.log('hello world');
+}
+target.addEventListener('click', handleClick)
+```
+
+# JSON
+```javascript
+const json_str = '{"greeting": "hello"}'
+const json_obj = JSON.parse(json_str)
+
+// serialization, exclude the function from the object automatically
+JSON.stringify(json_obj)
 ```
