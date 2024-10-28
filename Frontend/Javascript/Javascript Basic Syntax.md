@@ -1,4 +1,25 @@
+# VSCode Configuration
 
+插件
+code runner
+
+
+### String
+```javascript
+
+'xiao'.toUpperCase() 
+```
+### Array
+```javascript
+// pop the first ele
+arr.shift()
+
+// add ele to the end
+arr.push()
+```
+
+
+### Proxy
 Proxy有点像是python中的dunner方法，或者getter， setter方法，用来增加或者扩展对象的基本行为。
 
 ```javascript
@@ -27,3 +48,10 @@ gameSettingsProxy.difficulty = "easy" // 成功
 ```
 
 Vue使用了proxy做数据的双向绑定
+
+
+# BOM
+
+```javascript
+setTimeout(callback, 3000)  // 3秒后运行
+```

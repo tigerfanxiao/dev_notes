@@ -28,11 +28,13 @@ git pull # 会自动 merge 到 branch
 
 ```shell
 # 使用 rebase 可以规避 git pull必然会多出一个没有意义的 merge commit
+git pull origin main <url> --rebase
+# not the first time 
 git pull --rebase
 
 # 配置 git pull 模式使用 rebase
 git config pull.rebase true
-
+# rollback git rebase configuration
 git config pull.rebase false
 ```
 

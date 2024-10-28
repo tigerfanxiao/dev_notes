@@ -4,6 +4,7 @@ Docker Compose 是 docker 之外的服务
 docker compose -v 
 ```
 ### `Dockerfile`  VS. `docker-compose`
+如果我们只是构建一个镜像, 那用 `Dockerfile`就足够了. 如果是构建一组容器, 那就用docker-compose
 - `Dockerfile` 是构建镜像用的. Docker Compose 将镜像构建容器或者服务
 - `Dockerfile` 和 `docker-compose` 不一定要放在同一个文件目录下
 
@@ -38,7 +39,7 @@ services:
 version: '3.8'
 
 services:
-  web: # container 的名字
+  web: # service name
     build: ./project #  构建进项的 Dockerfile
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
@@ -51,26 +52,41 @@ services:
 
 ```
 
+postgres container
+```yaml
+version: "3.9"
+services: 
+	db: #
+		image: postgres:16.1-alphine3.19
+		restart: always
+		environment:
+			- POSTGRES_USER=postgres
+			- POSTGRES_PASSWORD=postgres
+		port: 
+			- "5432:5432"
+	adminer:
+		image: adminer
+		restart: always
+		port: 
+			- "8080:8080"
+```
 
+### Docker compose up
 首先要创建 `docker-compose.yml` 文件
 
 ```shell
-# 文件名必须是 docker-compose.yml
+# 当前目录下必须有文件 docker-compose.yml
+# 只是 build image, 不运行 container
 docker compose build 
-```
-
-### docker compose build
-
-```shell
 # 重构镜像, 启动容器
+# -d 运行容器 detach 模式, 否则 terminal 会顶在那里
 docker compose up -d --build
 # 指定 docker-compose 文件来启动进项
-# -d 运行容器 detach 模式
 docker compose up -d -f docker-compose.yml
-
 # 关闭 docker compose 想关的容器
 docker compose down 
 ```
+
 ### docker compose exec
 ```shell
 # 访问容器中 postgres

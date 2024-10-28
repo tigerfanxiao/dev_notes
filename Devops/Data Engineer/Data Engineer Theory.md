@@ -30,6 +30,8 @@ Requirements Gathering
 	- Non-Functional Requirements: How the system accomplishes what it need to do. Memory & Storage Capacity
 - Cost & Security Constraints
 
+
+![[Pasted image 20241028141304.png]]
 ### Columnar Storage
 数据库一般是 Table storage
 

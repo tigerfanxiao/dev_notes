@@ -8,7 +8,7 @@ The idea I am interested in is IaC. Infrastructure as Code
 4. 10 月 1 日 完成Python 基础练习的复习
 5. 10 月 3 日 完成 SQL 基础语法的复习
 6. 10 月 10 日完成 Pandas 的基础语法复习
-7. 
+7. 10 月 28 日完成 Intro development Flask API Udemy 课程
 # Job Description
 K8s 很重要
 AWS production Experience很重要
