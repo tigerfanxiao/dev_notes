@@ -188,15 +188,28 @@ style = `color: ${color}`;
 ```
 
 ### Scope
+js 会先在 block scope 的本地找, 然后再去 global scope 去找
+
 ```javascript
 var globalVar = 77;
 function scopeTest() {
-	var localVar = 88; // var also has block scope inside of bracket
+	var localVar = 88; // localVar is only defined inside of block scope
 }
 
-console.log(localVar); // localVar is not defined
+console.log(localVar); // localVar is not defined in global scope
 ```
 
+
+```javascript
+function scopeTest() {
+
+var y = 44;
+	console.log(x);
+}
+
+var x = 33;
+scopeTest(); // 33 , x is defined in global scope
+```
 ### Object
 ```javascript
 var user = {
@@ -512,6 +525,63 @@ var a = input.value
 ```
 # Module
 
+导出 `myFunc.js`
+```javascript
+function myFunc() {
+ //
+}
+
+module.exports = myFunc // this function can be import by other module
+```
+导入
+
+```javascript
+const myFunc = require('./myFunc')
+```
+
+#### default export
+**one default export** per JavaScript module.
+```javascript
+export default function addTwo(a, b) {
+	console.log(a + b);
+}
+
+// 先定义, 后导出
+function addTwo(a, b) {
+	console.log(a + b);
+}
+export default addTwo;
+```
+
+#### export multiple
+```javascript
+export function addTwo(a, b) {
+	console.log(a + b);
+}
+
+export function addThree(a, b, c) {
+	console.log(a + b + c);
+}
+
+// 
+function addTwo(a, b) {
+	console.log(a + b);
+}
+
+function addThree(a, b, c) {
+	console.log(a + b + c);
+}
+export { addTwo, addThree };
+```
+
+import module
+
+```javascript
+// import default
+import addTwo from "./addTwo";
+// import one from multiple export
+import { addTwo } from "./addTwo";
+```
 # Events
 event type: click
 ```javascript

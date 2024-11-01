@@ -33,7 +33,10 @@ Linux 和 Containerization 很重要
 - CICD, github Action
 - Pytest TDD
 
+API 开发, 抽取某一天的数据. 在数据库里保存数据的时间节点是精确秒的. 所以应该是 API 请求发出后, 在服务侧进行了处理, 然后发往数据库进行查询. 做了 Schema serialize
+怎么在 AWS 上的 API gateway上部署 API, 并使用 lambda 函数去调用数据库
 
+需要学习: Httpx中 Async 请求
 
 # 数据分析项目
 
