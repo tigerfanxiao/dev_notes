@@ -6,6 +6,42 @@ P57
 
 感悟： HTML的键值对是用等号的， CSS的键值对是用冒号的
 
+
+### 引入方式
+行内引入
+```css
+<div style="front-size: 20px;color: blue">
+</div>
+```
+
+在html head中style标签中写
+```html
+<head>
+  <style type="text/css">
+    /* type属性默认是 text/css 可以省略*/
+    h1 {
+     color: green;
+    }
+  </style>
+<head>
+```
+
+本地文件引入css
+
+```css
+<head>
+	/* type属性默认是 text/css 可以省略*/
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+</head>
+```
+引入在线的
+```css
+/*引入在线字体, 400, 700两种粗细样式 */
+ <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Space+Mono:400,700">
+
+```
+
 ## 最佳实践
 
 默认头部配置
@@ -247,7 +283,7 @@ host在本地的字符集
 ​       url("..font/Robot.woff") format('truetype');
 
 }```
-```
+
 
 
   

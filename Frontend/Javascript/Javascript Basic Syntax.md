@@ -56,7 +56,12 @@ let multiple_line = `
 console.log(multiple_line);
 
 ```
+### Date
 
+```javascript
+
+
+```
 ### Array
 ```javascript
 

@@ -1,4 +1,4 @@
-
+使用 react-app 构建项目
 ```shell
 npm init react-app <app_name>
 cd <app_name>
@@ -215,3 +215,176 @@ name == Bob ? "Yes, it is Bob" : "I don't know this person";
 - onPaste
 
 # Hook
+
+### useState hook
+- You can only call hooks at the top level of your component or your own hooks. 
+- You cannot call hooks inside loops or conditions. 
+- You can only call hooks from React functions, and not regular JavaScript functions.
+
+Example
+- An input text field 
+- Any text that has been entered into the field 
+- A Reset button to set the field back to its default state
+
+```jsx
+
+import { useState } from 'react';
+
+export default function InputComponent() 
+	const [inputText, setText] = useState('hello'); // hello is default value for inputText
+	function handleChange(e) {
+		setText(e.target.value); // 把 inputText 对象取出来
+	}
+
+	return (
+		<>
+			<input value={inputText} onChange={handleChange} />
+			<p>You typed: {inputText}</p>
+			// 设置为初始值
+			<button onClick={() => setText('hello')}>Reset</button>
+		</>
+	);
+
+}
+```
+
+### useRef hook
+控制 dom
+```jsx
+function TextInputWithFocusButton() {
+	const inputEl = useRef(null);
+	const onButtonClick = () => {
+		// `current` points to the mounted text input element
+		inputEl.current.focus();
+	};
+
+	return (
+		<> // ref attribute works for useRef hook
+			<input ref={inputEl} type="text" />	 
+			<button onClick={onButtonClick}>Focus the input</button>
+		</>
+	);
+}
+```
+
+
+### route
+安装 routeReactDom
+
+```shell
+npm install react-router-dom@6
+```
+
+```jsx
+import "./App.css";
+import Homepage from "./Homepage";
+import AboutLittleLemon from "./AboutLittleLemon";
+import Contact from "./Contact";
+import { Routes, Route, Link } from "react-router-dom";
+
+
+function App() {
+
+	return (
+	<div>
+		<nav>
+		<Link to="/" className="nav-item">Homepage</Link>
+		<Link to="/about" className="nav-item">About Little Lemon</Link>
+		<Link to="/contact" className="nav-item">Contact</Link>
+		</nav>
+		<Routes>
+			<Route path="/" element={<Homepage />}></Route>
+			<Route path="/about" element={<AboutLittleLemon />}></Route>
+			<Route path="/contact" element={<Contact />}></Route>
+		</Routes>
+	</div>
+	
+	);
+
+};
+
+
+export default App;
+```
+
+
+index.js
+```jsx
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
+);
+```
+
+
+### image
+
+```jsx
+import avatar from "./assets/logo.png"
+
+function UserImage() {
+	return (
+		<div>
+			<img src={avatar} alt = "User image"/>
+		< /div>
+	)
+}
+export default UserImage;
+```
+
+
+### media package
+```shell
+npm install react-player
+```
+
+
+```jsx
+import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/youtube"; // if only youtube video
+
+const MyVideo = () => {
+	return (
+		<ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+	);
+};
+	
+const App = () => {
+	return (
+		<div>
+			<MyVideo />
+		</div>
+	);
+	
+};
+
+export default App;
+```
+
+### audio
+```jsx
+import React from "react";
+
+function App() {
+
+	const bird1 = new Audio("https://upload.wikimedia.org/wikipedia/commons/9/9b/Hydroprogne_caspia_-_Caspian_Tern_XC432679.mp3");
+
+function toggle1() {
+	if (bird1.paused) {
+		bird1.play();
+	} else {
+		bird1.pause();
+	}
+	return (
+		<div>
+			<button onClick={toggle1}>Caspian Tern 1</button>
+
+		</div>
+
+	);
+};
+
+export default App;
+```

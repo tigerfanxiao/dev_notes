@@ -30,7 +30,7 @@ JEST 的特性是 code coverage
 }
 ```
 
-
+测试文件 `addFive.test.js`
 ```javascript
 const { default: TestRunner } = require("jest-runner");
 const addFive = require("./addFive"); // 引入需要测试的函数
@@ -45,6 +45,8 @@ test("returns the number plus 5", () => {
 ```shell
 npm run test
 ```
+
+
 Mocking
 ansychrorous code test
 
