@@ -88,13 +88,17 @@ veggies.forEach( function(veggie, index) {
 	console.log(`${index}. ${veggie}`);
 });
 ```
+### `find()`
+find the first element that meets the condition
+```js
+const nums = [0,10,20,30,40,50];
+select_num = nums.find(num=> num === 10);
+```
 ### filter
 ```javascript
 const nums = [0,10,20,30,40,50];
 
-nums.filter(function(num) {
-	return num > 20;
-})
+nums.filter(num=>num>20)
 
 ```
 ### map
@@ -234,8 +238,17 @@ car.lightsOn = function() {
 }
 
 
-typeof('hello') // String
+typeof('hello') == 'string' // String
 ```
+### Object.assign
+```js
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const result = Object.assign(target, source);
+console.log(result); // { a: 1, b: 4, c: 5 }
+```
+
 ### Math
 
 ```javascript
@@ -282,6 +295,10 @@ a > 5 || a > 10
 
 ```
 
+### Ternary
+```js
+theme === 'light'? 'dark':'light'
+```
 ### Condition
 ```javascript
 if (condition == true) {

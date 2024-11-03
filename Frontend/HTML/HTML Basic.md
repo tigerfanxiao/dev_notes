@@ -23,7 +23,10 @@
 
 #### Checkbox
 ```html
-<input type="checkbox"/> Purple
+<input 
+	type="checkbox"
+	checked=True
+/> Purple
 ```
 ### Input Event
 - onChange
@@ -40,3 +43,8 @@
 
 
 ## Button
+```html
+<button type="submit" disabled=True>
+	Create account
+</button>
+```

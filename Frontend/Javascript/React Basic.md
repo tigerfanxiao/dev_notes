@@ -47,6 +47,11 @@ root.render(<App />);
 
 # JSX
 可以在一个文件里写 JS, HTML, CSS, 来构造 component 必须要的元素
+Pros 和 State 的区别
+- Props 不能被 children 修改, is public
+- State is a snapshot, component manage its own stage,  and trigger re-render
+- State optional
+
 ### ClassName
 使用 className attribute in JSX
 
@@ -251,6 +256,8 @@ export default function InputComponent()
 ```
 
 ### useRef hook
+- `ref.current.focus()`
+- `ref.current.value()`
 和 useState 最大的区别在于不会触发 render
 控制 dom
 ```jsx
@@ -391,18 +398,17 @@ function toggle1() {
 export default App;
 ```
 
-### Form
+## Form
 change a form from uncontrolled component to controlled component
 
-1. input 中需要输入两个值 value, onChange
-2. 
+1. 使用 useState 来控制输入
+2. input 中需要输入两个值 value, onChange
+3. 
 
 ```jsx
-
 import "./App.css";
 import { useState } from "react";
 import { validateEmail } from "./utils";
-
   
 const PasswordErrorMessage = () => {
 	return (
@@ -410,7 +416,6 @@ const PasswordErrorMessage = () => {
 	);
 };
 
-  
 function App() {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -422,33 +427,37 @@ function App() {
 	const [role, setRole] = useState("role");
 	
 	const getIsFormValid = () => {
-
-		// Implement this function
-	
-		return true;
+		return (
+			firstName &&
+			lastName &&
+			validateEmail(email) &&
+			password.value.length > 8 &&
+			role !== 'role'
+		);
 	
 	};
-
-  
 
 	const clearForm = () => {
-	
-	// Implement this function
+		setFirstName("");
+		setLastName("");
+		setEmail("");
+		setPassword({
+			value: "",
+			isTouched: false,
+		});
+		setRole("role");
 	
 	};
 
-  
-
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault(); // 阻止默认行为
 		alert("Account created!");
 		clearForm();
 	};
 
-  
-
 	return (
 		<div className="App">
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}> // 处理提交动作
 				<fieldset>
 					<h2>Sign Up</h2>
 					<div className="Field">
@@ -471,55 +480,69 @@ function App() {
 	
 					<div className="Field">
 						<label>Email address <sup>*</sup></label>
-						<input placeholder="Email address" />
+						<input 
+							value = {email}
+							onChange={e=>setEmail(e.target.value)}
+							placeholder="Email address" />
 					</div>
 	
-	<div className="Field">
+					<div className="Field">
+						<label>Password <sup>*</sup></label>
+						<input 
+							value = {password}
+							onChange={e=>setPassword({...password, value=e.target.value})}
+							onBlur={e=>setPassword({...password, isTouched=true})}
+							placeholder="Password" />
+					{ password.isTouched && password.value.length<8 ?(<PasswordErrorMessage/>):null}
+					</div>
 	
-	<label>
+					<div className="Field">
+						<label>Role <sup>*</sup></label>
+						<select value={role} onChange={e=>setRole(e.target.value)}>
+							<option value="role">Role</option>
+							<option value="individual">Individual</option>
+							<option value="business">Business</option>
+						</select>
+					</div>
 	
-	Password <sup>*</sup>
-	
-	</label>
-	
-	<input placeholder="Password" />
-	
-	</div>
-	
-	<div className="Field">
-	
-	<label>
-	
-	Role <sup>*</sup>
-	
-	</label>
-	
-	<select>
-	
-	<option value="role">Role</option>
-	
-	<option value="individual">Individual</option>
-	
-	<option value="business">Business</option>
-	
-	</select>
-	
-	</div>
-	
-	<button type="submit" disabled={!getIsFormValid()}>
-	
-	Create account
-	
-	</button>
-	
-	</fieldset>
-	
-	</form>
-	
-	</div>
-	
+					<button type="submit" disabled={!getIsFormValid()}>
+						Create account
+					</button>
+				</fieldset>
+			</form>
+		</div>
 	);
 }
 
 export default App;
+```
+邮箱验证
+```jsx
+export const validateEmail = (email) => {
+
+return String(email).toLowerCase().match(
+	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	);
+};
+```
+
+
+# ContextAPI
+Context is global state, solve props drilling problem
+
+```jsx
+
+import {createContext, useState, useContext} from "react";
+
+const UserContext = createContext(undefined);
+
+export const UserProvider = ({children})=>{
+	const [user] = useState({
+		name: "John",
+		email: "John@example.com",
+	});
+	return <UserConext.Provider value={user}></UserContext.Provider>
+}
+
+export const useUser = ()=> useContext(UserContext)
 ```
