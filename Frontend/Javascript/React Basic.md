@@ -3,7 +3,12 @@
 npm init react-app <app_name>
 cd <app_name>
 npm start # 开启服务器
+```
 
+在当前目录下创建项目
+```shell
+npm init react-app . 
+npm start
 ```
 
 # concept
@@ -14,16 +19,12 @@ JSX
 function name 首字母大写
 transpiler, 使用 babel 把 ES6和 JS 代码编译成浏览器可以读懂的 JS 代码
 
-创建项目
-```shell
-npm init react-app . # 在当前目录下创建项目
-npm start
-```
-
 App.js 最大的 component
 但是根节点是 root
-```jsx
 
+### customised component
+```jsx
+// 构建自己的 component
 function Head() {
 	return <h1>Hello world</h1>;
 }
@@ -34,7 +35,7 @@ function App() {
 export default App; // 导出默认 module
 ```
 
-index.js
+`index.js`
 ```javascript
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -217,6 +218,7 @@ name == Bob ? "Yes, it is Bob" : "I don't know this person";
 # Hook
 
 ### useState hook
+会触发 render
 - You can only call hooks at the top level of your component or your own hooks. 
 - You cannot call hooks inside loops or conditions. 
 - You can only call hooks from React functions, and not regular JavaScript functions.
@@ -249,6 +251,7 @@ export default function InputComponent()
 ```
 
 ### useRef hook
+和 useState 最大的区别在于不会触发 render
 控制 dom
 ```jsx
 function TextInputWithFocusButton() {
@@ -380,11 +383,143 @@ function toggle1() {
 	return (
 		<div>
 			<button onClick={toggle1}>Caspian Tern 1</button>
-
 		</div>
 
 	);
 };
+
+export default App;
+```
+
+### Form
+change a form from uncontrolled component to controlled component
+
+1. input 中需要输入两个值 value, onChange
+2. 
+
+```jsx
+
+import "./App.css";
+import { useState } from "react";
+import { validateEmail } from "./utils";
+
+  
+const PasswordErrorMessage = () => {
+	return (
+		<p className="FieldError">Password should have at least 8 characters</p>
+	);
+};
+
+  
+function App() {
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState({
+		value: "",
+		isTouched: false,
+	});
+	const [role, setRole] = useState("role");
+	
+	const getIsFormValid = () => {
+
+		// Implement this function
+	
+		return true;
+	
+	};
+
+  
+
+	const clearForm = () => {
+	
+	// Implement this function
+	
+	};
+
+  
+
+	const handleSubmit = () => {
+		alert("Account created!");
+		clearForm();
+	};
+
+  
+
+	return (
+		<div className="App">
+			<form onSubmit={handleSubmit}>
+				<fieldset>
+					<h2>Sign Up</h2>
+					<div className="Field">
+						<label>First name <sup>*</sup></label>
+						// input 需要输入两个 props: value 和 onChange
+						<input 
+							value={firstName}
+							onChange={e=>setFirstName(e.target.value)}
+							placeholder="First name" 
+						/>
+					</div>
+	
+					<div className="Field">
+						<label>Last name</label>
+						<input 
+							value={lastName}
+							onChang={(e)=>setLastName(e.target.value)}
+							placeholder="Last name" />
+					</div>
+	
+					<div className="Field">
+						<label>Email address <sup>*</sup></label>
+						<input placeholder="Email address" />
+					</div>
+	
+	<div className="Field">
+	
+	<label>
+	
+	Password <sup>*</sup>
+	
+	</label>
+	
+	<input placeholder="Password" />
+	
+	</div>
+	
+	<div className="Field">
+	
+	<label>
+	
+	Role <sup>*</sup>
+	
+	</label>
+	
+	<select>
+	
+	<option value="role">Role</option>
+	
+	<option value="individual">Individual</option>
+	
+	<option value="business">Business</option>
+	
+	</select>
+	
+	</div>
+	
+	<button type="submit" disabled={!getIsFormValid()}>
+	
+	Create account
+	
+	</button>
+	
+	</fieldset>
+	
+	</form>
+	
+	</div>
+	
+	);
+}
 
 export default App;
 ```

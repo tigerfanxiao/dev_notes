@@ -4,14 +4,13 @@
 code runner 可以在 vscode 里直接运行 js 代码 `control + option + n`
 
 
-### console.log
+### `console.log()`
 ```javascript
 // print with style in browser
 console.log("%cHello, World", "color: blue; font-size: 40px");
 
 // print one line, seperate by space
 console.log("Hello ", "there, ", "World")
-
 ```
 
 ### comments
@@ -23,7 +22,6 @@ console.log("Hello ", "there, ", "World")
 /*
 multiple line comments
 */
-
 
 ```
 ### String
@@ -62,7 +60,7 @@ console.log(multiple_line);
 
 
 ```
-### Array
+## Array
 ```javascript
 
 
@@ -75,7 +73,7 @@ arr.shift();
 
 ```
 Array iteration
-forEach
+### forEach
 ```javascript
 // forEach 
 const fruits = ['kiwi','mango','apple','pear'];
@@ -90,19 +88,19 @@ veggies.forEach( function(veggie, index) {
 	console.log(`${index}. ${veggie}`);
 });
 ```
-filter
+### filter
 ```javascript
 const nums = [0,10,20,30,40,50];
 
-nums.filter( function(num) {
+nums.filter(function(num) {
 	return num > 20;
 })
 
 ```
-map
+### map
 ```javascript
 [0,10,20,30,40,50].map( function(num) {
-	return num / 10
+	return num / 10;
 })
 ```
 ### Map
@@ -429,10 +427,21 @@ class Cat extends Animal {
 ```
 
 ### De-structure
-```javascript
 
-let { PI } = Math
-console.log(PI)
+
+重新构建对象
+```js
+let password = {
+	value: "",
+	isTouched: false;
+}
+// value会被覆盖
+let newPassword = {...password, value:e.target.value}
+
+```
+
+```javascript
+let { PI } = Math // 从 Math module 里面挑出 PI
 ```
 
 ### Object 
@@ -461,7 +470,10 @@ for(const key of Object.keys(clothingItem) ) {
 	console.log(key, ":", clothingItem[key])
 }
 ```
-
+## arrow function
+```js
+const add = (a, b) => a + b;
+```
 ### Proxy
 Proxy有点像是python中的dunner方法，或者getter， setter方法，用来增加或者扩展对象的基本行为。
 
