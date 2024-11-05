@@ -45,17 +45,71 @@ P57
 ## 最佳实践
 
 默认头部配置
-本质上，root标签是html， 然后里面有个body标签，但是body标签是由默认margin的。所以下面这个全局配置，会先把所有css对象的margin和情况
+本质上，root标签是html， 然后里面有个body标签，但是body标签是有默认margin的。所以下面这个全局配置，会先把所有css对象的margin和情况
 ```css
 
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* 如果长宽给定, 则配置padding不会使 box变大， 而是压缩内容*/
+     /* 如果长宽给定, 则配置padding不会使 box变大， 而是压缩内容*/
+    box-sizing: border-box; 
 }
 ```
 
 
+
+### Unit
+- 绝对长度 px
+- 相对长途 % em
+	- 2em 表示2倍
+
+### Box Model
+
+默认情况下, padding是零, board是零
+顺时针, 如果对应位置为空, 在对应位置对面方向的值
+```css
+
+height: 140px; /*内容的高, 不是盒子的尺寸*/
+width:  140px; /*内容的宽*/
+
+border: solid 3px green; /*虚线dashed 电线 dotted*/
+
+border-top-color: black; /*顶部边框的颜色*/
+
+border-top-width: 10px; /* 底部 border-bottom*/
+
+padding-top: 10px 20px 10px;  /* 上面 左右 下面 */
+
+margin: 10px 20px 10px; /*本元素和其他元素的间隔, 或者浏览器的距离*/
+
+margin: 10px auto 10px; /*左右对齐*/
+
+```
+
+
+```css
+
+margin: 10px 20px 20px 10px; /* top right bottom left */
+
+margin: 10px 20px /* top-bottom left-right */
+
+margin: 10px /* all 4 direction*/
+
+margin: 10px 20px 10px;  /* 上面 左右 下面 */
+
+```
+
+  
+
+注意1:
+当设置height和width时没有把margin和padding考虑在内的, 调整margin不会改变盒子的大小, 但是调整padding时会把盒子变大
+
+注意2:
+padding是通过扩充box的尺寸来实现的
+
+注意3: 上下塌陷
+平行两个box之间的margin是叠加的
+上下两个box之间的margin是取上下两个margin中大的一个
 
 HSL参数, 容易修改颜色亮度和饱和度
 
@@ -250,11 +304,11 @@ z-index类似于权重, 设置了z-index属性的元素会优先显示
 
   
 
-`!important` 全局最优先
+`!important` 
 
-`#id` 优先级是
+`#id`
 
-`.class` 优先级是
+`.class`
 
   
 
@@ -263,18 +317,15 @@ host在本地的字符集
 [Free Fonts! Legit Free & Quality » Font Squirrel](https://www.fontsquirrel.com/)
 
   
-
+```css
 @font-face {
-
   font-family: "Roboto";
-
   src: url("..font/Robot.woff") format('woff2'),
-
 ​       url("..font/Robot.woff") format('woff'),
-
 ​       url("..font/Robot.woff") format('truetype');
+}
 
-}```
+```
 
 
 
