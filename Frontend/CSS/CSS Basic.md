@@ -67,11 +67,7 @@ HSL参数, 容易修改颜色亮度和饱和度
 
 #常用样式
 
-  
-
-
-背景
-
+### background
 ```css
 
 height:600px;
@@ -96,9 +92,7 @@ background: red url("12.jpg") norepeat;
 
 ```
 
-  
-
-文本
+### text
 
 ```css
 
@@ -131,9 +125,7 @@ list-style: circle/decimal/disc/upper-alpha;
 
 ```
 
-  
-
-display显示和隐藏
+### display
 
 ```css
 

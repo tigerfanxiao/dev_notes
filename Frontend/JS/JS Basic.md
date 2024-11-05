@@ -119,7 +119,7 @@ bestBoxers.set(3, "The third place");
 console.log(bestBoxers);
 bestBoxers.get(1); // 'The Champion'
 ```
-### Set
+## Set
 ```javascript
 const repetitiveFruits = ['apple','pear','apple','pear','plum', 'apple'];
 const uniqueFruits = new Set(repetitiveFruits);
