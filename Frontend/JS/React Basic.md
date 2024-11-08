@@ -1,11 +1,15 @@
-使用 react-app 构建项目
+# Code Sandboox
+codesandbox.io
+https://codesandbox.io/p/sandbox/react-first-app-advice-forked-3s85sm
+
+# Initiate Project
+- 使用 react-app 构建项目
 ```shell
 npm init react-app <app_name>
 cd <app_name>
 npm start # 开启服务器
 ```
-
-在当前目录下创建项目
+- 在当前目录下创建项目
 ```shell
 npm init react-app . 
 npm start
@@ -22,7 +26,11 @@ transpiler, 使用 babel 把 ES6和 JS 代码编译成浏览器可以读懂的 J
 App.js 最大的 component
 但是根节点是 root
 
-### customised component
+# JSX
+可以在一个文件里写 JS, HTML, CSS, 是构造 component 必须要的元素
+
+### Customised Component
+File `app.js`
 ```jsx
 // 构建自己的 component
 function Head() {
@@ -34,8 +42,7 @@ function App() {
 }
 export default App; // 导出默认 module
 ```
-
-`index.js`
+File `index.js`
 ```javascript
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -45,13 +52,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 ```
 
-# JSX
-可以在一个文件里写 JS, HTML, CSS, 来构造 component 必须要的元素
-Pros 和 State 的区别
-- Props 不能被 children 修改, is public
-- State is a snapshot, component manage its own stage,  and trigger re-render
-- State optional
-
 ### ClassName
 使用 className attribute in JSX
 
@@ -59,6 +59,10 @@ Pros 和 State 的区别
 <p className="link">Read more...</p>
 ```
 
+## Pros & State
+- Props 不能被 children 修改, is public
+- State is a snapshot, component manage its own stage,  and trigger re-render
+- State optional
 ### Props
 从 JSX 转变为 pure JS
 ```jsx
@@ -77,7 +81,7 @@ React.createElement(
 parent component  one-direction transfer data to child component
 - 只能单向传递, 从 parent 到 child, 不能反过来
 - props 在传递的过程中, 不能被修改, 也称为 pure function
-index.js
+file `index.js`
 ```jsx
 import App from './App.js'
 
@@ -234,7 +238,6 @@ Example
 - A Reset button to set the field back to its default state
 
 ```jsx
-
 import { useState } from 'react';
 
 export default function InputComponent() 
@@ -277,7 +280,14 @@ function TextInputWithFocusButton() {
 }
 ```
 
+### useEffect 
+用于side effect, 比如 component mount 的时候, 就运行某个动作. 而不是等待用户点击触发时间才运行. 
+```jsx
+useEffect(function () {
+	getAdvice(); // 被side effect 是被调用的函数
+	}, []); // 设计的 dependence
 
+```
 ### route
 安装 routeReactDom
 

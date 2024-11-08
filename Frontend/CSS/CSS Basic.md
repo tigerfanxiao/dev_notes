@@ -7,14 +7,14 @@ P57
 感悟： HTML的键值对是用等号的， CSS的键值对是用冒号的
 
 
-### 引入方式
-行内引入
+### refer css
+inline 
 ```css
 <div style="front-size: 20px;color: blue">
 </div>
 ```
 
-在html head中style标签中写
+style tag
 ```html
 <head>
   <style type="text/css">
@@ -26,8 +26,7 @@ P57
 <head>
 ```
 
-本地文件引入css
-
+link tag for css file
 ```css
 <head>
 	/* type属性默认是 text/css 可以省略*/
@@ -195,9 +194,6 @@ display:inline-block; /*一行显示多个元素, 且每个元素可以调整大
   
 
 例子:
-
-  
-
 ```css
 
 span {
@@ -209,7 +205,6 @@ span {
   width: 20px;
 
 }
-
 ```
 
 滚动条:
@@ -300,7 +295,13 @@ z-index类似于权重, 设置了z-index属性的元素会优先显示
   
   
 
-### CSS 选择器优先级计算
+### CSS Selector
+```css
+/* container 下面 div 元素中的第一个, 计数从 1 开始 */
+.container > div:nth-child(1) {
+	background-color: #96ceb4;  
+}
+```
 
   
 
@@ -329,4 +330,26 @@ host在本地的字符集
 
 
 
-  
+# Layout
+标签级别
+div标签本身就是行级标签，会占一行
+## Flexbox
+- 首先flex 需要一个 container, 这个 container 下面一级的元素设置 `display: flex`, 会把这些元素放在一行里. 注意这个只作用于一级
+- 默认情况下, main axis 是横向的, 从左往右. cross axis 是纵向的, 从上往下. 通过 `flex-direction: row` 默认来控制
+
+justify content 布局
+```css
+justify-content: flex-start 把子节点往左边放
+justify-content: flex-end 把子节点往右边放
+justify-content: center 都挤在中间
+justify-content: space-around 两个子节点之间空余 2 个单位, 子节点和容器之间空余 1 个单位
+justify-content: space-between 两个子节点之间空余 1 个单位, 子节点和容器之间没有空余
+justify-content: space-evently 两个子节点之间空余 1 个单位, 子节点和容器之间空余 1 个单位
+```
+
+`justify-content: space-around`
+![[Pasted image 20241108112445.png]]
+`justify-content: space-between`
+![[Pasted image 20241108112637.png]]
+`justify-content: space-evenly`
+![[Pasted image 20241108112707.png]]

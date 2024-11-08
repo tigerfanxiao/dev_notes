@@ -1,11 +1,31 @@
+### Structure
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first website</title>
+	</head>
+	<body>
+	</body>
+</html>
+
+```
+
+### heading
+```html
+<h1>
+<h2>
+<h3>
+<h4>
+<h5>
+<h6> <!-- stop at h6>
+```
+
 ### comments
 ```html
 <!-- this is comments -->
 ```
 # Form
-## Input
-### Input Type
-
 #### Input text
 ```html
 <input type="text" 
@@ -40,8 +60,6 @@
 	<option value="Teacher">Teacher</option>
 </select>
 ```
-
-
 ## Button
 ```html
 <button type="submit" disabled=True>

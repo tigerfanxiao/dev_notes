@@ -2,8 +2,8 @@
 
 
 ## `Dataframe` & `Series`
-
-### csv
+## read files
+### read csv
 ```python
 
 import pandas as pd
@@ -14,7 +14,7 @@ specific_cols_names = ['col1', 'col2']
 df = pd.read_csv(csv_file_path,  encoding='iso8859-1', usecols=specific_cols_names)
 
 
-wine_reviews = pd.read_csv("path", index_col=0)
+wine_reviews = pd.read_csv("csv_filepath", index_col=0)
 
 # 输出到 csv
 df.to_csv('path')
@@ -25,6 +25,7 @@ df.to_csv('path')
 excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
 ```
 
+## Dataframe
 ### DataFrame meta info
 ```python
 
@@ -54,10 +55,10 @@ len(df.index)
 df1 = pd.DataFrame({'A':[3,4],'B':[5,6]})
 ```
 
-|     | A   | B   |
-| --- | --- | --- |
-| 0   | 3   | 5   |
-| 1   | 4   | 6   |
+| index | A   | B   |
+| ----- | --- | --- |
+| 0     | 3   | 5   |
+| 1     | 4   | 6   |
 可以给每一行加一个 index
 ```python
 pd.DataFrame({'Bob': ['I liked it.', 'It was awful.'], 

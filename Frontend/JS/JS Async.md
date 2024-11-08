@@ -65,8 +65,9 @@ fetch('https://jsonplaceholder.typicode.com/posts', {
 
 API 资源
 https://github.com/public-apis/public-apis
-
-### Async
+https://api.adviceslip.com/advice
+https://jsonplaceholder.typicode.com/posts/1
+### Async Await
 任何 function 用 async 开头都要返回 promise
 ```js
 
@@ -76,15 +77,18 @@ const getBlogPost = async () => {}
 
 getBlogPost.then(value => console.log(value)); // works here too
 ``` 
+
 await 放在 promise 的前面
 
 ```js
 
 async function getPost() {
-	const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+	try {
+		const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
 	const data = await response.json();
-	console.log(data);
+	console.log(data); // run immediately after await response.json
+	} catch (error) {
+		console.error("Failed to fetch post")
+	}
 }
-
-getPost().catch (error) {console.log(error)};
 ```

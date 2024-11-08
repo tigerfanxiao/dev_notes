@@ -1,3 +1,7 @@
+### import script to html
+```html
+<script src="script.js"></script>
+```
 # VSCode Configuration
 
 插件
