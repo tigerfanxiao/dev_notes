@@ -1,5 +1,5 @@
 
-# Install git
+# Linux Git Installment
 ```shell
 # 在centos下用yum安装git
 sudo yum install git -y
@@ -19,19 +19,20 @@ git分为四个地方.
 git fetch # 只是把变动拉下来, 但是不会自动 merge, 需要手动 merge
 # git pull = git fetch + git merge
 git pull # 会自动 merge 到 branch
-
 ```
 
-### rebase
+### git rebase
 当两个人修改同一个分支. 别人在这个分支上先提交了, 当你提交的时候就会被 reject. 然后你需要先下载的她的新内容. 再把自己的 commit 放在她的提交后面
-
 
 ```shell
 # 使用 rebase 可以规避 git pull必然会多出一个没有意义的 merge commit
 git pull origin main <url> --rebase
 # not the first time 
 git pull --rebase
+```
 
+把默认的 git pull 配置成 git rebase
+```shell
 # 配置 git pull 模式使用 rebase
 git config pull.rebase true
 # rollback git rebase configuration
@@ -103,7 +104,7 @@ git branch -d <branch_B>
 Stash 默认情况下, 不会关注 untrack 的文件
 stash并不依赖于分支, 所以本质上, 你可以将当前分支的修改 stash 后, 切换另一个分支呈现
 
-User case
+Use case
 
 -   当你在修改代码时, 并不想要做commit, 然后突然想去其他的branch上查看一些信息.
 -   你发现本应该在其他branch上完成的修改, 结果在master branch上做了, 你想把这部分修改移动到其他branch上
@@ -189,4 +190,12 @@ windows上的git bash
 git reset --hard HEAD
 
 git revert HEAD --no-edit # HEAD 表示最近的一次 commit
+```
+
+
+# Use Case
+### Go to the previous commit
+```shell
+git log --oneline
+git checkout 
 ```
