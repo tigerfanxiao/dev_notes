@@ -1,13 +1,11 @@
-https://www.bilibili.com/video/BV1p84y1P7Z5?p=9&spm_id_from=pageDriver&vd_source=708ab8355a6d2b20c5a1edf85bb4a577
+# UI Material
 
-# 进度
-P1-P9 
-P57
-
-感悟： HTML的键值对是用等号的， CSS的键值对是用冒号的
+### Icon
+https://boxicons.com/?query=dev
 
 
-### refer css
+
+### Import CSS
 inline 
 ```css
 <div style="front-size: 20px;color: blue">
@@ -41,7 +39,7 @@ link tag for css file
 
 ```
 
-## 最佳实践
+## Best Practise
 
 默认头部配置
 本质上，root标签是html， 然后里面有个body标签，但是body标签是有默认margin的。所以下面这个全局配置，会先把所有css对象的margin和情况
@@ -354,8 +352,13 @@ div标签本身就是行级标签，会占一行
 absolute 经常和 relative 连用. 配置了 absolute 标签首先会推出当前页面的 flow, 它后面的元素会挤上来. 这个元素会向上级元素查找是否定义了 relative. 如果找到了 relative, 则和这个上级元素进行对其. 如果找不到配置了 relative 的上级元素, 则这个元素就和 body 进行对其. 
 - 只有配置了 relative 的元素, 才可以配置 z-index确定页面的层次. 默认是 z-index=0, 隐藏式-1
 ```css
+.container {
+	position: relative;
+}
 
-
+.ele {
+	position: absolute;
+}
 ```
 ## Flexbox
 - 首先flex 需要配置在 container 上, 这个 container 下面一级的元素设置 `display: flex`, 会把这些元素放在一行里. 注意这个只作用于一级
