@@ -1,13 +1,4 @@
-### Import react
-
-```jsx
-// react
-<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
-// react dom
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-// babel
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-```
+### Import react from CDN
 
 React 有三大组件, 需要引入
 
@@ -15,13 +6,49 @@ React 有三大组件, 需要引入
 -   react dom
 -   babel
 
+`index.html`
+```html
+<html>
+	<head>
+		// react 服务于 jsx
+		<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+		// react dom
+		<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+		// babel
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script src="index.js" type="text/babel"></script>
+	</body>
+</html>
+```
+
+`index.js`
 ```jsx
 import ReactDOM from "react-dom/client";
 
-ReactDOM.render(<h1></h1>, document.getElementById("root"));
+ReactDOM.render(<h1>hello world</h1>, document.getElementById("root"));
 ```
 
-# Code Sandboox
+### Import react 17
+```jsx
+import React from "react" // 服务于 JSX 语法
+import ReactDOM from "react-dom"
+
+ReactDOM.render(<h1>hello world</h1>, document.getElementById("root"));
+```
+### import react 18
+
+```jsx
+import React from "react"
+import ReactDOM from "react-dom/client" // 新变化
+// 直接创建 root 元素
+ReactDOM.createRoot(document.getElementById("root")).render(nav)
+```
+
+
+# Code Sandbox
 
 codesandbox.io
 https://codesandbox.io/p/sandbox/react-first-app-advice-forked-3s85sm
@@ -43,11 +70,55 @@ npm init react-app .
 npm start
 ```
 
-# concept
+### Create project Vite
+- Bundle
+- Babel
+
+### nvm
+nvm 可以在一台设备上安装多个 node 版本, 有点像 python 的虚拟化环境
+
+install node with nvm
+```shell
+nvm install --lts
+```
+
+```shell
+# install node
+node -v
+npm -v # install npm automatically with node
+```
+
+create project
+```shell
+npm create vite@lastest
+# 选择项目类型
+
+cd project_name
+npm install # 安装 package.json
+npm run dev # 运行
+```
+
+### pack project
+
+```shell
+npm run build
+```
+- 会增加一个 index.pack.js 文件
+- 不需要 node_modules
+# Concepts
 
 component based architecture
-virtual DOM
-JSX
+### Virtual DOM
+JSX 只能返回一个 javascript object, 浏览器是看不懂的, 即使用 `JSON.stringify(obj)`, 也只能看到对象的内容. 浏览器的 DOM 无法直接解析.  只有使用 `ReactDOM.render()`才能使浏览器 DOM 变化
+### JSX
+- 必须在一个 parent tag 内
+```jsx
+<>
+	<h1></h1>
+	<ul></ul>
+</>
+```
+
 所有的 component JSX 文件首字母大写
 function name 首字母大写
 transpiler, 使用 babel 把 ES6 和 JS 代码编译成浏览器可以读懂的 JS 代码
@@ -143,12 +214,19 @@ ReactDOM.render(page, document.getElementById("root"));
 
 ### Customised Component
 
+#### function component
+1. function name should be capitalised
+2. return one `<div>`
+3. render like `<Header />`
+
 File `app.js`
 
 ```jsx
 // 构建自己的 component
 function Head() {
-    return <h1>Hello world</h1>;
+    return (
+	    <h1>Hello world</h1>
+	);
 }
 
 function App() {
@@ -165,6 +243,23 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
+```
+
+### Organize component
+
+`Header.jsx`
+```jsx
+import React from "react" // 从我安装的库中找
+
+function Header() {
+	return ()
+}
+
+export default Header 
+```
+import Header
+```jsx
+import Header from "./Header" // 从我本地的文件找
 ```
 
 ### ClassName

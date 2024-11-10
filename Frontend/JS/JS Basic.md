@@ -534,6 +534,7 @@ setTimeout(callback, 3000)  // 3秒后运行
 
 # DOM
 
+### select element
 ```javascript
 document // DOM 
 document.querySelector('p') // get the first found p tag
@@ -543,16 +544,7 @@ document.getElementByClassName('myClass')
 
 
 ```
-
-### add element
-```javascript
-var h1 = document.createElement('h1')
-h1.innerText = answer;
-
-
-
-```
-
+### append element
 ```js
 
 // create element
@@ -564,7 +556,7 @@ h1.setAttribute('type', 'text') // 或者
 document.getElementById('root').append(h1) // 在指定元素内添加
 document.body.appendChild(h1); // 在 body 中添加
 ```
-element value
+### set element attribute
 ```javascript
 var input = document.createElement('input')
 input.setAttribute('type', 'text')
@@ -647,5 +639,5 @@ const json_str = '{"greeting": "hello"}'
 const json_obj = JSON.parse(json_str)
 
 // serialization, exclude the function from the object automatically
-JSON.stringify(json_obj)
+JSON.stringify(js_obj)
 ```

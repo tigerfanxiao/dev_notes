@@ -72,9 +72,23 @@
 	<option value="Teacher">Teacher</option>
 </select>
 ```
-## Button
+### Button
 ```html
 <button type="submit" disabled=True>
 	Create account
 </button>
+```
+
+### image
+
+```html
+<img src="./assets/1.png">
+```
+
+### footer tag
+
+```html
+
+<footer>
+</footer>
 ```
