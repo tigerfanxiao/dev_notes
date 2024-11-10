@@ -1,4 +1,4 @@
-# Code Sandboox
+# Code Sandbox
 codesandbox.io
 https://codesandbox.io/p/sandbox/react-first-app-advice-forked-3s85sm
 
