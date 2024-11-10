@@ -544,15 +544,26 @@ document.getElementByClassName('myClass')
 
 ```
 
-add element
+### add element
 ```javascript
 var h1 = document.createElement('h1')
 h1.innerText = answer;
-h1.setAttribute('type', 'text')
 
-document.body.appendChild(h1);
+
+
 ```
 
+```js
+
+// create element
+const h1 = document.createElement('h1');
+h1.textContent = 'hellow'
+h1.className = 'h1header'
+h1.setAttribute('type', 'text') // 或者
+
+document.getElementById('root').append(h1) // 在指定元素内添加
+document.body.appendChild(h1); // 在 body 中添加
+```
 element value
 ```javascript
 var input = document.createElement('input')

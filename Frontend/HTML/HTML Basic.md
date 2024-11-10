@@ -21,6 +21,18 @@
 <h6> <!-- stop at h6>
 ```
 
+### nav tag
+```html
+<nav>
+</nav>
+```
+
+### section tag
+```html
+<section>
+</section>
+```
+
 ### comments
 ```html
 <!-- this is comments -->

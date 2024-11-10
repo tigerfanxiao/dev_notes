@@ -1,3 +1,12 @@
+### Import react
+```jsx
+// react
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+// react dom
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+// babel
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+```
 # Code Sandbox
 codesandbox.io
 https://codesandbox.io/p/sandbox/react-first-app-advice-forked-3s85sm
@@ -29,6 +38,91 @@ App.js 最大的 component
 # JSX
 可以在一个文件里写 JS, HTML, CSS, 是构造 component 必须要的元素
 
+### Children
+```jsx
+const h1 = document.createElement("h1")
+h1.textContent = "Hello world"
+h1.className = "header"
+console.log(h1)
+// <h1 class="header">
+
+const element = <h1 className="header">This is JSX</h1>
+console.log(element)
+
+
+/*
+1. 可以看到 jsx 元素构建的 html 元素里面必然有 props 属性
+2. props 属性下, 里面必然有 children 属性
+3. 如果 children 属性只有一个元素, 则不是列表
+{
+	type: "h1",
+	key: null,
+	ref: null,
+	props: { 
+		className: "header", 
+		children: "This is JSX" 里面有所有子元素, 包括 contentText
+	},
+	_owner: null,
+	_store: {}
+}
+*/
+```
+
+如果 children 属性有多个元素, 才是 list
+```jsx
+const page = (
+
+<div>
+	<h1 className="header">This is JSX</h1>
+	<p>This is a paragraph</p>
+</div>
+
+)
+
+console.log(page)
+
+ReactDOM.render(
+	page,
+	document.getElementById("root")
+)
+
+/*
+{
+	type: "div", 
+	key: null, 
+	ref: null, 
+	props: {
+		children: [
+			{
+				type: "h1", 元素结构保持一致
+				key: null, 
+				ref: null, 
+				props: { 
+					每个元素都有 props 属性, 到最下层,会有一个不是 list 的 children 属性
+					className: "header", 
+					children: "This is JSX"
+					}, 
+				_owner: null, 
+				_store: {}
+			}, 
+			{
+				type: "p", 
+				key: null, 
+				ref: null, 
+				props: {
+					children: "This is a paragraph"
+					}, 
+				_owner: null, 
+				_store: {}
+			}
+		]
+	
+	}, 
+	_owner: null,
+	_store: {}
+}
+*/
+```
 ### Customised Component
 File `app.js`
 ```jsx
