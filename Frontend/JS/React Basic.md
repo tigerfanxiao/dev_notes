@@ -300,7 +300,7 @@ parent component one-direction transfer data to child component
 
 -   只能单向传递, 从 parent 到 child, 不能反过来
 -   props 在传递的过程中, 不能被修改, 也称为 pure function
-    file `index.js`
+file `index.js`
 
 ```jsx
 import App from "./App.js";
@@ -377,6 +377,33 @@ Card.propTypes = {
 export default Card;
 ```
 
+### map component
+```jsx
+import React from "react"
+import Joke from "./Joke"
+import jokesData from "./jokesData"
+
+export default function App() {
+	const jokes = jokesData.map(joke =>{
+		return (<Joke
+			setup={joke.setup}
+			punchline={joke.punchline}/>
+		)
+	})
+
+	return (
+		<div> 
+			{jokes} // 这里的 jokes 是一个序列
+		</div>)
+}
+```
+
+### Conditional render
+
+```jsx
+{props.openSpots === 0 && ( <div className="card--badge">SOLD OUT</div>
+)}
+```
 ### html in JSX
 
 ```jsx

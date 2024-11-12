@@ -197,13 +197,13 @@ span {
 }
 ```
 
-滚动条:
+### overflow
 ```css
 
 overflow: hidden; /*隐藏超出边界的内容*/
 
 overflow: auto; /*有滚动条*/
-
+overflow-x: auto; /* 如果容器的中的元素横向很多,在超过容器边界时, 会 overflow */
 overflow-Y: 'scroll'; 滚动
 
 ```

@@ -57,8 +57,8 @@ def get_node_value(head, index):
     
 ```
 
-## reverse linked list
-### 思维
+## Reverse linked list
+
 1. prev, cur, next 指向三个元素, 其中 prev 是空
 2. 每次迭代移动着三个指针, 知道 cur等于 None, prev 是最后一个元素
 ```python
@@ -85,8 +85,6 @@ def reverse_list(head, prev=None):
 	return reverse_list(next, head)
 	
 ```
-
-
 
 # Double Linked List
 为什么要双向链表？因为双向链表既可以从头往后遍历，也可以从后往前遍历
