@@ -107,6 +107,10 @@ margin: 10px /* all 4 direction*/
 
 ```
 
+### box-shadow
+```css
+box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+```
 ### HSL
 容易修改颜色亮度和饱和度
 1st: degree of the hue, and can be between 0 and 360. 
@@ -449,7 +453,7 @@ flex-shrink: 0;
 }
 ```
 
-align-self
+align-self 找到 flex 容器的内的元素. 指定它的属性
 ```css
 .logout {
 	align-self: flex-start /* 移动到纵向的顶部 */

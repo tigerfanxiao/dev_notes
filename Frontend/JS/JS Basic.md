@@ -33,7 +33,8 @@ multiple line comments
 // Concatinate String
 "xiao" + "fan"
 "xiao".concat("fan")
-
+"Xiao".charAt(0) // 第 0 个元素
+"Xiao".slice(1) // 第一个元素后面所有的元素, 包含第一个
 'xiao'.toUpperCase();
 'XIAO'.toLowerCase();
 'xiao'.indexOf('x') // 0
@@ -61,7 +62,8 @@ console.log(multiple_line);
 ### Date
 
 ```javascript
-
+const date = new Date()
+date.getHours() // 时
 
 ```
 ## Array
@@ -107,9 +109,11 @@ nums.filter(num=>num>20)
 ```
 ### map
 ```javascript
-[0,10,20,30,40,50].map( function(num) {
-	return num / 10;
-})
+[0,10,20,30,40,50].map( 
+	function(num) {
+		return num / 10;
+	}
+)
 ```
 ### Map
 与 Object 的区别在于没有继承性, 没有prototype, 像是字典
@@ -447,8 +451,17 @@ class Cat extends Animal {
 }
 ```
 
-### De-structure
+### Destructure
 
+```js
+const person = {
+	img: "./images/im.jpg",
+	name: "xiao",
+	phone: "88888",
+
+}
+{img, name} = person // 可以只取出两个值, 但是 key 值必须相同
+```
 
 重新构建对象
 ```js

@@ -331,31 +331,49 @@ function App() {
     return (
         <div>
             <h1>Task: Add three Card elements</h1>
-            // 引入 3 个 Card component. props 值各不相同
-            <Card h2="First card's h2" h3="First card's h3" />
-            <Card h2="Second cards' h2" h3="Second cards's h3" />
-            <Card h2="Third card's h2" h3="Third cards'h3" />
-        </div>
+            <Card 
+	            img="katie-zaferes.png"
+				rating={5.0}
+				reviewCount={6} // 把 6 解释成 JS 的数字,而不是字符串
+				country="USA"
+				title="Life Lessons with Katie Zaferes"
+				price={136}
+	        />
+            
     );
 }
-
 export default App;
 ```
 
 Card.js
 
 ```jsx
+import PropTypes from "props-types";
+
 function Card(props) {
     return (
         <div className="card">
             {" "}
             // 定义 css
-            <h2>{props.h2}</h2> // 从 parent component 获取数据
-            <h3>{props.h3}</h3>
+            <h2>{props.img}</h2> // 从 parent component 获取数据
+            <h3>{props.rating}</h3>
+            <h3>{props.reviewCount}</h3>
+            <h3>{props.country}</h3>
+            <h3>{props.title}</h3>
+            <h3>{props.price}</h3>
         </div>
     );
 }
 
+Card.propTypes = {
+	img: PropTypes.string.isRequired,
+	rating: PropTypes.number.isRequired,
+	reviewCount: PropTypes.number.isRequired,
+	country: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	price: PropTypes.number.isRequired,
+
+};
 export default Card;
 ```
 
@@ -806,4 +824,12 @@ export const UserProvider = ({children})=>{
 }
 
 export const useUser = ()=> useContext(UserContext)
+```
+
+# build
+### public
+把图片直接放在 public/images 内
+```jsx
+// 用绝对路径引入图片
+"/images/my.png"
 ```
