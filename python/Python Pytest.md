@@ -4,7 +4,6 @@ using fixtures to set up your tests
 how to mock external dependencies
 
 - [ ] 读取json文件
-- [ ] 
 # Install
 ```shell
 pip install pytest

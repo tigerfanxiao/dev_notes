@@ -474,10 +474,23 @@ let newPassword = {...password, value:e.target.value}
 
 ```
 
+挑出某一个元素
 ```javascript
 let { PI } = Math // 从 Math module 里面挑出 PI
 ```
 
+交换两个元素
+```js
+[ nums[i], nums[j]] = [ nums[j], nums[i]];
+```
+React Props
+```jsx
+card = {
+	id = 5,
+	name = 'black',
+}
+<Card {...card}/>
+```
 ### Object 
 object.create()
 ```javascript

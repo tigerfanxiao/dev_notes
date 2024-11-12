@@ -431,12 +431,6 @@ flex-shrink: 0;
 
 ```css
 .container > div {
-	flex: 1; 所有元素都是1， 等于平铺这些元素
-}
-```
-
-```css
-.container > div {
 	flex: 1; 全部铺平所有子元素. 占满容器
 }
 
