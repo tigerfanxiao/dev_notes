@@ -139,6 +139,8 @@ background-position: left center; 内容的上下和左右位置
 /*可以将属性写在一行*/
 
 background: red url("12.jpg") norepeat;
+/* 渐变 */
+background: linear-gradient(90deg, #672280 1.18%, #A626D3 100%);
 
 ```
 
@@ -488,6 +490,112 @@ align-self 找到 flex 容器的内的元素. 指定它的属性
 	flex: 1 1 50%; 每个元素占用50%的行
 }
 ```
+
+# CSS Grid
+ grid-template 定义整体布局
+```css
+.container {
+	display: grid;
+	grid-template-columns: 100px auto 100px; /* 3 列 2 行 */
+	grid-template-rows: 50px 50px;
+	grid-gap: 3px;
+}
+```
+
+![[Pasted image 20241113212754.png]]
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 100px auto; /* 2 列 3 行 */
+	grid-template-rows: 50px 50px 200px;
+	grid-gap: 3px;
+}
+```
+![[Pasted image 20241113213039.png]]
+
+fraction
+```css
+grid-template-columns: repeat(3, 1fr); /* 3个 fraction */
+grid-template-rows: repeat(2, 50px); /* == 50px 50 px */
+
+/* 简写 行 / 列 */
+grid-template: repeat(2, 50px) / repeat(3, 1fr);
+```
+grid-column 定义局部单个元素
+```css
+.header {
+	grid-column-start: 1; /* 从第一列开始 */
+	grid-column-end: 3; /* 到最后一列结束 */
+}
+
+/* 简写 */
+.header {
+	grid-column: 1 /3 ;
+}
+
+/* 占用两个 column */
+.footer {
+	grid-column: 1 / span 2;
+}
+
+/* 到最后一列 */
+.footer {
+	grid-column: 1 / -1;
+}
+
+.menu {
+	grid-row: 1 / 3;  /* 从第一列开始, 到第二 2 列结束 */
+
+}
+```
+grid-template-area
+```css
+.container {
+	height: 100%;
+	display: grid;
+	grid-gap: 3px;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: 40px auto 40px;
+	grid-template-areas:
+		". h h h h h h h h h h ."
+		"m c c c c c c c c c c c"
+		". f f f f f f f f f f .";
+}
+
+.header {
+	grid-area: h;
+}
+
+.menu {
+	grid-area: m;
+}
+
+.content {
+	grid-area: c;
+}
+
+.footer {
+	grid-area: f;
+}
+
+```
+
+![[Pasted image 20241114073357.png]]
+### auto-fix minmax
+```css
+.container {
+	display: grid;
+	grid-gap: 5px;
+	/* 最小100px, 最大 1fr, 根据 container 大小自动填充 */
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	/* 为了避免 implicit row, 定义无论多少行, 行高都是 100px */
+	grid-auto-rows: 100px;
+	/* 默认是 row 每个元素占用一行. dense 可以填充 */
+	grid-auto-flow: dense;
+}
+```
+
 
 
 # Case

@@ -94,20 +94,20 @@ veggies.forEach( function(veggie, index) {
 	console.log(`${index}. ${veggie}`);
 });
 ```
-### `find()`
+### `.find()`
 find the first element that meets the condition
 ```js
 const nums = [0,10,20,30,40,50];
 select_num = nums.find(num=> num === 10);
 ```
-### filter
+### `.filter()`
 ```javascript
 const nums = [0,10,20,30,40,50];
 
 nums.filter(num=>num>20)
 
 ```
-### map
+### `.map()`
 ```javascript
 [0,10,20,30,40,50].map( 
 	function(num) {

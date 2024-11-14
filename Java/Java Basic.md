@@ -23,24 +23,32 @@ now.getTime()
 ```
 
 
-# String方法
+# String
 
 ```java
-mstring.length()
-mstirng.endswidth()
-mstring.startswidth()
+mstring.length();
+mstirng.endswidth();
+mstring.startswidth();
 
-mstring.indexOf("H") // if not found, return -1
+mstring.indexOf("H"); // if not found, return -1
 mstring.replace("origin string", "new string")
-mstring.toLowerCase()
-mstring.toUpperCase()
-mstring.trim()
+mstring.toLowerCase();
+mstring.toUpperCase();
+mstring.trim();
 ```
 
-# Array 方法
+# Array
 ```java
 int [][] numbers = new int[3][4];  // create 2-dimension
-myArray.length()  
+ 
+myArray.size();
+myArray.get(2); // fetch the 2 index element
 myArray.toString()  // print string
 Array.deepToString() // 
+```
+
+### Collection
+```java
+import Collections
+
 ```

@@ -36,7 +36,7 @@ five_sort(nums)
 ```
 
 # solution
-
+左右指针
 ```python
 # time o(n)  
 # storage (1)  
