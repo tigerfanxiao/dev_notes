@@ -207,7 +207,6 @@ overflow: hidden; /*隐藏超出边界的内容*/
 overflow: auto; /*有滚动条*/
 overflow-x: auto; /* 如果容器的中的元素横向很多,在超过容器边界时, 会 overflow */
 overflow-Y: 'scroll'; 滚动
-
 ```
 
   
@@ -598,6 +597,65 @@ grid-template-area
 
 
 
+```css
+.container {
+	height: 100%;
+	display: grid;
+	grid-gap: 3px;
+	/* main-start 第一列的最左边分界线 */
+	grid-template-columns: [main-start] 1fr [content-start] 5fr [content-end main-end];
+	grid-template-rows: [main-start] 40px [content-start] auto [content-end] 40px [main-end];
+
+}
+
+.header {
+	grid-column: main;
+}
+.menu {}
+.content {
+	grid-area: content;
+}
+
+.footer {
+	grid-column: main;
+}
+```
+
+![[Pasted image 20241114173736.png]]
+
+### justify-content align-content
+```css
+
+justify-content: space-around;
+align-content: center;
+```
+![[Pasted image 20241114174227.png]]
+### justify-item align-item
+对元素中的内容是否缩放元素
+```css
+
+justify-items: stretch; /* 默认是 stretch */
+align-items: center;
+```
+
+### auto-fit auto-fill
+如果容器很大, 如果元素不足, auto-fit会填充空间. auto-fill不会
+![[Pasted image 20241114175422.png]]
+
+
+grid case
+```css
+article {
+	display: grid;
+	grid-template-columns: 80px 1fr 80px; 分 3 列
+}
+
+article > * {
+	grid-column: 2;
+	min-width: 0; 防止内容过多 overflow 到第3 列
+
+}
+```
 # Case
 ### ul tag
 ```css

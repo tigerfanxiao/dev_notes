@@ -512,9 +512,9 @@ name == Bob ? "Yes, it is Bob" : "I don't know this person";
 # Hook
 
 ### useState hook
-
-会触发 render
-
+- useState 的初值 `['', f()]`
+- 提供一个 callback function 给 `f(oldStateValue)`
+- 会触发 render
 -   You can only call hooks at the top level of your component or your own hooks.
 -   You cannot call hooks inside loops or conditions.
 -   You can only call hooks from React functions, and not regular JavaScript functions.
@@ -524,6 +524,30 @@ Example
 -   An input text field
 -   Any text that has been entered into the field
 -   A Reset button to set the field back to its default state
+```jsx
+
+import React from "react"
+
+export default function App() {
+	const [count, setCount] = React.useState(0)
+	function add() {
+		setCount(prevCount => prevCount + 1)	
+	}
+	function subtract() {
+		setCount(prevCount => prevCount -1)
+	}
+	return (
+		<div className="counter">
+			<button className="counter--minus" onClick={subtract}>–</button>
+			<div className="counter--count">
+				<h1>{count}</h1>
+			</div>
+			<button className="counter--plus" onClick={add}>+</button>
+		</div>
+	)
+}
+```
+
 
 ```jsx
 import { useState } from 'react';
