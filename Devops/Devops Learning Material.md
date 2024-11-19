@@ -1,5 +1,14 @@
 
-# Python
+# Python Flask
+
+https://www.youtube.com/watch?v=zsYIw6RXjfM
+https://www.youtube.com/watch?v=mqhxxeeTbu0&list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX
+https://www.youtube.com/watch?v=GMppyAPbLYk
+https://www.youtube.com/watch?v=z3YMz-Gocmw
+https://www.youtube.com/watch?v=F7AK-WzpYdY&list=PLMOobVGrchXN5tKYdyx-d2OwwgxJuqDVH
+
+[Try Flask API Development 2024 Course Introduction](https://www.youtube.com/watch?v=Nl47u8zx8oM&list=PLOLrQ9Pn6caxBM0vaSzJdN4uD9V-DZ82L)
+
 ### Python 学习材料
 - Qytang NetDevOps Python 基础班
 

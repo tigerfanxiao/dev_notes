@@ -90,7 +90,6 @@ get router info routing-table all
 ping 命令
 ```shell
 execute ping 10.1.1.10 # 我 ping 别人
-
 ```
 
 # Zone
