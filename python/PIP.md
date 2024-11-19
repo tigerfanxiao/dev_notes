@@ -2,19 +2,23 @@
 
 pip search <PACKAGE_NAME>  # 查找包的安装地址
 pip install <PACKAGE_NAME>==1.0.0
-pip install ––upgrade <PACKAGE_NAME
+
+# upgrade module version
+pip install ––upgrade <PACKAGE_NAME>
+
 pip list  # show all installed package
+pip show flask # show flask version
 
 pip freeze | grep netmiko # 查询当前安装的包版本
 
 ```
 
 
-### requirements.txt
+### Dependency management
 ```shell
-
+# 通过文件安装包
 pip install –r <REQUIREMENTS_FILE>
-
+# 把当前环境输出到文件
 pip freeze > reqirements.txt
 ```
 

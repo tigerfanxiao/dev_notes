@@ -1,3 +1,15 @@
+# Coursera
+
+- [IBM Front-End Developer Professional Certificate](https://www.coursera.org/professional-certificates/ibm-frontend-developer)
+- [Applied Software Engineering Fundamentals Specialization](https://www.coursera.org/specializations/software-engineering-fundamentals)
+- [IBM Full Stack Software Developer Professional Certificate](https://www.coursera.org/professional-certificates/ibm-full-stack-cloud-developer)
+- [IBM DevOps and Software Engineering Professional Certificate](https://www.coursera.org/professional-certificates/devops-and-software-engineering)
+- [IBM Back-End Development Professional Certificate](https://www.coursera.org/professional-certificates/ibm-backend-development)
+
+
+- [Meta Back-End Developer Professional Certificate](https://www.coursera.org/programs/open-access-guyana-ngeor/professional-certificates/meta-back-end-developer?source=search#courses)
+- [Meta Front-End Developer Professional Certificate](https://www.coursera.org/programs/open-access-guyana-ngeor/professional-certificates/meta-front-end-developer?source=search)
+
 
 # Python Flask
 
@@ -8,6 +20,8 @@ https://www.youtube.com/watch?v=z3YMz-Gocmw
 https://www.youtube.com/watch?v=F7AK-WzpYdY&list=PLMOobVGrchXN5tKYdyx-d2OwwgxJuqDVH
 
 [Try Flask API Development 2024 Course Introduction](https://www.youtube.com/watch?v=Nl47u8zx8oM&list=PLOLrQ9Pn6caxBM0vaSzJdN4uD9V-DZ82L)
+
+=======
 
 ### Python 学习材料
 - Qytang NetDevOps Python 基础班
@@ -44,6 +58,12 @@ NextJS
 https://www.youtube.com/watch?v=zfAb95tJvZQ
 React NextJS
 https://www.youtube.com/watch?v=kPKXmEp_wfU
+
+React Portfolio 合集课程
+https://www.youtube.com/watch?v=3HNyXCPDQ7Q&list=PLd0qRSEDFQI7DgB5BKHQrryFlR02n1bK-&index=6
+
+
+
 HTML/CSS/JS
 https://www.youtube.com/watch?v=J7_Ru2uuBV4
 React NextJS 

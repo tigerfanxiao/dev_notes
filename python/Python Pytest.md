@@ -4,7 +4,6 @@ using fixtures to set up your tests
 how to mock external dependencies
 
 - [ ] 读取json文件
-- [ ] 
 # Install
 ```shell
 pip install pytest
@@ -20,7 +19,6 @@ def test_foo():
 	assert 1 == 1
 	assert 2 == 2
 ```
-
 
 ### 对异常进行测试
 
@@ -83,4 +81,44 @@ def setup_teardown():
 ```
 
 一个测试函数，可以接受多个fixture
-### fixture 的继承
+
+# Run test
+
+```shell
+# 执行所有测试
+pythom -m pytest 
+# 压制 warning 执行所有测试
+python -m pytest -p no:warnings
+# 执行所有带有 read 的测试函数
+python -m pytest -k read
+```
+
+# MonkeyPatching
+```python
+
+```
+
+
+```shell
+
+# run only the last failed tests
+$ docker-compose exec web python -m pytest --lf
+
+# run only the tests with names that match the string expression
+$ docker-compose exec web python -m pytest -k "summary and not test_read_summary"
+
+# stop the test session after the first failure
+$ docker-compose exec web python -m pytest -x
+
+# enter PDB after first failure then end the test session
+$ docker-compose exec web python -m pytest -x --pdb
+
+# stop the test run after two failures
+$ docker-compose exec web python -m pytest --maxfail=2
+
+# show local variables in tracebacks
+$ docker-compose exec web python -m pytest -l
+
+# list the 2 slowest tests
+$ docker-compose exec web python -m pytest --durations=2
+```

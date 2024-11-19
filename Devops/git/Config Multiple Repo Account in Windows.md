@@ -51,7 +51,31 @@ git config user.email "tigerfanxiao@gmail.com"
 推送本地文件到远端
 ```shell
 # 默认情况下, remote_repo 是 origin
-git remote add <remote_repo> git@github.com:tigerfanxiao/dev_notes.git
+git remote add origin git@github.com:tigerfanxiao/dev_notes.git
+# 原始代码库作为 upstream
+git remote add upstream git@github.com:tigerfanxiao/dev_notes.git
+
+git remote -v # 结果如下
+origin git@github.com:tigerfanxiao/dev_notes.git (fetch)
+origin git@github.com:tigerfanxiao/dev_notes.git (push)
+upstream git@github.com:tigerfanxiao/dev_notes.git (fetch)
+upstream git@github.com:tigerfanxiao/dev_notes.git (push)
+
+git fetch upstream # 从 upstream 拿到最新的变化
+git merge upstream/master # 把 upstream 的变化合并到本地的 master 分支上
+# 直接 fetch 并 merge
+git pull upstream 
+```
+
+```shell
 git branch -M main
 git push -u <remote_repo> main
+```
+
+
+# 回退
+
+```shell
+# 本地完全删除当前的 commit, 回到上一个 commit 的状态. history 会改变
+git reset --hard HEAD~1
 ```

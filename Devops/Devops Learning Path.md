@@ -8,7 +8,7 @@ The idea I am interested in is IaC. Infrastructure as Code
 4. 10 月 1 日 完成Python 基础练习的复习
 5. 10 月 3 日 完成 SQL 基础语法的复习
 6. 10 月 10 日完成 Pandas 的基础语法复习
-7. 
+7. 10 月 28 日完成 Intro development Flask API Udemy 课程
 # Job Description
 K8s 很重要
 AWS production Experience很重要
@@ -21,6 +21,31 @@ Linux 和 Containerization 很重要
 
 # Project 项目
 ## 项目想法
+
+# API 开发
+- FastAPI 开发
+	- CRUD
+		- ORM
+	- Authentication
+	- Validation
+	- Documentation
+- 代码结构
+- CICD, github Action
+- Pytest TDD
+
+API 开发, 抽取某一天的数据. 在数据库里保存数据的时间节点是精确秒的. 所以应该是 API 请求发出后, 在服务侧进行了处理, 然后发往数据库进行查询. 做了 Schema serialize
+怎么在 AWS 上的 API gateway上部署 API, 并使用 lambda 函数去调用数据库
+
+需要学习: Httpx中 Async 请求
+
+# 数据分析项目
+
+### Petal Search Click Stream 分析
+分析用户行为 behavior, purchase habit
+Pipeline使用 kafka, Apache Spark
+### 运营商项目
+A telecommunication company collects network usage data through each day at a rate of several thousand of data points each second. The company runs an application to process the usage data in real time. the company aggregates and stores the data in an Amazon Aurora DB instance. Sudden drops in network usage usually indicate a network outage. The company must be able to identify sudden drops in network usage so the company can take immediate remedial actions. 
+Create an AWS Lambda function within the Database Activity Streams feature of Aurora to detect drops in network usage.
 
 # 西班牙分拣中心Meraki 基础网络改造项目
 1. 项目管理 
@@ -42,6 +67,8 @@ Linux 和 Containerization 很重要
 6. 采集设备状态信息和配置信息, 进行数据分析. 是不是考虑是 data steam的状态信息分析
 7. 项目体现数据库的设计, 选型. NoSQL 还是 SQL
 	- 通过数据库的表设计, foreigin key 来减少代码?主要体现 IaC 的思想
+
+
 
 # Cloud Computing
 ### AWS Certificate

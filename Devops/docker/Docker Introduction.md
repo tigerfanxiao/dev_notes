@@ -22,18 +22,7 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 8. 容器适合做单进程, 且所在前台顶着 console 口. 可以利用 docker swam 或者 k8s 做负载. 虚拟机则是运行多进程
 
 
-### 微服务
-1. 微服务其实也可以放在虚拟机上, 不一定是 docker. 
-
-### Docker Operation
-1. 创建 Dockerfile 文件
-2. 用 Docker File 文件构建镜像
-3. Docker Run 镜像
-
-
 # Docker 命令
-
-[命令参考文档](https://docs.docker.com/reference/cli/docker/container/run/)
 
 ### 镜像相关命令
 
