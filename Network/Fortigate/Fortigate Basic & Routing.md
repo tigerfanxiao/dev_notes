@@ -10,7 +10,6 @@ https://docs.fortinet.com/product/fortigate/6.4
 ### Session Table 的影响
 - 第一次查询了 FIB 后, 往返的流量就会在 sessiontable 中创建一条记录
 - 正因为有了 session table 所在 HA 的 AP 切换时, 除了同步配置, 还需要同步 session table
-- 
 # 设备初始化解
 1. 初始登录账户 admin, 没有密码
 
