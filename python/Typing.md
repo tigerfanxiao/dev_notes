@@ -49,6 +49,7 @@ def greet(name: Optional[str]) -> str:
 ```
 # Check Typing with `mypy`
 
+
 ```shell
 pip install mypy
 

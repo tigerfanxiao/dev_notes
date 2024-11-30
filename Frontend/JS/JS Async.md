@@ -70,18 +70,18 @@ https://jsonplaceholder.typicode.com/posts/1
 ### Async Await
 任何 function 用 async 开头都要返回 promise
 ```js
-
-async function getBlogPost() { return 'works here too' } // 返回值是给到 resolve
-
+// 返回值是给到 resolve
+async function getBlogPost() { return 'works here too' } 
+// 调用 async 函数, 把结果promise放入 getBlogPost
 const getBlogPost = async () => {}
-
-getBlogPost.then(value => console.log(value)); // works here too
+// 用 then 出来 promise
+getBlogPost.then(value => console.log(value));
 ``` 
 
 await 放在 promise 的前面
 
 ```js
-
+// 这里只是函数定义, 不是调用函数
 async function getPost() {
 	try {
 		const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');

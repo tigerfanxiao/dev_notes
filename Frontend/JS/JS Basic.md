@@ -72,6 +72,9 @@ date.getHours() // 时
 
 // add ele to the end
 arr.push();
+// add ele to the first
+arr.unshift();
+
 // remove the last element
 fruits.pop();
 // pop the first element
@@ -228,8 +231,8 @@ scopeTest(); // 33 , x is defined in global scope
 ### Object
 ```javascript
 var user = {
-	property_1: 1
-	property_2: "xiao"
+	property_1: 1,
+	property_2: "xiao",
 };
 
 // add more properties to the object
@@ -245,14 +248,27 @@ car.lightsOn = function() {
 	console.log("The lights are on.")
 }
 
+```
 
+type of object
+```js
 typeof('hello') == 'string' // String
+```
+
+es6 create object
+```js
+// if object property has the same name of variable
+a = "a letter"
+b = "b letter"
+{a, b}
+
 ```
 ### Object.assign
 ```js
 const target = { a: 1, b: 2 };
 const source = { b: 4, c: 5 };
 
+// create new object and add new properies
 const result = Object.assign(target, source);
 console.log(result); // { a: 1, b: 4, c: 5 }
 ```
@@ -558,6 +574,25 @@ Vue使用了proxy做数据的双向绑定
 setTimeout(callback, 3000)  // 3秒后运行
 ```
 
+window
+```js
+
+window.addEventListener("resize", function() {
+	console.log("Resized")
+})
+```
+### LocalStorage
+```js
+localStorage.getItem("key")
+// 如果找不到, return null
+localStorage.setItem("key", value)
+
+// 注意 value 必须是 string, 如果是其他复杂对象, 必须使用
+JSON.stringify(value)
+// 从 localstorage 取出对象
+JSON.parse(stringifiedValue)
+```
+
 # DOM
 
 ### select element
@@ -650,6 +685,8 @@ import addTwo from "./addTwo";
 import { addTwo } from "./addTwo";
 ```
 # Events
+
+只能在正式 html 元素才能用 onClick 属性. 在自定义的 componemt 中, 自己定义的 handleClick 只是一个普通的 props, 需要借助传入的callback 函数来定义
 event type: click
 ```javascript
 const target = document.querySelector('body');
@@ -666,4 +703,22 @@ const json_obj = JSON.parse(json_str)
 
 // serialization, exclude the function from the object automatically
 JSON.stringify(js_obj)
+```
+
+
+# ES6
+### compute property syntax
+```js
+// 之类 name 可以是一个变量
+{
+	[name]: value 
+}
+```
+### implicit return 
+
+```js
+// 即使在两行, 用括号就不用写 return
+user => ({
+name: "xiao"
+})
 ```

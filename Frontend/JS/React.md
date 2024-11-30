@@ -52,6 +52,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(nav)
 
 codesandbox.io
 https://codesandbox.io/p/sandbox/react-first-app-advice-forked-3s85sm
+# Icons
+https://react-icons.github.io/react-icons/icons/fa6/
 
 # Initiate Project
 
@@ -212,6 +214,8 @@ ReactDOM.render(page, document.getElementById("root"));
 */
 ```
 
+对于自定义的 component, 也可以使用 children
+
 ### Customised Component
 
 #### function component
@@ -270,11 +274,12 @@ import Header from "./Header" // 从我本地的文件找
 <p className="link">Read more...</p>
 ```
 
-## Pros & State
+## Pros vs State
 
--   Props 不能被 children 修改, is public
--   State is a snapshot, component manage its own stage, and trigger re-render
--   State optional
+- Pros 用于父节点到子节点的数据传递. 而 state 主要用于 component 内部的状态保存
+- Props 不能被 children 修改, is public
+- State is a snapshot, component manage its own stage, and trigger re-render
+- State optional
 
 ### Props
 
@@ -401,8 +406,10 @@ export default function App() {
 ### Conditional render
 
 ```jsx
-{props.openSpots === 0 && ( <div className="card--badge">SOLD OUT</div>
-)}
+// show something or not
+{state && <div>something</div>}
+// show this or that
+{state ? "this thing":"that thing"}
 ```
 ### html in JSX
 
@@ -524,6 +531,8 @@ Example
 -   An input text field
 -   Any text that has been entered into the field
 -   A Reset button to set the field back to its default state
+
+如果需要知道之前最新的状态, 需要传入 callback 函数给 setState
 ```jsx
 
 import React from "react"
@@ -548,7 +557,7 @@ export default function App() {
 }
 ```
 
-
+ 如果不需要知道最新的状态, 可以直接传值给 SetState
 ```jsx
 import { useState } from 'react';
 
@@ -596,14 +605,161 @@ function TextInputWithFocusButton() {
 }
 ```
 
-### useEffect
+### useEffect hook
 
-用于 side effect, 比如 component mount 的时候, 就运行某个动作. 而不是等待用户点击触发时间才运行.
+用于 side effect
+- component mount 的时候, 就运行某个动作. 而不是等待用户点击触发时间才运行.
+- local Storage
+- 外部 API 调用
+- 给 windows 添加 event listener
+
 
 ```jsx
-useEffect(function () {
-    getAdvice(); // 被side effect 是被调用的函数
-}, []); // 设计的 dependence
+React.useEffect(function() {
+	// 被side effect 是被调用的函数
+	fetch("https://swapi.dev/api/people/1")
+		.then(res => res.json())
+		.then(data => console.log(data))
+}, [count])  // [] 表示只跑一次
+
+// 用 async await 改写
+React.useEffect(async () => {
+		const res = await fetch("https://api.imgflip.com/get_memes")
+		const data = await res.json()
+		setAllMemes(data.data.memes)
+	}, [])
+```
+
+cleanup
+```jsx
+import React from "react"
+
+export default function WindowTracker() {
+	const [windowWidth, setWindowWidth] = React.useState(window.innerWidth)
+
+	React.useEffect(() => {
+		// 定义绑定到window listender上的callback 函数
+		function watchWidth() {
+			console.log("Setting up...")
+			setWindowWidth(window.innerWidth)
+		}
+		// 在第一次加载 component 时,给 windows 添加 event listener
+		window.addEventListener("resize", watchWidth)
+		// 当这个 component 别关闭时, 运行的 callback 删除 listener
+		return function() {
+			console.log("Cleaning up...")
+			window.removeEventListener("resize", watchWidth)
+		}
+
+	}, [])
+
+	return (
+		<h1>Window width: {windowWidth}</h1>
+	)
+
+}
+```
+
+### useContext hook
+Context is global state, solve props drilling problem
+在顶部使用
+```jsx
+// 创建一个 context
+const ThemeContext = React.createContext();
+
+export default function App() {
+	return (
+		// 需要用 Provider 把元素 最上层的 component 包起来
+		// 用过 value 给 context 添置值
+		<ThemeContext.Provider value = "light">
+			<div className="container dart-theme">
+				<Header />
+				<Button />
+			</div>
+		</ThemeContext.Provider>
+	)
+}
+// 导出 ThemeContext 给别的 module 使用
+export { ThemeContext }
+```
+
+传一个值, 传一个object 的不同写法
+```jsx
+// 传一个值
+<ThemeContext.Provider value = "light">
+// 传一个变量, 因为是 js 所以需要使用 {}
+<ThemeContext.Provider value = { theme }>
+// 传一个 object, 第一个{} 表示 js, 第二个{} 表示 object
+<ThemeContext.Provider value = {{ theme, toggleFunc }}>
+// 上面写法等于
+<ThemeContext.Provider value = {{ theme: theme, toggleFunc: toggleFunc }}>
+```
+
+使用 context
+
+```jsx
+// 从别的模块引入context
+import { ThemeContext } from "./App";
+
+export default function Button() {
+	// 获取 context 中的值
+	const value = React.useContext(ThemeContext);
+	return (
+		<button className={`${value}-theme`}>
+			Switch Theme
+		</button>
+	)
+
+}
+```
+
+### dot syntax for compound components
+如果 menu 下还有多个子 component. 在 Menu 文件夹下有如下结构
+
+```
+Menu
+	- Menu.js
+	- MenuButton.js
+	- MenuDropdown.js
+	- MenuItem.js
+	- index.js # 创建这个 js 文件来做转化
+
+```
+
+Menu文件夹下的 `index.js`
+```js
+import Menu from "./Menu"
+import MenuButton from "./MenuButton"
+import MenuDropdown from "./MenuDropdown"
+import MenuItem from "./MenuItem"
+
+Menu.Button = MenuButton
+Menu.Dropdown = MenuDropdown
+Menu.Item = MenuItem
+
+export default Menu
+```
+
+使用 dot syntax
+```jsx
+// 只要引入 index.js
+import Menu from "./Menu/index"
+
+function App() {
+	const sports = ["Tennis", "Pickleball", "Racquetball", "Squash"]
+
+	return (
+		<Menu>
+			<Menu.Button>Sports</Menu.Button>
+			<Menu.Dropdown>
+				{sports.map(sport=>(
+					<Menu.Item key={sport}>{sport}</Menu.Item>
+				))}
+
+			<Menu.Dropdown>
+		</Menu>
+	)
+}
 ```
 
 ### route
@@ -733,115 +889,124 @@ change a form from uncontrolled component to controlled component
 3.
 
 ```jsx
-import "./App.css";
-import { useState } from "react";
-import { validateEmail } from "./utils";
+import React from "react"
 
-const PasswordErrorMessage = () => {
-	return (
-		<p className="FieldError">Password should have at least 8 characters</p>
-	);
-};
+  
+export default function Form() {
+	// 使用 state object 来控制所有输入参数
+	const [formData, setFormData] = React.useState({firstName: "", lastName: ""})
 
-function App() {
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState({
-		value: "",
-		isTouched: false,
-	});
-	const [role, setRole] = useState("role");
+	console.log(formData)
 
-	const getIsFormValid = () => {
-		return (
-			firstName &&
-			lastName &&
-			validateEmail(email) &&
-			password.value.length > 8 &&
-			role !== 'role'
-		);
+	function handleChange(event) {
+		const {name, value, type, checked} = event.target
+		setFormData(prevFormData => {
+			return {
+				...prevFormData, // 之前的值
+				// 用[]可以动态的使用变量作为对象的key 值
+				[name]: type === "checkbox"? checked: value
+			}
+		})
 
-	};
-
-	const clearForm = () => {
-		setFirstName("");
-		setLastName("");
-		setEmail("");
-		setPassword({
-			value: "",
-			isTouched: false,
-		});
-		setRole("role");
-
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault(); // 阻止默认行为
-		alert("Account created!");
-		clearForm();
-	};
+	}
 
 	return (
-		<div className="App">
-			<form onSubmit={handleSubmit}> // 处理提交动作
-				<fieldset>
-					<h2>Sign Up</h2>
-					<div className="Field">
-						<label>First name <sup>*</sup></label>
-						// input 需要输入两个 props: value 和 onChange
-						<input
-							value={firstName}
-							onChange={e=>setFirstName(e.target.value)}
-							placeholder="First name"
-						/>
-					</div>
-
-					<div className="Field">
-						<label>Last name</label>
-						<input
-							value={lastName}
-							onChang={(e)=>setLastName(e.target.value)}
-							placeholder="Last name" />
-					</div>
-
-					<div className="Field">
-						<label>Email address <sup>*</sup></label>
-						<input
-							value = {email}
-							onChange={e=>setEmail(e.target.value)}
-							placeholder="Email address" />
-					</div>
-
-					<div className="Field">
-						<label>Password <sup>*</sup></label>
-						<input
-							value = {password}
-							onChange={e=>setPassword({...password, value=e.target.value})}
-							onBlur={e=>setPassword({...password, isTouched=true})}
-							placeholder="Password" />
-					{ password.isTouched && password.value.length<8 ?(<PasswordErrorMessage/>):null}
-					</div>
-
-					<div className="Field">
-						<label>Role <sup>*</sup></label>
-						<select value={role} onChange={e=>setRole(e.target.value)}>
-							<option value="role">Role</option>
-							<option value="individual">Individual</option>
-							<option value="business">Business</option>
-						</select>
-					</div>
-
-					<button type="submit" disabled={!getIsFormValid()}>
-						Create account
-					</button>
-				</fieldset>
-			</form>
-		</div>
-	);
+		<form>
+			<input
+				type="text"
+				placeholder="First Name"
+				onChange={handleChange}
+				name="firstName" // this property identify the event.target
+				value={formData.firstName}
+			
+			/>
+			<input
+				type="text"
+				placeholder="Last Name"
+				onChange={handleChange}
+				name="lastName"
+				value={formData.lastName} // single source of truth, 不让 input 自己去维护一个 state
+			/>
+		</form>
+	)
 }
+```
+下面的 form 元素和 html 中的写法略有不同
+```jsx
+<textarea/>
 
-export default App;
+<input 
+	type="checkbox" 
+	id="idFriendly" 
+	checked={formData.isFriendly}
+	name="idFriendly"
+	onChange={handleChange}
+/>
+<label htmlFor="idFriendly">Are your friendly</label>
+
+
+```
+
+radio
+```jsx
+
+<fieldset>
+	<legend>Current employment status</legend>
+	<input
+		type="radio"
+		id="unemployed"
+		name="employment"
+		value="unemployed"
+		checked={formData.employment === "unemployed"}
+		onChange={handleChange}
+	/>
+	<label htmlFor="unemployed">Unemployed</label>
+	<br />
+	
+	<input
+		type="radio"
+		id="part-time"
+		name="employment"
+		value="part-time"
+		checked={formData.employment === "part-time"}
+		onChange={handleChange}
+	/>
+	<label htmlFor="part-time">Part-time</label>
+	<br />
+
+	<input
+		type="radio"
+		id="full-time"
+		name="employment"
+		value="full-time"
+		checked={formData.employment === "full-time"}
+		onChange={handleChange}
+	/>
+	<label htmlFor="full-time">Full-time</label>
+	<br />
+</fieldset>
+```
+
+dropdown
+```jsx
+<label htmlFor="favColor">What is your favorite color?</label>
+<br />
+<select
+	id="favColor"
+	value={formData.favColor}
+	onChange={handleChange}
+	name="favColor"
+>
+	<option value="">-- Choose --</option>
+	<option value="red">Red</option>
+	<option value="orange">Orange</option>
+	<option value="yellow">Yellow</option>
+	<option value="green">Green</option>
+	<option value="blue">Blue</option>
+	<option value="indigo">Indigo</option>
+	<option value="violet">Violet</option>
+
+</select>
 ```
 
 邮箱验证
@@ -856,25 +1021,20 @@ export const validateEmail = (email) => {
 };
 ```
 
-# ContextAPI
-
-Context is global state, solve props drilling problem
-
+submit
 ```jsx
-
-import {createContext, useState, useContext} from "react";
-
-const UserContext = createContext(undefined);
-
-export const UserProvider = ({children})=>{
-	const [user] = useState({
-		name: "John",
-		email: "John@example.com",
-	});
-	return <UserConext.Provider value={user}></UserContext.Provider>
+function handleSubmit(event) {
+	// 阻止默认行为, 因为默认情况下, submit 会刷新页面, 充值所有 input 内容. 把所有参数都放在 url 里,用 post 方式发送出去
+	event.preventDefault()
+	console.log(formData)
 }
 
-export const useUser = ()=> useContext(UserContext)
+return (
+	// 在 form 标签下配置 onSumit 方法
+	<form onSubmit={handleSubmit}>
+		// 在 form 中的 button, 默认是 type=submit, 会触发form 递交 event
+		<button>Submit</button>
+
 ```
 
 # build
@@ -884,3 +1044,18 @@ export const useUser = ()=> useContext(UserContext)
 // 用绝对路径引入图片
 "/images/my.png"
 ```
+
+# 3rd Party Module
+### classnames & clsx
+```shell
+npm install classnames
+```
+把多个 classname 进行拼接
+```jsx
+export default function Button({children, className, size, ...rest}) {
+
+	const allClasses = classnames(sizeClass, className)
+	//  button-large green
+}
+```
+
