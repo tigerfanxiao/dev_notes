@@ -1,20 +1,28 @@
-# 恢复出厂设置
-断电重启设备
+# Reset Factory Mode
+锐捷交换机的配置是保存在 `config.text`中的
 ```shell
-
-Ctrl + C
+# 手动断电重启设备
+# Ctrl + C 进入 bootloader 菜单
+# Ctrl + Q，进入uboot命令行
+# 输入下面命令, 清楚console 密码
+main_config_password_clear
 
 help
+# 重命名现有的配置文件, 这步操作后, 重启设备会丢失现有配置
 rename config.text config.text.bak
 # 重启
 load
 
+# 重启完成后
+enable
+copy config.text.bak config.text # 恢复配置文件 
+
+# 如果以上命令报错，则使用以下命令恢复配置文件：
+copy flash:config.bak flash:config.text
+
+# 使配置生效
+copy startup-config running-config
 ```
-
-
-连接防火墙或者路由器的上行接口
-
-
 
 ### L2 ACCESS
 
