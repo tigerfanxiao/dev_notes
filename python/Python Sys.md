@@ -13,7 +13,7 @@ print(sys.path)
 sys.path.insert(1, '/sdf') # 插入在指定位置上
 # 先要修改 sys.path
 # 再 import
-import thirdpartypackage
+import <thirdpartypackage>
 
 ```
 
