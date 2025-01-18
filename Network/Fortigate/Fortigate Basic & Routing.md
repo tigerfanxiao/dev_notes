@@ -4,7 +4,7 @@ https://docs.fortinet.com/product/fortigate/6.4
 
 # 概念
 
-下一代防火墙很重要的概念是引入了 session table 的该尼奥
+下一代防火墙很重要的概念是引入了 session table 的概念
 进过防火墙的流量都会在 session table 中创建一条记录
 
 ### Session Table 的影响
@@ -12,7 +12,6 @@ https://docs.fortinet.com/product/fortigate/6.4
 - 正因为有了 session table 所在 HA 的 AP 切换时, 除了同步配置, 还需要同步 session table
 # 设备初始化解
 1. 初始登录账户 admin, 没有密码
-
 
 ### 授权
 先要连接上公网, 配置完管理页面, 才能打授权. 
@@ -25,6 +24,9 @@ https://docs.fortinet.com/product/fortigate/6.4
 默认情况下的, 管理口 IP 为 `192.168.1.99`
 在本端配置 192.168.1.97
 然后用浏览器访问 
+### 修改管理页面端口
+将 HTTP 端口 80重定向到 HTTPS 并将 8443 作为端口
+![[Pasted Graphic 4.png]]
 
 
 # 命令

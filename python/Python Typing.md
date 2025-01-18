@@ -1,6 +1,4 @@
-# 问题
-1. 怎么在vscode中集成mypy
-
+# Pydantic
 
 ### Typing List & Tuple
 ```python

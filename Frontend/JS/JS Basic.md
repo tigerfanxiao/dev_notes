@@ -68,7 +68,8 @@ date.getHours() // 时
 ```
 ## Array
 ```javascript
-
+// check if element in the array
+arr.include(ele)
 
 // add ele to the end
 arr.push();
@@ -130,16 +131,19 @@ bestBoxers.set(3, "The third place");
 console.log(bestBoxers);
 bestBoxers.get(1); // 'The Champion'
 ```
-## Set
+### Set
 ```javascript
 const repetitiveFruits = ['apple','pear','apple','pear','plum', 'apple'];
 const uniqueFruits = new Set(repetitiveFruits);
 console.log(uniqueFruits);
 
 // add number to set
-let set = new Set();
-set.add(1);
-set.add(2);
+let mySet = new Set();
+mySet.add(1);
+mySet.add(2);
+
+mySet.has(3) // check if element in the set, but hashtable
+
 ```
 ### spread operator
 
@@ -383,6 +387,10 @@ for (prop in sportsCar) {
 // for-of loop will only loop current obejct
 for (prop of Object.keys(sportsCar)) {
 	console.log(prop, sportsCar[prop]); // speed: fast
+}
+
+for (let item of b) {
+  // do somethin
 }
 ```
 ### Function
