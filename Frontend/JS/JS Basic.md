@@ -20,13 +20,11 @@ console.log("Hello ", "there, ", "World")
 ### comments
 
 ```javascript
-
 // one line commments
 
 /*
 multiple line comments
 */
-
 ```
 ### String
 ```javascript
@@ -57,14 +55,11 @@ let multiple_line = `
    xiao
 `;
 console.log(multiple_line);
-
 ```
 ### Date
-
 ```javascript
 const date = new Date()
 date.getHours() // 时
-
 ```
 ## Array
 ```javascript

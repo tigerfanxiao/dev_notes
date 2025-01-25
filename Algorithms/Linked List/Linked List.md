@@ -1,4 +1,5 @@
-单向链表
+### 单向链表
+- 单向链表有 Head 和 Tail
 ```mermaid
 graph LR 
 A((A)) --> B((B)) --> C(( C )) --> D(( D )) --> E(( None ))
@@ -13,6 +14,28 @@ class Node:
     def __repr__(self) -> str:
         return self.value
 
+class LinkedList:
+	def __init__(self, node:Node) -> None:
+		self.head = node
+
+	def go_through_linked_list:
+		ur_node = self.head
+		while cur_node is not None: 
+			print(cur_node.value)
+			cur_node = cur_node.next
+			
+	@go_through_linked_list
+	def print_linked_list(self):
+		cur_node = self.head
+		while cur_node is not None: 
+			print(cur_node.value)
+			cur_node = cur_node.next
+		
+
+	def add_node_to_end(self, node):
+		
+		
+	
 
 node_a = Node('A')
 node_b = Node('B')
