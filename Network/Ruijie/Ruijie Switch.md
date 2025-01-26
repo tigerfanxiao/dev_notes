@@ -1,11 +1,14 @@
 # Reset Factory Mode
 锐捷交换机的配置是保存在 `config.text`中的
 ```shell
+
 # 手动断电重启设备
 # Ctrl + C 进入 bootloader 菜单
 # Ctrl + Q，进入uboot命令行
 # 输入下面命令, 清楚console 密码
 main_config_password_clear
+Ctrl + C
+
 
 help
 # 重命名现有的配置文件, 这步操作后, 重启设备会丢失现有配置
@@ -23,9 +26,6 @@ copy flash:config.bak flash:config.text
 # 使配置生效
 copy startup-config running-config
 ```
-
-### L2 ACCESS
-
 ```shell
 
 interface GigabitEthernet 0/47
@@ -67,13 +67,9 @@ exit
 
 show aggregate summary
 show interface aggregateport 1
-
-
 ```
 
-
 ### NAT
-
 ```shell
 # 公网出口
 int teng 0/51
@@ -81,10 +77,6 @@ ip add 10.36.1.9/24
 ip natoutside
 
 ```
-
-
-
-
 
 用 hybrid 方式来配置 access 口， 用于内网 PoE 设备，比如影音设备
 在办公室的 RJ45 接口很可能被私连交换机，或者线路错连成为环路， 所以在接口下要配置防止网络风暴的 PPS Packet Per Second
@@ -99,3 +91,27 @@ interface GigabitEthernet 0/37
 ```
 
 问题： 最佳实践 pps 怎么计算
+
+
+### 出口限源
+```shell
+line vty 0 4
+ transport input ssh
+ access-class For_Access_Restrictions in
+ exec-timeout 180 0
+ privilege level 15
+ Login local
+!
+end
+
+
+ip access-list standard For_Access_Restrictions
+ 10 permit host 30.118.110.91 
+ 20 permit host 30.118.110.92 
+ 30 permit host 30.118.110.93 
+ 90 permit host 30.118.110.179 
+ 100 deny any
+ 
+username cainiaoit privilege 15 secret EScoe2024@
+username cainiao privilege 15 secret EScoe2024@
+```

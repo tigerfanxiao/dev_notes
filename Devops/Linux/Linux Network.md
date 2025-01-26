@@ -207,3 +207,16 @@ netstat -r # 显示路由表
 # 查看这个机器上的程序, 相应的进程号, 端口号 
 netstat -tulnp 
 ```
+
+
+# Centos7
+
+```shell
+vim /etc/sysconfig/network-scripts/ifcfg-eno2
+
+# 修改内容 IP 地址
+IPADDR=172.20.0.102
+
+# 重启网口
+service network restart
+```

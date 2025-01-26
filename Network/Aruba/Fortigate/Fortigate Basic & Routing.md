@@ -41,7 +41,7 @@ show system interface port1
 # 查看静态路由配置
 show router static 
 # 查看 FIB
-get router info kernal 
+get router info kernel 
 # 查看 RIB
 get router info routing-table all
 ```
@@ -58,9 +58,9 @@ end
 # 第一次登录账号 admin 密码为空
 config system interface
 edit port1
-set mode static
-set ip 10.1.1.10 255.255.255.0
-set allowaccess ping https ssh http fgfm # 注意: 治理的 ping 是允许别人 ping 我们
+	set mode static
+	set ip 10.1.1.10 255.255.255.0
+	set allowaccess ping https ssh http fgfm # 注意: 治理的 ping 是允许别人 ping 我们
 next
 end
 
@@ -78,8 +78,8 @@ end
 # 配置默认路由
 config static route
 edit 1 
-set dst 0.0.0.0 0.0.0.0 
-set gateway 202.100.1.1 # 公网网关
+	set dst 0.0.0.0 0.0.0.0 
+	set gateway 202.100.1.1 # 公网网关
 next
 end
 
