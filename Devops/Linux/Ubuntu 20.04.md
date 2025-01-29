@@ -1,4 +1,4 @@
-### check linux version
+### check Ubuntu version
 ```shell
 lsb_release -a
 ```
