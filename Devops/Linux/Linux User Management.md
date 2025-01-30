@@ -12,13 +12,15 @@ UID的范围
 201-999 没有任何文件的系统进程
 1000+ 普通用户
 
-对于Group来说也有GID的概念. 每个用户属于一个primary group和一个secondary group. 如果创建一个新的用户, 会同时给这个用户创建一个同名的group, 然后把这个用户的primary group配置成这个组
+对于Group来说也有GID的概念. 每个用户属于一个primary group和多个secondary group. 如果创建一个新的用户, 会同时给这个用户创建一个同名的group, 然后把这个用户的primary group配置成这个组
 
 ```shell
 # find current user name
 whoami
 # find uid of current user
-id
+id <username>
+# find principle and secondary groups of user
+groups <username>
 ```
 
 ### Files for user and group
@@ -58,7 +60,6 @@ cloud_user:x:1001:
 # 组名:组密码:: 组管理员名单:组员清单
 root:::
 cloud_user:!::
-
 ```
 
 ### User Shell environment
@@ -110,19 +111,35 @@ chown userb:userb /userb # 修改家目录的所有权
 chmod 700 /userb # 给userb所有的权限
 
 # -m 表示需要make homedir
-useradd -c "<comments>" -d <home_dir> -m -g <primary_group> -G <secondary_group> -p <password> -s /bin/sh -u 2000 <username>
+useradd -u <uid> -c "<comments>" -d <home_dir> -m -g <primary_group> -G <secondary_group> -p <password> -s /bin/sh <username>
 
 # 修改用户信息
 usermod -c "comments" -d /jane -g appadm -p <passwrod> -s /bin/sh <username>
+usermod -G <groupname> <username> # configure secondary group
+usermod -aG <groupname> <username> # add secondary group
+usermod -d /home/appteam -m <username> # move the current home directory to new directory /home/appteam
 ```
-默认的组
-adm
-wheel 10
 
 
-`/etc/login/def`
+
 Create group
 默认情况下都会创建 adm和wheel group. Wheel group is generally used for control access for sudo users
+
+默认的组
+adm
+wheel GID 10
+
+`/etc/login.defs` 这里定义了GID的最大最小值等信息
+```shell
+groupadd <groupname>
+groupadd -g <GID> groupname
+
+
+# modify group
+groupmod -g <DID> -n oldgroupname newgroupname
+# remove group
+groupdel <groupname>
+```
 #### 家目录中的文件
 - `.bash_logout` 退出shell时会执行的命令
 - `.bash_profile` 第一次登录shell的时候, 会执行的命令和变量. 该用户新建一个shell的时候, 不会被执行
@@ -143,5 +160,20 @@ drwxr-xr-x.   4 root root   39 Aug 27  2020 .mozilla
 
 ```shell
 rm -R /userb # 删除家目录及下面所有文件
-chown userb:userb .bash* # 修改所有.bash开头的文件的权限
+chown userb:userb .bash* # 修改所有.bash开头的文件的用户权限和组权限
 ```
+
+remove user
+
+```shell
+# 删除和用户有关的进程
+# 删除家目录
+userdel -r <home_dir> <username>
+# 查询所有和user有关的文件
+find / -user <username>
+```
+
+
+其他工具
+pwconv pwunconv
+grpconv grpunconv
