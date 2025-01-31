@@ -121,7 +121,6 @@ usermod -d /home/appteam -m <username> # move the current home directory to new 
 ```
 
 
-
 Create group
 默认情况下都会创建 adm和wheel group. Wheel group is generally used for control access for sudo users
 
@@ -177,3 +176,19 @@ find / -user <username>
 其他工具
 pwconv pwunconv
 grpconv grpunconv
+
+
+# visudo
+直接修改 `/etc/sudoers`
+把配置文件放入`/etc/sudoers.d`
+
+
+# Centos 7 破解root账户密码
+
+1. 重启设备 按e, 进入内核参数修改模式
+![[Pasted image 20250131073810.png]]
+1. 内核参数修改, 找到linux16 所在的段, 把`ro` 改成`rw`, 在后面加上 `init=/bin/sh`. 用户ctrl + x 进入单用户模式
+![[Pasted image 20250131073822.png]]
+3. 使用 `passwd` 修改root账户的新密码
+4. `touch /.autorelabel` 创建表现文件, 是selinux允许对root密码的修改
+5. `exec /sbin/init` 重启
