@@ -1,3 +1,9 @@
+### 破解 root 密码
+1. 重启服务器, 按 `e` 进入内核模式
+![[Pasted image 20250131073810.png]]
+1. 找到 Linux16所在的行. 把`ro` 改为`rw` 在行尾添加 `init=/bin/sh`
+![[Pasted image 20250131073822.png]]
+
 
 # 配置repo
 
@@ -6,10 +12,10 @@ Since CentOS 7 has reached EOL, the mirror is moved to vault. When yum is execut
 
 We need to update `CentOS-Base.repo` in `/etc/yum.repos.d/CentOS-Base.repo`.
 
-1. Uncomment the lines starting with `baseurl`.
-2. Update all `http://mirrorlist.centos.org` to `http://vault.centos.org`.
-3. Update all `http://mirror.centos.org` to `http://vault.centos.org`.    
-4. We can clear the cache with `sudo yum clean all`.
+2. Uncomment the lines starting with `baseurl`.
+3. Update all `http://mirrorlist.centos.org` to `http://vault.centos.org`.
+4. Update all `http://mirror.centos.org` to `http://vault.centos.org`.    
+5. We can clear the cache with `sudo yum clean all`.
 
 ```
 repo_file=/etc/yum.repos.d/CentOS-Base.repo
