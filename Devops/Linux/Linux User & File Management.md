@@ -115,7 +115,7 @@ useradd -u <uid> -c "<comments>" -d <home_dir> -m -g <primary_group> -G <seconda
 
 # 修改用户信息
 usermod -c "comments" -d /jane -g appadm -p <passwrod> -s /bin/sh <username>
-usermod -G <groupname> <username> # configure secondary group
+usermod -G <groupname> <username> # configure and replace secondary group
 usermod -aG <groupname> <username> # add secondary group
 usermod -d /home/appteam -m <username> # move the current home directory to new directory /home/appteam
 ```
@@ -165,11 +165,15 @@ chown userb:userb .bash* # 修改所有.bash开头的文件的用户权限和组
 remove user
 
 ```shell
-# 删除和用户有关的进程
-# 删除家目录
-userdel -r <home_dir> <username>
-# 查询所有和user有关的文件
+# 1. 删除和用户有关的进程
+ps U <username> 
+kill <PID>
+# 2. 查询所有和user有关的文件
 find / -user <username>
+
+# 3. 删除家目录
+userdel -r <home_dir> <username>
+
 ```
 
 
@@ -182,13 +186,79 @@ grpconv grpunconv
 直接修改 `/etc/sudoers`
 把配置文件放入`/etc/sudoers.d`
 
+新增一个用户并给与sudo权限
+检查wheel 组的权限
+```shell
+%wheel ALL=(ALL)    ALL # 需要密码
+```
+新建用户userA
+```shell
+useradd -G wheel userA
+passwd userA # 设置新密码
+sudo - userA # 切换到该用户
+sudo whoammi # 应该显示root
+```
 
 # Centos 7 破解root账户密码
 
-1. 重启设备 按e, 进入内核参数修改模式
+3. 重启设备 按e, 进入内核参数修改模式
 ![[Pasted image 20250131073810.png]]
-1. 内核参数修改, 找到linux16 所在的段, 把`ro` 改成`rw`, 在后面加上 `init=/bin/sh`. 用户ctrl + x 进入单用户模式
+4. 内核参数修改, 找到linux16 所在的段, 把`ro` 改成`rw`, 在后面加上 `init=/bin/sh`. 用户ctrl + x 进入单用户模式
 ![[Pasted image 20250131073822.png]]
-3. 使用 `passwd` 修改root账户的新密码
-4. `touch /.autorelabel` 创建表现文件, 是selinux允许对root密码的修改
-5. `exec /sbin/init` 重启
+5. 使用 `passwd` 修改root账户的新密码
+6. `touch /.autorelabel` 创建表现文件, 是selinux允许对root密码的修改
+7. `exec /sbin/init` 重启
+
+
+# File Management
+```shell
+# 制定用户或者群做相同的配置
+# 增加用户的权限为
+chmod u+x <filename>
+# 把用户的权限配置为rw
+chmod u=rw <filename>
+# 把群和其他用户的可读权限去掉
+chmod go-r <filename>
+# 给用户， 群， 其他用户的权限都配置为 rwx
+chmod a=rwx <filename>
+
+# 制定用户和群各自不同的配置
+# 分别置顶用户的权限是7，群的权限是5， 其他用户的权限是0
+chmod 750 <filename> 
+
+# 修改目录的权限
+chmod -R 777 <filename>
+```
+
+### Special Permission
+- suid 确保执行某个文件的是文件的owner， 而不是当前的用户
+- sguid
+- sticky bit  `t` 用于目录. 如果用户用这个目录的写权限， 该用户或者root只能删除和重命名他自己创建的文件
+```shell
+
+chmod u+s <filename>
+chmod g+s <filename>
+# 如果group有执行权限， 则显示s， 如果没有执行权限则显示S
+rwxr-Sr-x 1 test test 54256 Jul 5 15:26 /tmp/<filename>
+rwxr-sr-x 1 test test 54256 Jul 5 15:26 /tmp/<filename>
+
+# 如果sticky bit配置好， 会出现t标识
+chmod o+t 
+drwxrwxrwt 2 user group 4096 Feb 5 12:34 /tmp
+```
+
+### File ACL
+当给文件设置ACL之后， 会出现 `+` 标识
+
+```shell
+getfacl <filename>
+
+# m for modify
+setfacl -m mask:rw <filename>
+# 即使testuser1所在的群有权限， 但是去除testuser1对该文件的所有权限
+setfacl -m u:testuser1:- testfile
+# 删除所有在文件testfile1上的关于group test的ACL
+setfacl -x g:test testfile1
+```
+
+

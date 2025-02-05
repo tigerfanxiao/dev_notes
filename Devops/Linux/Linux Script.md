@@ -111,8 +111,11 @@ command execution mode
 # batch mode command1执行完成后, 才会执行 command2
 command1; command2
 
-# concurrent mode
+# concurrent mode 两条命令一起执行
 command1 & command2
+
+# 一条命令执行的同时， 我可以继续使用shell来执行其他的命令
+command1 &
 ```
 
 # String
