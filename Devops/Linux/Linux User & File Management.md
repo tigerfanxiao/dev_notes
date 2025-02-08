@@ -1,4 +1,35 @@
 
+# Linux SSH
+
+### Install openssh
+在服务器侧安装服务端
+```shell
+sudo yum -y install openssh-server openssh-clients
+sudo systemctl start sshd
+```
+
+远程登录服务器
+注意: Ubunut 不允许root账户远程登录, 需要用别的账户
+```shell
+ssh username@<ip>
+```
+
+
+使用公钥文件登录ssh
+```bash
+chown 400 perm
+ssh usernanme@ip_addriess -i perm
+```
+
+### 查看当前连接用户
+```shell
+# 查看当前连接
+tty
+# 查看所有连接
+who
+
+```
+
 # root
 ```shell
 sudo -i # 切换root
@@ -17,6 +48,8 @@ UID的范围
 ```shell
 # find current user name
 whoami
+# find current user name and his ip address
+who am i
 # find uid of current user
 id <username>
 # find principle and secondary groups of user
