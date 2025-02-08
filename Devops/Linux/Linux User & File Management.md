@@ -14,7 +14,6 @@ sudo systemctl start sshd
 ssh username@<ip>
 ```
 
-
 使用公钥文件登录ssh
 ```bash
 chown 400 perm

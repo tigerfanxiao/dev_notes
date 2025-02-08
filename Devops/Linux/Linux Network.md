@@ -28,11 +28,15 @@ ip addr add 192.168.1.50/24 dev eth1
 ip route add 172.16.10.0/24 via 192.168.200.t0 dev eth1
 ```
 
-### `host`
+### `hostname`
 ```shell
+# 临时 hostname
 hostname # 查看的hostname 是包含有 domain, 如果没有配置 domain 就是.local
 hostname -s # 看看除了 domain 之外的 hostname
 hostname -i # 返回 hostname 的 ip 地址
+
+#  永久修改 hostname
+hostnamectl set-hostname rocky8.xiao.com
 
 ```
 ### `ping`
@@ -45,9 +49,6 @@ traceroute
 
 
 ```shell
-
-
-
 # ip 命令可以取代 ipconfig, 有更多的功能
 ip addr list # 
 # 查看单个接口的信息
