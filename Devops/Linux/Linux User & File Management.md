@@ -162,7 +162,7 @@ rm -R /userb # 删除家目录及下面所有文件
 chown userb:userb .bash* # 修改所有.bash开头的文件的用户权限和组权限
 ```
 
-remove user
+### Remove user
 
 ```shell
 # 1. 删除和用户有关的进程
@@ -170,15 +170,26 @@ ps U <username>
 kill <PID>
 # 2. 查询所有和user有关的文件
 find / -user <username>
-
+# 将需要保留的文件和目录通过chown转移给别的用户
+# /var/spool/mail 会在userdel后自动删除
 # 3. 删除家目录
-userdel -r <home_dir> <username>
+userdel -r <username>
 
+```
+### Change user expiration time
+
+```shell
+# 修改用户过期时间为永不过期
+chage -E -1 user2
 ```
 
 
 其他工具
-pwconv pwunconv
+### `pwconv` 重新生成shadow文件
+如果发现用户在`/etc/passwd` 中但是不在 `/etc/shadow` 中， 可以适用 `pwconv` 生成shadow文件, 然后需要使用`passwd` 设置密码
+
+
+pwunconv
 grpconv grpunconv
 
 
@@ -186,6 +197,7 @@ grpconv grpunconv
 直接修改 `/etc/sudoers`
 把配置文件放入`/etc/sudoers.d`
 
+### 给用户增加sudo权限
 新增一个用户并给与sudo权限
 检查wheel 组的权限
 ```shell
