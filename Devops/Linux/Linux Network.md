@@ -28,12 +28,24 @@ ip addr add 192.168.1.50/24 dev eth1
 ip route add 172.16.10.0/24 via 192.168.200.t0 dev eth1
 ```
 
-### `hostname`
-合法的主机名
-
-注意： 非法的主机名会造成
+### 主机名 hostname
+合法的主机名的样式
 ```shell
-# 临时 hostname
+# 其中 100-1 取内网中最后两段 IP 地址 100.1
+es-madrid-node1-100-1.cainiao.com
+```
+非法主机名样式
+```shell
+# 以下是非法的主机名样式
+rocky8.3 # 主机名的点后面不能直接跟数字, 或者以数字结尾
+rocky_xiao.com # 主机名中不能使用下划线
+```
+
+注意： 非法的主机名会造成各种服务报错
+
+修改 hostname
+```shell
+# 临时修改 hostname
 hostname # 查看的hostname 是包含有 domain, 如果没有配置 domain 就是.local
 # 显示简写的主机名
 hostname -s # 看看除了 domain 之外的 hostname
@@ -41,7 +53,6 @@ hostname -i # 返回 hostname 的 ip 地址
 
 #  永久修改 hostname
 hostnamectl set-hostname rocky8.xiao.com
-
 ```
 ### `ping`
 ```python

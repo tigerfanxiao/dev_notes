@@ -26,7 +26,8 @@ ssh usernanme@ip_addriess -i perm
 tty
 # 查看所有连接
 who
-
+# 查看所有连接和运行的命令
+w
 ```
 
 # root
@@ -306,3 +307,70 @@ setfacl -x g:test testfile1
 ```
 
 
+# 命令提示符
+区分
+```shell
+# # 管理员
+$ # 普通用户
+```
+
+- 命令提示符定义在环境变量 `PS1` 中
+持久化命令提示符
+
+```shell
+\e # 控制符
+\u # 当前用户
+\h # 主机名简称
+\H # 主机名
+\w # 当前工作目录
+\W # 当前工作目基名
+\t # 24 小时时间格式
+\T # 12 小时时间格式
+!  # 命令历史数
+# # 开机后命令历史数
+```
+在 centos 中写入 `/etc/profile.d/env.sh`
+在 ubuntu 中写入 `.bashrc`
+
+```shell
+echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
+```
+
+
+# Shell
+### 环境变量
+```shell
+$SHELL # 使用哪一种 Shell
+$PS1 # 命令提示符
+$PATH # 外部命令的搜索路径
+
+```
+
+内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
+外部命令: 有独立的磁盘文件, 需要从磁盘中读取的命令, 理论上说速度慢
+> 有的命令可能即是内部命令, 优势外部命令. Shell 会在内存中寻找内部命令, 如果找不到, 就在环境变量 Path 中定义的目录中找
+
+
+
+```shell
+enable # 显示所有内部命令
+type echo # 查看是否是内部命令
+echo is a shell builtin # echo 是内部命令
+
+type who
+who is /usr/bin/who
+
+type echo -a # 查看内部和外部命令
+```
+
+所有的使用过的命令都会被记录到 Shell 的缓存中
+```shell
+# 查看所有缓存在 shell 中的命令. hash 的是命令的路径,加快后面命令的定位
+hash
+```
+
+> 如果发现命令执行不了了, 可能是命令的路径被修改了. 一种方法是清楚 hash 的缓存, 或者退出 shell
+
+```shell
+hash -r # 删除Shell 中所有缓存的命令
+```
