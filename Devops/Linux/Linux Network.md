@@ -29,6 +29,9 @@ ip route add 172.16.10.0/24 via 192.168.200.t0 dev eth1
 ```
 
 ### `hostname`
+合法的主机名
+
+注意： 非法的主机名会造成
 ```shell
 # 临时 hostname
 hostname # 查看的hostname 是包含有 domain, 如果没有配置 domain 就是.local
