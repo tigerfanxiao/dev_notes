@@ -32,6 +32,7 @@ ip route add 172.16.10.0/24 via 192.168.200.t0 dev eth1
 ```shell
 # 临时 hostname
 hostname # 查看的hostname 是包含有 domain, 如果没有配置 domain 就是.local
+# 显示简写的主机名
 hostname -s # 看看除了 domain 之外的 hostname
 hostname -i # 返回 hostname 的 ip 地址
 
