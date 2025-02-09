@@ -391,7 +391,22 @@ alias <command> # 列出某个命令的别名
 ```
 需要持久化的时候, 需要写入`.bashrc`
 注意: 需要
-
+### 退出命令
+```shell
+ctrl + d # 正常退出
+ctrl + c # 强行退出
+```
+### 批量执行
+```shell
+cmd1;cmd2;cmd3
+```
+### 长命令换行
+```shell
+hostnamectl \
+set-hostname \
+newhost
+```
+# Storage 存储
 ### 硬盘
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
 一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
