@@ -407,15 +407,49 @@ set-hostname \
 newhost
 ```
 # Storage 存储
-### 硬盘
+### 硬盘分区
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
 一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
+
+
 ```shell
-# 查看所有硬盘信息, 包括插在设备上的 U盘
+# 1. 查看所有硬盘信息, 包括插在设备上的 U盘
 lsblk 
+# 2. 在硬盘上创建分区
+fdisk /dev/xvdb
+n # 创建新的分区
+p # 主分区， 其他选默认
+w # 保存
+# 3. 更新分区表
+partprobe
+# 4. 在分区上创建文件系统
+mkfs -t ext4 /dev/xvdb1
+```
+挂载分区
+```shell
+# 5. 创建目录用于挂载文件
+mkdir /app
+
+# 6. 查找UUID， 用于保存在 /etc/fstab中
+blkid /dev/xvdb1
+/dev/xvdb1: UUID="fa1e16c0-8c76-42c3-9816-bceda1a21fb8" TYPE="ext4"
+# 7. 在/etc/fstab 中增加下面的内容
+UUID=fa1e16c0-8c76-42c3-9816-bceda1a21fb8 /app  ext4    defaults.grpquota       1       2
+# 8. 加载所有新的文件系统 -t = type
+mount -t ext4 /dev/xvdb1 /app
+# 9. 修改目录所属的组
+chgrp app /app
 
 ```
+### Quota
+```shell
+# 1. 安装quota
+yum install -y quota
+# 2. 创建quota文件
+quotacheck -cug /app
+# 3. 
 
+```
 ### 识别新硬盘
 添加硬盘后, 系统不会马上识别, 重启后可以识别
 可以通过磁盘扫描的命令来实现
@@ -428,8 +462,6 @@ lsblk # 查看新的硬盘是否出现
 
 # 定义别名来实现3个命令
 alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /sys/class/scsi_host/host1/scan;echo '- - -' > /sys/class/scsi_host/host2/scan"
-
-
 
 ```
 
