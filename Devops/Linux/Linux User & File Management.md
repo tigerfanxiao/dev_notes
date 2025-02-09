@@ -348,9 +348,9 @@ $PATH # 外部命令的搜索路径
 
 内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
 外部命令: 有独立的磁盘文件, 需要从磁盘中读取的命令, 理论上说速度慢
-> 有的命令可能即是内部命令, 优势外部命令. Shell 会在内存中寻找内部命令, 如果找不到, 就在环境变量 Path 中定义的目录中找
+> 有的命令可能即是内部命令, 优势外部命令. 
 
-
+命令的执行顺序： Shell 会先查看命令别名， 然后内存中寻找内部命令, 如果找不到, 最后就在环境变量 Path 中定义的目录中找
 
 ```shell
 enable # 显示所有内部命令
@@ -383,6 +383,11 @@ alias cdnet="cd /etc/sysconfig/network-scripts/"
 # 列出所有的别名
 alias 
 alias <command> # 列出某个命令的别名
+
+# 一般情况下bash中运行的命令是别名
+# 强制运行原始命令， 不运行别名
+\ls
+'ls' # 和上面的效果一样
 ```
 需要持久化的时候, 需要写入`.bashrc`
 注意: 需要
@@ -394,7 +399,55 @@ alias <command> # 列出某个命令的别名
 # 查看所有硬盘信息, 包括插在设备上的 U盘
 lsblk 
 
+```
+
+### 识别新硬盘
+添加硬盘后, 系统不会马上识别, 重启后可以识别
+可以通过磁盘扫描的命令来实现
+```shell
+# 可能要执行好多次下面的命令， 使用不同的host值才能扫描出来
+echo '- - -' > /sys/class/scsi_host/host0/scan
+echo '- - -' > /sys/class/scsi_host/host1/scan
+echo '- - -' > /sys/class/scsi_host/host2/scan
+lsblk # 查看新的硬盘是否出现
+
+# 定义别名来实现3个命令
+alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /sys/class/scsi_host/host1/scan;echo '- - -' > /sys/class/scsi_host/host2/scan"
+
+
 
 ```
 
-添加硬盘后, 系统不会马上识别, 重启后可以识别
+# File Management
+# 文件操作
+
+```shell
+ls -al # 查询当前目录下所有文件包括隐藏的
+
+# 通配符
+ls fil? # ? 表示单个字符
+ls f* # 匹配任意长字符
+ls file[1-9] # 匹配 file1, file2, file3, 只能匹配单个数字
+ls *[[:digit:]] # 单个数字
+
+
+ls | grep -E '^file' # 查询所有 file 开头的文件
+
+```
+
+```shell
+# 创建1000 个文件
+for i in {1..1000}; do touch file_$i; done
+
+# 删除所有文件
+rm file_[1-1000]
+rm file_*
+```
+
+
+
+# 进程
+```shell
+# 显示所有进场
+ps a 
+```
