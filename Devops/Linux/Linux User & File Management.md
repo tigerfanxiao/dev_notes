@@ -374,3 +374,27 @@ hash
 ```shell
 hash -r # 删除Shell 中所有缓存的命令
 ```
+
+### 命令别名
+```shell
+# 临时增加别名
+alias cdnet="cd /etc/sysconfig/network-scripts/"
+
+# 列出所有的别名
+alias 
+alias <command> # 列出某个命令的别名
+```
+需要持久化的时候, 需要写入`.bashrc`
+注意: 需要
+
+### 硬盘
+默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
+一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
+```shell
+# 查看所有硬盘信息, 包括插在设备上的 U盘
+lsblk 
+
+
+```
+
+添加硬盘后, 系统不会马上识别, 重启后可以识别
