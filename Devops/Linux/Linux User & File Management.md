@@ -406,14 +406,20 @@ hostnamectl \
 set-hostname \
 newhost
 ```
+
+### man 命令帮助
+```shell
+# 查看命令的作用
+whatis rm
+```
+
 # Storage 存储
 ### 硬盘分区
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
 一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
 
-
 ```shell
-# 1. 查看所有硬盘信息, 包括插在设备上的 U盘
+# 1. 查看所有硬盘信息, 包括插在设备上的 U盘. 这些硬盘对应文件 /dev/xvdb
 lsblk 
 # 2. 在硬盘上创建分区
 fdisk /dev/xvdb
@@ -464,7 +470,47 @@ lsblk # 查看新的硬盘是否出现
 alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /sys/class/scsi_host/host1/scan;echo '- - -' > /sys/class/scsi_host/host2/scan"
 
 ```
+## LVM 虚拟卷管理
+### RAID
+- 如果服务器做了 RAID, 那么所有的物理硬盘就会变成一个逻辑上的磁盘. 这个逻辑上的磁盘也就是虚拟卷LV
+- RAID可以坐在软件层面和硬件层面. RAID的概念
+- Mirroring 数据被完全的复制
+- Striping 数据被放在多个磁盘中
+- Parity 专用的校验数据和恢复数据, 可能使用独立的磁盘来存储
 
+####  RAID0
+-  No redundancy, 磁盘的利用率最高
+- 读和写可以在不同的磁盘区块完成, 提供IO效率
+![[Pasted image 20250210063805.png]]
+
+#### RAID 1
+- 完全备份和复制, 磁盘利用率低
+- 读的效率提高, 因为可以任意从两个阵列中读取. 写的效率降低, 因为所有的修改都要在两个整列中写入
+![[Pasted image 20250210064321.png]]
+#### RAID2 & RAID3 & RAID4
+- 用的很少
+- RAID2 是Bit level parity check
+- RAID3 是 Byte level parity check, dedicated parity disk
+- RAID4 是Block level parity check, dedicated parity disk
+![[Pasted image 20250210065459.png]]
+
+#### RAID5
+- 至少要3个硬盘. 最多可以允许一个硬盘坏了. 当时重构数据需要花很长的时间
+- 在安防监控中经常使用RAID
+- no dedicated parity disk
+![[Pasted image 20250210070043.png]]
+
+#### RAID6
+- 类似于RAID5, 可以是有两个Parity Drive. 最多可以允许坏两个disk
+- 读性能增加, 写性能减弱. 因为有两个parity drive要写入
+![[Pasted image 20250210070205.png]]
+
+#### RAID10
+- 是RAID0和RAID1的结合. 至少需要4个盘. 2个盘存数据, 2个盘存mirroring
+
+## LVM
+- VG Virtual group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
+- LV Logical volume 虚拟卷. 这个就是独立的分区了
 # File Management
 # 文件操作
 
@@ -491,7 +537,11 @@ rm file_[1-1000]
 rm file_*
 ```
 
-
+### 查看文件占用磁盘
+```shell
+# 查询指定目录下, 文件夹的磁盘占用
+du -h --max-depth=1 <dir_path> | sort -rh | head -n 20
+```
 
 # 进程
 ```shell

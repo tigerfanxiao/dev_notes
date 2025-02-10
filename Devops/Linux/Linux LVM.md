@@ -1,7 +1,5 @@
-LVM logical Volume Management 虚拟卷管理
-如果服务器做了 RAID, 那么所有的物理硬盘就会变成一个逻辑上的磁盘. 这个逻辑上的磁盘也就是虚拟卷
-vg virtual group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
-lv logical volume 虚拟卷. 这个就是独立的分区了
+LVM Logical Volume Management 虚拟卷管理
+
 
 ```shell
 sudo fdisk -l # 列出所有磁盘, 包括逻辑盘, 没有挂载成功的
@@ -36,19 +34,18 @@ I/O size (minimum/optimal): 262144 bytes / 786432 bytes
 ### 创建逻辑卷
 
 ```shell
-sudo vgdisplay ubuntu-vg # 查看volumne group 的信息
+# 以下操作都需要root权限
+vgdisplay ubuntu-vg # 查看volumne group 的信息
 # 创建一个新的卷, 大小是 6.45T, 放在 ubuntu-vg 中
-sudo lvcreate -L 6.45T -n new_lv_name ubuntu-vg
+lvcreate -L 6.45T -n new_lv_name ubuntu-vg
 # 将这个卷惊醒格式化, ext4
-sudo mkfs.ext4 /dev/ubuntu-vg/new_lv_name   # Format with ext4 filesystem
+mkfs.ext4 /dev/ubuntu-vg/new_lv_name   # Format with ext4 filesystem
 # 创建一个挂在点
-sudo mkdir /mnt/new_lv_name   # Create a mount point
+mkdir /mnt/new_lv_name   # Create a mount point
 # 把磁盘加到组里
-sudo mount /dev/ubuntu-vg/new_lv_name /mnt/new_lv_name   # Mount the logical volume
+mount /dev/ubuntu-vg/new_lv_name /mnt/new_lv_name   # Mount the logical volume
 # 配置自盘自动挂载, 每次重启
 echo '/dev/ubuntu-vg/new_lv_name /mnt/new_lv_name ext4 defaults 0 0' | sudo tee -a /etc/fstab
-
-
 
 ```
 
