@@ -354,13 +354,13 @@ $PATH # 外部命令的搜索路径
 
 ```shell
 enable # 显示所有内部命令
-type echo # 查看是否是内部命令
+type echo # 查看是否是内部命令, 如果别名, 则只显示别名
+type echo -a # 查看内部和外部命令, 解决只显示别名的问题
 echo is a shell builtin # echo 是内部命令
 
 type who
 who is /usr/bin/who
 
-type echo -a # 查看内部和外部命令
 ```
 
 所有的使用过的命令都会被记录到 Shell 的缓存中
@@ -407,10 +407,19 @@ set-hostname \
 newhost
 ```
 
-### man 命令帮助
+### 命令帮助查询
+- 内部命令使用help查询
+- 外部命令使用man查询
+- 使用`type -a` 区分是内部还是外部命令
 ```shell
-# 查看命令的作用
-whatis rm
+# 使用whatis 之前需要构建man数据库
+mandb 
+whatis rm # 回复命令的作用简述
+
+# 内部命令
+help cmd
+# 外部命令
+cmd --help
 ```
 
 # Storage 存储
