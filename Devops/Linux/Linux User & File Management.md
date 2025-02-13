@@ -411,17 +411,31 @@ newhost
 - 内部命令使用help查询
 - 外部命令使用man查询
 - 使用`type -a` 区分是内部还是外部命令
+- man根据不同的命令类型, 分了9个大类, 默认如果不指定类别的话, 返回类别1
+- man帮助的路径是由man帮助的配置文件 `/etc/man_db.conf` 中定义了搜索man帮助文件的路径
 ```shell
 # 使用whatis 之前需要构建man数据库
 mandb 
-whatis rm # 回复命令的作用简述
-
+# 回复命令的作用简述, 帮助文档的类别, 可以用man使用
+whatis rm 
+# 查看命令帮助文档路径
+where is rm
 # 内部命令
 help cmd
 # 外部命令
 cmd --help
+# 外部命令
+man <cmd>
+# 对于手工安装的软件比如, Nginx, 可以直接制定帮助内容路径
+man <path>
 ```
 
+### 时间和时区
+
+```shell
+date # 查看日期
+timedatectl # 配置时区
+```
 # Storage 存储
 ### 硬盘分区
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
