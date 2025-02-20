@@ -4,8 +4,10 @@
 ### Install openssh
 在服务器侧安装服务端
 ```shell
-sudo yum -y install openssh-server openssh-clients
-sudo systemctl start sshd
+sudo -i
+yum -y install openssh-server openssh-clients
+systemctl start sshd
+systemctl status sshd
 ```
 
 远程登录服务器
@@ -16,7 +18,7 @@ ssh username@<ip>
 
 使用公钥文件登录ssh
 ```bash
-chown 400 perm
+chown 400 perm # 400 means read and execute
 ssh usernanme@ip_addriess -i perm
 ```
 
@@ -431,11 +433,59 @@ man <path>
 ```
 
 ### 时间和时区
+- 时间也区分硬件时间和软件时间
 
 ```shell
 date # 查看日期
+date +%Y-%m-%d # [+Format]
+data +%F # 和上面一样
+# 查看硬件时间
+clock
+# 用硬件时间去矫正软件时间
+clock -s 
 timedatectl # 配置时区
 ```
+
+### 修改motd信息
+```shell
+
+# issue的信息是在登录之前就显示的
+cat /etc/issue 
+# motd的信息是在登录时显示的
+cat /etc/motd 
+
+```
+
+### 查看硬件信息
+```shell
+# 产看cpu信息
+lscpu 
+# 等同于 
+cat /proc/cpuinfo
+
+# 产看内存
+free -h
+cat /proc/meminfo
+# 关闭图形界面
+init 3
+# 打开图形界面
+init 5
+
+# 查看分区信息
+df -h
+cat /proc/partitions
+
+# 查询内核版本
+uname -r
+# 查询架构
+uname -p
+# 查询发型版本
+cat /etc/os-release
+lsb_release -a
+
+
+```
+
 # Storage 存储
 ### 硬盘分区
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
