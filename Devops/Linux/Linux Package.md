@@ -54,3 +54,7 @@ sudo yum install -y terraform
 ```
 
 
+安装源
+```shell
+yum -y install epel-release.noarch # 安装源
+```

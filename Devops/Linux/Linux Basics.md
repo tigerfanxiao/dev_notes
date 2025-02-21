@@ -439,11 +439,23 @@ man <path>
 date # 查看日期
 date +%Y-%m-%d # [+Format]
 data +%F # 和上面一样
-# 查看硬件时间
+# 查看硬件时间 Bios中的时间
 clock
 # 用硬件时间去矫正软件时间
-clock -s 
-timedatectl # 配置时区
+clock -s
+# 用软件时间来矫正硬件时间
+clock -w
+# 查看时间
+timedatectl
+# 配置时区为马德里
+timedatectl set-timezone Europe/Madrid
+cat /etc/timezone
+ls -l /etc/localtime # 查看的软连接
+
+# 显示日历
+cal
+# 显示 2023 年日历
+cal 2025
 ```
 
 ### 修改motd信息
@@ -455,6 +467,20 @@ cat /etc/issue
 cat /etc/motd 
 
 ```
+### hostname
+```shell
+hostnamectl set-hostname <hostname>
+
+```
+长时间执行的命令, 关闭窗口还能执行
+```shell
+yum -y install epel-release.noarch
+yum -y install screen
+screen
+
+ps aux | grep ping # 查看程序是否在运行
+```
+建议学习 Tmux
 
 ### 查看硬件信息
 ```shell
@@ -483,7 +509,18 @@ uname -p
 cat /etc/os-release
 lsb_release -a
 
+# 重启
+reboot
+init 6
+shutdown -r now # 立即重启
+# ctrl + alt + delete 在生产中物理机可以重启
 
+# 关机
+halt
+poweroff
+init 0
+shutdown # 一分钟以后关机
+shutdown -h now # 立即关机
 ```
 
 # Storage 存储
