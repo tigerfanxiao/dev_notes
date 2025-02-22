@@ -469,6 +469,9 @@ cat /etc/motd
 ```
 ### hostname
 ```shell
+# 显示主机名
+hostname 
+# 修改主机名
 hostnamectl set-hostname <hostname>
 
 ```
@@ -657,4 +660,63 @@ du -h --max-depth=1 <dir_path> | sort -rh | head -n 20
 ```shell
 # 显示所有进场
 ps a 
+ps aux
+```
+
+echo
+```shell
+echo $PATH
+echo "$PATH" # 可以识别出变量
+ehco '$PATH' # 只打印字符串
+
+touch `date +%F`.log # 反向单引号为另一条命令的执行结果
+touch $(date +%F).log # $() 和反向单引号是等价的, 但是建议使用, 因为可以嵌套
+```
+计算器
+```shell
+echo 7*12 | bc # bc 是计算器
+```
+
+编码
+unicode中包含 utf-8, utf-16, utf-32 其中 utf8是1到 4 个字节.包含了了所有国家的字符集. 
+- GB3212只是中国的文字的字符集
+- IOS8859-1 欧洲的字符集
+```shell
+echo $LANG
+```
+- windows 中, 如果按回车, 会增加 `\r\n`, linux只是`\n`, 所以在 windows 中编辑的文本文件放在 windows 中, 容易出问题
+```shell
+hexdump -C text.txt # 可以查看文件 16 进制表示
+```
+
+扩展符号
+```shell
+echo {1..10} # 10个数字
+echo {10..1..2} # 10 8 6 4 2
+echo {a..c}{1..3}
+touch a{1..10}.log # 创建10 个文件
+```
+ history
+```shell
+!s # 执行最近一次 s 开头的命令
+!?con # 执行最近一次命令中包含 con 字符的命令
+echo !^ # 前面一个命令的第一个参数
+echo !$ # 前面一个命令的最后一个参数
+echo !* # 前一个命令的全部参数
+
+# 快速获取前一条命令的参数 esc (松手)+ .
+cat /etc/motd
+ll /etc/motd
+```
+
+bash 快捷键
+```shell
+ctrl + l # 清屏
+ctrl + a # 光标移动到命令行首
+ctrl + e # 光标移动到命令行末
+ctrl + > # 光标向右移动一个单词
+ctrl + < # 光标向左移动一个单词
+ctrl + u # 光标删除直命令行首
+ctrl + k # 光标删除直命令行末
+ctrl + d # 向后删除
 ```
