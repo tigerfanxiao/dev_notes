@@ -719,4 +719,204 @@ ctrl + < # 光标向左移动一个单词
 ctrl + u # 光标删除直命令行首
 ctrl + k # 光标删除直命令行末
 ctrl + d # 向后删除
+
+ctrl + s # 锁死屏幕, 屏幕不会显示
+ctrl + q # 两次 解锁屏幕
+```
+
+
+# Linux 文件系统
+- `/bin`和 `/sbin` 的区别是, `/bin` 是普通用户可以还行, `/sbin` 是管理员才能执行的程序
+- linux 内核文件保存在 `/boot`下, 只有 12M
+```shell
+/bin # 存储 cd, mv 等命令的的二进制文件, 比如 ls 命令, 就是/bin/ls 文件
+/sbin # 系统管理员使用的命令的二进制文件
+/usr  # used for sharing files between users
+/media # usb 介质
+/home # 所有用户的文件夹都放在 home 下面
+/etc # 相当于 windows 中的注册表, 存储 linux 所有程序的配置文件
+/boot # 存放开机启动需要的程序, linux 内核也在里面
+/run # 程序运行的时候的临时文件
+/tmp # 用户和程序的临时文件
+/var # 日志等文件
+/proc # 吧保存在内存中的文件, 用于进程
+/sys # 保存在内存中的文件, 用于硬件
+```
+
+`/dev`下有块设备, 字符设备
+块设备, 比如硬盘. 一个块包含多个字节
+字符设备, 一个字符一个字符为单位 比如 `/dev/zero`
+
+蓝色: 文件夹, 绿色: 可执行程序, 红色: 压缩文件, 浅蓝色:链接 `/etc/DIR_COLORS` 定义
+
+```shell
+\ls # 原始的 ls 命令
+ls # 其实是别名 ls --color=auto
+```
+### File Privilege
+Linux 文件权限有三个维度, 使用 `chmod`修改
+- user是文件的所有者
+- group 是组
+- other 为其他
+
+```shell
+-rw-rw-r-- # 三个组 User Group Other
+```
+
+修改文件权限
+```shell
+chmod u+x filename.txt # 给 user 添加执行权限
+chmod go+x filename.txt # 给 group 和 other 增加执行权限
+chmod ugo-wr <filename> # 删除 user, group, other 的 write, read 权限
+chmod +x <filename> # 给文件所有的组加上执行权限
+```
+
+
+Linux 文件的所有权有两个维度. 使用`chown`修改
+- user
+- 组
+
+文件类别
+```shell
+- # 普通文件
+s # socket, 双向实现两个程序通信
+c # 字符设备
+b # 块设备文件
+p # 管道文件, 单向的. A程序把数据输入管道文件, B 从这个管道文件读出数据
+l # 链接文件
+d # 文件夹
+```
+
+文件路径
+```shell
+basename <path> # 文件basename
+dirname <path> # 文件夹的父目录
+
+
+cd ~username # 进入某个用户的家目录
+cd # 进入当前用户的家目录
+cd - # 回到上次的路径 
+
+ls -R <path> # 列出嵌套的目录
+
+```
+
+文件的属性称为文件的 metadata, 元数据
+文件的三个时间 
+- 内容修改时间 mtime
+- 读时间 atime, 更新条件: 读时间超过一天以上, 或者修改时间新于读时间
+- 属性修改时间 ctime - 比如修改所有者
+
+```shell
+# 显示文件的读时间
+ll --time=atime filename
+# 显示文件的属性修改时间
+ll --time=ctime filename
+# 显示文件详细的信息
+stat /etc/networks 
+  File: /etc/network
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: fd00h/64768d    Inode: 131148      Links: 4
+Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2025-01-21 01:19:22.637164053 +0100
+Modify: 2023-03-14 23:42:54.000000000 +0100
+Change: 2025-01-21 01:19:22.637164053 +0100
+ Birth: -
+
+```
+文件的节点编号 inode
+- 可以认为是文件的唯一标识符. 默认是不显示的
+- 节点编号和分区的大小有关
+- 如果有一个块硬盘是 sda, 则分区为 sda1, sda2
+- 可能存在硬盘没有放满, 但是节点编号被用完了. 报错 `no space left on devicek`
+- 删除文件后, 节点编号会释放. 但是硬盘空间不一定会被释放. 如果有程序还在使用这个文件
+
+```shell
+# 显示文件的节点编号 inode
+ls -i 
+# 每个分区可用的节点编号的最大值, 节点编号用量
+df -i
+# 查看每个分区的空间占用
+df -h
+# 查看文件类型, 是否是文本, 或者可执行文件
+file <filename>
+```
+文件通配符
+```shell
+* # 0 或者任意字符, 但是不包好, .开头的隐藏文件
+? # 单个字符
+[0-6] # 0到 6 中的一个数字
+[124] # 1或者 2, 或者 4
+[^12] # 不是 1,不是 2
+[c-f] # c到f, 包含大写字母. 先出现小写字母后出现大写字母 cCdDeEf
+[:lower:] # 所有小写字母你[[:lower:]]表示所有小写字母中取一个
+[:upper:] # 左右大写字母 [[:upper:]]表示所有大写字母中取一个
+[:digit:] # 数字
+
+
+.* # 注意 表示包含所有.开头的隐藏文件, 且包含父目录.., 如果此时是在家目录下做操作, 则可能删除根目录
+
+```
+
+复制
+```shell
+# 复制文件
+cp -a file file.bak # 保留所有属性备份
+cp -a file{,.bak}
+
+# 复制目录
+cp -r path/ new_path/ # 如果目录重叠, 则会放在重叠目录下的子目录
+# 先备份再覆盖
+cp -b file1 file2 
+
+```
+特殊文件的复制
+```shell
+ll /data/zero /h
+# 对于特殊文件的复制, 要保留原属性
+cp -a /dev/zero /data/
+
+```
+移动
+- 可以有多个源, 但是目标只有一个
+多个文件改名, 改成不同的
+```shell
+# centos
+rename .txt .txt.bak *.txt # 多有*.txt 文件中的.txt 替换为.txt.bak
+rename .bak '' *.txt.bak # 把所有的.txt.bak 文件改成 .txt
+# ubuntu 上需要额外安装
+rename 's/\.txt/\.txt\.bak/' *.txt
+```
+
+删除
+一般在公司里, 不会先删除. 而是先关机, 移动到空闲的磁盘空间, 1 个月. 然后再删除. 
+
+```shell
+rm ./-a # 删除看上去像 option 的文件
+
+# 用 mv 来取代 rm 防止误操作
+alias rm='mv -t /tmp' # mv -t 作用是先写 destination 目录, 后写源目录
+```
+删除大的临时的文件的正确方法
+- 规避删除文件后, 还有其他程序占用文件, 造成无法释放硬盘空间
+```shell
+# 删除之前事先清空文件
+cat /dev/null > <detination_file> 
+rm -f <destination_file>
+
+# 删除文件后, 手动释放文件占用
+lsof | grep delete # 可以看到进程编号
+# 再用 ps 命令找到指定进程, kill 掉该进程
+# 但是这种方法, 可能 kill 的进程是数据库服务, 不能轻易停
+```
+创建文件夹
+```shell
+mkdir -p /a/b/c
+```
+标准 IO 重定向
+- 有标准输入, 标准输出, 标准错误都通过文件来标识
+```shell
+/dev/std/stdin # 标准输入设备文件
+/dev/std/stdout # 标准输出设备文件
+/dev/std/stderr # 标准错误设备文件
 ```
