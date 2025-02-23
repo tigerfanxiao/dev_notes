@@ -745,7 +745,7 @@ ctrl + q # 两次 解锁屏幕
 
 `/dev`下有块设备, 字符设备
 块设备, 比如硬盘. 一个块包含多个字节
-字符设备, 一个字符一个字符为单位 比如 `/dev/zero`
+字符设备, 一个字符一个字符为单位 比如 `/dev/zero`, /dev/pst/1
 
 蓝色: 文件夹, 绿色: 可执行程序, 红色: 压缩文件, 浅蓝色:链接 `/etc/DIR_COLORS` 定义
 
@@ -780,7 +780,7 @@ Linux 文件的所有权有两个维度. 使用`chown`修改
 ```shell
 - # 普通文件
 s # socket, 双向实现两个程序通信
-c # 字符设备
+c # 字符设备文件, 比如/dev/pst/0, /dev/null, /dev/zero
 b # 块设备文件
 p # 管道文件, 单向的. A程序把数据输入管道文件, B 从这个管道文件读出数据
 l # 链接文件
@@ -915,8 +915,80 @@ mkdir -p /a/b/c
 ```
 标准 IO 重定向
 - 有标准输入, 标准输出, 标准错误都通过文件来标识
+- 三种输出对应 0, 1, 2, 也称为文件描述符. 文件描述符是一个进程为每一个打开的文件分配的唯一标识(数字), 前三个数字是固定的
+- 默认情况下, stdin, stdout, stderr都是默认输出到当前窗口的. 重定向就是要不输出到窗口, 重定向给指定的程序
 ```shell
-/dev/std/stdin # 标准输入设备文件
-/dev/std/stdout # 标准输出设备文件
-/dev/std/stderr # 标准错误设备文件
+/dev/stdin # 标准输入设备文件
+/dev/stdout # 标准输出设备文件
+/dev/stderr # 标准错误设备文件
+
+# 标准输入对应 0, 标准输出对应 1, 标准错误对应 2
+ls /dev/std*
+lrwxrwxrwx. 1 root root 15 Feb 21 07:17 /dev/stderr -> /proc/self/fd/2
+lrwxrwxrwx. 1 root root 15 Feb 21 07:17 /dev/stdin -> /proc/self/fd/0
+lrwxrwxrwx. 1 root root 15 Feb 21 07:17 /dev/stdout -> /proc/self/fd/1
+
+
+# 找到程序对应的进程编号
+pidof tail
+ls /proc/1759/fd # 查看进场编号为 1759 的文件描述符
+
+# 把标准输出重定向到别的 tty, /dev/pts/1 是一个设备文件
+hostname 1> /dev/pts/1 
+hostname > /dev/pts/1 # 标准输出 1 是可以省略的
+
+# 把标准错误信息重定向到 err.txt, 注意标准输出不会被重定向
+ls /dataa 2>err.txt 
+# 如果一个命令中有多的有错的, 正确的输出到一个文件, 错误的放在另一个文件里
+ls /data /dataa
+ls /data /dataa >stdout.txt 2>stderr.txt
+ls /data dataa &>all.txt # 标准输出和错误输出都在同一个文件里
+# 老的写法, 标准输出和标准错误都写在同一个文件里, 注意前后次序不能变
+ls /data dataa >all.txt 2>&1 #
+
+```
+
+shell
+```shell
+# 安装 cshell
+yum -y install csh
+# 查看当前shell
+echo $SHELL 
+ls /etc/shell
+csh # 切换为 cshell
+
+>a.txt # cshell 不支持这种清空文件的写法
+```
+
+### 软链接和硬链接
+硬链接
+- 把一个文件起另外一个新的名称, 节点编号是相同的, 文件是同一个. 两个硬链接是平等关系
+- 删除其中一个, 并不会删除文件. 除非把所有的名字都删除了. 节点编号则会被回收, 文件才会被删除
+- 删除一个文件后, 文件的数据并没有立即被清空. 利用专业的数据恢复软件, 文件可以被找回
+- 创建硬链接之后, 文件的连接数会变化. 如果应该文件有多个硬链接, 连接数会大于 1
+- 硬链接但是必须在同一个分区中. 不能跨分区不能创建硬链接
+- 硬链接只支持文件, 不支持文件夹
+```shell
+ln target hardlink # 创建硬链接文件
+```
+软链接
+- 软链接也称为符号链接. 类似 windows 的快捷方式
+- 在升级版本时, 可以把原来的软链接删除, 为 app 指向新的文件夹, 创建一个软连接. 
+- 删除软连接的方法, 只能删除软链接文件`rm -f app`, 不是删除软连接下的文件 `rm -rf app/`
+- 创建软连接要么使用绝对路径, 或者相对于目标软链接的相对路径
+- 删除源文件, 软连接失效
+- 软连接可以跨设备, 跨分区
+
+```shell
+ln -s target softlink 
+# 给老的版本创建一个软连接
+ln -s app1.0 app
+# 删除软链接,版本文件夹保存
+rm -f app
+# 为新的版本文件夹创建一个软连接
+ln -s app2.0 app
+
+# 回退到老的版本
+rm -f app
+ln -s app1.0 app
 ```
