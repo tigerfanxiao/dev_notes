@@ -1,3 +1,8 @@
+# GUI
+```shell
+ctrl + alt + f3 # 切换到非 gui
+ctrl + alt + f2 # 切换到gui
+```
 
 # Linux SSH
 
@@ -40,11 +45,11 @@ sudo -i # 切换root
 Linux的用户分User和Group
 Linux给每一个用户都会分配一个ID， 也成为UID
 UID的范围 
-0 是superuser root用户
-1-200 是系统进程
-201-999 没有任何文件的系统进程
-1000+ 普通用户
-
+- 0 是superuser root用户
+- 1-200 是系统进程
+- 201-999 没有任何文件的系统进程
+- 1000+ 普通用户
+注: 一般在一个服务器上跑一个服务, 担心不同的服务互相影响, 影响性能
 对于Group来说也有GID的概念. 每个用户属于一个primary group和多个secondary group. 如果创建一个新的用户, 会同时给这个用户创建一个同名的group, 然后把这个用户的primary group配置成这个组
 
 ```shell
@@ -58,6 +63,13 @@ id <username>
 groups <username>
 ```
 
+3A
+- Authentication 认证, 验证用户的身份
+- Authorization 授权
+- Accounting| Audition 审计
+token
+- 当用户验证身份之后, 服务器发送这个用户token
+- 用户用这个 token 去获取资源
 ### Files for user and group
 - `/etc/passwd`
 - `/etc/shadow`
@@ -918,7 +930,7 @@ mkdir -p /a/b/c
 - 三种输出对应 0, 1, 2, 也称为文件描述符. 文件描述符是一个进程为每一个打开的文件分配的唯一标识(数字), 前三个数字是固定的
 - 默认情况下, stdin, stdout, stderr都是默认输出到当前窗口的. 重定向就是要不输出到窗口, 重定向给指定的程序
 ```shell
-/dev/stdin # 标准输入设备文件
+/dev/stdin # 标准输入设备文件(键盘输入), 比如 bc, cat
 /dev/stdout # 标准输出设备文件
 /dev/stderr # 标准错误设备文件
 
@@ -946,6 +958,16 @@ ls /data dataa &>all.txt # 标准输出和错误输出都在同一个文件里
 # 老的写法, 标准输出和标准错误都写在同一个文件里, 注意前后次序不能变
 ls /data dataa >all.txt 2>&1 #
 
+
+# 标准输入的重定向
+echo 2+3>bc.txt
+bc <bc.txt # < 是标准输入的重定向, 把文件中的内容输入给 bc
+# 从 1+2+...+100
+seq -s+ 100 >bc.txt;bc<bc.txt
+# 或者使用重定向高级用法
+bc <<<`seq -s+ 100`
+# 右边公式的结果临时保存在一个文件内, 作为标准输入函数的输入
+bc < <(seq -s+100)
 ```
 
 shell
@@ -959,6 +981,57 @@ csh # 切换为 cshell
 
 >a.txt # cshell 不支持这种清空文件的写法
 ```
+
+多行重定向
+- `>`是单行重定向, 每次按回车, 内容就会输出到文件
+- `<<EOF`其中 EOF 表示重定向结束, 是一个习惯
+- EOF后面不能包含空格 
+```shell
+# 覆盖
+cat > a.txt <<EOF
+newline1
+newline2
+newlo3
+EOF # 当重启一行输入 EOF 时, 才会把内容输出到文件
+
+# 追加内容
+cat >> a.txt <<EOF
+newline1
+newline2
+newlo3
+EOF # 当重启一行输入 EOF 时, 才会把内容输出到文件
+```
+
+管道符
+- 把命令 1 的输出结果作为第二个命令的输入. 也就是管道符后面的命令一定是支持标准输入的
+- 管道符左面的命令一定是标准输出功能的
+```shell
+echo 1+2 | bc
+cat mail.txt | mail -s subject receiver@email.com
+```
+其他标准输入命令
+```shell
+# tr 命令用来转换
+tr a-z A-Z # 小写转换为大写
+tr -d abc # 删除 abc
+tr -dc abc # 除了 abc, 其他都删除
+tr -s abc # 发现连续的 a, 连续的 b, 连续的 c, 压缩成一个
+
+
+# tee 命令 支撑标准输入
+tee out.txt
+hello # 同时在屏幕上打印和输出到文件
+# 追加内容
+echo hello3 | tee -a new.out | tr 'a-z' 'A-Z'
+
+# 使用 tee 命令生成配置文件
+tee /data/text.conf <<EOF
+line1
+line2
+EOF
+
+```
+
 
 ### 软链接和硬链接
 硬链接
@@ -991,4 +1064,26 @@ ln -s app2.0 app
 # 回退到老的版本
 rm -f app
 ln -s app1.0 app
+```
+
+
+# 邮件
+IMAP/SMTP 需要授权码
+```shell
+# 安装
+yum -y install postfix;systemctl enable --now postfix
+```
+配置邮箱
+```shell
+# rocky 
+# 查询某个配置文件属于哪个软件
+rpm -qf /etc/mail.rc
+# 会提示出这个文件是 mailx-12.5-29.el9.x86_64这个软件装的
+# 安装一下这个软件后, 才能编辑这个配置文件
+vim /etc/mail.rc
+# 贴入下面的配置
+set from=29355@qq.com
+set smtp=smtp.qq.com
+set smtp-auth-user@29355@qq.com
+set smtp-auth-password=dfasdfasdf
 ```

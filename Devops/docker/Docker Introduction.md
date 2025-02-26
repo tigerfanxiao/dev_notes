@@ -1,6 +1,5 @@
- 09
-[B站视频](https://www.bilibili.com/video/BV1gr4y1U7CY?p=8&spm_id_from=pageDriver&vd_source=3d7d2ddd3035c9f21a34739d4a0a4eb8)
- ### Docker 架构
+
+Docker 架构
 Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
 
 注意: 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
@@ -10,9 +9,9 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
 
-### Docker和虚拟机的区别?
+### Docker和虚拟机的区别
 虚拟化的颗粒度不同
-1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 简单地理解就是多个 docker 共享一个操作系统内核, 特别是 linux 尽管有这么多不同的版本, 但是 linux 内核是各种版本共用的. 但是类似 Vmware 这样的虚拟机, 每一个虚拟机就有独立的操作系统内核, 说一容易造成资源限制
+1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 简单地理解就是多个 docker 共享一个操作系统内核, 特别是 linux 尽管有这么多不同的版本, 但是 linux 内核是各种版本共用的. 但是类似 Vmware 这样的虚拟机, 每一个虚拟机就有独立的操作系统内核, 所以容易造成资源限制
 2. Docker 的构建是由 Docker File 完成的, 构建的过程可以被描述. 虚拟机则是原始装了一个系统后, 在系统内部做各种不可描述的操作
 3. Docker 的使用方法, 往往是需要的时候启动一个, 不需要的时候, 则废弃. 而不是进入 docker 内部去操作. 进入 docker 内部更多是为了排障. 虚拟的使用方法往往是进入虚拟机内部去操作
 4. 容器一种服务, 理论上说, 把服务跑完了, 容器就停了. 但是虚拟机一般是一直开着
@@ -21,14 +20,10 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker
 7. 容器一般是要让一个程序在 console 口顶着运行, 而一般虚拟机是中的 web 服务是在后台运行的
 8. 容器适合做单进程, 且所在前台顶着 console 口. 可以利用 docker swam 或者 k8s 做负载. 虚拟机则是运行多进程
 
-
-# Docker 命令
-
-### 镜像相关命令
-
-在 docker hub 上搜索官方镜像
+### Docker Image
 
 ```shell
+# 在 docker hub 上搜索官方镜像
 docker pull centos:8 # tag 指定了版本. 如果不填就是最新的
 
 # 查看所有 centos 的镜像, 所有不同的版本
@@ -45,7 +40,7 @@ docker rmi -f $(docker images -aq) # 删除所有镜像
 注意:
 1. tag 不同, 但是镜像可能是相同的. 可以通过hash 值来判断两个镜像是否相同
 2. 不同镜像的有些层是一样的, docker 不会重复拉. 所以两个镜像真正占据的磁盘空间是小于纸面上两个镜像大小的和
-### 容器相关命令 
+### Docker run
 docker run 的命令一般用在调试阶段. 调试结束后更多地使用 docker compose 用 yaml 文件来拉起容器. 且多个容器可以一起启动
 
 ```shell
@@ -128,8 +123,6 @@ docker rename <old_name> <new_name>
 docker stats
 # vieww specific container status
 docker status <container_name>
-
-
 ```
 
 ### `docker restart` parameters
@@ -138,9 +131,6 @@ docker status <container_name>
 -   `always` - Always restart when stopped
 -   `unless-stopped` - Restart unless manually stopped
 -   `on-failure<:retries>` - Restart when the container fails; we can supply the maximum amount of retries
-
-
-
 # Scenario
 
 下面可以造点例子出来. Zero-Downtime Deployments
