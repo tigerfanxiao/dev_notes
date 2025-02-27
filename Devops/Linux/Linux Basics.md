@@ -42,8 +42,10 @@ w
 sudo -i # 切换root
 ```
 ### UID & GID
-Linux的用户分User和Group
-Linux给每一个用户都会分配一个ID， 也成为UID
+- Linux的用户分User和Group
+- Linux给每一个用户都会分配一个ID， 也成为UID. 系统是根据 UID 来判断各种权限的, 而不是根据名字
+- 如果一个新的用户, 想继承一个老用户的所有权限, 只要改名, 不改 UID 就行
+
 UID的范围 
 - 0 是superuser root用户
 - 1-200 是系统进程
@@ -70,6 +72,17 @@ groups <username>
 token
 - 当用户验证身份之后, 服务器发送这个用户token
 - 用户用这个 token 去获取资源
+
+#### SU 切换用户
+
+```shell
+# 不完全切换, 保留原来的路径, 保留原来 bash, 保留环境变量
+su <username>
+# 完全切换
+su - <username>
+# 切换一个命令, 然后退回来, 不需要来回切换
+su - <username> -c 'touch /tmp/a.txt'
+```
 ### Files for user and group
 - `/etc/passwd`
 - `/etc/shadow`
@@ -107,6 +120,17 @@ cloud_user:x:1001:
 # 组名:组密码:: 组管理员名单:组员清单
 root:::
 cloud_user:!::
+```
+查找用户或者组
+```shel
+getent passwd mysql # 查询用户 mysql 的信息
+```
+组成员管理
+```shell
+groupmems -l -g mail # 列出把 mail 作为附加组的组成员
+# 给组添加成员
+groupmems -a <username> -g <group_name> 
+groupmems -d <username> -g <group_name>
 ```
 
 ### User Shell environment
@@ -157,6 +181,14 @@ mkdir /userb # 新建家目录
 chown userb:userb /userb # 修改家目录的所有权
 chmod 700 /userb # 给userb所有的权限
 
+# 锁定账号
+usermod -L <username>
+getent shadow <username> # 密码前会有!
+usermod -U <username> # 解锁账号
+
+# 修改用户名, 但是需要手动改家目录, 但是权限一样
+usermod -l current_name new_name
+
 # -m 表示需要make homedir
 useradd -u <uid> -c "<comments>" -d <home_dir> -m -g <primary_group> -G <secondary_group> -p <password> -s /bin/sh <username>
 
@@ -183,14 +215,29 @@ groupadd -g <GID> groupname
 
 # modify group
 groupmod -g <DID> -n oldgroupname newgroupname
+# change the primary group for user
+uermod -g <username> <groupname>
+# 只有当没有用户使用该组为主组是, 才能删除这个组
 # remove group
 groupdel <groupname>
 ```
+
+对于一些服务, 创建用户和组的实例
+```shell
+# -r 表示系统组
+/usr/sbin/groupadd -g 82 -r postfix 2>/dev/null # 指定了新建组的编号
+# -M 不创建家目录中的那些普通用户所需要的文件, 但是-d 还是指定了家目录的地址
+# -r 系统账号, 不会创建普通用户那样的文件, 比如邮箱
+/usr/sib/useradd -d /var/spool/postfix -s /sbin/nologin -g postfix -G mail -M -r -u 89 postfix 2>/dev/null
+```
+
 #### 家目录中的文件
 - `.bash_logout` 退出shell时会执行的命令
 - `.bash_profile` 第一次登录shell的时候, 会执行的命令和变量. 该用户新建一个shell的时候, 不会被执行
 - `.bashrc` 用户每次新建一个shell的时候, 都会被执行
-在 `/etc/skel`下定义了每个新用户的创建在家目录中会创建默认文件. 
+在 `/etc/skel`下定义了每个新用户的创建在家目录中会创建默认文件的模板
+- 如果要让新建的家目录中含有某个默认的文件, 就要在 `/etc/skel`下创建一个文件
+- 系统在创建新用户时的行为定义在 `/etc/default/useradd`
 ```shell
 [cloud_user@a130ce37501c ~]$ cd /etc/skel/
 [cloud_user@a130ce37501c skel]$ ls
@@ -219,7 +266,7 @@ kill <PID>
 find / -user <username>
 # 将需要保留的文件和目录通过chown转移给别的用户
 # /var/spool/mail 会在userdel后自动删除
-# 3. 删除家目录
+# 3. 删除用户和家目录和邮箱
 userdel -r <username>
 
 ```
@@ -253,9 +300,15 @@ grpconv grpunconv
 新建用户userA
 ```shell
 useradd -G wheel userA
+# 一般不在 useradd 中使用 -p 来设置秘密, 因为这里需要填写的是加密后的密码
+# 使用 passwd 来设备密码, 输入的密码会被加密, 放到 shadow 文件中
 passwd userA # 设置新密码
+# 使用管道符来一次性创建密码
+echo <password> | passwd --stdin <username> # ubuntu不支持, rocky 支持
+echo -e '123456\n123456' | passwd <username> # 通用, ubuntu 和 rocky 都支持
 sudo - userA # 切换到该用户
 sudo whoammi # 应该显示root
+
 ```
 
 # Centos 7 破解root账户密码
@@ -428,7 +481,7 @@ newhost
 - man根据不同的命令类型, 分了9个大类, 默认如果不指定类别的话, 返回类别1
 - man帮助的路径是由man帮助的配置文件 `/etc/man_db.conf` 中定义了搜索man帮助文件的路径
 ```shell
-# 使用whatis 之前需要构建man数据库
+# 使用whatis 之前需要构建Whatis 数据库
 mandb 
 # 回复命令的作用简述, 帮助文档的类别, 可以用man使用
 whatis rm 
@@ -850,7 +903,7 @@ ls -i
 df -i
 # 查看每个分区的空间占用
 df -h
-# 查看文件类型, 是否是文本, 或者可执行文件
+# 查看文件类型,如果是是设备文件就不能用 cat 查看
 file <filename>
 ```
 文件通配符
@@ -1068,6 +1121,7 @@ ln -s app1.0 app
 
 
 # 邮件
+- 邮箱保存在 `/var/spool/mail`, 每个用户都有一个文件夹. 收到的邮件都在这些文件夹下
 IMAP/SMTP 需要授权码
 ```shell
 # 安装
