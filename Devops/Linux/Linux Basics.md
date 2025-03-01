@@ -179,6 +179,8 @@ useradd -d </userb> userb # 在根目录下创建 /userb 作为家目录
 usermod -d </userb> userb
 mkdir /userb # 新建家目录
 chown userb:userb /userb # 修改家目录的所有权
+chown -R userb:userb dir # 修改目录及目录里的所有文件和文件夹的权限
+
 chmod 700 /userb # 给userb所有的权限
 
 # 锁定账号
@@ -323,6 +325,16 @@ sudo whoammi # 应该显示root
 
 
 # File Management
+- 新建一个文件默认是不加执行权限的, 因为文件的执行权限有安全风险
+- 新建文件的默认权限是 644, 新建文件夹的默认权限是 755
+- 一个文件能不能删除, 是由目录决定的
+-  文件夹读写执行的含义
+	- 读 - 列出文件列表. 但是看不到 inode, 和文件的 meta 信息
+	- 写 -  在目录下建立新的文件, 或者删除文件
+	- 执行 - 看不到文件夹列表, 但是可以看到里面的文件的内容和属性, 如果你知道文件名
+	- 所以一般要能访问目录, 一般会给 rx
+- 如果只相对文件夹内的所有子文件夹加 x 权限, 对文件不加 x 权限, 可以使用 X 选项
+- 
 ```shell
 # 制定用户或者群做相同的配置
 # 增加用户的权限为
@@ -333,15 +345,59 @@ chmod u=rw <filename>
 chmod go-r <filename>
 # 给用户， 群， 其他用户的权限都配置为 rwx
 chmod a=rwx <filename>
-
+# 把 u 的权限都去掉, g 增加 w 权限, o 给所有权限
+chmod u=,g+w,o=rwx <filename>
 # 制定用户和群各自不同的配置
 # 分别置顶用户的权限是7，群的权限是5， 其他用户的权限是0
 chmod 750 <filename> 
 
 # 修改目录的权限
-chmod -R 777 <filename>
-```
+chmod -R 777 <dir_name>
 
+chmod -R a+X dir/
+
+# 增加 s 权限
+chmod u+s /bin/cat # 让所有人都有 root 权限查看文件
+chmod u-s /bin/cat # 删除权限
+# 如果用数字表示
+chmod 4755 /bin/cat
+chmod 755 /bon/cat # 删除 suid 权限
+```
+umask 用来修改新建文件和文件夹的默认权限
+```shell
+umask
+0022 # 第一个的 0 表示 8 进制
+# 文件的默认权限是 666-umask, 如果检出的结果中有奇数,所有奇数位+1, 加 1 的目的是去掉执行权限
+022+644 = 666 # 666 本身就把
+# 文件夹的默认权限是 777-umask
+022+755 = 777 
+```
+suid 权限
+```shell
+ll `which passwd`
+# 这里有个 s 权限, 表示当用户执行这个命令时, 会临时使用文件所有者的权限, 这里是 root
+-rwsr-xr-x 1 root root 68208 Feb  6  2024 /usr/bin/passwd*
+```
+### sgid 权限
+- 创建新文件的所属组是用户的主组
+- sgid 作用在文件和文件夹的行为是不同的
+	- sgid 作用在文件时, 文件执行时, 临时继承文件所属组的权限
+	- sgid 作用在文件夹时, 在文件夹内创建的文件, 自动继承文件夹所属组的权限
+```shell
+chmod g+s # 继承组的权限
+chmod 2755 # 2 表示 sgid
+chmod 6755 # 又有 suid 和 sgid
+```
+### sticky 位
+```shell
+ll -d /tmp
+# 这里的 t 是 sticky 位, 表示这个目录里的文件, 只能删除自己的, 不能删除别人的
+drwxrwxrwt 14 root root 4096 Feb 28 09:56 /tmp/
+
+chmod 1777 /tmp # 增加 sticky 位
+chmod 777 /tmp # 去除 sticky 位
+chmod o+5 /tmp # 模式法 增加 sticky 位
+```
 ### Special Permission
 - suid 确保执行某个文件的是文件的owner， 而不是当前的用户
 - sguid
@@ -359,20 +415,69 @@ chmod o+t
 drwxrwxrwt 2 user group 4096 Feb 5 12:34 /tmp
 ```
 
+#### 特殊权限
+设置文件的特殊属性, 可以防止 root 用户误操作删除或者修改
+```shell
+# 不能删除, 改名, 更改
+chattr +i file
+chattr -i file # 删除这个属性, 就可以删除 
+lsattr # 会出现 i 的标记
+# 能追加, 但是不能删除
+chattr +a file
+
+
+```
 ### File ACL
-当给文件设置ACL之后， 会出现 `+` 标识
+- 实现只显示某个用户的权限
+- 当给文件设置ACL之后，`ll` 会出现 `+` 标识
 
 ```shell
+# 查看文件是否设置 acl 权限
 getfacl <filename>
 
 # m for modify
 setfacl -m mask:rw <filename>
-# 即使testuser1所在的群有权限， 但是去除testuser1对该文件的所有权限
-setfacl -m u:testuser1:- testfile
+# 删除 testuer1 对这个文件的权限
+setfacl -m u:testuser1:- <filename>
+#  给 testuser1 配置 rw 权限
+setfacl -m u:testuser1:rw <filename>
+# 删除 mage 在 acl 控制
+setfacl -x u:mage <filename> 
 # 删除所有在文件testfile1上的关于group test的ACL
 setfacl -x g:test testfile1
+
+# 清除文件所有的 ACL 权限
+setfacl -b <filename>
 ```
 
+ 案例
+```shell
+# 如果删除了 chmod 的可执行权限
+chmod -x "which chmod"
+# chmod +x 也就不能使用了
+# 此时就要用 acl把权限加回来
+setfacl -m u:root:rwx /usr/bin/chmod
+chmod +x /usr/bin/chmod
+```
+
+#### 文件属性中的selinux标签
+- selinux 在安装完成后, 默认是启用的, 在生产中一般是禁用的
+```shell
+# 查看 Selinux看是否 Diable
+getenforce
+
+# 在 selinux 被禁用后, 创建的新标签, 没有这个.
+# 属性中最后又一个.是 selinux 的标签,用下面的命令可以看到
+ll -Z ananconda-ks.cfg
+```
+禁用 Selinux
+```shell
+cat /etc/selinux/config
+# 把里面的
+SELINUX=enforing
+# 改为
+SELINUX=disbled
+```
 
 # 命令提示符
 区分
@@ -1140,4 +1245,75 @@ set from=29355@qq.com
 set smtp=smtp.qq.com
 set smtp-auth-user@29355@qq.com
 set smtp-auth-password=dfasdfasdf
+```
+
+
+# 初始化
+
+### Rocky
+1. 最小化安装
+2. 关闭防火墙
+```shell
+systemctl diable --now firewalld
+```
+3. 关闭 SELinux
+```shell
+nano /etc/selinux/config
+SELINUX=disabled
+reboot
+```
+4. 实现邮件通信
+```shell
+yum -y install postfix mailx
+systemctl enable --now postfix
+```
+5. yum 源
+```shell
+CentOS8: BaseOS, appstream, epel
+CentOS7: BaseOs, epel
+```
+6. 常用软件
+```shell
+yum -y install bash-completion psmisc lzsz tree man-pages redhat-lsb-core zip unzip bzip2 wget tcpdump ftp rsync wim lsof
+```
+7. 网卡 NAT
+```shell
+
+```
+1. 时间同步
+
+## 文本三剑客
+- grep
+- sed
+- awk
+
+### grep
+```
+```
+
+### aws
+- 使用 aws 打印列
+
+```shell
+
+cloud_user@ip-10-0-1-10:~$ ps
+  PID TTY          TIME CMD
+ 3845 pts/0    00:00:00 bash
+ 3939 pts/0    00:00:00 ps
+
+# 打印第一列
+cloud_user@ip-10-0-1-10:~$ ps | awk '{print $1}'
+PID
+3845
+3941
+3942
+
+# 打印第二列
+cloud_user@ip-10-0-1-10:~$ ps | awk '{print $2}'
+TTY
+pts/0
+pts/0
+pts/0
+
+
 ```

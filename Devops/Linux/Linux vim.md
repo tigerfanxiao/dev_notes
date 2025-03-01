@@ -1,40 +1,25 @@
 # 模式
-vim 有下面 4 中模式
-|模式|作用|转换|注释|
-|---|---|---|---|
-|Normal|移动光标|`i` 转 Insert 模式||
-|Insert|键盘输入|`jj` 或者 `esc`退出 Insert 到 Normal||
-|Vistual|选择内容|`v` 进入或者退出 Visual 模式| ctrl + v block select|
-|Command|查找, 替换, 保存|||
+- vim 有下面 4种模式
+
+| 模式      | 作用         | 转换                              | 注释                    |
+| ------- | ---------- | ------------------------------- | --------------------- |
+| Normal  | 移动光标       | `i` 转 Insert 模式                 |                       |
+| Insert  | 键盘输入       | `jj` 或者 `esc`退出 Insert 到 Normal |                       |
+| Vistual | 选择内容       | `v` 进入或者退出 Visual 模式            | ctrl + v block select |
+| Command | 查找, 替换, 保存 | :                               |                       |
 
 
-## 模式转换
-### Normal -> Insert
-在光标前插入 i
-在行首插入 I
+### 模式转换
+- Normal -> Insert
+```shell
+i # 在光标前插入 
+I # 在行首插入 
+a # 在光标后插入 
+A # 在行尾插入 
+o # 在新一行插入
+O # 在光标的上一行插入
+```
 
-在光标后插入 a
-在行尾插入 A
-
-
-
-### Insert -> Normal 
-esc
-jj 在配置文件中做的
-
-
-### Normal -> Visual
-v
-### Visual -> Normal
-esc
-v
-
-
-### Normal -> 命令模式
-:
-### 命令模式 -> Normal
-esc
-保存和退出文件 ZZ 或者 `:wq`
 
 # 光标移动
 
@@ -255,11 +240,14 @@ I 在前面删除
 
 cmd + shift + p -> focus termianl  或者用 空格 + t
 cmd  + 1 回到编辑器
+```shell
 在设置中 <leader> 被定义为空格
 <leader><leader> s <char> 搜索一个字符
-
-
 vim中的查找 /<char>
+```
+
+
+
 
 新增 4 个空行
 复制一个空行 yy 粘贴 4 次 4p
@@ -267,7 +255,106 @@ vim中的查找 /<char>
 把下面多行, 移动到当前行的末尾 J
 
 
-# 保存文件
+保存文件
 
 ctrl + g 查看当前 buffer
 :list 查看所有 buffer
+
+### 扩展命令模式
+```shell
+:r <filename> # 将文件内容读到当前文件中
+:w <filename> # 另存为
+!command # 执行命令
+r!command # 读入命令的输出
+```
+
+删除
+```shell
+:2d # 删除第二行
+:2,5d # 删除第二行到第五行
+:.,$d # 删除当前行到结尾
+```
+
+复制
+```shell
+:2,4y # 复制2到 4 行
+p # 粘贴到光标的行
+P # 粘贴到光标的前一行
+
+:30:r /etc/isse # 在第 30 行读入一个新文件的内容
+```
+搜索替代
+```shell
+:%s/root/ROOT/ # 同一行只替代第一个
+:%s/root/ROOT/g # 全局替换
+
+# 在每一行的行首加#
+:$s/^/#/
+```
+加行号
+```shell
+:set nu # 显示行号
+:set number
+:set nonu # 不显示行号
+```
+通过修改 vim 的配置文件加行号
+```shell
+# /etc/vimrc 全局修改
+# ~/.vimrc # 个人的配置
+
+# 在文件中加入
+set nu
+```
+忽略大小写
+```shell
+:set ic # igonrecase
+:set noic
+```
+缩进
+```shell
+:set ai # autoindent 自动缩进 默认是 8 个
+:set noai
+
+:set shiftwidth=4 # 配置缩进为 4 个字符
+>> 缩进
+<< 反缩进
+```
+
+保留格式
+```shell
+:set paste
+```
+显示不可见字符
+```shell
+:set list # tab键是 ^I
+```
+高亮
+```shell
+:set hlsearch 
+:set nohl # 取消高亮
+```
+语法高亮
+```shell
+:set syntax
+```
+把 windows 文件转换为 linux 文件
+- vim会把 windows 格式识别为 dos 文件
+- 使用 `hexdump -C win.txt` 可以看到 `0d 0a`, 如果是 linux 文件不会看到 `0d`
+```shell
+:set ff=unix # 转换为 linux 格式
+:set ff=dos # 转换为 windows 格式
+```
+tab 用空格替代
+```shell
+:set et # extend tab 把 tab 转换为空格, 默认是 8 个空格
+:set ts=4 # 一个 tab 键=4 个空格
+```
+加横线标记
+```shell
+:set cul # cursorline
+```
+加密
+```shell
+:set key=<yourpass>
+:set key= # 清空密码
+```
