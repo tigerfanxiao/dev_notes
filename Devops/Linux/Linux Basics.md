@@ -939,7 +939,12 @@ chmod u+x filename.txt # 给 user 添加执行权限
 chmod go+x filename.txt # 给 group 和 other 增加执行权限
 chmod ugo-wr <filename> # 删除 user, group, other 的 write, read 权限
 chmod +x <filename> # 给文件所有的组加上执行权限
+
+# 修改文件的组
+chgrp groupname filename
+chown .groupname filename
 ```
+
 
 
 Linux 文件的所有权有两个维度. 使用`chown`修改
@@ -1141,7 +1146,7 @@ csh # 切换为 cshell
 ```
 
 多行重定向
-- `>`是单行重定向, 每次按回车, 内容就会输出到文件
+- `>`是单向重定向, 每次按回车, 内容就会输出到文件
 - `<<EOF`其中 EOF 表示重定向结束, 是一个习惯
 - EOF后面不能包含空格 
 ```shell
@@ -1170,11 +1175,12 @@ cat mail.txt | mail -s subject receiver@email.com
 其他标准输入命令
 ```shell
 # tr 命令用来转换
-tr a-z A-Z # 小写转换为大写
-tr -d abc # 删除 abc
-tr -dc abc # 除了 abc, 其他都删除
-tr -s abc # 发现连续的 a, 连续的 b, 连续的 c, 压缩成一个
-
+tr a-z A-Z < filename # 小写转换为大写
+tr -d abc < filename # 删除 abc
+tr -dc abc < filename # 除了 abc, 其他都删除
+tr -s abc < filename # 发现连续的 a, 连续的 b, 连续的 c, 压缩成一个
+tr -s ' ' <filename # 压缩空格
+df | tail -n +2 | tr -s ' ' | cut -d" " -f5 | tr -d %
 
 # tee 命令 支撑标准输入
 tee out.txt
