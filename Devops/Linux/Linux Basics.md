@@ -1005,6 +1005,7 @@ Change: 2025-01-21 01:19:22.637164053 +0100
 - 如果有一个块硬盘是 sda, 则分区为 sda1, sda2
 - 可能存在硬盘没有放满, 但是节点编号被用完了. 报错 `no space left on devicek`
 - 删除文件后, 节点编号会释放. 但是硬盘空间不一定会被释放. 如果有程序还在使用这个文件
+- 可以通过查看根目录的本地目录和上级目录判断根目录的上级目录就是自己
 
 ```shell
 # 显示文件的节点编号 inode
@@ -1252,7 +1253,75 @@ set smtp=smtp.qq.com
 set smtp-auth-user@29355@qq.com
 set smtp-auth-password=dfasdfasdf
 ```
+# 文件搜索
+### Locate
+- 搜索速度非常快, 需要首先构建文件索引数据库
+- 搜索依赖于数据库
+```shell
+updatedb # 构建或者更新数据库
+locate <filename> # 搜索文件
+locate -r '\.conf$' # 支持基本正则表达式
+```
 
+### find
+- 优势在于搜索条件丰富
+- 直接搜索磁盘
+- 默认就是递归搜索当前目录下的所有文件
+- 
+```shell
+find # 
+find /etc/ -maxdeptch 1 # 只搜索目录本身, 算作第一级目录
+find /etc/ -mindeptch 2 # 只搜索第二级
+
+# 根据文件名查找
+# 默认情况下是匹配整个路径, 比如 /etc/chrony.conf
+find /etc/ -regex ".*\.conf$" 
+# 精确匹配文件名, 不用匹配路径
+find /etc/ -name passwd 
+find /etc/ -name "*.conf" # 支持正则, 必须有双引号
+find /etc/ -type f -iname "example.txt"
+
+# 文件的所有者, 所属组
+find /var/ -user wang -ls 
+find /home -nouser -ls # 搜索没有用户的文件, 用户被删除后遗留下来的
+
+# 搜索文件类型
+find /etc/ -type d -ls # 只是文件夹
+find ~ -type f -ls # 只是文件, 不包含文件夹
+
+# 空文件
+find -empty -ls 
+
+# 多个条件
+find /home \(-user wang -o -name "*.conf"\) -ls # -o 表示或者
+# 查找空文件夹内
+find !\(-type d -a -empty \) # -a 表示 and
+# 跳过 security 文件夹来搜索其他目录, -prune 去掉这个目录
+find /etc -path '/etc/security' -prune -o -name "*.conf"
+
+
+dd if=/dev/zero of=f1.img bs=1k count=1024 # bs表示块的大小, count 表示有 1024 个块, 等于 1M 的文件
+find -size 2M # 大于 1M 到 2M 之间的文件
+find -size 2048K # 2047K 到 2048K 之间的文件
+find -size +6k # (6k, 无穷大)
+find -size -6k # (5K, 6K)
+
+# 按照时间搜索
+find -atime +30 # 30 天前触碰过的文件
+find -mtime -7 # 过去7天内修改过的文件 
+
+# 按照权限搜索
+find -perm 444 # 根据权限来搜索
+find -perm /444 -ls # 或的关系. 只要user, group, other 的权限大于 4 的就行
+find -perm -444 -ls # 并且关系
+find -perm /600 -ls # user有 r 或者 w 的权限, 0 表示任何权限都可以
+find -perm -600 -ls # user表示必须有 r 和 w 的权限
+find /usr/bin -type -f -perm /111 # 搜索所有可执行文件
+
+# 和其他操作一起实现
+find /home -type f -name "*.sh" -exec chmod +x {} \; # 给所有.sh文件增加可执行操作权限, 这个 \;一定要加, 表示 -exec 的命令结束了
+
+```
 
 # 初始化
 
@@ -1288,38 +1357,3 @@ yum -y install bash-completion psmisc lzsz tree man-pages redhat-lsb-core zip un
 ```
 1. 时间同步
 
-## 文本三剑客
-- grep
-- sed
-- awk
-
-### grep
-```
-```
-
-### aws
-- 使用 aws 打印列
-
-```shell
-
-cloud_user@ip-10-0-1-10:~$ ps
-  PID TTY          TIME CMD
- 3845 pts/0    00:00:00 bash
- 3939 pts/0    00:00:00 ps
-
-# 打印第一列
-cloud_user@ip-10-0-1-10:~$ ps | awk '{print $1}'
-PID
-3845
-3941
-3942
-
-# 打印第二列
-cloud_user@ip-10-0-1-10:~$ ps | awk '{print $2}'
-TTY
-pts/0
-pts/0
-pts/0
-
-
-```

@@ -111,6 +111,179 @@ cmp /bin/ls /bin/dir
 hexdump -s 790 -Cn20 /bin/ls # 跳过前面 800 个字符, 看后面 20 个
 hexdump -s 790 -Cn20 /bin/dir
 ```
+# grep
+- 文本处理三剑客 grep, sed, awk
+- `grep <word> stdin` 如果没有带文件, 那就是用来接收标准输入的
+- 多用于处理标准输出, 而不是文件
+``` shell
+# 使用管道符
+ifconfig eth0 | grep netmask
+
+# 使用标准输入重定向
+grep root < /etc/passwd
+
+# 只看前三个结果
+grep -m3 nologin /etc/passwd
+
+# 取反或者过滤
+grep -v nologin /etc/passwd
+grep -v "#" /etc/fstab # 过滤掉注释行
+
+# 不区分大小写
+grep -i ROOT /etc/passwd
+
+# 统计出现的次数
+grep -c root /etc/passwd
+
+# 只显示匹配到的字符串
+grep -o root /etc/passwd
+
+# 静默模式, 与 $? 连用, 判断上一个命令是否有返回
+grep -q 
+
+# 后续行数
+grep -A3 root /etc/passwd # 在 root 后面的 3 行, After
+# 前多少行
+grep -nB3 root /etc/passwd # Before 并列出行号
+# 前后多少行
+grep -C3 root /etc/passwd 
+
+# 包含多个关键词, 或者关系
+grep -e root -e bash /etc/passwd
+# 包含多个关键词, 并且, 使用两个命令的组合
+grep root /etc/passwd | grep bash
+
+# 如果把过滤条件放入文件(每一行为一个条件, 条件之间是或的关系), 使用这个文件过滤另一个文件. 
+grep -f test.txt /etc/passwd 
+# 快速找出两个文件的相同之处
+grep -f a.txt b.txt 
+
+# 递归查询文件内容, 但不处理软连接
+grep -r root /etc/* # 查询所有文件中的内容
+# # 递归查询文件内容, 处理软连接
+grep -R root /etc/*
+
+
+# 使用命令的结果来搜索
+grep `whoami` /etc/passwd
+grep "$USER" /etc/passwd
+
+# 扩展的正则表达式
+grep -E 
+egrep # 扩展的正则表达式
+
+```
+
+# 正则表达式
+- 通配符和正则的区别
+	- 通配符多用来匹配文件名中的字符串
+	- 正则用来表示文本中的字符串
+- 正则表达式区分为, 基本的正则表达式, 扩展的正则表达式, perl 语言的正则表达式
+- 通配符中的`[a-z]`和正则中的`[a-z]` 不同. 通配符的字母排序是`aAbB...`, 正则中的排序是`ab..AB..` 
+- 通配符中的`*`表示任意字符, 正则中的`*`表示前面的符号出现任意次数
+- 正则匹配模式是贪婪模式, 竟可能匹配更多的
+```shell
+. # 字符串中的一个字符, 包含空格, 符号
+
+ls -al | grep "f[[:lower:]]" 
+
+[.] # 写在中括号中的点只表示. 不是任意字符
+* # *前面的符号出现任意次数, 包含 0 次
+
+? # a可有可无, 出现零次或者 1 次
++ # 出现一次以上
+{n} # 出现 n 次
+{,5} # 出现 0 到 5 次
+{5,} # 出现 5 次以上
+
+^$ # 表示空行
+# 排除注释和空行
+grep -v "^#" -e "^$" /etc/apache2/apache2.conf
+grep -v "^[#|^]$" /etc/apache2/apache2.conf
+\<word\> # 单词, 数字, 字母, 下划线都属于单词
+\bword\b # 可以表示单词的词首, 词尾
+
+# 词组
+(abc) # 分组可以用 \1 来也引用
+ip 地址
+([0-9]{1,3}\.){3}[0-9]{1,3}
+
+
+```
+# sed
+- grep 不能修改文件, vim 是一种交互式的操作. 如果要非交互的, 批量修改文件则用 sed
+- sed是行编辑器, 他不会像 vim 一样把整个文件都加载到内存中, 而是每次只处理一行, 第一行处理完就退出内存. 从上往下处理
+- sed 每次处理一行, 默认就会打印一行. 适合处理大容量的文件
+- 和 grep 一样, 在没有文件时, 支持标准输入, 每次一行
+- `//`里面是正则表达式, 多个正则表达式用逗号分开
+- sed
+
+```shell
+sed 'p' /etc/fstab # 打印当前模式空间的行. 读一行打印一次, 再打印一次
+sed '10p' /etc/fstab # 除了自动打印外, 再打印第 10 行
+sed -n '10p' /etc/fstab # 关闭自动打印
+
+sed -n "/network/p" # 查找 network, 并打印
+sed -n '3,5p' # 打印第 3 行到第五行
+
+sed -n '/^b/,/^s/p' /etc/passwd # 从 b 开始的行, 找到 s 开始的行, 注意, 匹配中 b 之后 即使找不到 s, 也会打印出来
+
+# 打印 12 点到13 点的日志
+sed -n '/^Mar 30 12:/,/^Mar 30 14:/p' test.log
+# 打印 12 点或17 点的日志
+sed -n -e '/^Mar 30 12:/p' -e '/^Mar 30 17:/p' test.log
+# 或者用; 分割两个脚本
+sed -n -e '/^Mar 30 12:/p;/^Mar 30 17:/p' test.log
+# 打印奇数行
+sed -n '1~2p' 
+
+# 不显示第一行, 但是后面自动打印
+sed '1d'
+sed '1~2d' # 把奇数行不显示了, 只打印偶数行
+
+# 直接修改文件本身, 使用.bak 做备份
+sed -i.bak '/^#d/' fstab # 删除文件中的注释
+
+
+# 追加
+seq 10 | sed '5a hello' # 在第五行的后面追加 hello, 并自动忽略空格
+seq 10 | sed '5a\   hello' # 在第五行的后面追加 hello, 不自动忽略空格
+# 替换
+seq 10 | sed '5c hello' 
+# 替换
+sed -i.bak '/^SELINUX=enforcing/c SELINUX=disable' /etc/sysconfig/selinux
+# 读文件
+sed '1~2r /etc/issue' # 在奇数行的后面, 读入 /etc/issue文件的内容
+# 取反
+seq 10 | sed -n '1~2!p'  # 打印出偶数
+
+```
+# awk
+- 使用 awk 打印列
+
+```shell
+
+cloud_user@ip-10-0-1-10:~$ ps
+  PID TTY          TIME CMD
+ 3845 pts/0    00:00:00 bash
+ 3939 pts/0    00:00:00 ps
+
+# 打印第一列
+cloud_user@ip-10-0-1-10:~$ ps | awk '{print $1}'
+PID
+3845
+3941
+3942
+
+# 打印第二列
+cloud_user@ip-10-0-1-10:~$ ps | awk '{print $2}'
+TTY
+pts/0
+pts/0
+pts/0
+
+
+```
 # VIM
 ```shell
 vimtutor
