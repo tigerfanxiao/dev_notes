@@ -1319,10 +1319,121 @@ find -perm -600 -ls # user表示必须有 r 和 w 的权限
 find /usr/bin -type -f -perm /111 # 搜索所有可执行文件
 
 # 和其他操作一起实现
-find /home -type f -name "*.sh" -exec chmod +x {} \; # 给所有.sh文件增加可执行操作权限, 这个 \;一定要加, 表示 -exec 的命令结束了
+find /home -type f -name "*.sh" -exec chmod +x {} \; # 给所有.sh文件增加可执行操作权限, 这个 \;一定要加, 表示 -exec 的命令结束了 
+
+find -size +100M -size -130M -ls # 大于 100M 小于 130M 的文件
+
+# 列出目录下所有文件, 并按照文件大小排序
+find /etc/ -type f | xargs ls -Sl 
 
 ```
 
+### xargs
+- 因为不是所有的命令都支持标准输入. 用 xargs 结合标准输入重定向, 可以把一条命令变成支持标准输入的命令
+- touch, ls 这些命令虽然可以跟多个参数, 但是参数是有极限的. 比如不能是几十万个, 这时可以用 xargs 每次为命令喂1 万个参数
+
+```shell
+# ls 命令本身是不支持标准输入的
+xargs ls -l # 转变为标准输入
+echo a.txt | xargs ls -l # 把 a.txt 的内容变成 xargs 的标准输入
+
+# -n3 等于每次输入一个参数
+seq 10 | xargs -n3 # 每行 3 个
+
+# 一次创建 10 个用户
+echo user{1..10} | xargs -n1 useradd # -n1 表示每次输入 1 个参数, 调用 10 次
+```
+一个 python 下载视频工具的案例
+```shell
+# -i 和 {} 连用, 表示替换
+# -P3 同时调用 3 个进程
+yum install -y python3-pip
+pip3 install you-get
+seq 60 | xargs -i -P3 you-get https://www.bilibili.com/video/BV14K11w7uF?p={}
+```
+使用 null 或者 ascii 码中的 0 作为分隔符, 用于规避文件名中的空格, 影响了分隔符
+```shell
+# -0 xargs 指定 \0 为分隔符
+find -type f print0 | xargs -0 ls -l
+```
+# 压缩
+- compress 压缩成.z 文件, 效率不高
+- gzip, 互联网上常用, 支持压缩比, 但是压缩比高的时候, cpu 代价高. 可以接受标准输入
+- bzip, 也支持压缩比, bz2 文件, 非标配, 需要额外安装
+- xz 压缩比更高
+- zcat 压缩文件预览
+- zip 可以压文件, 也可以压文件夹
+```shell
+# compress
+yum install -y compress
+compress <filename> # 生成的文件.z, 源文件丢失
+compress -c <filename> > <zfile_name> # -c 是在屏幕上打印
+uncompress <filename> 
+
+
+# gz
+gzip <filename>
+gzip -k -9 <filename> # centos8 之后, 保留原来的文件. -9 表示压缩比
+gzip -d <filename> # 解压缩
+# 可以对标准输入进行压缩
+ls -R / | gzip > test.gz
+
+# bzip
+bzip2 -9 -k <filename>
+bzip2 -d <filename>
+
+# xz
+xz -9 -k <filename>
+unxz <filename>
+
+# zip 
+du -sh /etc/ # 查看目录大小
+zip -r  zip_file.zip <dirname>
+unzip zip_file.zip
+unzip zipfile.zip -d <target_folder>
+zip -p # 增加密码
+
+```
+# 打包
+- c 打包
+- t 预览
+- f 文件
+- v 看过程
+```shell
+# 打包
+tar -cvf file.tar <dirname>
+tar -tvf file.tar # 预览tar 文件中的内容
+tar -xvf file.tar # 解包
+tar -xvf file.tar -C <target_dir> # 指定解包的目录
+
+# 打包目录下的文件, 不包含目录
+tar -C /etc/ -cvf /opt/etc.2.tar ./ # 这里-C 表示进入 /etc目录 ./表示所有文件
+# 调用压缩程序
+tar zcf file.tar.gz /etc # 把目录打包, 压缩成 gz 文件
+tar jcf file.tar.bz2 /etc # 调用 bzip2 来压缩, 需要先安装 bzip
+tar Jcf file.tar.xz /etc# 调用 xz 来压缩, 需要先安装 xz
+
+tar xf file.tar.xz -C <target_dir> # 通用解压 gz, bzip, xz 文件
+
+```
+拆分
+```shell
+split -b 1M -d filename filename_suffix # -d 表示数字小编号, 每个文件切成 1M
+cat filename* > filename # 合并这些文件
+```
+# RPM
+```shell
+# 查看软件信息
+RPM qi xz 
+```
+# 修改网卡名
+```shell
+vim /etc/default/grub 
+# 增加 if.names=0
+GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/root rd.lvm.lv=rl/swap rhgb quiet net.ifnames=0"
+# 需要执行后重启
+grub2-mkconfig -o /etc/grub2.cfg; reboot
+```
 # 初始化
 
 ### Rocky

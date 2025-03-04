@@ -257,7 +257,40 @@ sed '1~2r /etc/issue' # 在奇数行的后面, 读入 /etc/issue文件的内容
 # 取反
 seq 10 | sed -n '1~2!p'  # 打印出偶数
 
+# 后项引用
+echo abc123xyz | sed -r 's/(abc)(123)/\1new/' # \1 引用第一个(abc)
+echo abc123xyz | sed -r 's/(abc)(123)(xyz)/\3/' # 删除第一, 第二个分组, 只保留第三个分组
+# &表示搜索到的内容的引用
+echo abc123xyz | sed -r 's/.*/&new/' # 把搜索到的内容加上 666
+sed -r 's/^(SELINUX=).*/\1disabled/' /etc/sysconfig/selinux # 关闭 selinux
+# 查看 IP 地址
+ifconfig eth0 | sed -rn '2s/^.*inet ([0-9.]+).*/\1/p'
+
+
+sed -ir.bak 's/^(GRUB_CMDLINE_LINUX=.*)"$/\1 net.ifnames=0/'
+
+sed -i '/^(GRUB_CMDLINE_LINUX=/s#"$# net.ifnames=0#' /etc/default/grub
+
+# 搜索内容并替换构造新的文件
+sed 's/6379/6380/g' test.conf > test2.conf # g表示全局替代
+
+# 动态替换内容
+sed "s/6379/`id -u wang`/g" test.conf
+sed "s/6379/$UID/g" test.conf
+sed 's/6379/'$UID'/g' test.conf
+
+df | sed -rn 's/^\/dev\/sd.* ([0-9]+%).*/\1/p' 
 ```
+保持空间
+- 把读过的行, 暂时存起来.
+- 我们上面看到的模式空间
+- 两个空间和相互追加, 覆盖
+```shell
+sed -n 'n;p' File # n 读取匹配到的行的下一行覆盖只模式空间. 打印偶数行
+seq 10 | sed 'N;s/\n//' # N 读取匹配到的行的下一行追加到模式空间
+```
+
+
 # awk
 - 使用 awk 打印列
 
