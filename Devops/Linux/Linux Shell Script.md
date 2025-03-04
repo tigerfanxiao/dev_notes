@@ -1,24 +1,32 @@
-
-# shebang
+# Shell 脚本格式
+- 脚本在执行时, 如果中间有错误, 还是能够继续执行下去的
+shebang
+- 所有的解释性语言, 首行都要写 shebang
 在 linux 中运行的 python 脚本需要用
 ```shell
 #!/usr/bin/env python3
 # -*- coding=utf-8 -*-
 ```
 
-在 linux 中运行的 shell 脚本
-
+在 linux 中运行的 Bash shell 脚本
 ```shell
-#! /bin/bash
+#!/bin/bash
 ```
 
-执行脚本
+为脚本增加可执行权限
 ```shell
+# 加执行权限
 chmod u+x helloworld.sh
 ./helloworld.sh
 
 # 如果文件没有执行权限
 bash helloworld.sh
+
+# bash 接受标准输入
+echo hostname | bash 
+# 把脚本放在服务器上, 下载直接运行
+curl <url.sh> 2>/dev/null | bash # 把标准输出传给了 bash
+
 ```
 
 # Shell Variable 
@@ -38,12 +46,10 @@ unset firstname # delete the variable firstname
 # 把 shell variable 提升为环境变量
 export var_name 
 env # 查看所有的环境变量
-
-
 ```
 
 
-案例
+获取用户输入
 ```shell
 #! /bin/bash
 echo -n "Enter your name :"	  	
@@ -56,28 +62,6 @@ echo "Welcome $name"
 echo -n "Congratulations! You just created and ran your first shell script "
 echo "using Bash on IBM Skills Network"
 ```
-
-
-符号
-```shell
-# 注释
-; # 如果在同一行放两个命令, 则用;隔开
-* # 通配符
-? # 单个字符
-\ # escape
-touch file\ with\ space.txt # 有空格的文件
-"" # 里面的变量会被引用
-'' # 里面的变量不会被引用
-> # 覆盖, 重新构建
->> # 增加在文件后面
-2> # redirect standard error to file
-2>> # append error message to file
-
-< # redirect file content to standard input
-sort < data.txt
-tr “[a-z]” “[A-Z]” < a_text_file.txt
-```
-
 
 command substitution
 ```shell
@@ -121,11 +105,13 @@ command1 &
 # String
 
 ```shell
+# 命令返回值进行变量赋值
 today=$(date +%Y%m%d)
-weather_report=raw_data_$today # 字符串的拼接
+# 字符串的拼接
+weather_report=raw_data_$today
 ```
 
-condition
+# Condition
 ```shell
 # the number of the args read by command line
 if [[ $# == 2 ]] # integer comparison need double square bracket
@@ -204,8 +190,10 @@ echo ${my_array[@]}
 
 ```
 
-# for loop
+# Loop
 ```shell
+
+
 for item in ${my_array[@]}; do
   echo $item
 done

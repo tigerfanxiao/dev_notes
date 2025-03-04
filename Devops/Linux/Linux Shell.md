@@ -1,44 +1,4 @@
 
-# Common Commands
-```shell
-printenv SHELL # 查看当前适用的是什么 shell
-bash # 切换 bash
-whoami # 查看当前用户
-id # 当前用户id 和组 ID
-unane # 当前系统名称
-ps # running process
-top # running process and resource usage, cpu, memory, io
-df # mounted file system 
-man # reference manuel
-cp # copy file
-mv # move file
-rm # remove file
-touch # create empty file, update file timestamp
-chmod # change file permission
-
-grep # return lines in file matching pattern
-find # find files in directory tree
-ls
-pwd
-mkdir
-cd
-rmdir # remove directory
-cat
-more # print file page by page
-head -3 # print first N lines
-tail -3 <file_name> # print last 10 lines
-tail -f <file_name> # 查看一直在更新的文件末尾
-echo # print string or variable 
-zip # compress a set of files
-unzip # extract files from a compressed zip archive
-gzip
-# network
-hostname 
-ping 
-ifconfig # 需要安装 nettools
-wget # download file from URL
-
-```
 
 ### `id`
 ```shell
@@ -50,16 +10,7 @@ id -u -n # the name of user = whoami
 uname -s -r # kernal vesion
 uname -v # verbol version
 ```
-### `df`
-```shell
-df -h # human readable disk usage
-```
 
-### `ps`
-```shell
-ps # 查看当前用户运行的进程
-ps -e # 查看所有用户运行的进程
-```
 ### `top`
 默认是按照 cpu usage 排序的
 ```shell
@@ -89,19 +40,6 @@ wc pets.txt # count lines, word of file
 wc -l pets.txt # return how many lines
 wc -w pets.txt # word count
 wc -c pets.txt # character count
-```
-
-### `sort`
-```shell
-
-sort pets.txt # 把每一行按照首字母进行排序
-sort -r pets.txt # 逆向排序
-
-```
-
-### `uniq`
-```shell
-uniq pets.txt # 这是去除连续的重复的行
 ```
 
 ### `grep`

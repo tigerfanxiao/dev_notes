@@ -507,8 +507,6 @@ $ # 普通用户
 ```shell
 echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
 ```
-
-
 # Shell
 ### 环境变量
 ```shell
@@ -546,7 +544,6 @@ hash
 ```shell
 hash -r # 删除Shell 中所有缓存的命令
 ```
-
 ### 命令别名
 ```shell
 # 临时增加别名
@@ -945,8 +942,6 @@ chgrp groupname filename
 chown .groupname filename
 ```
 
-
-
 Linux 文件的所有权有两个维度. 使用`chown`修改
 - user
 - 组
@@ -1058,7 +1053,7 @@ cp -a /dev/zero /data/
 多个文件改名, 改成不同的
 ```shell
 # centos
-rename .txt .txt.bak *.txt # 多有*.txt 文件中的.txt 替换为.txt.bak
+rename .txt .txt.bak *.txt # 把所有的 *.txt 文件中的.txt 替换为.txt.bak
 rename .bak '' *.txt.bak # 把所有的.txt.bak 文件改成 .txt
 # ubuntu 上需要额外安装
 rename 's/\.txt/\.txt\.bak/' *.txt
