@@ -640,7 +640,8 @@ cat /etc/motd
 hostname 
 # 修改主机名
 hostnamectl set-hostname <hostname>
-
+# 查询主机地址
+hostname -I 
 ```
 长时间执行的命令, 关闭窗口还能执行
 ```shell
@@ -675,7 +676,7 @@ cat /proc/partitions
 uname -r
 # 查询架构
 uname -p
-# 查询发型版本
+# 查询操作系统发行版本
 cat /etc/os-release
 lsb_release -a
 
@@ -835,6 +836,12 @@ echo
 echo $PATH
 echo "$PATH" # 可以识别出变量
 ehco '$PATH' # 只打印字符串
+echo "CPU: \c" # \c表示不换行
+echo -n "CPU: " # - 表示不换行
+
+
+# \E[1;32m 表示绿色 \E[0m 表示关闭颜色
+echo -e "\E[1;32mCPU: \E[0m\c" # 绿色
 
 touch `date +%F`.log # 反向单引号为另一条命令的执行结果
 touch $(date +%F).log # $() 和反向单引号是等价的, 但是建议使用, 因为可以嵌套
@@ -1144,7 +1151,7 @@ csh # 切换为 cshell
 多行重定向
 - `>`是单向重定向, 每次按回车, 内容就会输出到文件
 - `<<EOF`其中 EOF 表示重定向结束, 是一个习惯
-- EOF后面不能包含空格 
+- **EOF后面不能包含空格, 否则会有语法错误** 
 ```shell
 # 覆盖
 cat > a.txt <<EOF

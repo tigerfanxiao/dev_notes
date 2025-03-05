@@ -29,6 +29,22 @@ curl <url.sh> 2>/dev/null | bash # 把标准输出传给了 bash
 
 ```
 
+# 错误提示
+- 错误有三种: 语法错误, 命令错误, 逻辑错误
+- 往往提示可以发现执行到发生错误的地方. 提示有 Syntax Error
+- 命令错误会继续执行. 比如某一条命令不存在
+```shell
+ # 扫描脚本中的语法错误, 但是不会执行
+ # 无法发现命令错误
+bash -n ./system_info.sh
+
+# 排查命令错误
+bash -x ./system_info.sh # 跟踪每一个命令执行的过程
+
+cat -A  test.sh # 查看看不见的字符, 特别是 EOF 后面有没有空格
+cat -n 18 test.sh # 查看对应的行号的
+vim 中 输入 :set list # 查看有没有不可见的空格错误
+```
 # Shell Variable 
 在 shell 中定义变量
 ```shell
@@ -241,4 +257,18 @@ echo $sum
 cut 的列变成数列
 ```shell
 col0=($(cut -d "," -f1 $csv_file))
+```
+
+
+# 脚本案例
+```shell
+#!/bin/bash
+# 打印 CPU 型号
+echo -e "CPU: \c"
+lscpu | sed -nr "s#^Model name: +(.*)#\1#p"
+head -n1 /proc/meminfo | tr -s " "
+echo -e "/dev/sda: \c" 
+lsblk /dev/sda | grep "^sda" | tr -s " " | cut -d" " -f4
+echo -n "OS: " 
+sed -rn 's/^VERSION="(.*)/\1/p' /etc/os-release
 ```
