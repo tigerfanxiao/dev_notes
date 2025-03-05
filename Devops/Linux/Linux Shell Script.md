@@ -29,6 +29,9 @@ curl <url.sh> 2>/dev/null | bash # 把标准输出传给了 bash
 
 ```
 
+# Shell 进程
+- `. test.sh` 这种用法是不推荐的. 因为这个脚本不会独立开启一个子进程, 而是直接在当前的bash进程中运行. 如果此时bash 进程有同名的变量, 就会发生变量替换
+- 如果是配置文件, 确实应该用 `. .bashrc` 因为就是要配置文件在当前 bash 进程中生效
 # 错误提示
 - 错误有三种: 语法错误, 命令错误, 逻辑错误
 - 往往提示可以发现执行到发生错误的地方. 提示有 Syntax Error
@@ -80,6 +83,7 @@ echo "using Bash on IBM Skills Network"
 ```
 
 command substitution
+- 当有很多文件公用相同的变量. 可以写一个变量的文件. 在别的脚本中调用这个文件就行
 ```shell
 # 有两种方法
 $(command)
@@ -87,8 +91,24 @@ $(command)
 
 here=$(pwd) # 把命令的结果保存到变量中
 
+nums=`echo {1..10}` # 命令的结果赋值给变量
+
 # 在数学运算中需要用(())
 sum=$(($n1+$n2))
+
+# 定义多行变量 
+course ="
+> Linux
+> golong
+> python
+"
+echo "$course" # 保持原格式打印变量
+echo $course # 不保持格式打印变量
+
+# 在脚本中直接调用脚本, 在当前进程中有效. 就可以直接引用脚本中定义的变量
+. /etc/os-release 
+# 删除变量
+unset variable_name 
 
 # 注意 ${} 是打印用的
 echo "${varaible_name}"

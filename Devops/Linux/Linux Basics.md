@@ -1436,7 +1436,16 @@ GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/roo
 # 需要执行后重启
 grub2-mkconfig -o /etc/grub2.cfg; reboot
 ```
-# 初始化
+# 进程
+
+```shell
+pstree -p # 查看进程树, 子进程
+
+echo $BASHPID # 查看 bash 进程的 ID
+
+
+```
+# 系统初始化
 
 ### Rocky
 1. 最小化安装
