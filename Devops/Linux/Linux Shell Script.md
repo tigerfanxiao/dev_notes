@@ -28,6 +28,40 @@ echo hostname | bash
 curl <url.sh> 2>/dev/null | bash # 把标准输出传给了 bash
 
 ```
+算数运算
+- shell不支持浮点数运算
+```shell
+# 需要使用 let
+let k = i + j 
+((k=i+j)) # 或者这种写法
+k=$[i-j] # 或者这种写法
+# 打印结果
+echo $k
+
+
+expr 10 + 20
+echo 10+20 | bc
+
+# random 变量 在 0-32767之间. 是 bash 内置的变量
+echo $RANDOM 
+echo $[RANDOM%80+1] # 1-80之间
+COLOR=$[RANDOM%7+31] # 31-37之间的 7 中颜色
+
+# 自增, 注意 i 还是要自增的
+i=2
+let i++
+let ++i
+
+# 二进制与运算
+echo $[4&5]
+# 取反
+echo $[!2]
+! true # fals5e
+! false
+# 异或
+x=10;y=20;x=$[x^y];y=$[x^y];x=$[x^y];echo x=$x y=$y
+
+```
 
 # Shell 进程
 - `. test.sh` 这种用法是不推荐的. 因为这个脚本不会独立开启一个子进程, 而是直接在当前的bash进程中运行. 如果此时bash 进程有同名的变量, 就会发生变量替换
@@ -48,6 +82,16 @@ cat -A  test.sh # 查看看不见的字符, 特别是 EOF 后面有没有空格
 cat -n 18 test.sh # 查看对应的行号的
 vim 中 输入 :set list # 查看有没有不可见的空格错误
 ```
+# 状态码
+```shell
+
+echo $? # 成功是 0
+
+# 自定义返回结果
+exit 100 # 最大支持 255
+exit # 提前退出程序 
+
+```
 # Shell Variable 
 在 shell 中定义变量
 ```shell
@@ -64,7 +108,29 @@ unset firstname # delete the variable firstname
 
 # 把 shell variable 提升为环境变量
 export var_name 
-env # 查看所有的环境变量
+declare -x var_name # 也可以用来声明环境变量
+# 查看所有的环境变量
+env 
+
+# 查看某个进程中的环境变量
+cat /proc/10710/environ
+
+# 常量
+readonly PI=3.1415926 # 这种方法定义的变量, 不能改动
+# 显示所有的常量
+readonly
+
+
+# 位置变量
+./myshell.sh arg1 arg2
+$1 # 在脚本后的第一个字符串
+${10} # 第 10 个参数
+$0 # 代表脚本本身
+$* # 所有参数
+$@ # 所有参数
+$# # 参数个数
+
+
 ```
 
 
@@ -114,15 +180,6 @@ unset variable_name
 echo "${varaible_name}"
 ```
 
-command line arguments
-```shell
-./myshell.sh arg1 arg2
-
-# 在脚本中用
-$1 
-$2 
-```
-
 command execution mode
 - Batch mode
 - concurrent mode
@@ -138,6 +195,29 @@ command1 & command2
 command1 &
 ```
 
+判断
+```shell
+# test 命令
+[ -e /xxx/ ] # 判断文件是否存在, 存在返回 0, 在脚本中更常用
+[ ! -e /xxx/ ] # 取反
+[ -a /xxx/ ] # 
+[ -r /xxx/ ] # 看当前用户是否有权限
+
+[ string1 = string2 ] # 比较两个字符串, 必须带有空格
+[ $score -ge 80 ] # 大于等于
+
+# 增强版, 支持正则表达式
+[[ $file =~ .*\.conf$ ]] # =~ 支持右侧写扩展的正则表达式, 判断文件后缀
+# == 支持通配符
+[[ $file == *.txt ]] 
+# 判断是否为空
+[ "$name" ] # 必须要加双引号, 不然无法判断带有空格的字符串
+
+(cmd) # 会创建一个子进程 
+{ cmd; cmd }
+
+test /xxx/ # 存在返回 0, 不常用
+```
 # String
 
 ```shell
@@ -292,3 +372,38 @@ lsblk /dev/sda | grep "^sda" | tr -s " " | cut -d" " -f4
 echo -n "OS: " 
 sed -rn 's/^VERSION="(.*)/\1/p' /etc/os-release
 ```
+规避 rm 执行风险
+```shell
+WARNING_COLOR="echo -e \E[1;31m"
+END="\E[0m"
+DIR=/tmp/`date +%F_%H-%M-%S`
+mkdir $DIR
+mv $* $DIR
+${WARNING_COLOR}Move $* to $DIR $END
+
+
+# 配置脚本
+chmod +x rm.sh
+alias rm="/data/scripts/rm.sh"
+```
+
+安全选项
+```shell
+set -u # 当发现调用没有定义的变量时会报错
+set +u # 关闭报错
+set -o # 查看所有安全指令
+set -e # 只要脚本出错就不执行
+# 结合起来
+set -u -e
+
+
+rm -rf $Dir/* # 当 Dir 变量不存在时, 会直接删除根目录
+```
+格式化输出 printf
+```shell
+printf "%10s" 1 2 3 4 # 字符串输出, 预留 10 个字符宽度, 默认是右对齐
+printf "%f\n" 1 2 3 4 # 打印出 4 行
+printf "%s %s\n" 1 2 3 4 5 6 # 每两个数字换行
+printf "%-10s" 10 # 左对齐
+```
+
