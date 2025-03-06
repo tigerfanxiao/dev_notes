@@ -66,6 +66,13 @@ x=10;y=20;x=$[x^y];y=$[x^y];x=$[x^y];echo x=$x y=$y
 # Shell 进程
 - `. test.sh` 这种用法是不推荐的. 因为这个脚本不会独立开启一个子进程, 而是直接在当前的bash进程中运行. 如果此时bash 进程有同名的变量, 就会发生变量替换
 - 如果是配置文件, 确实应该用 `. .bashrc` 因为就是要配置文件在当前 bash 进程中生效
+```shell
+# 在()中的子进程可以继承父进程, 但是只在子进程中有效
+name=magedu;(echo $name;name=49;echo $name;);echo $name
+# magedu m49 magedu
+
+cd /data; umask 666; touch app.key
+```
 # 错误提示
 - 错误有三种: 语法错误, 命令错误, 逻辑错误
 - 往往提示可以发现执行到发生错误的地方. 提示有 Syntax Error
@@ -227,7 +234,20 @@ today=$(date +%Y%m%d)
 weather_report=raw_data_$today
 ```
 
-# Condition
+# 条件语句
+```shell
+# -a 表示 and
+[ $ID = "ubuntu" -a $VERSION_ID = "20.04" ]
+# -o 表示 or
+[ $ID = "ubuntu" -o $ID = "rocky" ]
+# 使用正则表达式
+[[ $ID =~ rocky|cenos|rhel ]]
+
+# 短路与
+
+
+```
+
 ```shell
 # the number of the args read by command line
 if [[ $# == 2 ]] # integer comparison need double square bracket
