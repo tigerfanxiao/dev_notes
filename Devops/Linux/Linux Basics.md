@@ -1256,7 +1256,7 @@ set smtp-auth-user@29355@qq.com
 set smtp-auth-password=dfasdfasdf
 ```
 # 文件搜索
-### Locate
+### `locate`
 - 搜索速度非常快, 需要首先构建文件索引数据库
 - 搜索依赖于数据库
 ```shell
@@ -1265,7 +1265,7 @@ locate <filename> # 搜索文件
 locate -r '\.conf$' # 支持基本正则表达式
 ```
 
-### find
+### `find`
 - 优势在于搜索条件丰富
 - 直接搜索磁盘
 - 默认就是递归搜索当前目录下的所有文件
