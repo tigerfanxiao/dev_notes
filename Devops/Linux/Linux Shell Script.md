@@ -66,6 +66,7 @@ x=10;y=20;x=$[x^y];y=$[x^y];x=$[x^y];echo x=$x y=$y
 # Shell 进程
 - `. test.sh` 这种用法是不推荐的. 因为这个脚本不会独立开启一个子进程, 而是直接在当前的bash进程中运行. 如果此时bash 进程有同名的变量, 就会发生变量替换
 - 如果是配置文件, 确实应该用 `. .bashrc` 因为就是要配置文件在当前 bash 进程中生效
+- 管道符后面也会创建一个子进程
 ```shell
 # 在()中的子进程可以继承父进程, 但是只在子进程中有效
 name=magedu;(echo $name;name=49;echo $name;);echo $name
@@ -98,7 +99,50 @@ echo $? # 成功是 0
 exit 100 # 最大支持 255
 exit # 提前退出程序 
 
+
+IP=1.0.0.100; ping -c1 -W1 $IP &> /dev/null && echo "$IP is up" || { echo "$IP is unreachable"; exit;}
+
+# 查看脚本运行时间
+time bash <file.sh>
 ```
+# 配置文件
+全局配置文件
+``` shell
+/etc/profile
+/etc/profile.d/*.sh
+/etc/bashrc
+```
+个人配置文件
+```shell
+~/.bash_profile
+~/.bashrc
+```
+交互式shell 登录配置文件执行顺序
+```shell
+# 放在每个文件最前
+/etc/profile  # 放环境变量, 命令和脚本
+/etc/profile.d/*.sh
+/etc/bashrc # 放别名和函数, 或者环境变量
+~/.bash_profile
+~/.bashrc
+/etc/bashrc # 又执行一遍
+
+# 放在每个文件最后
+/etc/profile.d/*.sh
+/etc/bashrc
+/etc/profile
+/etc/bashrc # 又执行一遍
+~/.bashrc
+~/.bash_profile
+```
+非交互登录, 即使用 su 切换
+```shell
+# 执行次序
+/etc/profile.d/*.sh
+/etc/bashrc
+~/.bashrc
+```
+
 # Shell Variable 
 在 shell 中定义变量
 ```shell
@@ -126,7 +170,6 @@ cat /proc/10710/environ
 readonly PI=3.1415926 # 这种方法定义的变量, 不能改动
 # 显示所有的常量
 readonly
-
 
 # 位置变量
 ./myshell.sh arg1 arg2
@@ -233,7 +276,13 @@ today=$(date +%Y%m%d)
 # 字符串的拼接
 weather_report=raw_data_$today
 ```
-
+用户输入
+```shell
+# 提示用户输入
+read -p "Please input your name: " name
+# 同时对多个变量进行赋值
+read x y z <<< "xxx yyy zzz"
+```
 # 条件语句
 ```shell
 # -a 表示 and
@@ -250,18 +299,15 @@ weather_report=raw_data_$today
 
 ```shell
 # the number of the args read by command line
-if [[ $# == 2 ]] # integer comparison need double square bracket
-then
+if [[ $# == 2 ]] ; then
   echo "number of arguments is equal to 2"
 else
   echo "number of arguments is not equal to 2"
 fi
 
-if [ "$string_var" == "Yes" ]
-then 
+if [ "$string_var" == "Yes" ] ; then 
 	echo "the string is equal"
-elif [ "$string_var" == "No" ]
-then
+elif [ "$string_var" == "No" ] ; then
 	echo "the string is not equal"
 else
 	echo "no response is correct"
@@ -276,7 +322,19 @@ else
     echo "one or both conditions are false"
 fi
 ```
-
+case
+```shell
+case $n in 
+1|3|5) # 通配符
+	cmd
+	;; # 语法要求必须要有
+2|4|6)
+	cmd
+	;;
+*)     # 通配符
+	cmd
+esac
+```
 or
 ```shell
 if [ condition1 ] || [ condition2 ]
@@ -288,14 +346,36 @@ fi
 ```
 
 ```shell
-for file in $(ls) # [TASK 9]
-do
-	if (( `date -r $file +%s` > $yesterdayTS ))
-
-	then
-
-	fi
+# 使用多个字符串
+for i in a b c; do # 序列可以是回车, 空格, tab
+	echo i=$i
 done
+
+# 使用序列
+for i in {1..10}: do
+	echo i=$i
+done
+
+# 使用通配符
+for i in /data/scripts/*.sh; do
+	echo i=$i
+done 
+
+# 使用命令
+for i in {1..9}; do 
+	for j in `seq $i`; do
+		echo -en "${j}x${i}=$[i&j]\t" # 因为 \t是特殊符号, 所以要用-e
+	done
+	echo
+done
+
+break # 提前退出循环
+
+# c 语言风格写法
+for (( i=0; i<=6; i++ )) ; do
+  echo $i
+done
+
 ```
 
 logical operators
@@ -307,6 +387,7 @@ a -le 3 # 小于等于
 a -lt 3 # 小于
 a -ge 3 # 大于等于
 a -gt 3 # 大于
+a -eq 0 # 等于 0
 ```
 
 # arrays
@@ -339,10 +420,7 @@ for i in ${!my_array[@]}; do
   echo ${my_array[$i]} # i is index
 done
 
-N=6
-for (( i=0; i<=$N; i++ )) ; do
-  echo $i
-done
+
 
 # 0, 1, 2, 3, 4, 5
 for i in {0..5}; do
@@ -426,4 +504,37 @@ printf "%f\n" 1 2 3 4 # 打印出 4 行
 printf "%s %s\n" 1 2 3 4 5 6 # 每两个数字换行
 printf "%-10s" 10 # 左对齐
 ```
-
+用 case 写菜单
+```shell
+echo -en "\E[$RANDOM%7+31];1m"
+cat <<EOF
+请选择:
+1) 备份数据库
+2) 清理日志
+3) 软件升级
+4) 软件回滚
+5) 删库跑路
+EOF
+echo -en '\E[0m'
+read -p "请输入上面的数字 1-5: " MENU
+case $MENU in 
+1)
+	echo "执行备份数据库"
+	;;
+2)
+	echo "执行清理日志"
+	;;
+3)
+	echo "执行软件升级"
+	;;
+4)
+	echo "执行软件回滚"
+	;;
+5)
+	echo "执行删库跑路"
+	;;
+*)
+	echo "输入错误"
+	;;
+esac
+```
