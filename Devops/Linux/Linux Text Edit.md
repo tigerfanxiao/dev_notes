@@ -334,7 +334,14 @@ vim +10 test.txt # 直接进入第 10 行
 | Insert  | 键盘输入       | `jj` 或者 `esc`退出 Insert 到 Normal |                       |
 | Vistual | 选择内容       | `v` 进入或者退出 Visual 模式            | ctrl + v block select |
 | Command | 查找, 替换, 保存 | :                               |                       |
+### vim 配置
+```shell
+# 修改配置文件 .vimrc
+set ts=4 # 一个 tab 是 4 个空格
+set expandtab # 用空格代替 tab
+set ai # 自动缩进
 
+```
 
 ### 模式转换
 - Normal -> Insert

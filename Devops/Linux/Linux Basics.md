@@ -774,30 +774,149 @@ windows 使用的we年系统
 ls /lib/modules/`uname -r`/kernel/fs # 查看内核中支持的文件系统
 ```
 创建文件系统
-- 也就是 windows 中常说的格式化
+- 也就是 windows 中常说的格式化. 会有文件的元数据存储的地方
 - MBR 不能在扩展分区上创建文件系统. 只能在逻辑分区上创建
+- 断电可能造成文件系统破坏
+- 块是存放文件的最小单位. 一个文件至少得占一个块
+- 块的大小可能是 1K, 2K, 4K, 取决于分区的大小. 如果分区只有 100M, 那么块可能只有 1K
+- 保留块默认是 5%, 预留给 root 使用, 防止硬盘被普通用户写满
 ```shell
 lsblk -f # 查看文件系统
 
 mkfs.ext4 /dev/sdb1 
+# 创建完文件系统后, 就会产生一个 UUID
+blkid # 可以用来查看所有 UUID
+blkid /dev/xvdb1
+# /dev/xvdb1: UUID="fa1e16c0-8c76-42c3-9816-bceda1a21fb8" TYPE="ext4"
 
+# 创建目录用于挂载文件
+mkdir /logs
+mount /dev/sdb1 /logs # 这是临时性的挂载, 重启失效
+mount  -o ro /dev/sdb1 /logs # -o 表示挂载选项, ro 表示可读可写
+# 取消挂载
+umount /logs
+
+# 查看 ext4 文件系统的属性
+tune2fs -l /dev/sdb1 
+# 查看 xfs 文件系统的属性
+xfs_info /mysql
 ```
 
 挂载分区
 ```shell
-# 5. 创建目录用于挂载文件
-mkdir /app
-
-# 6. 查找UUID， 用于保存在 /etc/fstab中
-blkid /dev/xvdb1
-/dev/xvdb1: UUID="fa1e16c0-8c76-42c3-9816-bceda1a21fb8" TYPE="ext4"
-# 7. 在/etc/fstab 中增加下面的内容
+# 挂载持久化
+/etc/fstab
+# 添加下面的命令
 UUID=fa1e16c0-8c76-42c3-9816-bceda1a21fb8 /app  ext4    defaults.grpquota       1       2
+# defaults.grpquota 是挂载选项 
+# 第一个数字表示多长时间做一个文件系统的备份
+# 第二个数字表示开机是否文件系统完整性检测 0 表示不检测, 1 表示先检测分局, 2 表示 文件系统 1 检测完了, 再检测
+
+mount -a # 会触发读取 /etc/fstab 文件中新增加的行, 不能改变挂载的 option
+# 如果用使挂载 option 变化生效, 需要重新挂载
+mount -o remount /mysql
+
 # 8. 加载所有新的文件系统 -t = type
 mount -t ext4 /dev/xvdb1 /app
 # 9. 修改目录所属的组
 chgrp app /app
 
+```
+### swap 文件系统
+- 虚拟内存使用
+- 安装 k8s 的时候, 要禁用 swap. 因为硬盘性能太低, 不能满足 k8s 性能要求
+- swap建议放在硬盘的最外圈或者 ssd
+- 可以用分区的方式或者文件的方式当 swap 用, 但是分区的方式性能好
+- 如果是一个文件形式的 swap 是可以迁移的
+- swap 推荐 
+	- 系统内存低于 2G, RAM量的两倍
+	- 系统 2GB-8GB, 等于 RAM 的量
+	- 系统 8G-64G, 建议用 4G 到 RAM 的 0.5 倍
+	- 超过 64G, 独立负载(至少 4GB)
+```shell
+free -h # 查看内存
+
+# 禁用 swap
+# 在 /etc/fstab 中把 swap 的一行注释掉
+sed -i.bak `/swap/s@^@#@` /etc/fstab
+# 禁用所有 swap
+swapoff -a 
+# 启用 swap
+swapon -a
+# 查看本机 swap
+swapon -s # 实际上看到的是 /proc/swaps
+# 创建 swap 文件系统
+mkswap /dev/sdc1
+
+# 修改 swap 的优先级 /etc/fstab
+UUID=... swap swap defaults,pri=100 0 0
+swapoff -a
+swapon -a 
+
+# 删除 swap
+# 先删除 /etc/fstab 中的 swap 的行
+swapoff /dev/sdc1 3 
+
+
+# 创建文件形式的 swap
+dd if=/dev/zero of=/swapfile bs=1M count=2048
+# 格式化文件变成 swap 类型
+mkswap /swapfile 
+blkid /swapfile # 这种情况下, 因为文件太多,设备重启时可能找不到 uuid
+# 修改 /etc/fstab 使用文件名, 而不是 UUID
+/swapfile      none      swap    default     0 0
+chmod 644 /swapfile
+swapon -a # 使生效
+swapon -s # 查看
+
+# 迁移 swap 文件
+swapoff /swapfile # 禁用 swap
+mv /swapfile /dtat/ 
+# 修改 /etc/fstab
+/etc/swapfile      none      swap    default     0 0
+swapon -a # 启用
+
+# 修改使用 swap 的阈值
+cat /proc/sys/vm/swappiness
+sysctl -a | grep swappiness # 查看阈值
+vim /etc/sysctl.conf # 在文件中添加
+vm.swappiness = 30 # 可以修改为 0
+sysctl -p # 使生效
+```
+### 光盘
+- 光盘已经有文件系统, 所以只要挂载就能用了
+```shell
+sr0 # 光盘的设备名
+
+# 手工挂载
+mount /dev/sr0 /mnt 
+ls /mnt 
+
+# 自动挂载
+ls /misc/cd
+# 实现自动挂载需要安装软件
+yum -y install autofs
+systemctl enable --now autofs
+
+```
+### U盘
+- 不需要分区, 自动识别出一个设备名, 直接挂载
+- 注意 NTFS  Rocky 是不识别的, 无法挂载
+```shell
+# 查看 U 盘插入后的日志
+
+tail -f /var/log/messages
+modinfo ntfs # ubuntu 查看文件系统是否支持, 有 NTFS 驱动
+
+```
+
+### du df
+```shell
+# du 查看文件夹的大小, 及文件夹的子目录, 以 k 为单位
+du -sh /etc/ # -s 表示汇总,  查看目录的大小
+
+# df 是查看文件系统大小
+df -h 
 ```
 ### Quota
 ```shell
@@ -823,15 +942,19 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 
 ```
 ## LVM 虚拟卷管理
+- 分区不能动态调整大小的, 需要删除重建. 会影响业务
+- 避免单点故障
 ### RAID
 - 如果服务器做了 RAID, 那么所有的物理硬盘就会变成一个逻辑上的磁盘. 这个逻辑上的磁盘也就是虚拟卷LV
-- RAID可以坐在软件层面和硬件层面. RAID的概念
+- RAID可以做在软件层面和硬件层面. RAID的概念
 - Mirroring 数据被完全的复制
 - Striping 数据被放在多个磁盘中
 - Parity 专用的校验数据和恢复数据, 可能使用独立的磁盘来存储
+- RAID 扩容还是需要停服务, 关机
 
 ####  RAID0
--  No redundancy, 磁盘的利用率最高
+- 2 块硬盘以上 
+- No redundancy, 磁盘的利用率最高
 - 读和写可以在不同的磁盘区块完成, 提供IO效率
 ![[Pasted image 20250210063805.png]]
 
@@ -843,7 +966,7 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 - 用的很少
 - RAID2 是Bit level parity check
 - RAID3 是 Byte level parity check, dedicated parity disk
-- RAID4 是Block level parity check, dedicated parity disk
+- RAID4 是 Block level parity check, dedicated parity disk, 但是防止校验位的硬盘经常坏
 ![[Pasted image 20250210065459.png]]
 
 #### RAID5
@@ -853,12 +976,19 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 ![[Pasted image 20250210070043.png]]
 
 #### RAID6
+- 至少要 4 块硬盘
 - 类似于RAID5, 可以是有两个Parity Drive. 最多可以允许坏两个disk
-- 读性能增加, 写性能减弱. 因为有两个parity drive要写入
+- 读性能增加, 写性能减弱. 因为有两个parity drive要写入. 
 ![[Pasted image 20250210070205.png]]
 
 #### RAID10
-- 是RAID0和RAID1的结合. 至少需要4个盘. 2个盘存数据, 2个盘存mirroring
+- 推荐使用 RAID 10
+- 是RAID0和RAID1的结合. 至少需要4个盘.
+- 先把两个硬盘组成 raid 1
+- 再把两组硬盘组成 raid 0
+#### RAID01
+- 先把两个硬盘组成 raid 0
+- 在把两个组硬盘组成 raid 1
 
 ## LVM
 - VG Virtual group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
@@ -1084,7 +1214,7 @@ Change: 2025-01-21 01:19:22.637164053 +0100
 # 显示文件的节点编号 inode
 ls -i 
 # 每个分区可用的节点编号的最大值, 节点编号用量
-df -i
+df -i # 只能看到完成挂载的文件系统
 # 查看每个分区的空间占用
 df -h
 # 查看文件类型,如果是是设备文件就不能用 cat 查看
