@@ -248,6 +248,7 @@ sed -i.bak '/^#d/' fstab # 删除文件中的注释
 # 追加
 seq 10 | sed '5a hello' # 在第五行的后面追加 hello, 并自动忽略空格
 seq 10 | sed '5a\   hello' # 在第五行的后面追加 hello, 不自动忽略空格
+sed -i '/^abcd123$/a ABCD123' test.txt # 追加 ABCD123 到 abcd123
 # 替换
 seq 10 | sed '5c hello' 
 # 替换
@@ -319,7 +320,10 @@ pts/0
 ```
 # VIM
 ```shell
-vimtutor
+# vim 练习模拟换机
+vimtutor 
+
+vim +10 test.txt # 直接进入第 10 行
 ```
 # 模式
 - vim 有下面 4种模式

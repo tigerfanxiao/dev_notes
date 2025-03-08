@@ -743,8 +743,8 @@ quotacheck -cug /app
 ```shell
 # 可能要执行好多次下面的命令， 使用不同的host值才能扫描出来
 echo '- - -' > /sys/class/scsi_host/host0/scan
-echo '- - -' > /sys/class/scsi_host/host1/scan
-echo '- - -' > /sys/class/scsi_host/host2/scan
+for i in {0..32}; do echo '- - -' > /sys/class/scsi_host/host$i/scan; done
+
 lsblk # 查看新的硬盘是否出现
 
 # 定义别名来实现3个命令
@@ -1322,7 +1322,7 @@ find -size +6k # (6k, 无穷大)
 find -size -6k # (5K, 6K)
 
 # 按照时间搜索
-find -atime +30 # 30 天前触碰过的文件
+find /dir/ -atime +30 -delete  # 30 天前触碰过的文件, 删除
 find -mtime -7 # 过去7天内修改过的文件 
 
 # 按照权限搜索
@@ -1384,7 +1384,6 @@ yum install -y compress
 compress <filename> # 生成的文件.z, 源文件丢失
 compress -c <filename> > <zfile_name> # -c 是在屏幕上打印
 uncompress <filename> 
-
 
 # gz
 gzip <filename>

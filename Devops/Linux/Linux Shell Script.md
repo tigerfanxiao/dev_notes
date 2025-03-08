@@ -249,6 +249,7 @@ command1 &
 ```shell
 # test 命令
 [ -e /xxx/ ] # 判断文件是否存在, 存在返回 0, 在脚本中更常用
+[ -d /dir ] # 判断目录是否存在
 [ ! -e /xxx/ ] # 取反
 [ -a /xxx/ ] # 
 [ -r /xxx/ ] # 看当前用户是否有权限
@@ -269,7 +270,6 @@ command1 &
 test /xxx/ # 存在返回 0, 不常用
 ```
 # String
-
 ```shell
 # 命令返回值进行变量赋值
 today=$(date +%Y%m%d)
@@ -409,8 +409,6 @@ echo ${my_array[@]}
 
 # Loop
 ```shell
-
-
 for item in ${my_array[@]}; do
   echo $item
 done
