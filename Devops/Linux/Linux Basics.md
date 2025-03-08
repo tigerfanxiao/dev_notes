@@ -695,13 +695,17 @@ shutdown -h now # 立即关机
 ```
 
 # Storage 存储
+磁盘类型
+- SCSI 早期
+- SAS 家用 SATA
 ### 硬盘分区
+- 企业级硬盘一般在 15000 转
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
 一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
 
 ```shell
 # 1. 查看所有硬盘信息, 包括插在设备上的 U盘. 这些硬盘对应文件 /dev/xvdb
-lsblk 
+lsblk # 只是查看内存中的分区表
 # 2. 在硬盘上创建分区
 fdisk /dev/xvdb
 n # 创建新的分区
@@ -712,6 +716,73 @@ partprobe
 # 4. 在分区上创建文件系统
 mkfs -t ext4 /dev/xvdb1
 ```
+
+硬盘处理三个步骤
+1. 设备分区
+2. 创建文件系统
+3. 挂载新的文件系统
+分区的类别
+1. MBR, Master Boot Record 早先的方式, 局限性在单个硬盘不能超过 2T
+	1. 分区分为 主分区(最多 4 个),  1 个扩展分区(扩展分区里面再可以分逻辑分区). 
+	2. 主分区和扩展分区加起来不能超过 4 个
+2. GPT, 可以支持 128 个分区, 容量可以达到 8Z (T, P, E, Z, B, Y)
+	1. 本身会自动备份分区表. ubuntu 上默认使用 GPT
+BIOS 和 UEFI
+- BIOS Basic Input Output System 用于完成硬件的自检和操作系统的引导. 如果硬件自检有问题, 会有报警的声音. 在主板上, 仅仅支持 MBR, 空间只有 1M 内存, 只支持英语
+- EFI 是Intel 开发的, 后来标准规范化之后用 UEFI, 可以支持图形界面, 硬盘分区支持 GPT, 支持多国语言. 当前的笔记本都是支持 UEFI
+- 注意 BIOS + MBR 与 UEFI+ GPT 配合
+```shell
+# 查看分区
+fdisk -l /dev/sda # 看到 Disklabel type: dos 就是 MBR 分区
+hexdump -C -n 512 # 看前 512 /dev/sda
+
+dd if=/dev/sda of=/data/mbr bs=1 count=64 skip=446 # 从源文件的 447 开始读 64 个字节
+hexdemp -C /data/mbr 
+# 分区表一定是异地备份, 否则硬盘损坏也是看不了的
+
+# 破坏分区表
+dd if=/dev/zero of=/dev/sda bs=1 count=64 seek=446 # 从目标文件的 447 开始修改
+```
+分区工具
+- fdisk 管理 MBR 分区
+- gdisk 管理 GPT 分区
+- parted 高级分区操作, 可以是交互和非交互方式. 很危险不建议用
+- 可能遇到分区没有马上生效, 需要重启服务器. 此时使用 `partprobe` 把内存和硬盘的分区表进行同步
+```shell
+# mbr 分区
+fdisk /dev/sdb
+# 进入交互式界面
+m # 帮助
+p # 打印现有的分区
+n # 创建
+d # 删除
+w # 存盘退出
+q # 不存盘退出
+```
+### 文件系统
+如果没有文件系统, 就没有文件的概念. 所以的数据就是 0 1 存放在硬盘上
+linux中常见的文件系统
+- xfs 支持的硬盘和分区空间更大, 支持 8E, 不支持文件系统的缩减, 只能扩展
+- ext4 支持 1E, 支持缩减. ubuntu 偏好
+- iso9660 只光盘特殊的文件系统
+- swap
+windows 使用的we年系统
+- FAT32
+- NTFS
+- exFAT
+```shell
+ls /lib/modules/`uname -r`/kernel/fs # 查看内核中支持的文件系统
+```
+创建文件系统
+- 也就是 windows 中常说的格式化
+- MBR 不能在扩展分区上创建文件系统. 只能在逻辑分区上创建
+```shell
+lsblk -f # 查看文件系统
+
+mkfs.ext4 /dev/sdb1 
+
+```
+
 挂载分区
 ```shell
 # 5. 创建目录用于挂载文件
@@ -1440,13 +1511,20 @@ cat filename* > filename # 合并这些文件
 # 查看软件信息
 RPM qi xz 
 ```
-# 修改网卡名
+# 网络
+### 修改网卡名
 ```shell
 vim /etc/default/grub 
 # 增加 if.names=0
 GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/root rd.lvm.lv=rl/swap rhgb quiet net.ifnames=0"
 # 需要执行后重启
 grub2-mkconfig -o /etc/grub2.cfg; reboot
+```
+### 加上 IP 地址
+
+```shell
+ip a a 10.0.0.8/24 dev ens160
+
 ```
 # 进程
 
