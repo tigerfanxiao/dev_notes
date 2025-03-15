@@ -1636,12 +1636,33 @@ tar xf file.tar.xz -C <target_dir> # 通用解压 gz, bzip, xz 文件
 split -b 1M -d filename filename_suffix # -d 表示数字小编号, 每个文件切成 1M
 cat filename* > filename # 合并这些文件
 ```
-# RPM
+# 软件管理
+- 大量的软件可能是没有包的, 只是提供了源码, 需要编译安装
+- ABI 应用程序的二进制接口. windows 和 linux 的二进制程序默认是不兼容的
+	- ELF (Exectable and Linable Format) Linux
+	- PE () Windows
 ```shell
 # 查看软件信息
 RPM qi xz 
+
+
+tar xf nginx-1.20.2.tar.gz -C /usr/local/src # 习惯是把源码解压到这个目录
+cat `find -name "*.c"` | wc -l # 统计所有文件的行数
+find -name "*.c" | xargs cat | wc -l
 ```
 # 网络
+
+```shell
+# 需要安装 net-tools 才能使用 mii-tool
+apt install net-tools
+# mii-tools 查看网卡状态
+mii-tool ens33
+ens33: negotiated 1000baseT-FD flow-control, link ok
+
+# 查看网卡详细状态, 速率
+ethtool ens33 
+ethtool -i ens33 # 查看网卡型号
+```
 ### 修改网卡名
 ```shell
 vim /etc/default/grub 
