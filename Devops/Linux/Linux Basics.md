@@ -697,11 +697,12 @@ shutdown -h now # 立即关机
 # Storage 存储
 磁盘类型
 - SCSI 早期
-- SAS 家用 SATA
+- SAS 是企业级存储, 家用对标的协议的是 SATA
 ### 硬盘分区
 - 企业级硬盘一般在 15000 转
 默认情况下, 硬盘的命名为 `sda`, `sdb`, `sdc`延续下去
 一个硬盘下, 有多个分区. 记为 `sda1`, `sda2`, `sda3`
+- ext 协议有 lost+found
 
 ```shell
 # 1. 查看所有硬盘信息, 包括插在设备上的 U盘. 这些硬盘对应文件 /dev/xvdb
@@ -1001,6 +1002,7 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 - 由多个物理卷组成一个虚拟卷组 Volume Group
 - VG Volume group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
 - LV Logical volume 虚拟卷. 这个就是独立的分区了
+- 在生产中, 对根目录扩容是比较常见的
 ![[Pasted image 20250316073317.png]]
 分区的类型
 - 8e Linux LVM
@@ -1092,7 +1094,78 @@ lvreduce -L 4G /dev/testvg/mysql_lv
 mount -a  # 如果缩减模块了文件系统, 在这一步就会报错
 # 尝试修复文件系统
 fsck /dev/mapper/testvg-mysql_lv
+# 因为缩容失败, 重新构建文件系统
+mkfs.ext4 /dev/mapper/testvg-mysql_lv
+# UUID 该表, 需要重新挂载
+blkid # 查看 uuid
+vim /etc/fstab
+mount -a
 ```
+逻辑卷快照
+- 快照会在卷组中开辟一块区域
+- 快照一开始不会保存数据. 只要在发现数据变动时, 才会把变动之前的数据保存在快照中
+- 快照的大小取决于逻辑卷中文件的大小. 如果现有文件很小, 则快照可以也很小
+```shell
+# 创建快照
+lvcreate -n mysql_snapshot -s -L 100M -p r /dev/testvg/mysql_lv  # -s 表示快照逻辑卷, -p r 表示设置成只读
+# 查看快照, 会有 snopshot status 项
+lvdisplay 
+
+# 把快照挂载到 /mnt 
+mount /dev/testvg/mysql_snapshot /mnt
+ls /mnt # 看得到文件, 但是文件内容是在源逻辑卷中 
+
+
+# 恢复快照
+# 取消两个磁盘的挂载
+umount /mnt
+umount /mysql
+# 使用命令还原快照, 但是快照会消失
+lvconvert --merge /dev/testvg/mysql_snapshot # 写快照名子
+# 挂载回去
+mount /dev/testvg/mysql_lv /mysql
+
+# 手工拷贝
+mount /dev/testvg/mysql_lv /mysql
+mount /dev/testvt/mysql_snapshot /mnt
+\cp /mnt/* /mysql/
+
+# 删除快照
+umount /mnt
+lvremove /dev/testvtg/mysql_snapshot
+
+```
+拆除硬盘
+```shell
+# 查看物理卷是否被使用
+pvdisplay # 查看 Allocated PE
+# 查看 VG 的空间, 判断是否有足够的 PE
+vgdisplay
+# 把这儿磁盘搬迁到同一个 VG 中的别的磁盘上
+pvmove /dev/sdb2 
+# 从 vg 中移除物理卷
+vgreduce <vg_name  /dev/sdb2
+pvremote /dev/sdb2 
+# 如果是一个孤立硬盘的话, 就是可以拆走了
+```
+删除逻辑卷
+```shell
+# 删除挂载
+vim /etc/fstab
+# 取出挂载
+umount /mysql
+umount /log
+# 删除逻辑卷
+lvremove /dev/testvg/mysql_lv
+lvremote /dev/testvg/log
+# 删除卷组
+vgremove testvg
+# 删除物理卷
+pvremote /dev/sd{c,b1}
+# 拆除硬盘
+
+```
+
 # File Management
 # 文件操作
 
