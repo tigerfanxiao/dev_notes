@@ -850,7 +850,7 @@ mkswap /dev/sdc1
 
 # 修改 swap 的优先级 /etc/fstab
 UUID=... swap swap defaults,pri=100 0 0
-swapoff -a
+swapoff -a # 禁用 swap
 swapon -a 
 
 # 删除 swap
@@ -892,7 +892,7 @@ sr0 # 光盘的设备名
 mount /dev/sr0 /mnt 
 ls /mnt 
 
-# 自动挂载
+# 自动挂载, 可以查看光盘里的内容
 ls /misc/cd
 # 实现自动挂载需要安装软件
 yum -y install autofs
@@ -903,6 +903,10 @@ systemctl enable --now autofs
 - 不需要分区, 自动识别出一个设备名, 直接挂载
 - 注意 NTFS  Rocky 是不识别的, 无法挂载
 ```shell
+lsblik # 查看 U 盘的盘符
+sudo mkdir -p /mnt/usb
+# 把优盘挂载在 mnt/usb下
+sudo mount /dev/sdb1 /mnt/usb # 
 # 查看 U 盘插入后的日志
 
 tail -f /var/log/messages
@@ -1649,7 +1653,109 @@ RPM qi xz
 tar xf nginx-1.20.2.tar.gz -C /usr/local/src # 习惯是把源码解压到这个目录
 cat `find -name "*.c"` | wc -l # 统计所有文件的行数
 find -name "*.c" | xargs cat | wc -l
+
+# 查看程序依赖的库
+which ls
+ldd /usr/bin/ls
 ```
+
+ 包管理器
+ - 安装是二进制可执行命令
+ - rpm 命令不能解决包的依赖关系, yum 可以
+ - 安装和卸载都有依赖关系
+```shell
+# 下面这个命令不能解决依赖关系, 很少用
+rpm -ivh <package_path> # -h 安全进度条
+# 查询软件是否已经成功装上
+rpm -q <package_name>
+# 查询软件的版本, 描述, 安装时间
+rpm -qi <package_name>
+# 查询没有安装的包
+rpm -qpi <package_name>
+rpm -ql <package_name> # 查询包里的文件
+rpm -qf /etc/passwd # 查看文件属于哪个包
+rpm -q vstfd || yum vstfd
+rpm -e # 卸载, 不太使用
+
+```
+镜像仓库
+```shell
+cd /etc/yum.repos.d/
+Rocky-BaseOS.repo
+# 阿里云镜像, 找到有 repodata 的文件夹(元数据)所在的文件夹
+https://developer.aliyun.com/mirror/
+# 创建的仓库必须是 repo 后缀的, 文件名任意, 必须在 /etc/repos.d 目录下
+
+[base] # 仓库名
+baseurl=https://mirrors.aliyun.com/centos/7/os/x86_64/
+gpgcheck=0
+
+# 列出现在仓库的列表
+yum repolist #-v 看到每个仓库包的个数
+yum list package
+
+```
+仓库
+- 一般是需要 base 仓库, AppStream 仓库, extras(不太常用的包), PowerTools
+- 如果一个包在 Appstream和 ngix 的仓库里都有, 则用 `yum list nginx`列出的是版本高的库
+```shell
+[BaseOS]
+name=aliyun BaseOS
+baseurl=https://mirros.aliyun.com/rockylinux/8/BaseOS/x86_64/os/
+gpgcheck=1 # 可以省略
+gpgkey=https://mirros.aliyun.com/rockylinux/RPM-GPG-KEY-rockyofficial
+
+[Appsteam]
+name=aliyun Appstream
+baseurl=https://mirros.aliyun.com/rockylinux/8/AppStream/x86_64/os/
+gpgkey=https://mirros.aliyun.com/rockylinux/RPM-GPG-KEY-rockyofficial
+
+[extras]
+name=aliyun Appstream
+baseurl=https://mirros.aliyun.com/rockylinux/8/AppStream/x86_64/os/
+gpgkey=https://mirros.aliyun.com/rockylinux/RPM-GPG-KEY-rockyofficial
+
+[PowerTools]
+name=aliyun Appstream
+baseurl=https://mirros.aliyun.com/rockylinux/8/AppStream/x86_64/os/
+gpgkey=https://mirros.aliyun.com/rockylinux/RPM-GPG-KEY-rockyofficial
+enable=1 # 表示使用此仓库, 0 表示禁用
+
+# 本地磁盘上也有一个路径看gpg
+ls /etc/pki/rpm-gpg 
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockofficial
+```
+卸载
+```shell
+#  rocky8 之后会把依赖的包也卸载
+yum remove nginx 
+```
+下载包不安装
+- 用于把文件和依赖复制到 u 盘中, 带去没有网络的地方安装包
+```shell
+# 默认只下载相关的包默认到 /var/cache/yum/x86_64/7/
+yum install package --downloadonly -downloaddir=/data/httpd httpd
+ls /data/httpd
+# 复制到优盘后, 在新的服务器上
+rpm -ivh /data/*.rpm # 使用文件安装
+```
+企业级仓库 epel
+```shell
+yum list epel* # 模糊查询 epel 包在哪个仓库
+yum install -y epel-release # 会自动给你配好仓库
+yum uninstall -y epel-release # 卸载自动配置的仓库
+
+# 自己配置
+[epel]
+baseurl=https://mirros.aliyun.com/epel/8/Everything/x86_64
+	   =https://备用 url
+
+# 安装一个包
+yum install sl -y 
+
+```
+在公司内部搭建私有仓库服务器
+
 # 网络
 
 ```shell
@@ -1685,6 +1791,17 @@ pstree -p # 查看进程树, 子进程
 echo $BASHPID # 查看 bash 进程的 ID
 
 
+```
+### telnet 
+```shell
+# 安装 telnet
+yum install -y telnet 
+
+telnet youtube.com 443
+### 如果连接正常反馈如下
+Trying 142.250.190.206...
+Connected to youtube.com.
+Escape character is '^]'.
 ```
 # 系统初始化
 
