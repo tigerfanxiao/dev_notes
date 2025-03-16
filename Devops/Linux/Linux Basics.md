@@ -977,6 +977,7 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 - 至少要3个硬盘. 最多可以允许一个硬盘坏了. 当时重构数据需要花很长的时间
 - 在安防监控中经常使用RAID
 - no dedicated parity disk
+- 在 3 块硬盘的情况下, 可用空间是 2/3 因为一块磁盘需要做 parity
 ![[Pasted image 20250210070043.png]]
 
 #### RAID6
@@ -994,9 +995,104 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 - 先把两个硬盘组成 raid 0
 - 在把两个组硬盘组成 raid 1
 
-## LVM
-- VG Virtual group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
+## LVM 逻辑卷
+- 是一种软件技术, 可以用来动态扩缩容
+- 首先为每一个 Linux 块设备(分区或者硬盘)分配一个物理卷的标签. 和 RAID 不同的是, 块设备可以是不同大小的
+- 由多个物理卷组成一个虚拟卷组 Volume Group
+- VG Volume group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
 - LV Logical volume 虚拟卷. 这个就是独立的分区了
+![[Pasted image 20250316073317.png]]
+分区的类型
+- 8e Linux LVM
+- 83 普通分区
+- 82 SWAP
+- PE 表示物理卷的盘区, 给逻辑卷分配的最小单位, 在创建卷组的时候指定
+```shell
+# 安装 LVM 工具
+yum -y install lvm2
+
+# 创建物理卷
+pvcreate /dev/sdb1 /dev/sdc # 这个命令可以单独敲
+pvs # 查看物理卷
+pvdisplay # 查看物理卷详情
+
+# 创建卷组
+vgcreate -s 16M vg_name /dev/sd{b1,c}  # -s 指定 PE 大小为 16M
+# 查看 vg
+vgs
+
+# 创建逻辑卷
+lvcreate -n <lv_name> -L 6G <vg_name> # 针对数据库进行扩容, -l表示 PE 的个数, -L 指定容量
+# 查看逻辑卷
+lvdisplay
+# 可以发现有三个名字对应逻辑卷
+/dev/testvg/log_lv
+/dev/mapper/testvg-log_lv
+../dm-1
+
+# 创建文件系统
+mkfs.ext4 /dev/testvg/mysql_lv
+# 查看文件系统
+blkid
+# 提前创建挂载点文件夹爱
+mkdir /log
+mkdir /mysql
+# 挂载文件系统
+vim /etc/fstab
+# 挂载
+mount -a
+# 查看挂载后的文件目录
+df
+
+```
+测试逻辑卷性能
+```shell
+# 有缓存机制, 每次执行会变得更快, 性能不差的
+dd if=/dev/zero of=/mysql/test.img bs=1M count=1024
+
+```
+逻辑卷扩容
+- 逻辑卷扩容完毕后, 还需重新加载文件系统
+```shell
+# 扩充的容量不能超过 vg 剩余的容量
+lvextend -l +318 /dev/testvg/mysql_lv # 使用 vgs 查看剩余的 PE, 
+lvextend -l +50%free /dev/testvg/mysal_lv # 把剩余空间的 50%都用完
+
+# 对文件系统进行扩容, 只支持 ext4
+resize2fx /dev/testvg/mysql_lv
+# 对文件系统进行扩容, 只支持 xfs
+xfs_growfs /dev/testvg/log_lv
+
+# 推荐, 根据现有的文件系统, 进行扩容
+lvextend -r -l +50%free /dev/testvg/mysal_lv # -r 表示根据现有的文件系统扩容
+```
+扩展卷组
+```shell
+pvcreate /dev/sdb2
+vgextend testvg /dev/sdb2
+vgdisplay
+lvextend -r -L 8G  /dev/testvg/log_lv # 把逻辑卷扩充为 8G, 如果是+8G表示在原来的文件系统上新增 8G
+```
+缩容
+- 当硬盘盘位都装满了, 某些磁盘利用率低的场景
+- 缩减有风险, 容易造成数据破坏, 建议先备份, 而且只能离线缩减. 需要把文件夹的挂载关系取消
+- 只支持 ext4, 不支持 xfs
+```shell
+
+# 1. 取消挂载
+umount /mysql
+# 2. 做文件系统的完整性
+df -hT # 查看文件系统的类型
+fsck -f /dev/testvg/mysql_lv 
+# 3. 缩减文件系统
+resize2fs /dev/testvg/mysql_lv 4G # 目标缩减到 4G
+# 4. 缩减逻辑卷
+lvreduce -L 4G /dev/testvg/mysql_lv 
+# 5. 重新挂载文件系统
+mount -a  # 如果缩减模块了文件系统, 在这一步就会报错
+# 尝试修复文件系统
+fsck /dev/mapper/testvg-mysql_lv
+```
 # File Management
 # 文件操作
 
