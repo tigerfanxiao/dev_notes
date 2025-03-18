@@ -1,7 +1,7 @@
 # Shell 脚本格式
-- 脚本在执行时, 如果中间有错误, 还是能够继续执行下去的
+- 脚本在执行时, 如果中间有命令执行错误(语法除外), 还是能够继续执行下去的
 shebang
-- 所有的解释性语言, 首行都要写 shebang
+- 所有的解释性语言, 首行都要写 shebang, 比如python
 在 linux 中运行的 python 脚本需要用
 ```shell
 #!/usr/bin/env python3
@@ -13,22 +13,25 @@ shebang
 #!/bin/bash
 ```
 
-为脚本增加可执行权限
+### 执行脚本的方法
 ```shell
-# 加执行权限
+# 1. 加执行权限
 chmod u+x helloworld.sh
 ./helloworld.sh
 
-# 如果文件没有执行权限
+# 2. 如果文件没有执行权限, 可以通过命令来执行
 bash helloworld.sh
 
-# bash 接受标准输入
+# 3. bash 接受标准输入
 echo hostname | bash 
-# 把脚本放在服务器上, 下载直接运行
+
+# 4. 把脚本放在服务器上, 下载直接运行
 curl <url.sh> 2>/dev/null | bash # 把标准输出传给了 bash
 
 ```
-算数运算
+
+# 脚本
+### 算数运算
 - shell不支持浮点数运算
 ```shell
 # 需要使用 let
@@ -37,8 +40,7 @@ let k = i + j
 k=$[i-j] # 或者这种写法
 # 打印结果
 echo $k
-
-
+# 使用 expr 表达式
 expr 10 + 20
 echo 10+20 | bc
 

@@ -1,25 +1,37 @@
-
-
-在powershell 中安装AWS CLI
-
+# How to install aws-cli
+## Install aws-cli
+### Install aws-cli through powershell
 ```powershell
 Invoke-WebRequest -Uri "https://awscli.amazonaws.com/AWSCLIV2.msi" -OutFile "AWSCLIV2.msi"
 
 Start-Process -Wait -FilePath ".\AWSCLIV2.msi"
 
 # 重启powershell之后
-aws --version
+aws --version # return the following info
 aws-cli/2.12.7 Python/3.11.4 Darwin/23.6.0 source/arm64 prompt/off
 
 ```
-
-简单配置用户
-```powershell
+### Install aws-cli on mac
+```shell
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+# check if aws cli installed successfully
+aws --version
+```
+## config user profile
+```shell
+# in cmd line
 aws configure --profile <user_name>
 aws_access_key_id = <AK>
 aws_secret_access_key = <SK>
 Default region name [None]: us-east-1
 Default output format [None]: json
+```
+config file
+```shell
+[profile xiao]
+region = eu-west-1
+output = json
 ```
 
 # credencial
@@ -31,8 +43,6 @@ Default output format [None]: json
 aws_access_key_id = <AK>
 aws_secret_access_key = <SK>
 ```
-
-
 
 ```shell
 # 创建S3 bucket
