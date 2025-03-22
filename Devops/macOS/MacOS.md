@@ -15,5 +15,7 @@ resetpassword
 # open finder in current directory
 open . 
 
-
+# 查看磁盘
+diskutil list
+diskutil list external # 查看U盘
 ```
