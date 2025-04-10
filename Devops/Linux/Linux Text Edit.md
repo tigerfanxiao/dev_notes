@@ -9,11 +9,9 @@ cat -n a.txt
 tac a.txt
 # 同一行内的内容, 倒过来显示
 rev a.txt
-
 # 查看文件内容, 并显示行号, 但是空行不计算
 nl a.txt
 ```
-
 # More
 - more 很少用, more 的问题是文件翻到底, 会自动退出
 # Less

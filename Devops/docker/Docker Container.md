@@ -54,7 +54,6 @@ docker cp ./t.sh container_id:/t.sh
 # 把容器中文件 copy 到本地中
 docker cp container_id:/test.txt text.txt
 ```
-
 ### Best Practice
 - 容器的正常做法, 是要用一个程序定在 console 口里定在前台运行的. 所以一般也不是用 attach 进去操作容器, 因为主进程顶住了 console 口, 操作不了. 如果进入容器操作, 需要使用vty
 - 尽量使用`-d`, 否则一个一直在运行的程序会顶住你的 console 口运行. 你没法操作, 用 ctrl + C 也退不出来
@@ -76,10 +75,7 @@ stress --vm 1 --vm-bytes 16000m -v # 关联16G内存, 如果物理内存只有8G
 stress --cpu 1
 
 ```
-
-
 指定容器的内存
-
 ```shell
 
 docker run -it --name qytang-stress --memory=200M centos8

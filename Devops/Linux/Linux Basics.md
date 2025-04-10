@@ -1,7 +1,7 @@
 # GUI
 ```shell
 ctrl + alt + f3 # 切换到非 gui
-ctrl + alt + f2 # 切换到gui
+ctrl + alt + f2 # 切换到 gui
 ```
 
 # Linux SSH
