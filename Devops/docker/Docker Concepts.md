@@ -1,14 +1,9 @@
-
-Docker 架构
+# Docker Architecture
 Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
-
 注意: 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
-
 # 名词解释
 * Container 我们可以把每个 container 认为是一个进程
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
-
-
 ### Docker和虚拟机的区别
 虚拟化的颗粒度不同
 1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 简单地理解就是多个 docker 共享一个操作系统内核, 特别是 linux 尽管有这么多不同的版本, 但是 linux 内核是各种版本共用的. 但是类似 Vmware 这样的虚拟机, 每一个虚拟机就有独立的操作系统内核, 所以容易造成资源限制
