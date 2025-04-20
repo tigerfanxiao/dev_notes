@@ -1,9 +1,19 @@
 # Docker Architecture
-Docker 是 CS 结构的, 有 client 部分和 Server 部分. client 执行docker build等命令, docker Daemon(守护进程) 收到命令后控制容器和镜像. 如果本地没有镜像, 则到 docker hub (Registry)下载
-注意: 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
+Docker 是 CS 结构的, 有 client 部分和 Server 部分. 可以认为 docker Daemon(守护进程)  为 Server 端, 每个容器都是一个子进程, 可以看做 client 端, 每个子进程之间是隔离的(在内存上是隔离的). 守护进程还有 systemd 可以查看. 子进程之间的隔离是通过宿主机的 name space技术来实现的
+容器不能访问宿主机的资源, 宿主机使用chroot 技术把容器锁定到一个指定的运行目录里
+```shell
+/var/lib/containerd/io.containerd.runtime.v1.linux/moby/容器 ID
+```
+- 每个容器有独立的进程编号, 在容器内部可以通过 hostname 命令查看
+- 容器没有内容, 在容器中运行 uname 命令会直接回显宿主机的内核
+- 在Linux 中一定有一个 Pid 为 1 的进程(init/systemd) 是其他所有进程的父进程. 那么在每个容器中也要有一个父进程来管理器其下的子进程. 每个容器的主进程通过宿主机内核中的 PID namespace 进行管理. 比如一个 nginx 的容器的 PID 为 1 的进程就是 nginx
+### 最佳实践
+- 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
+
 # 名词解释
 * Container 我们可以把每个 container 认为是一个进程
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
+
 ### Docker和虚拟机的区别
 虚拟化的颗粒度不同
 1. 虚拟化技术的颗粒度是系统级别的. 容器化技术是以进程为颗粒度. 简单地理解就是多个 docker 共享一个操作系统内核, 特别是 linux 尽管有这么多不同的版本, 但是 linux 内核是各种版本共用的. 但是类似 Vmware 这样的虚拟机, 每一个虚拟机就有独立的操作系统内核, 所以容易造成资源限制
@@ -90,7 +100,6 @@ docker logs <container id>
 docker logs -tf <container id > # 打印日志不停
 
 
-
 # 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
 docker rm <container_id> 
 
@@ -120,6 +129,48 @@ docker stats
 docker status <container_name>
 ```
 
+# 容器调试
+```shell
+
+# 判断容器的 linux 版本是 debian, 一般用 debian 或者 alpine 比较多
+# 查看用 apt 方法来安装工具
+cat /etc/issue
+Debian GNU/Linux 10 \n \l
+
+# 容器网络调试需要安装的基础命令
+apt-get update
+apt-get install procps # top 命令
+apt-get install net-tools
+apt-get install iputils-ping # ping 命令
+# 用一个命令来执行
+apt-get update && apt-get install procps net-tools iputils-ping
+```
+docker 用 iptables 使用宿主机的 IP地址, 进行地址转换出去
+- 所以需要确保宿主机的 IPtable 运行正常
+```shell
+
+iptables -t nat -vnL
+# 如果清空了 IPtables, 则会造成容器都挂了. 需要重启容器才能恢复
+iptables -t nat -F 
+```
+网桥 docker0
+在一个宿主机上的容器之间的通信是二层的, 通过 docker0 这个网桥来传输. 不需要通过宿主机的网卡, 除非是跨宿主机的通信
+```shell
+# 在宿主机上安装 bridge 查看命令
+apt-get get bridge-utils
+apt-get install bridge-utils
+
+brctl show # 查看服务器上创建了 docker0 的网桥, 默认使用 172.17.0.1/16
+
+# 在容器里执行 arp -a 可以查看到别的容器的 mac 地址, 和对应的 172.17.0.0/16中的
+```
+内核优化
+```shell
+cat /etc/sysctl.conf
+net.ipv4.ip_forward=1 # 必须配置, 否则不通
+
+vm.swappiness=0
+```
 ### `docker restart` parameters
 
 -   `no` - Never restart

@@ -7,6 +7,8 @@ yum -y install net-tools
 
 # debian
 apt-get install net-tools
+apt-get install procps # top 命令
+apt-get install iputils-ping # ping 命令
 
 
 # 查询本机接口的 ip 地址

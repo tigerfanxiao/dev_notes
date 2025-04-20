@@ -136,8 +136,13 @@ grep -c root /etc/passwd
 # 只显示匹配到的字符串
 grep -o root /etc/passwd
 
-# 静默模式, 与 $? 连用, 判断上一个命令是否有返回
-grep -q 
+# quiet mode, 与 $? 连用, 判断上一个命令是否有返回
+grep -q root /etc/passwd
+if [ $? -eq 0 ]; then
+    echo "Command succeeded"
+else
+    echo "Command failed"
+fi
 
 # 后续行数
 grep -A3 root /etc/passwd # 在 root 后面的 3 行, After
