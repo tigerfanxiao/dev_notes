@@ -3,7 +3,7 @@
 2. 环境变量
 3. 标准链接库目录
 4. 任何 `.pth`文件的内容
-可以通过来[[Python SYS]]查看
+可以通过来[[Python Sys]]查看
 ### circular import error
 在项目目录下有和公用模块同名的模块
 
