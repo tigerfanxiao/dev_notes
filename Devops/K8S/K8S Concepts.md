@@ -1,5 +1,10 @@
+Orchestration 的作用
+- High availability with no downtime
+- Scalability or high performance
+- Disaster Recovery for backup and restore
 
 ### K8S Component and Objects
+
 
 - node 每一个物理机或者实体机可以看做为一个 node
 	- 至少有还一个管理节点 Master node, 1 个或者多个 worker node
