@@ -1,5 +1,33 @@
+kubectl 分为两种, 一种是命令交互式操作 imperative, 另一种是声明式declarative 通过 configuration file (通常是 yaml 文件)来进行操作. 交互式适合调试的场景, 而声明式适合 IaC 的场景
+imperatve 模式
+```shell
+kubectl create
+kubectl update
+kubectl delete
+kubectl describe # 描述resource info
+```
 
-# Deployment
+kubectl configuation file 也称为 kubenetes manifests
+```shell
+# 通过 configuration file 来创建和 update
+kubectl apply -f nginx-configuration.yaml
+# 通过 configuration file 来删除
+kubtctl delete -f nginx-configuration.yaml
+```
+
+Kubenetes manifests file 的结构
+- 版本
+- kind 类型: 区分类型是 Development 还是 Service
+```yaml
+apiVersion: v1
+kind: Development
+metadata:
+	name:
+	label:
+spec:
+
+```
+### Deployment
 
 ```shell
 
@@ -75,11 +103,8 @@ kubectl delete deployment my-deployment
 | Command                         | Description                                                               |
 | ------------------------------- | ------------------------------------------------------------------------- |
 | **for …do**                     | Runs a for command multiple times as specified.                           |
-| **kubectl apply**               | Applies a configuration to a resource.                                    |
 | **kubectl config get-clusters** | Displays clusters defined in the kubeconfig.                              |
 | **kubectl config get-contexts** | Displays the current context.                                             |
-| **kubectl create**              | Creates a resource.                                                       |
-| **kubectl describe**            | Shows details of a resource or group of resources.                        |
 | **kubectl expose**              | Exposes a resource to the internet as a Kubernetes service.               |
 | **kubectl get**                 | Displays resources.                                                       |
 | **kubectl get pods**            | Lists all the Pods.                                                       |

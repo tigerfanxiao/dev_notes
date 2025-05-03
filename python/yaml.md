@@ -4,9 +4,16 @@
 - 因为 ansible 已经是用 `:[]{}>` 如果要使用这些字符原来的意义, 需要转义
 - YAML 支持直接读取 True 和 False. 如果要读成字符串, 需要双引号
 - YAML 支持直接读取数字. 如果要读成字符串, 需要双引号
-- 
 
 
+### YAML 特性
+* 在一个 yaml 文件中可以放多段配置, 并用分隔符分开
+* YAML也支持注释. 不区分单双引号
+```yaml
+---  # 只是 document seperator
+inventory 
+```
+#### 换行
 用 `>` 来换行
 
 ```yaml
@@ -18,30 +25,7 @@
 	src/srv/httpd.js
 	dest=/etc/httpd.conf
 ```
-
-安装包依赖
-```
-pip install pyyaml
-```
-
-YAML 特性
-* 在一个 yaml 文件中可以放多段配置, 并用分隔符分开
-* YAML也支持注释. 不区分单双引号
-```yaml
----  # 只是 document seperator
-inventory 
-```
-
-读出来的可以直接是列表， 或者字典
-列表
-```yaml
----
-- 1
-- 2
-- 3
-```
-
-字典
+#### 列表和字典
 ```yaml
 ---
 inventory:
@@ -59,7 +43,12 @@ inventory:
 
 ```
 
-# python
+# Python with Yaml
+python 的 yaml 包
+```
+pip install pyyaml
+```
+
 ```python
 import yaml
 
