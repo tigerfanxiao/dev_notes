@@ -829,7 +829,7 @@ chgrp app /app
 - swap建议放在硬盘的最外圈或者 ssd
 - 可以用分区的方式或者文件的方式当 swap 用, 但是分区的方式性能好
 - 如果是一个文件形式的 swap 是可以迁移的
-- swap 推荐 
+- swap 容量推荐
 	- 系统内存低于 2G, RAM量的两倍
 	- 系统 2GB-8GB, 等于 RAM 的量
 	- 系统 8G-64G, 建议用 4G 到 RAM 的 0.5 倍
@@ -837,9 +837,10 @@ chgrp app /app
 ```shell
 free -h # 查看内存
 
-# 禁用 swap
+# 永久禁用 swap
 # 在 /etc/fstab 中把 swap 的一行注释掉
 sed -i.bak `/swap/s@^@#@` /etc/fstab
+
 # 禁用所有 swap
 swapoff -a 
 # 启用 swap

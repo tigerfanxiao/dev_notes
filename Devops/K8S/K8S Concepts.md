@@ -2,7 +2,10 @@ Orchestration 的作用
 - High availability with no downtime
 - Scalability or high performance
 - Disaster Recovery for backup and restore
-
+K8s 是 orchestration tool
+- High availability
+- Scalability
+- Disaster Recovery
 ### K8s Component and Objects
 
 - node 每一个物理机或者实体机可以看做为一个 node
@@ -43,11 +46,14 @@ Orchestration 的作用
 - ReplicaSet
 
 
-
-K8s 是 orchestration tool
-- High availability
-- Scalability
-- Disaster Recovery
+# 安装 K8s
+### 基本要求
+- 至少3 个 node, 其中一个 master node,  2 个 worker node
+- 每个 node 至少 2 个 cpu 和 2g ram
+一般情况下, regular node 是通过 api server -> Scheduler -> Kubelet 来构建的. 但是 master node 所在的 control plane 是直接通过 kubelet 来构建的. Kubelet 可以观察 `/etc/kubernetes/manifests` 目录下的查找 manifest file 的来构建 static node
+- Kubelet (Not Controller Manager) watches static pod and restart if it fails
+- Static Pod names are suffixed with node name
+- Static Pod 组成: API server, scheduller, controller manager, etcd
 
 # Best Practice
 
@@ -57,17 +63,18 @@ K8s 是 orchestration tool
 
 Node 是计算节点, 可以是物理机, 也可以是虚拟机
 
-
-### Service
-Service 有 Service 的 IP 地址, 由 Service的 IP 地址来接受请求, 然后做负载均衡, 发送给 Pod
-Service 有两种IP
-- Cluster IP 接受 Cluster 内部的流量
-- Node IP 接受 Cluster 外部的流量
-
+运作机制
+- 使用 self-signed CA certificate for K8s 
+- Server certificate for the API server endpoint
+- Client certificate for Scheduler and Controller Manager
+- Server certificate for Etcd and Kubelet
+- Client certificate for API server to talk to Kubelets and Etcd
+- Client certificate for Kubelet to authenticate to API server
+Kubeadm
+- Providing "fast paths" for creating k8s cluster
+- perform the actions necessary to get minimum viable cluster
+- It cares only about bootstrapping, not about provisioning machines
 ### Istio
-
-Istio 是一种 K8S 生态中的一部分
-
 # k8s Management Tools
 Kompose 把 docker compose 文件变成 k8s 对象
 Helm  k8s 配置工具 template

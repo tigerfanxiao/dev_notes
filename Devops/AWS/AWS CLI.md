@@ -52,3 +52,12 @@ aws s3api create-bucket --bucket <bucket_name> --profile <user_name>
 }
 ```
 
+### SSH 连接 Instance
+
+如果创建了 instance 后, 允许 ssh, 下载.perm 文件后
+```shell
+mv k8s.perm ~/.ssh/
+chmod 400 k8s.perm # 修改当前账户只有只读权限
+# ubuntu instance 会默认创建一个 ubuntu 账户, 可以使用 sudo
+ssh -i k8s.perm ubuntu@1.1.1.1
+```

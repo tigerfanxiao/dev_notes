@@ -1,3 +1,6 @@
+在线检查语法工具
+https://onlineyamltools.com/
+
 # YAML 语法
 
 ### 转义
@@ -14,16 +17,25 @@
 inventory 
 ```
 #### 换行
-用 `>` 来换行
 
-```yaml
-- name: write the apache config file
-- template: src/srv/httpd.js dest=/etc/httpd.conf
-
-# 上面一行可以写成
+- 一行写成多行, 不保留格式. 常用语在一行内容太多的时候
+- 保留格式显示多行. 常用语直接写 bash 脚本时
+```yaml 
 - template: >
 	src/srv/httpd.js
 	dest=/etc/httpd.conf
+# 上面一行等于 
+# - template: src/srv/httpd.js dest=/etc/httpd.conf
+
+command:
+	- sh
+	- -c
+	- |
+		#!/usr/bin/env bash -e 
+		https () {
+			local path "${1}"
+		}
+		http "/app/kibana"
 ```
 #### 列表和字典
 ```yaml
@@ -40,6 +52,7 @@ inventory:
           permission: ro
         - name: private
           permission: rw
+        - version: [1.2, 1.0] # list 的另外一种方式
 
 ```
 
