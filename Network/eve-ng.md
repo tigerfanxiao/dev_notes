@@ -1,14 +1,21 @@
 
 EVE-NG 承载在 ubuntu 的上
-ubuntu 上的管理员密码是 `root/eve`
 登录的目的是增加配置镜像
 启动 eve-ng 镜像后, 可以看到 eve-ng 所运行的 IP 地址
 
 ```shell
+# ubuntu 管理员账户密码
+root/eve
+
+# web页面登陆密码
+admin/eve
+
 # 查询 eve 运行的本地 ip 地址
 ip add | grep 192.
 ```
-eve 页面的登录`admin/eve`
+
+
+
 
 ### Telnet 
 - 不需要用户名密码
