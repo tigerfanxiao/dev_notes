@@ -10,7 +10,10 @@ ctrl + alt + f2 # 切换到 gui
 在服务器侧安装服务端
 ```shell
 sudo -i
+# rocky 8
 yum -y install openssh-server openssh-clients
+# for ubuntu or debian
+apt-get install openssh-server openssh-clients
 systemctl start sshd
 systemctl status sshd
 ```
