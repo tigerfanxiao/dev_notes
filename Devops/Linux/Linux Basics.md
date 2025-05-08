@@ -1978,6 +1978,9 @@ telnet youtube.com 443
 Trying 142.250.190.206...
 Connected to youtube.com.
 Escape character is '^]'.
+# 收入协议
+GET /HTTP/1.0
+# 返回页面
 ```
 # 系统初始化
 

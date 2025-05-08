@@ -75,16 +75,6 @@ docker run -p <host_port>:<container_port> --d --name <container> <image-name>
 # -rm  在推出交互模式后, 把容器销毁
 docker run -it --name <container_name>:tag --rm <image> bash 
 
-
-# 强制关闭容器, 类似拔电源
-docker kill <container_id>
-# 正常关机
-docker stop <container_id>
-# 从中断中恢复
-docker start <container_id>
-# 重启 
-docker restart <container_id>
-
 # 进入容器的console, 一般情况下是被主进程锁死的. 不建议使用, 容易被主进程顶死
 docker attach <container_name> 
 # 进入容器的 vty 链路, 进到交互式界面做操作. 不会影响到主进程, 但是可以做修改
@@ -100,14 +90,6 @@ docker logs <container id>
 docker logs -tf <container id > # 打印日志不停
 
 
-# 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
-docker rm <container_id> 
-
-# 强行删除一个正在运行的容器
-docker rm -f <container_id>
-
-# 删除所有的容器
-docker rm -f $(ps -aq)
 
 # 当 container 已经启动后, 进入交互模式
 docker exec -it <container> <shell> # shell=/bin/bash
@@ -128,7 +110,20 @@ docker stats
 # vieww specific container status
 docker status <container_name>
 ```
+关闭和重启容器
+```shell
+docker kill <container_id> # 强制关闭容器, 类似拔电源
+docker stop <container_id> # 正常关机
+docker start <container_id> # 从中断中恢复
+docker restart <container_id> # 重启 
+```
 
+删除容器
+```shell
+docker rm <container_id> # 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
+docker rm -f <container_id> # 强行删除一个正在运行的容器
+docker rm -f $(docker ps -aq) # 删除所有的容器
+```
 # 容器调试
 ```shell
 
