@@ -9,11 +9,7 @@ docker开发策略
 1. 安装python版本
 2. 安装requirements
 3. 创建django项目
-# Python 版本
 
-问题： 使用pipfile.lock开控制版本？ 这是pyenv中的东西吧。
-在win10上， python可以允许安装多个版本的。 所以在pycharm中可以配置多个版本
-在命令行， 可以用特殊的命令来控制执行器的版本？
 
 
 # requirements
@@ -160,7 +156,6 @@ DATABASES = {
 }
 ```
 但是django默认会指定`mysqlclient`作为数据库driver。 如果直接启动server会报错
-```
 
 启动django还是会遇到问题
 
