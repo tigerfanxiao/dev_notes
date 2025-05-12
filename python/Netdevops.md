@@ -26,13 +26,3 @@ ln -sb /usr/bin/pip3.8 /usr/bin/pip3
 
 
 ```
-
-安装 docker
-
-```shell
-sudo yum install -y yum-utils 
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-
-```
