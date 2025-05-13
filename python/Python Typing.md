@@ -1,5 +1,25 @@
-# Pydantic
+# `dataclasses`
+### `field(default_factory)`
+初始化一个空的列表
+```python
+from dataclasses import dataclass, field
 
+@dataclass
+class Email:
+	receiver_list: list[str] = field(default_factory=list)  # 初始化空序列
+
+```
+`__post_init__` 这个方法只能用在dataclass包装的类里面
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Email:
+	def __post_init__(self):  # 在初始化后执行
+		print("A")
+```
+# Pydantic
+pydantic 是一个外部包, 需要安装
 ### Typing List & Tuple
 ```python
 from typing import List
@@ -25,9 +45,7 @@ class Interface(TypedDict):
 assert Interface(name='int1', ip='192.168.1.1') == dict(name='int1', ip='192.168.1.1') # True
 ```
 
-### Optional
-
-Optional for function
+可有可无的参数
 ```python
 from typing import Optional
 
@@ -47,11 +65,11 @@ def greet(name: Optional[str]) -> str:
 ```
 # Check Typing with `mypy`
 
-
 ```shell
+# 安装mypy
 pip install mypy
 
-# in terminal run
+# 运行 mypy 来检查py文件的typing
 mypy my_file.py
 ```
 

@@ -40,7 +40,7 @@ version: '3.8'
 
 services:
   web: # service name
-    build: ./project #  构建进项的 Dockerfile
+    build: ./project #  Dockerfile
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./project:/usr/src/app
@@ -52,7 +52,9 @@ services:
 
 ```
 
-postgres container
+### Postgres container
+- environment 可以通过在项目目录下创建 `env_vars/postgres.env` 文件存放. 在的 `docker-compose.yaml` 中, 使用 `env_file: - ./env_vars/postgres.env` 指定环境变量文件
+- adminer 是一个用于访问postgres 的客户端
 ```yaml
 version: "3.9"
 services: 
@@ -72,18 +74,22 @@ services:
 ```
 
 ### Docker compose up
-首先要创建 `docker-compose.yml` 文件
+- 创建 `docker-compose.yml` 文件
+- docker compose 命令会让container的log日志定在terminal里
 
 ```shell
-# 当前目录下必须有文件 docker-compose.yml
-# 只是 build image, 不运行 container
+
+# 构建镜像, 不运行 container
 docker compose build 
-# 重构镜像, 启动容器
+
+# 重构镜像, 运行容器
 # -d 运行容器 detach 模式, 否则 terminal 会顶在那里
 docker compose up -d --build
 # 指定 docker-compose 文件来启动进项
 docker compose up -d -f docker-compose.yml
-# 关闭 docker compose 想关的容器
+
+
+# 关闭容器
 docker compose down 
 ```
 

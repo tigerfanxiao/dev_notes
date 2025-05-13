@@ -36,6 +36,7 @@ docker images centos
 
 docker images -aq # 所有 image 的 ID
 docker images --digest # 查看image的hash值
+docker rm -f container # 终止并删除container
 docker rmi centos:7 # 删除镜像
 docker rmi 590dd # 根据简写的 ID 来删除镜像
 docker rmi 590d 4540d # 删除多个镜像
