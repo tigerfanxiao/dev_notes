@@ -1,4 +1,28 @@
 
+### 环境变量
+
+```shell
+pip install python-dotenv
+```
+
+`.env` 可以放在调用 `load_dotenv` 的目录上级
+```shell
+FLASK_ENV=development
+DEBUG=True
+TESTING=True
+SECRET_KEY=xiao1234
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_HOST=127.0.0.1
+DB_NAME=fkcommerce
+```
+
+```python
+from dotenv import load_dotenv
+load_dotenv() # 读取.env文件的环境变量
+
+my_variable = os.getenv("SECRET_KEY")
+```
 # 路径
 
 ```python

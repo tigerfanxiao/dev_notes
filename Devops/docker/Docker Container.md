@@ -7,7 +7,7 @@ https://docs.docker.com/engine/reference/commandline/run
 
 ```shell
 
-docker run --name my_docker_name centos # 基于 centos 镜像启动并命名一个容器
+docker run --name <container_name> <image> # 基于 centos 镜像启动并命名一个容器
 docker run --name mydocker_name -d centos  # 后台运行 
 docker run --name mydocker_name -d centos /bin/bash # 后台运行, 并运行 /bin/bash 命令
 docker run --rm --name mydocker_name -d centos /bin/bash # 容器退出了, 容器会自动删除. 

@@ -1,6 +1,7 @@
-
-创建一个 `app.py`
+# 创建应用
+- flask默认情况下会找 `app.py` 文件作为 entrypoint
 - 默认的flask server running port 5000
+创建一个 `app.py`
 ```python
 frmo flask import Flask
 

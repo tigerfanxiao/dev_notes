@@ -7,6 +7,8 @@ docker compose -v
 如果我们只是构建一个镜像, 那用 `Dockerfile`就足够了. 如果是构建一组容器, 那就用docker-compose
 - `Dockerfile` 是构建镜像用的. Docker Compose 将镜像构建容器或者服务
 - `Dockerfile` 和 `docker-compose` 不一定要放在同一个文件目录下
+- ports 一定要加引号, 否则会造成服务器正常被访问
+- 
 
 
 docker compose 文件
@@ -30,6 +32,8 @@ services:
 			-c hba_file=/etc/postgresql/pg_hba.conf
 
 ```
+
+
 
 ### 容器化开发
 - 怎么在开发阶段看到执行错误信息
@@ -55,6 +59,7 @@ services:
 ### Postgres container
 - environment 可以通过在项目目录下创建 `env_vars/postgres.env` 文件存放. 在的 `docker-compose.yaml` 中, 使用 `env_file: - ./env_vars/postgres.env` 指定环境变量文件
 - adminer 是一个用于访问postgres 的客户端
+- 这里的`/docker-entrypoint-initdb.d`目录是一个特殊的目录, 一般数据库的container都有整个目录用来运行构建数据库的脚本. 注意目录下的脚本需要添加执行权限(mac)
 ```yaml
 version: "3.9"
 services: 
@@ -66,13 +71,21 @@ services:
 			- POSTGRES_PASSWORD=postgres
 		port: 
 			- "5432:5432"
+		volumes:
+			- ./scripts:/docker-entrypoint-initdb.d
 	adminer:
 		image: adminer
 		restart: always
 		port: 
 			- "8080:8080"
 ```
-
+构建 `scripts/db-setup.sh`
+```shell
+#!/bin/sh
+export PGUSER="postgre"
+psql -c "CREATE DATABASE <database>" # -c 表示运行后面的命令
+psql <database> -c "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";" # 为数据库增加uuid插件
+```
 ### Docker compose up
 - 创建 `docker-compose.yml` 文件
 - docker compose 命令会让container的log日志定在terminal里
