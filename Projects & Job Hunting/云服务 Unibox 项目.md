@@ -15,7 +15,6 @@
 8.  新闻分类 fliter 功能, 运用机器学习,区分问题, interview, report, real-time news, 媒体来源的权重
 9.  Shopping product ranking, 对于中小CP是否提高曝光率, 权重.
 10.  推动API的多语言支持
-    
 
 # 项目工作
 

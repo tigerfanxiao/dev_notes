@@ -1,7 +1,7 @@
 
-# 基本
+# Basic
 
-```
+```shell
 # 链接
 [content](url)
 # 斜体
@@ -12,10 +12,9 @@
 __bold__
 
 ```
-
 # Latex
 
-```
+```shell
 # inline math 
 $y = mx + b$
 
@@ -33,5 +32,3 @@ $$
 $$
 e^x = \sum_{n=0}^{\infty}\frac{x^n}{x!}
 $$
-
-插入表格

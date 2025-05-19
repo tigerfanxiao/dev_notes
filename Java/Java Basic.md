@@ -1,7 +1,7 @@
 
 # 数据类型
 
-### Primative Type
+### Primitive Type
 ```java
 
 long very_long_integer = 33_22_22L;
@@ -21,8 +21,6 @@ Date now = new Date(); //
 now.getTime() 
 
 ```
-
-
 # String
 
 ```java

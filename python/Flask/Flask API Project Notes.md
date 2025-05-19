@@ -1,4 +1,4 @@
-# 创建项目环境
+# Create Project Env
 This guide is to help build python docker development environment on brand new Win11. 
 1. Install WSL on win11, which used to create Linux container on windows. 
 2. Install Docker Desktop on Windows
@@ -218,10 +218,10 @@ docker compose up --build # first time you need to use --build
 
 # 创建应用
 - flask默认情况下会找 `app.py` 文件作为 entrypoint
-- 默认的flask server running port 5000
+- By default, flask server running port 5000
 创建一个 `app.py`
 ```python
-frmo flask import Flask
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -241,7 +241,50 @@ flask --app hello run
 
 ### Flask 的依赖库
 - 安装一个库本身可能需要安装多个依赖库, 所以正常安装库的方式是通过`pip install`来安装, 然后用 `pip freeze` 来写入`requirements.txt` 
-```
+```shell
 pip install Flask-SQLAlchemy
 pip install psycopg2-binary # Flask-SQLAlchemy 使用的数据库引擎
 ```
+
+# 创建Postgre Docker
+
+1. 创建`docker-compose.yaml` 文件
+```yaml
+version: '3.9'
+service:
+	db:
+	    image: postgres:16.1-alpine3.19
+	    restart: always
+	    env_file: # 这里在本地目录创建了 env_vars目录和postgres.env 文件
+	      - ./env_vars/postgres.env
+    ports: # 这里指定接口的时候, 需要用双引号
+      - "5432:5432"
+    volumes: # 这里在本地创建了scripts目录, 里面有db-setup.sh 文件. volumne指定到容器内部
+      - ./scripts:/docker-entrypoint-initdb.d
+
+  adminer: # 这是一个数据库的客户端, 不用指定ip地址, 只要8080端口就能访问
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+```
+
+
+控制容器的命令
+```shell
+
+docker compose up -d # 在后台运行
+docker compose down # 中断所有容器
+```
+
+为ubuntu 安装一些常用的开发工具
+```shell
+sudo apt-get install net-tools
+
+# 查看所有在使用中的端口
+netstat -tuln # t = tcp u=udp l=list 
+```
+
+在vscode 上安装了postgres extension 是微软开发的, 不知道怎么运行sql语句
+
+
