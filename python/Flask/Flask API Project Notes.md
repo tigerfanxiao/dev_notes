@@ -288,3 +288,19 @@ netstat -tuln # t = tcp u=udp l=list
 在vscode 上安装了postgres extension 是微软开发的, 不知道怎么运行sql语句
 
 
+创建model
+```python
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from core import database as db
+
+class Category(db):
+    __tablename__ = "category"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), unique=True, nullable=True)
+    slug = Column(String(200), unique=True, nullable=True)
+    is_active = Column(Boolean, default=False)
+    parent_id = Column(Integer, ForeignKey("category.id"), nullable=True)
+
+    def __repr__(self):
+        return f"<Name: {self.name}>"
+```
