@@ -436,6 +436,13 @@ Hello World ^_^
 ```
 
 
+# 第七题
+
+先登录 argo-helm的官网
+```shell
+https://argoproj.github.io/argo-helm
+```
+
 # 第九题
 
 >`[candidate@base] $ ssh cka000056`

@@ -1,5 +1,13 @@
-# NPM
-### Install Nodejs
+# 环境搭建
+- npm 是nodejs的包管理工具
+- npx 也是一个工具, 多用来调用项目生成工具等
+
+```shell
+# 安装完nodejs后, 需要安装npx工具
+npm install -g npx
+```
+
+
 install on ubuntu
 
 ```shell
