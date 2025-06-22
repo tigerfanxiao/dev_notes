@@ -5,6 +5,16 @@
 ```shell
 # 安装完nodejs后, 需要安装npx工具
 npm install -g npx
+
+npx create-next-app@latest
+npm install next react react-dom
+npm i @mui/x-data-grid @mui/material @emotion/react @emotion/styled lucide-react numeral recharts uuid axios 
+npm i -D @types/node @types/uuid @types/numeral
+
+npm run dev
+
+npm i <package_name>@<version>
+
 ```
 
 
