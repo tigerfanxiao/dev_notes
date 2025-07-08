@@ -2,10 +2,6 @@ Orchestration 的作用
 - High availability with no downtime
 - Scalability or high performance
 - Disaster Recovery for backup and restore
-K8s 是 orchestration tool
-- High availability
-- Scalability
-- Disaster Recovery
 ### K8s Component and Objects
 
 - node 每一个物理机或者实体机可以看做为一个 node
