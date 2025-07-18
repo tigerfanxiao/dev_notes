@@ -1,6 +1,5 @@
 # Concepts
 
-
 ## `Dataframe` & `Series`
 ## read files
 ### read csv
@@ -464,11 +463,8 @@ reviews.rename_axis("wines", axis='rows').rename_axis("fields", axis='columns')
 ### Delete column
 
 ```python
-
-
 # 删除 id列
 df = df.drop(columns=["id"])
-
  ```
 ### Combining
 ```python
@@ -476,10 +472,8 @@ df = df.drop(columns=["id"])
 # 纵向叠加两个表
 df_interface = pd.concat([df1, df2], ignore_index=True)
 
-
 # join 关联两个表
 pd.merge(df1, df2, on='business_id', how='outer')
-
 
 ```
 
@@ -588,3 +582,5 @@ with warnings.catch_warnings(record=True):
 	warnings.simplefilter("always")  
 	offboard_df = pd.read_excel(file_path, sheet_name='sheet', engine="openpyxl")
 ```
+
+
