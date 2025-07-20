@@ -4,11 +4,10 @@ Docker Compose 是 docker 之外的服务
 docker compose -v 
 ```
 ### `Dockerfile`  VS. `docker-compose`
-如果我们只是构建一个镜像, 那用 `Dockerfile`就足够了. 如果是构建一组容器, 那就用docker-compose
+
 - `Dockerfile` 是构建镜像用的. Docker Compose 将镜像构建容器或者服务
 - `Dockerfile` 和 `docker-compose` 不一定要放在同一个文件目录下
 - ports 一定要加引号, 否则会造成服务器正常被访问
-- 
 
 
 docker compose 文件

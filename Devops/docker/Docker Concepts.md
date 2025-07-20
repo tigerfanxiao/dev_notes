@@ -5,7 +5,7 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. 可以认为 docker
 /var/lib/containerd/io.containerd.runtime.v1.linux/moby/容器 ID
 ```
 - 每个容器有独立的进程编号, 在容器内部可以通过 hostname 命令查看
-- 容器没有内容, 在容器中运行 uname 命令会直接回显宿主机的内核
+- 容器没有内核, 在容器中运行 uname 命令会直接回显宿主机的内核
 - 在Linux 中一定有一个 Pid 为 1 的进程(init/systemd) 是其他所有进程的父进程. 那么在每个容器中也要有一个父进程来管理器其下的子进程. 每个容器的主进程通过宿主机内核中的 PID namespace 进行管理. 比如一个 nginx 的容器的 PID 为 1 的进程就是 nginx
 ### 最佳实践
 - 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
