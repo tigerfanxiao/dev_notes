@@ -15,11 +15,11 @@ spec:
     command: ['sh', '-c', 'while true; do echo Success! >> /output/output.txt; sleep 5; done']
     volumeMounts:
     - name: output-vol
-      mountPath: /output
+      mountPath: /output 这是pod上的目录
   volumes:
   - name: output-vol
     hostPath:
-      path: /var/data
+      path: /var/data # 这是node上目录
 ```
 
 pod 共享的 volume 应该是临时的. 在 pod 删除后也会自动删除
