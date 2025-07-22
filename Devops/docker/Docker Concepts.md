@@ -11,7 +11,7 @@ Docker 是 CS 结构的, 有 client 部分和 Server 部分. 可以认为 docker
 - 容器更适合执行单进程, 如果要做多进程. 适合拉多个容器, 做负载均衡
 
 # 名词解释
-* Container 我们可以把每个 container 认为是一个进程
+* Container 我们可以把每个 container 认为是一个进程. 因为只有进程才能做到内存调用的隔离
 * Docker Hub 一个在线的 docker 镜像仓库. 华为内部有自己的 docker 仓库
 
 ### Docker和虚拟机的区别

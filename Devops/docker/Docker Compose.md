@@ -7,7 +7,7 @@ docker compose -v
 
 - `Dockerfile` 是构建镜像用的. Docker Compose 将镜像构建容器或者服务
 - `Dockerfile` 和 `docker-compose` 不一定要放在同一个文件目录下
-- ports 一定要加引号, 否则会造成服务器正常被访问
+-  ports 一定要加引号, 否则会造成服务器正常被访问
 
 
 docker compose 文件
@@ -31,8 +31,6 @@ services:
 			-c hba_file=/etc/postgresql/pg_hba.conf
 
 ```
-
-
 
 ### 容器化开发
 - 怎么在开发阶段看到执行错误信息
@@ -100,11 +98,9 @@ docker compose up -d --build
 # 指定 docker-compose 文件来启动进项
 docker compose up -d -f docker-compose.yml
 
-
 # 关闭容器
 docker compose down 
 ```
-
 ### docker compose exec
 ```shell
 # 访问容器中 postgres
