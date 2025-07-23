@@ -45,8 +45,6 @@ app/recipe # Receip related code
 ```
 Django>=3.2.4,<3.3
 djangorestframework>=3.12.4,<3.13
-
-
 ```
 ### TDD
 TDD is software development practice. 特点是先写根据 feature 写测试用例, 在写开发代码
@@ -73,10 +71,9 @@ Test Classes
 - TestCase
 	- have database
 
-
 ```python
 """
-Unit tests for views
+下面只是单纯的单例测试, 没有 mock
 """
 from django.test import SimpleTestCase
 
@@ -90,8 +87,6 @@ class ViewTests(SimpleTestCase):
 		sample_items = [1, 1, 2, 2, 3, 4, 5, 5]
 		res = views.remove_duplicates(sample_items)
 		self.assertEqual(res, [1, 2, 3, 4, 5])
-
-
 ```
 
 

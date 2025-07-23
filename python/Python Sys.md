@@ -24,8 +24,10 @@ env
 
 
 ```python
-sys.platform # 返回 linux 版本或者 windows
-sys.version # python 的版本
+# 返回 linux 版本或者 windows
+sys.platform 
+# python 的版本
+sys.version 
 
 sys.modules # 返回模块名和具体路径的字典
 list(sys.modules.keys())  # 模块名

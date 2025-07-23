@@ -1,12 +1,14 @@
 
 # Closure
-函数可以使用它被定以的 local scope中的变量
+
 
 ```python
 def outer_func():
-	message = 'HI' # here is the local scope where the inner func has been defined
+# here is the local scope where the inner func has been defined
+	message = 'HI'
 	def inner_func():
-		print(mesage)  # variable message is defined outside of inner_func
+		# variable message is defined outside of inner_func
+		print(mesage)
 	return inner_func
 	
 my_func = outer_func() # my_func is a function object

@@ -51,5 +51,5 @@ json.load(open(file='./config.json', encoding='utf-8'))
 
 # 用于直接读取json的字符串
 json_str = '{"name": "xiao", "age": 20}'
-python_obj = json.loads(json_str)  
+my_dict = json.loads(json_str)  
 ```
