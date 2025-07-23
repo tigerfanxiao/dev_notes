@@ -1,3 +1,27 @@
+# Data Engineer JD
+```
+Job Role: Data Engineer  
+Location: Madrid, Spain (hybrid)  
+Job Type: 6 months contract  
+  
+Job Description:  
+  
+· Experience and wide knowledge on:  
+- Public Cloud Platforms: AWS (Amazon Web Services), Google Cloud Platform  
+- Infrastructure as Code: Terraform, CloudFormation  
+- CI/CD pipelines (CodePipeline, Gitlab CD)  
+- Strong SO skills (WIN, LINUX), Windows AD, VDI (Citrix/Workspaces)  
+- Containers (EKS, Fargate), No-SQL DBs (Dynamo, Neptune, DocumentDB)  
+- Cloud Networking  
+- Cloud Security  
+- Config. Management (AWS SSM or Ansible)  
+- DevSecOps specialist - AWS Serverless architectures  
+- Cloud Security Controls implementation  
+- VPC, networking architecture in AWS  
+- DRP implementation in Cloud architectures  
+- Strong scripting and automation skills (bash, python, go, ansible)
+```
+
 
 数据来源
 - Application

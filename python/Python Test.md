@@ -194,6 +194,57 @@ class TestProgrammer(unittest.TestCase):
 		result = self.programmer.get_random_tech()
 		self.assertEqual(result, 'python')
 ```
+
+
+Request 测试用例
+```python
+"""
+my_moudule.py
+"""
+import requests
+import time
+
+
+def get_content(url):
+    retries = 3
+    delay = 1
+    for attempt in range(retries):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            return response.content.decode("utf-8")
+        except Exception:
+            time.sleep(delay)
+    raise Exception(f"Failed to get content from {url}")
+
+```
+
+
+```python
+import unittest
+from unittest.mock import MagicMock, patch
+from my_module import get_content
+
+class TestGetContent(unittest.TestCase):
+	@patch("requests.get")
+	def test_success(self, mock_get):
+		mock_response = MagicMock(
+			status_code=200, content=b"Hello, world!"
+		)
+		mock_get.return_value = mock_response
+		result = get_content("http://example.com")
+		self.assertEqual(result, "Hello, world!")
+		mock_get.assert_called_once_with("http://example.com")
+
+	@patch("requests.get")
+	def test_retry(self, mock_get):
+		mock_response = MagicMock(status_code=500, content=b"Hello, world!")
+		mock_get.side_effect = [Exception, Exception, mock_response]
+		result = get_content("http://example.com")
+		self.assertEqual(result, "Hello, world!")
+		self.assertEqual(mock_get.call_count, 3)
+```
+
 # Pytest
 
 ```shell

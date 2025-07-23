@@ -1,3 +1,23 @@
+
+延迟
+```python
+import requests
+import time
+
+def get_content(url):
+    retries = 3
+    delay = 1
+    for attempt in range(retries):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            return response.content.decode("utf-8")
+        except Exception:
+            time.sleep(delay)
+    raise Exception(f"Failed to get content from {url}")
+
+```
+
 Requests包难以完成页面跳转登录的功能，可能selenium更适合
 
 ### Response属性
