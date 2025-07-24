@@ -60,10 +60,11 @@ with patch('module_name.function_name', new=mock_obj):
 	# Code that uses the mocked function
 ```
 
-- **Verifying Calls**: You can use various methods like `**assert_called_with**`, `**assert_called_once_with**`, and `**assert_not_called**` to verify how the mock object was called during the test.
+- **Verifying Calls**: You can use various methods like `assert_called_with`, `assert_called_once_with`, and `assert_not_called` to verify how the mock object was called during the test.
 ```python
-mock_obj.assert_called_with(1, 2)
-mock_obj.assert_called_once_with(1, 2)
+mock_obj.assert_called_with(1, 2) # 被调用的参数
+mock_obj.assert_called_once_with(1, 2) # 被调用一次
+self.assertEqual(mock_obj.call_count, 3) # 被调用3次
 mock_obj.assert_not_called()
 ```
 
