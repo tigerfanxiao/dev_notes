@@ -1,5 +1,5 @@
 
-延迟
+Delay
 ```python
 import requests
 import time
@@ -20,27 +20,26 @@ def get_content(url):
 
 Requests包难以完成页面跳转登录的功能，可能selenium更适合
 
-### Response属性
+### Response Attributes
 
 ```python
+"""
+respose 有很多常见的属性
+"""
 import requests
 response = requests.get('www.google.com') # 得到 200
-response_html = response.text
+response.status_code # HTTP 状态码
+response.text # decode过的
+response.content # byte 字节, 未decode
+response.json() # 如果是API调用, 则用json解码, 返回值已经修改为字典
+response.raise_for_status # 如果 status code 不是 200 主动报异常
+
 # Headers
 response.headers  
-# 返回值的 json 格式, 是 dict
-response.json() 
-# 返回的数据文本格式, 是 string
-response.text
 # 是否是 200 返回 Boolean
 response.ok
 # 出先 error 的理由, 比如 url not found
 response.reason
-# HTTP状态码. 是 integer 比如 200, 404 等
-response.status_code
-
-# 如果 status code 不是 200 会爆出异常
-response.raise_for_status
 ```
 
 
