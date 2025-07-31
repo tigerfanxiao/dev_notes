@@ -220,6 +220,20 @@ def get_content(url):
 
 ```
 
+side effect
+```python
+from unittest.mock import MagicMock
+
+mock_func = MagicMock()
+mock_func.return_value = 10
+print(mock_func())  # → 10
+
+mock_func.side_effect = [1, 2, 3]
+print(mock_func())  # → 1
+print(mock_func())  # → 2
+print(mock_func())  # → 3
+
+```
 
 ```python
 import unittest
