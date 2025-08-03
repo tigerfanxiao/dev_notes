@@ -140,7 +140,7 @@ systemctl restart network.service
 ssh
 配置本机为 ssh 客户端
 ```shell
-ssh-keygen  # 生成 ssh 秘钥
+
 ssh-copy-id <SECOND_PUBLIC_IP_ADDRESS> # 将本机的公钥发给 ssh 服务端
 
 # add cloud_user identity to the agent and to reload the agent
