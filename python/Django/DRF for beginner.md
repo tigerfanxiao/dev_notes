@@ -35,11 +35,12 @@
 ### Tech-Stack
 36K+ Mid-level Python Backend
 - Dev
-	- Python 语法, Comprehension list, 正则
+	- Python Syntax
+		- Comprehension list, 正则
 	- Python Package
-	- Python API 开发
-		- Django Rest Framework 基本框架
-		- Django 框架
+	- Python Framework
+		- Django Rest Framework 3.9.2
+		- Django 2.2
 		- UnitTest 框架
 - Database
 	- Sqlite
@@ -100,7 +101,71 @@
 # Django
 Django和Django Restful 的关系是什么. 其实Django和Django Restful是不同的包. 因为在开发的过程中, 我们可以看到有些包使用Django中直接import的, 有些包是从Rest Framework中import的, 注意区分
 todo: 哪些包是Rest Framework中的能
+### Framework
+```shell
+# requirements.txt
+django==2.2 # django framework 2019
+djangorestframework=3.9.2 # drf framework 2019
 
+```
+### Develop environment
+
+1. 使用venv模块创建python虚拟环境
+2. 通过requirements.txt 安装
+```shell
+# 制定虚拟环境的路径, 非本地路径
+python -m venv ~/env
+
+# 在非本地路径激活虚拟环境
+source ~/env/bin/activate
+# 退出虚拟环境
+deactivate
+```
+
+通过`requirements.txt` 安装虚拟环境的包
+```shell
+# 在虚拟环境被激活的情况下
+pip install -r requirements.txt 
+```
+### Create Project and App
+区分Project和App两个概念
+- 项目是一个大的集合, 在整个大的集合项目不同的功能模块都是App. 一个项目至少包含一个App, 所以创建完项目后就要创建App
+- 创建project时候, 就会在本地生成project的目录和`manage.py`文件
+- 创建项目和创建App是两个不同的工具
+- 创建项目是使用`django-admin.py`, 创建app是使用`python manage.py` 
+- 在`settings.py`中注册rest_framework 和 app
+```shell
+# 执行一下命令后, 会在本地创建一个 my_project 文件夹, 里面有settings.py 和 urls.py
+django-admin.py startproject my_project .
+
+# 创建app, 使用 manage.py
+python manage.py startapp my_api
+
+# 启动django rest_framework
+python manage.py runserver 0.0.0.0:8000
+
+# 浏览器访问
+127.0.0.1:8000
+127.0.0.1:8000/admin
+
+# create super user
+python manage.py createsuperuser
+```
+在`settings.py`中注册增加三行, 注册rest_framework 和 app
+```python
+# settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework', # 添加 rest framework
+    'rest_framework.authtoken', # 添加 认证方式
+    'profiles_api', # 添加自定义的 app
+]
+```
 ## Servers
 区分几个概念
 - 服务器分为Application Server和Web-server两种
@@ -112,6 +177,8 @@ todo: 哪些包是Rest Framework中的能
 - 无论是wsgi还是asgi 其实都是开发中使用的服务器. 真正在生产环境中, 其实还有一种服务器类型叫 web-server, 这种服务器本身用来承接海量的需求. 将承接到的需求是转交给wsgi/asgi服务器来处理. 如果需求只是获取静态文件, 那么这种需求就可以直接到static文件的存储中提取文件反馈给用户, 不需要进过python wsgi和asgin服务器来处理. 这也就解释了 `python manage.py collectstatic --noinput` 的作用. 在实际生产环境部署中, ngnix需要知道静态内容的存储路径的. 这些内容应该在nginx的配置文件中写明
 
 ### Nginx
+学习方法: 在学习完django开发后, 学习部署时才专门学习
+
 Nginx 是一种web-server 的产品, 也被称为 Reverse-Proxy, 即反向代理. 作用是直接承接互联网上用户的请求, 然后将这些请求进行分类, 负载分担等操作, 发给python服务器.
 Nginx 或者Web-server的作用
 - serve 静态文件
@@ -135,35 +202,9 @@ server {
     }
 }
 ```
-### Develop environment
-
-1. 使用venv模块创建python虚拟环境
-2. 通过requirements.txt 安装
-```shell
-# 制定虚拟环境的路径, 非本地路径
-python -m venv ~/env
-
-# 在非本地路径激活虚拟环境
-source ~/env/bin/activate
-# 退出虚拟环境
-deactivate
-```
-
-通过`requirements.txt` 安装虚拟环境的包
-```shell
-# 在虚拟环境被激活的情况下
-pip install -r requirements.txt 
-```
-
-
-运行开发环境的服务器
-```shell
-python manage.py runserver 0.0.0.0:8000
-```
 ### Django admin interface
 
 需要先创建superuser
-
 ```
 http://127.0.0.0:8000/admin
 ```
