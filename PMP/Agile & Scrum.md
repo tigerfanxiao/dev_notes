@@ -231,4 +231,3 @@ Rejected Story
 The sprint retropective
 可以不邀请 product owner 这样可以让 dev team more comfortable to speak freely. 是不是 product owner 压太过
 - what went well, what did not go well
--  
