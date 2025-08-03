@@ -1,4 +1,3 @@
-
 # Thoughts
 技术本质上是为了商业服务的, 至少目前我的这个情况下. 我们这是用代码去实现商业的价值. 从这个意义上看, 我们是来解决问题的. 要解决问题就要看需要实现的目标和成本. 在目标和成本有一个比较清洗的认识之后, 我们才能选定技术方案
 
@@ -6,14 +5,23 @@
 
 从跟目前这个项目看开发和部署确实是两种完全不同的活, 都要花非常多的时间. 所以需要用CICD, 把部署自动化, 这样就可以把时间专注在开发上了
 
+### How to study
+1. 需要把不同的模块分开, 先专注于Django Rest Framework本身. 而不是环境部署上. 因为DRF是主要矛盾. 主要矛盾的逻辑高通了, 再逐个去研究分支的问题
+2. 观察DRF的组件, 应该其他语言, 想nodejs应该是有共性的
+3. 久坐和锻炼身体
+4. 问自己问题, 解答自己的问题. 然后是假设要去叫别人怎么开发Django Rest Framework API
 ### Questions
 - supervisorctl 在linux 中是什么工具?
-- `python manage.py collectstatic --noinput` 的效果
+- 当前vagrant和EC2的ubuntu版本不一致, 后期可以更改
+- python的生产环境的服务器uwsgi, 还是ngnix, 这是什么关系, 生产中真的用吗
+- 能用Firebase和DRF合作吗. 本质是Firebase是一个基本能取代django rest framework的东西, 只要前段就好了
 ### Move on
 - Development
 	- 这个项目没有写怎么开发Log, 记录程序的一些动作, 比如用户登录了, 用户的行为, 用于排错
 	- 这个项目没有Exception
 	- 这个项目没有Unit Test
+	- 这个项目没有消息对列的内容
+	- 这个项目没有异步请求的内容
 	- 这个项目没有文档
 - 学习使用vagrant环境去开发和部署
 	- 学习了API开发中权限管理的部分. 这是36K工资的工作
@@ -39,6 +47,7 @@
 - Devops
 	- Basic Linux
 	- Git/Github 
+	- Reverse Proxy - Nginx
 - Cloud Computing
 		- AWS
 			- Solution Architect Associate Certificate 获得
@@ -89,6 +98,62 @@
 		- React
 		
 # Django
+Django和Django Restful 的关系是什么. 其实Django和Django Restful是不同的包. 因为在开发的过程中, 我们可以看到有些包使用Django中直接import的, 有些包是从Rest Framework中import的, 注意区分
+todo: 哪些包是Rest Framework中的能
+
+## Servers
+区分几个概念
+- 服务器分为Application Server和Web-server两种
+- 在python中, Application Server 有wsgi和asgi 两种, 即asgi可以处理异步请求, wsgi不行
+- wsgi和asgi都是Application Server的接口规范, 不是产品本身
+- Application Server 往往部署在 Web-server的后面
+- 市场上成熟的wsgi服务器有 uWSGI, Gunicorn ASGI 服务器有 Uvicorn
+- wsgi和asgi都是都提供python的运行环境, 就是说, python通过接受到达这些服务器的request, 来处理和响应
+- 无论是wsgi还是asgi 其实都是开发中使用的服务器. 真正在生产环境中, 其实还有一种服务器类型叫 web-server, 这种服务器本身用来承接海量的需求. 将承接到的需求是转交给wsgi/asgi服务器来处理. 如果需求只是获取静态文件, 那么这种需求就可以直接到static文件的存储中提取文件反馈给用户, 不需要进过python wsgi和asgin服务器来处理. 这也就解释了 `python manage.py collectstatic --noinput` 的作用. 在实际生产环境部署中, ngnix需要知道静态内容的存储路径的. 这些内容应该在nginx的配置文件中写明
+
+### Nginx
+Nginx 是一种web-server 的产品, 也被称为 Reverse-Proxy, 即反向代理. 作用是直接承接互联网上用户的请求, 然后将这些请求进行分类, 负载分担等操作, 发给python服务器.
+Nginx 或者Web-server的作用
+- serve 静态文件
+- Reverse Proxy, send request to application server
+- handles SSL/TLS termination, caching, load balancing
+```shell
+server {
+    listen 80 default_server;
+
+    location /static {
+        alias /usr/local/apps/profiles-rest-api/static;
+    }
+
+    location / {
+        proxy_pass        http://127.0.0.1:9000/;
+        proxy_set_header  Host                $host;
+        proxy_set_header  X-Real-IP           $remote_addr;
+        proxy_set_header  X-Forwarded-For     $remote_addr;
+        proxy_set_header  X-Forwarded-Proto   $scheme;
+        proxy_redirect    off;
+    }
+}
+```
+### Develop environment
+
+1. 使用venv模块创建python虚拟环境
+2. 通过requirements.txt 安装
+```shell
+# 制定虚拟环境的路径, 非本地路径
+python -m venv ~/env
+
+# 在非本地路径激活虚拟环境
+source ~/env/bin/activate
+# 退出虚拟环境
+deactivate
+```
+
+通过`requirements.txt` 安装虚拟环境的包
+```shell
+# 在虚拟环境被激活的情况下
+pip install -r requirements.txt 
+```
 
 
 运行开发环境的服务器
@@ -223,6 +288,24 @@ from django.conf import settings
 
 # Operation
 ### Vagrant
+```shell
+config.vm.box = "ubuntu/bionic64" 
+# 切换到
+config.vm.box = "ubuntu/jammy64"
+
+```
+
+```shell
+
+# 关闭当前的虚拟机
+vagrant hault
+
+# 删除现在的虚拟机
+vagrant destroy 
+
+# 修改vagrantfile之后, 重新创建虚拟机
+vagrant up
+```
 
 ### Git
 ```shell
@@ -237,7 +320,13 @@ git push origin main
 
 在github上的查看提交的commit 次数和历史
 ![[Pasted image 20250802231153.png]]
-### AWS
+## AWS
+### 构建EC2实例
+1. 配置本地电脑ssh到实例
+2. 创建EC2实例的步骤
+	1. 目前最低的Ubuntu 版本是22.04
+3. 把deploy的执行文件上传到github
+4. 通过curl将setup.sh 下载到实例上
 在EC2 上传keypair 用于笔记本电脑ssh访问EC2的实例
 import keypair
 ```shell
