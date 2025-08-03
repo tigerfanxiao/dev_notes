@@ -130,8 +130,6 @@ dockerfile 和 docker-compose 的区别
 	- port mappings
 	- volume mappings
 - 所以当我们是使用docker 镜像来运行容器的时候是使用 docker compose 命令的
-
-github action
 - docker hub 是用来 pull image 的, 但是有 rate limit
 	- 100 pulls /6hr for unauthenticated users
 	- 200 pull /6hr for authenticated user
@@ -150,6 +148,7 @@ docker compose build
 docker build 
 # 两个命令都会新建 image, 在开发的时候, 只要用 docker compose 的命令
 ```
+<<<<<<< HEAD
 `.dockerignore` 文件是用来exclude 在某些文件目录下去寻找 Dockerfile或者 docker-compose 文件
 
 docker-compose
@@ -188,6 +187,32 @@ docker compose down
 # 如果修改了 Dockerfile 和 requirements.txt 意味着有新的依赖加入, 就需要重新构造镜像
 docker compose build
 ```
+=======
+`.dockerignore` 文件是用来exclude 在某些文件目录下去寻找 Dockerfile或者 docker-compose 文件 
+login with docker hub from terminal
+```shell
+
+```
+### Github action
+Github action 类似于 Travis-CI, Giblab CI/CD, Jenkins. 功能有
+- Deployment
+- Code linting
+- Unit tests
+github 有 3 部分组成
+- trigger(push to github)
+- jub like run unit test
+- results, Success/fail
+Pricing
+- Charged per minutes
+- 2000 free minute
+- 给全球用户使用的 shared IP address
+
+```
+
+```
+
+
+>>>>>>> 39440c9 (add notes)
 ### git
 构建 github repo recipe-app-api
  一般先在 github 上创建 repo, github 上提供了, 基于编程语言个 gitignore 文件和不同的 License 选择
