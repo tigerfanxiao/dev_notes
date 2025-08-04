@@ -43,14 +43,16 @@ magic_mock_obj = MagicMock()
 
 you can configure the behavior of mock objects by assigning return values, side effects, or exceptions that they should raise when called. You can also inspect how they were called.
 ```python
-# Configure the mock to return a specific value when called
-mock_obj.return_value = 42
+# 被模仿函数的返回值
+mock_func.return_value = 42
+mock_obj.json.return_value = json_obj # 表示被mock对象的json方法的返回值
 
-# Configure the mock to raise an exception when called
-mock_obj.side_effect = Exception("Mocked Exception")
+# 如果被测试的函数有多个Exception的结果
+mock_obj.side_effect = [Exception(1), Exception(2), True]
+mock_obj.return_value = True # 被测试函数的最后一个返回值
 
-# Inspect how the mock was called
-mock_obj.assert_called_with(1, 2, keyword_arg="value")
+# 带上测试函数的参数
+mock_obj.assert_called_once_with(arg1, arg2)
 ```
 Using Patching for Context Manager: To temporarily replace an object or function with a mock during a specific scope of code, you can use the patch context manager.
 
