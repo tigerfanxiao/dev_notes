@@ -215,5 +215,20 @@ Leadership leader has long term vision 看得非常远. 怎样去培养 vision �
 | Focus on operational issues and problem solving | Focus on vision, alignment, motivation, and inspiration  |
 好的项目经理需要知道什么是使用用 management, 什么时候用 Leadership. 两个都要会
 
+# Project management principle
+Project management principle
+- Principles serves as foundational guidelines for strategy, decision making, and problem solving.
+- professional standards and methodologies are often based on principles.
+- Principles for project management provide guidance for the behavior of people involved in projects
 
+PMI Code of Ethics and Professional Conduct
+- Principles can, but do not necessarily, reflect morals.
+- A code of ethics is related to morals.
+- A code of ethics for a profession can be adopted by an individual or profession to establish
+expectations for moral conduct. 
+- PMI is based on four values:
+	◦ Responsibility
+	◦ Respect
+	◦ Fairness
+	◦ Honest
 
