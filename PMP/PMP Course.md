@@ -69,6 +69,10 @@ Stakeholders: 因为这个项目收到影响的人, 可能是 postive impact 也
 - Project Sponsor - Provides resource and support 你的领导
 - Functional Manager - Department Manager, generally control resource 往往是控制你 resource 的人. 或者是抢你资源的人, 可能是你的敌人
 
+
+
+
+
 Project Manager Role
 - Initiator: An initiator is someone who takes the first step or proposes an idea or action
 - Negotiator: A negotiator is an individual who engages in discussion or formal negotiations to reach mutually agreeable solutions or outcomes. 
