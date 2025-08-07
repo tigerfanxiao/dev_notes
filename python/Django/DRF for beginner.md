@@ -72,12 +72,14 @@
 		- Iac
 			- Terraform
 			- Ansible
-	- 云计算
+	- Cloud Computing
 		- AWS 
 			- Coursera上的 Data Engineer 课程
 			- AWS Data Engineer Associate Certificate 获得
 		- Azure
 		- GCG
+	- Project Management
+		- PMP
 65K+
 	- K8s 认证
 		- CKA 获得
@@ -349,6 +351,9 @@ vagrant up
 ```
 
 ### Git
+1. 首先在github上创建项目
+2. 从github上把项目拉倒本地 ??
+3. 从
 ```shell
 # git 项目初始化
 git clone <link> <target_path>
@@ -357,6 +362,11 @@ git clone <link> <target_path>
 git add .
 git commit -am "Added user profile API"
 git push origin main
+
+# 修改刚提交的commit的说明
+git commit --amend -m "changed description"
+# 查看之前提交的说明
+git log --oneline
 ```
 
 在github上的查看提交的commit 次数和历史
