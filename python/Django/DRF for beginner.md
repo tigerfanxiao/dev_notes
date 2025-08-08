@@ -176,14 +176,39 @@ INSTALLED_APPS = [
 - Application Server 往往部署在 Web-server的后面
 - 市场上成熟的wsgi服务器有 uWSGI, Gunicorn ASGI 服务器有 Uvicorn
 - wsgi和asgi都是都提供python的运行环境, 就是说, python通过接受到达这些服务器的request, 来处理和响应
-- 无论是wsgi还是asgi 其实都是开发中使用的服务器. 真正在生产环境中, 其实还有一种服务器类型叫 web-server, 这种服务器本身用来承接海量的需求. 将承接到的需求是转交给wsgi/asgi服务器来处理. 如果需求只是获取静态文件, 那么这种需求就可以直接到static文件的存储中提取文件反馈给用户, 不需要进过python wsgi和asgin服务器来处理. 这也就解释了 `python manage.py collectstatic --noinput` 的作用. 在实际生产环境部署中, ngnix需要知道静态内容的存储路径的. 这些内容应该在nginx的配置文件中写明
+- 无论是wsgi还是asgi 其实都是开发中使用的服务器. 真正在生产环境中, 其实还有一种服务器类型叫 web-server, 这种服务器本身用来承接海量的需求. 将承接到的需求是转交给wsgi/asgi服务器来处理. 如果需求只是获取静态文件, 那么这种需求就可以直接到static文件的存储中提取文件反馈给用户, 不需要进过python wsgi和asgi 服务器来处理. 这也就解释了 `python manage.py collectstatic --noinput` 的作用. 在实际生产环境部署中, ngnix需要知道静态内容的存储路径的. 这些内容应该在nginx的配置文件中写明
 
 ### Nginx
 学习方法: 在学习完django开发后, 学习部署时才专门学习
+web-components:
+- Forward Proxy 站在用户的前面, 替用户发出请求Internet. 
+	- Access Control: Block access to certain website, or restrict internet usage within a company
+	- Security: Scan for any viruses and block
+	- Monitoring: In theory, it could log employee's web activity
+	- Caching Response
+- Reverse Proxy, 站在服务器的前面, 替服务器去接受来自Internet的用户请求
+	- Load Balancer 站在服务器的前面, 将流量分给不同的服务器
+	- Protect Servers: Expose proxy server as entry point. Configure security measures on the proxies
+	- Ensure SSL encryption is enabled 
+	- Caching: 加速用户访问
+在云的环境中, 比如AWS本身是提供ALB或者NLB的, 在这种情况下, 是否还需要再VPC内部署Nginx呢, 答案是肯定的. 原因是这样的部署方式, 更安全, 因为ALB或者NLB都是public network, 而vpc是private network. 而Nginx有颗粒度更细的路由分发能力, 可以依据7层, header, cookie, session data 分发策略.
+以下是在VPC中还需要部署Nginx的理由
+1. 用户的session persistence 需要在内网做
+2. SSL termination 也需要放在VPC里做
+3. 流量在一个VPC中不同的微服务之间的分发需要在内网做
+在K8s的语境中, Ingress Controller 就是k8s的Reverse Proxy组件
+在nodejs环境里, expressJS是一个轻量级的Reverse Proxy
+那同是Reverse Proxy的Nginx和expressJS他们区别在哪里?
+- Nginx load balance 在不同的服务器之间进行, expressJS则是在一个服务器上的不同CPU内核之间
+- Nginx 一般称为Web-server, expressJS则称为App Server, 也称为web-framework
+- Nginx非常高效的处理静态文件, 压缩文件等. expressJS则是用来处理业务逻辑
 
-Nginx 是一种web-server 的产品, 也被称为 Reverse-Proxy, 即反向代理. 作用是直接承接互联网上用户的请求, 然后将这些请求进行分类, 负载分担等操作, 发给python服务器.
-Nginx 或者Web-server的作用
-- serve 静态文件
+所以在生产环境中, 往往是多个expressJS服务器前面放了一个nginx
+![[Pasted image 20250808170912.png]]
+
+Nginx 是一种 Reverse-Proxy 也成为web-server, 即反向代理. 作用是直接承接互联网上用户的请求, 然后将这些请求进行分类, 负载分担等操作, 发送给web-server.
+Nginx 的作用
+- serve 静态文件(能力非常强大), gzip压缩
 - Reverse Proxy, send request to application server
 - handles SSL/TLS termination, caching, load balancing
 ```shell
@@ -250,8 +275,17 @@ class MyModel(models.Model):
 	
 ```
 
-为模型在数据库中构造表的命令
+把模型注册到Django admin中
+```python
+from django.contrib import admin
+from profile_api import models # 从自定义的app中引入models.py
 
+# 注册模型
+admin.site.register(models.ProfileFeedItem) # 自定义的模型
+```
+在注册完成后, 可以在admin中对应的app下, 看到model的名字
+![[Pasted image 20250802203527.png]]
+为模型在数据库中构造表的命令
 ```shell
 python manage.py makemigrations # 生成构造表的方案
 '''
@@ -266,16 +300,7 @@ Running migrations:
   Applying profiles_api.0002_profilefeeditem... OK
 '''
 ```
-把模型注册到Django admin中
-```python
-from django.contrib import admin
-from profile_api import models # 从自定义的app中引入models.py
 
-# 注册模型
-admin.site.register(models.ProfileFeedItem) # 自定义的模型
-```
-在注册完成后, 可以在admin中对应的app下, 看到model的名字
-![[Pasted image 20250802203527.png]]
 ### `serializer`
 当我们为模型构建实例的时候, 用户的输入是需要检验的, 比如姓名不能超过255个字符. 我们用Serializer来做数据合规的校验. 
 serializer 定义的方式
@@ -296,7 +321,7 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer)
 	"""Serializer profile feed items"""
 	class Meta:
 		model = models.ProfileFeedItem
-		fieldS = ('id', 'user_profile', 'status_text', 'created_on')
+		fields = ('id', 'user_profile', 'status_text', 'created_on')
 		extra_kwargs = {'user_profile': {'read_only': True}}
 ```
 
@@ -353,7 +378,6 @@ vagrant up
 ### Git
 1. 首先在github上创建项目
 2. 从github上把项目拉倒本地 ??
-3. 从
 ```shell
 # git 项目初始化
 git clone <link> <target_path>
@@ -401,22 +425,25 @@ ssh ubuntu@dns_address
 # bash - means read from stdin  
 curl -sL https://raw.githubusercontent.com/tigerfanxiao/profiles-rest-api/refs/heads/main/deploy/setup.sh | sudo bash -
 ```
-
 访问, 注意需要指定是http, 而不是https
 ```shell
 http://ec2-54-225-44-73.compute-1.amazonaws.com/api/
 ```
-### supervisorctl
-用于控制Linux上的进程
+### supervisor
+https://www.youtube.com/watch?v=KPCSh79GCCE
+上面这个视频是一个简单的supervisor教程. 简单的来说, supervisor是一个linux上的应用, 这个应用的作用是管理Linux上运行的进程. 比如说Django server进程, 如果用run server 在生产环境上跑起来之后, 如果出现了server中断, supervisor可以自动重启这个进程. 我们也可以通过supervisor来关闭和启动django进程. 同事supervisor还有GUI界面, 通过9001端口可以访问. 
 ```shell
 environment = 
 	DEBUG=0 # 给系统这是环境变量
 ```
 
-
+Socket 是一种双向通信机制. 常见的socket有
+- TCP Socket, 建立一种有链接的, 稳定的双向通信机制
+- UDP Socket, 建立一种无连接的, 不保障包顺序的双向通信
+- Unix domain socket
+Unix domain socket also named as IPC socket, Inter-process Communication Socket用户unix系统上不同进程间的双向通信. 现在还流行RPC Remote Procedure Call, 即实现两台不同物理机上的进程互相通信
 # Others
 HTTP Status
 400 页面不催在
 401 Authentication error
-
 302 页面跳转
