@@ -1,6 +1,6 @@
 # 学习 PMP 的目的
 - 从现在 8 月到 10 月, 2 个月的时间, 我要完成 AIDC 的项目, 这是一个 project. 这并不是我接触的第一个项目, 但是希望利用这个机会去学习一套项目管理的最佳实践. 并在实践的过程中, 最大话吸收和思考交付交付的方法论. 
-- 我的职业生涯从 PMO 开始, 10 年时间做到 IT Manager, 面对的下属, 合作方, Sponsor, Functional Manager, 采购这些, 如何进行沟通. 也算是达到中层管理的一条必经之路吧. 系统话的学习之后, 从此在自己的开发和工作中, 逐渐去观察和磨练这部分技能
+- 我的职业生涯从 PMO 开始, 10 年时间做到 IT Manager, 面对的下属, 合作方, Sponsor, Functional Manager, 采购这些, 如何进行沟通. 也算是达到中层管理的一条必经之路吧. 系统的学习之后, 从此在自己的开发和工作中, 逐渐去观察和磨练这部分技能
 - 以上两点解释了 why and why now 的问题
 - 因为学习编程往往需要整段的时间, 而且难度比较大, 需要专注学习. 但是PMP 可以利用碎片的时间和学习编程之间的休息时间, 睡觉前的时间, 进行调剂学习. 
 
@@ -24,7 +24,7 @@ Program
 
  PMO
  Organizational structure that standardizes the process and facilitates the sharing of resources, methodologies, tools, and techniques. 
- Types
+ Types 分类是要考的
  - Supportive: Support the project manager, such as providing templates, training, or lessons learned from other projects
  - Controlling: Determines the framework or methodology and use of specific forms
  - Directive: Controls the project. PM will be assigned and report to the PMO
