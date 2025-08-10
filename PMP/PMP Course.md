@@ -56,7 +56,7 @@ Project Life Cycle
 - can be either predictive or adaptive
 
 Project Governance
-- Framework within which project decision are made
+- Framework, functions, and processes that guide a company to create a project. 
 - Three pillars
 	- Structure
 	- People
@@ -152,11 +152,13 @@ Organizational Structure
 - Functional Organizations PM 的权利最小
 	- Structure that groups staff members according to their area of expertise (sales, marketing, constrution, etc). Functional structures require the project team members to report directly to the functional manager
 - Matrix Organizations PM 的权利在 middle
-	- There are three matrix structure: weak, balanced, and strong. The different structure are reflective of the project manager's authority in relation to the functional manager's authority. 
+	- There are three matrix structure: weak, balanced, and strong. The different structure are reflective of the project manager's authority in relation to the functional manager's authority. Strong Matrix, PM is full time, Weak Matrix, PM is part time
 - Project Oriented Organizations. (Projectized) PM 的权利最大
 	- Structure where the PM has the greatest amount of authority. The project team is assigned to the project on a full-time basis. When the project is complete, the project team member moves on to other assignments within the organization.
 - Hybird
 	- Blended type
+- Organic
+	- Company owner control the resource
 
 Risk vs Issues vs Assumption vs Constraints
 - Risk are potential events or situations that may occur in the future and have an impact on the project success  风险可能是好的, 也可能是坏的. 但是不一定发生. Risk 管理有 Risk Register
