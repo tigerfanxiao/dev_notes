@@ -444,6 +444,7 @@ Socket 是一种双向通信机制. 常见的socket有
 Unix domain socket also named as IPC socket, Inter-process Communication Socket用户unix系统上不同进程间的双向通信. 现在还流行RPC Remote Procedure Call, 即实现两台不同物理机上的进程互相通信
 # Others
 HTTP Status
+200 正确
 400 页面不催在
 401 Authentication error
 302 页面跳转

@@ -336,25 +336,25 @@ vim +10 test.txt # 直接进入第 10 行
 | Normal  | 移动光标       | `i` 转 Insert 模式                 |                       |
 | Insert  | 键盘输入       | `jj` 或者 `esc`退出 Insert 到 Normal |                       |
 | Vistual | 选择内容       | `v` 进入或者退出 Visual 模式            | ctrl + v block select |
-| Command | 查找, 替换, 保存 | :                               |                       |
+| Command | 查找, 替换, 保存 | 在 normal 模式下, 输入冒号 :            |                       |
 ### vim 配置
 ```shell
 # 修改配置文件 .vimrc
 set ts=4 # 一个 tab 是 4 个空格
 set expandtab # 用空格代替 tab
 set ai # 自动缩进
-
+set paste # 
 ```
 
 ### 模式转换
 - Normal -> Insert
 ```shell
 i # 在光标前插入 
-I # 在行首插入 
 a # 在光标后插入 
+I # 在行首插入 
 A # 在行尾插入 
-o # 在新一行插入
-O # 在光标的上一行插入
+o # 在当前光标的下一行插入
+O # 在当前光标的上一行插入
 ```
 
 ## VIM 命令模式

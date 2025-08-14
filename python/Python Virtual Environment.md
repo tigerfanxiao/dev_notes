@@ -18,11 +18,35 @@ exec "$SHELL"
 pyenv --version
 ```
 
-pyenv 用法
+# Pyenv
+pyenv 用于在一个电脑中保持多个python 的版本
 ```shell
 pyenv install --list
 pyenv install 3.8.10
 pyenv global 3.8.10
 
 pyenv exec python3.8.10 test.py
+```
+
+# UV
+```shell
+# install uv
+brew install uv
+# use pip
+pip install uv
+
+```
+
+```shell
+uv python list
+uv python install 3.9
+
+uv run --python 3.8 # run script with specific python version
+
+uv run --with rish --with requests --python 3.9 main.py # run with uninstalled package
+
+uv init --script main.py --python 3.9.21
+
+uv init
+
 ```

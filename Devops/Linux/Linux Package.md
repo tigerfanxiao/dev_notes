@@ -10,23 +10,6 @@ alien <package_name>.rpm
 # deb to rpm
 alien -r <package_name>.deb
 ```
-# apt
-
-
-```shell
-# ubuntu 20.04
-sudo apt-get update # find avaible package for your distro
-sudo apt-get upgrade # install the available package
-
-sudo apt-get update && sudo apt-get intall <package_name>
-
-# 配置自动更新 
-sudo dpkg-reconfigure unattended-upgrades
-# 不自动更新下面这些包
-sudo apt-mark hold kubelet kubeadm kubectl
-# 对不能自动更新的包,手动指定更新
-sudo apt-get install -y --allow-change-held-packages kubelet=1.27.2-00 kubectl=1.27.2-00
-```
 # yum
 1. 可以直接下载二进制包, 如果执行 bash 脚本来安装
 2. 可以下载代码, 在本地编译后安装
