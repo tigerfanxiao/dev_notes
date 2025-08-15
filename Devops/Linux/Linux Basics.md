@@ -159,7 +159,7 @@ devtmpfs        836M     0  836M   0% /dev
 tmpfs           893M     0  893M   0% /dev/shm
 tmpfs           893M   18M  876M   2% /run
 tmpfs           893M     0  893M   0% /sys/fs/cgroup
-/dev/nvme0n1p2   10G  6.5G  3.6G  65% /
+/dev/nvme0n1p2   10G  6.5G  3.6G  65% / # 这里是根目录
 tmpfs           179M  4.0K  179M   1% /run/user/1001
 
 ```
@@ -771,7 +771,7 @@ linux中常见的文件系统
 - ext4 支持 1E, 支持缩减. ubuntu 偏好
 - iso9660 只光盘特殊的文件系统
 - swap
-windows 使用的we年系统
+windows 使用的文件系统
 - FAT32
 - NTFS
 - exFAT
