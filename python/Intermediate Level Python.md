@@ -3,7 +3,13 @@ number
 positive_infinity = float('inf')
 print('Positive Infinity: ', positive_infinity)
 ```
-
+uuid
+```python
+# uuid1 一般是host的mac
+# uuid4 一般是随机字符串
+# fields 字段很多 (time_low, time_mid, time_hi_version, clock_seq_hi_variant, clock_seq_low, node)
+uuid.uuid4().fields[-1][:6] # 取最后一个node的前6位
+```
 ### string method
 
 ```python
@@ -70,10 +76,37 @@ hasattr(Employee, 'email') # True
 
 ```
 
+构造类, 其中uuid不能修改 setter
+```python
+import uuid
+
+
+class Product:
+    def __init__(self, product_name, price):
+        self._product_id = self._generate_id()
+        self.product_name = product_name
+        self.price = price
+
+    def __repr__(self):
+        return f"Product(product_name='{self.product_name}', price={self.price})"
+
+    def _generate_id(self):
+        return str(uuid.uuid4().fields[-1])[:6]
+
+    @property
+    def product_id(self):
+        return self._product_id
+
+    @product_id.setter
+    def product_id(self, value): # 这里说明product不能变动
+        raise AttributeError("product_id cannot be changed")
+```
 ### Dunder method
 
 ```python
 
+# 验证是否是函数, 返回True or False
+calllable(Employee.method)
 
 repr
 __repr__
