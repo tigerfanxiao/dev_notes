@@ -19,7 +19,8 @@ After the installation complete, you can test wsl Ubuntu by search in "Ubuntu" i
 ![[Pasted image 20250509170744.png]]
 Or in terminal with following command
 ```powershell
-wsl -d Ubuntu
+wsl -d Ubuntu # spin up wsl ubuntu
+wsl --shutdown # shutdown wsl 
 ```
 # Step 2 Install Docker Desktop
 

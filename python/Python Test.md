@@ -9,14 +9,59 @@ def add(x, y):
 class TestAddition(unittest.TestCase):
 	def test_add_positive_numbers(self):
 		result = add(2, 3)
-		self.assertEqual(result, 5)
+		self.assertEqual(result, 5, msg=None)
 
-		# 其他assert方法
+		# 不等于
+		self.assertNotEqual(result, 5, msg=None)
+		# 其他assert True or False
 		self.assertTrue(result, True)
 		self.assertFalse(result, False)
 
+		# check None
+		self.assertEqual(resut, None)
+		self.assertIsNone(obj, msg=None)
+		self.assertIsNotNone(obj, msg=None)
+
+		# less than
+		self.assertLess(obj1, obj2)
+		self.assertGreater(obj1, obj2)
+
+		# 如果要判断一个属性是否是用@property 定义出来的
+		self.assertIsInstance(getattr(class,'email', property))
+
+		# 判断 Exception正常触发
+		with self.assertRaises(ValueError):
+			rect = Rectangle(-4, 5)
+		# 不使用context manager
+		self.assertRaises(TypeError, callable, *args, **kwargs)
+			
+		# 是否在容器中
+		self.assertIn(member, container, msg=None)
+		self.assertNotIn(member, container, msg=None)
+
+		# 在比较浮点数计算, 查看到小数点后2位
+		self.assertAlmostEqual(first_float, second_float, places=2, delta=0.5)
+	
+
 if __name__ == '__main__':
 	unittest.main()
+```
+
+assert warning
+```python
+import unittest
+import warnings
+
+def generate_warning():
+	# 注意这里的UserWarning 或者是Warning都是不需要引入包就能用的
+	# 因为Warning是Exception的自己
+	# import warnings 只是为了调用 warnings.warn() 方法
+	warnings.warn("This is a warning", UserWarning)
+
+class TestWarning(unittest.TestCase):
+	def test_warning(self):
+		with self.assertWarns(UserWarning):
+			generate_warning()
 ```
 
 asset 只是用于开发环境, 不用于生产环境
@@ -26,10 +71,161 @@ is_italy = 'ITA' in countries
 
 assert is_italy, 'Italy not found in the countries list.'
 ```
-### setup in unitest
+# Fixture
+Fixture的作用
+1. 创建公共的实例
+2. `setUp`和`tearDown` 每个`test_` 方法都要重新用setUp构造一遍, 并用 tearDown拆除一遍
+3. `setUpClass()`和`tearDownClass()` 整个TestCase中的所有`test_` 方法都只构造一次, 执行完之后, 拆除
+4. `setUpModule()`和 `tearDownModule()` 是整个module都能用
+### setup & teardown
+```python
+class TestCalculator(unittest.TestCase):
+	def setUp(self) -> None:
+		self.calculator = Calculator() # 整个对象可以给所有的test_ 方法用
+
+	def tearDown(self) -> None:
+		del self.calculator # 销毁实例
+
+```
+`setupClass` 和 `tearDownClass`
+```python
+import unittest
+
+class MyTestCase(unittest.TestCase):
+
+	@classmethod
+	def setUpClass(cls):
+		# One-time setup for the entire test case class
+		cls.server = start_test_server()
+
+	@classmethod
+	def tearDownClass(cls):
+		# One-time teardown for the entire test case class
+		stop_test_server(cls.server)
+
+	def test_example1(self):
+		# 在引用 setUp中定义的 cls.server 时, 需要引用
+		self.server 
+		self.assertEqual()
+		
+
+	def test_example2(self):
+		# Test code that uses the test server
+		self.server
+		self.assertEqual()
+```
+
+`setUpModule`
+```python
+
+def setUpModule():
+	global calc
+	calc = SimpleCalc()
+```
 
 
+使用context manager 也可以实现, 文件的初始化和删除
 
+```python
+import unittest
+from contextlib import contextmanager
+
+@contextmanager
+def temp_file():
+	# Create a temporary file
+	file = open("temp.txt", "w")
+	yield file
+	# Clean up the temporary file
+	file.close()
+	os.remove("temp.txt")
+
+class MyTestCase(unittest.TestCase):
+	def test_file_creation(self):
+		with temp_file() as file:
+			# Test code that uses the temporary file
+			file.write("Hello, World!")
+```
+
+创建临时文件的包 `tempfile`
+```python
+import tempfile
+# 一般情况下TemporaryFile 创建的文件在close后, 会自动删除. 所以这里设置了delete=False
+# 在close之后, 也不会被删除
+# NamedTemporaryFile 会自动生成一个文件名, 通过 fp.name 引用
+fp = tempfile.NamedTemporaryFile(mode='w+', delete=False)
+#
+fp.write(b'hello, world') # 这里写入后 seek在文件末尾
+fp.close()
+# 如果文件刚写完, 还没有被关闭, 则需要读取文件内容的话需要把光标放到文件头部
+fp.seek(0) 
+# 如果文件已经close, 则可以是直接读取, 不用seek(0)
+assert fp.read() == b'hello, world', 'not equal content'
+
+# 删除文件
+os.unlink(fp.name) 
+os.remove(fp.name) # 两个效果一样
+```
+
+### skip test
+- 如果是使用TDD的开发模式, 在实现代码开发前, 先写测试代码, 会遇到有些测试需要先跳过, 因为开发还没有完成
+- 也可能是因为有些代码是特定系统环境下才需要测试的, 在生产环境中不需要测试, 也可以跳过. 比如手机端的测试代码, 不需要在系统端测试
+- 有条件的跳过某些测试用例. 比如代码中自动调取当天的日期, 因为当天每天都变, 
+```python
+import unittest
+
+class MyTestCase(unittest.TestCase):
+	@unittest.skip("Skipped for demonstration purposes")
+	def test_skip_example(self):  # Test code that would be skipped
+		pass
+```
+有条件的skip
+```python
+class TestContainer(unittest.TestCase):
+	@unittest.skipIf(date.today().day % 2 != 0, 'Skipping odd days.')
+	def test_code_ends_with_0_on_even_days(self):
+		c = Container()
+		self.assertTrue(
+		c.code.endswith('0'), 'Expected code to end with 0.')
+```
+除非满足条件, 否则就跳过
+```python
+@unittest.skipUnless()
+```
+
+构造一个测试文本文件
+```python
+class TestFileReader(unittest.TestCase):
+	def setUp(self):
+		self.filename = 'test.txt'
+		with open(self.filename, 'w') as f:
+			f.write('Hello, world!')
+
+	def tearDown(self):
+		os.remove(self.filename)
+
+	@unittest.skipUnless(os.path.isfile('test.txt'), "File not found")
+	def test_read_data(self):
+		reader = FileReader(self.filename)
+		data = reader.read_data()
+		self.assertEqual(data, 'Hello, world!')
+```
+
+如果测试代码还没开发完成, 则可以用 `self.fail()` 直接使测试失败. 加上skip装饰器直接跳过
+```python
+import unittest
+
+class DataTransformer:
+	def transform(self, data):
+	# Code to transform data
+		return transformed_data
+
+class TestDataTransformer(unittest.TestCase):
+	@unittest.skip("Test skipped as not implemented yet")
+	def test_transform(self):
+		# 立刻使这次测试失败
+		self.fail("Test not implemented yet")
+
+```
 ### Unittest.mock
 ```python
 from unittest.mock import Mock, MagicMock, patch
@@ -291,10 +487,6 @@ def test_configured_isis_with_value_error():
 
 ```
 
-# Fixture
-Fixture的作用
-1. 创建公共的实例
-2. 创建setup和teardown
 
 ### 创建公用实例
 
