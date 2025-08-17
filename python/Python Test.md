@@ -11,40 +11,44 @@ class TestAddition(unittest.TestCase):
 		result = add(2, 3)
 		self.assertEqual(result, 5, msg=None)
 
-		# 不等于
-		self.assertNotEqual(result, 5, msg=None)
-		# 其他assert True or False
-		self.assertTrue(result, True)
-		self.assertFalse(result, False)
-
-		# check None
-		self.assertEqual(resut, None)
-		self.assertIsNone(obj, msg=None)
-		self.assertIsNotNone(obj, msg=None)
-
-		# less than
-		self.assertLess(obj1, obj2)
-		self.assertGreater(obj1, obj2)
-
-		# 如果要判断一个属性是否是用@property 定义出来的
-		self.assertIsInstance(getattr(class,'email', property))
-
-		# 判断 Exception正常触发
-		with self.assertRaises(ValueError):
-			rect = Rectangle(-4, 5)
-		# 不使用context manager
-		self.assertRaises(TypeError, callable, *args, **kwargs)
-			
-		# 是否在容器中
-		self.assertIn(member, container, msg=None)
-		self.assertNotIn(member, container, msg=None)
-
-		# 在比较浮点数计算, 查看到小数点后2位
-		self.assertAlmostEqual(first_float, second_float, places=2, delta=0.5)
-	
-
 if __name__ == '__main__':
 	unittest.main()
+```
+
+各种assert 方法
+```python
+
+# 不等于
+self.assertNotEqual(result, 5, msg=None)
+# 其他assert True or False
+self.assertTrue(result, True)
+self.assertFalse(result, False)
+
+# check None
+self.assertEqual(resut, None)
+self.assertIsNone(obj, msg=None)
+self.assertIsNotNone(obj, msg=None)
+
+# less than
+self.assertLess(obj1, obj2)
+self.assertGreater(obj1, obj2)
+
+# 如果要判断一个属性是否是用@property 定义出来的
+self.assertIsInstance(getattr(class,'email', property))
+
+# 判断 Exception正常触发
+with self.assertRaises(ValueError):
+	rect = Rectangle(-4, 5)
+# 不使用context manager
+self.assertRaises(TypeError, callable, *args, **kwargs)
+	
+# 是否在容器中
+self.assertIn(member, container, msg=None)
+self.assertNotIn(member, container, msg=None)
+
+# 在比较浮点数计算, 查看到小数点后2位
+self.assertAlmostEqual(first_float, second_float, places=2, delta=0.5)
+	
 ```
 
 assert warning
@@ -117,7 +121,6 @@ class MyTestCase(unittest.TestCase):
 
 `setUpModule`
 ```python
-
 def setUpModule():
 	global calc
 	calc = SimpleCalc()
@@ -226,7 +229,81 @@ class TestDataTransformer(unittest.TestCase):
 		self.fail("Test not implemented yet")
 
 ```
-### Unittest.mock
+### mock
+
+当我们的代码中有类似request, 调用远端api, 需要访问网络这种情况时, 因为网络范围有很多不确定性,所以可以利用mock来处理
+下面举个简单的例子
+```python
+# 文件名是 main.py
+import requests  
+# 只是需要被测试的函数 len_joke
+def len_joke():  
+    joke = get_joke()  
+    return len(joke)  
+
+# 这里是被依赖的函数, 因为是API调用, 我们要mock的是这个函数
+def get_joke():  
+    url = 'http://api.icndb.com/jokes/random'  
+    response = requests.get(url)  
+    if response.status_code == 200:  
+        joke = response.json()['value']['joke']  
+    else:  
+        joke = 'No Jokes'  
+    return joke
+```
+测试函数的写法
+```python
+import unittest
+
+from unittest.mock import patch
+# 先吧需要测试的函数引入
+# 注意这里不一定需要引入 get_joke 因为这个被mock的函数是patch装饰器去找的
+from main import len_joke
+
+class TestLenJoke(unittest.TestCase):
+	@patch('main.get_joke') # 这里main是module的名字, get_joke是对应的函数
+	def test_len_joke(self, mock_get_joke) # 这里是说我们要用mock_get_joke整个函数来替代原来的get_joke函数
+		mock_get_joke.return_value = 'one' # 这里我们定义了这get_joke函数的返回值
+		# 我们假设在实际运行len_joke时, 依赖的get_joke返回值是 "one", 所以len_joke的返回值是3
+		self.assertEqual(len_joke(), 3)
+
+if __name__ == '__main__':
+	unittest.main()
+```
+MagicMock 的作用
+当我们patch一个函数的时候, 如果整个函数的返回值是一个有复杂架构的实例对象, 比如一个HTTP请求的返回值response是一个有复杂结构的对象. 那么模拟整个对象是需要先构造一个类的, 再通过实例化, 才能生成一个模拟的对象. 所以在unittest框架中提供了MagicMock 这个类. 用于快速构建一个复杂结构的实例. 我们还是用上面的例子举例
+```python
+import unittest
+from unittest.mock import patch, MagicMock
+from main import get_joke # 这是这次需要被测试的函数
+
+# 对get_joke 函数进行测试
+class TestLenJoke(unittest.TestCase):
+	# 注意命名空间, 这里是main模块下的引入的的requests包, 不是全局的requests包
+	# 这里不是patch了一个requests.get方法, 而是直接patch requests整个模块
+	@patch('main.requests') 
+	def test_get_joke(self, mock_requests): # 这里mock的是整个requests 整个模块
+		# 我们现在来构造一个复杂对象作为 mock_requests.get.return_value 的返回值
+		mock_response = MagicMock(status_code=200)
+		# 这里根究原代码 json也是一个函数, 所以有返回值 return_value
+		mock_response.json.return_value = {
+			'value': {'joke': 'one'}
+		}
+		mock_requests.get.return_value = mock_response
+		self.assertEqual(get_joke(), 'one')
+
+	# 对于获取数据失败的测试
+	@patch('main.requests')
+	def test_fail_get_joke(self, mock_requests):
+		mock_response = MagicMock(status_code=403)
+		mock_requests.get.return_value = mock_response
+		self.assertEqual(get_joke(), 'No Jokes')
+```
+
+
+
+
+
 ```python
 from unittest.mock import Mock, MagicMock, patch
 # Create a basic mock object
