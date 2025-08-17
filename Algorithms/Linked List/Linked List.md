@@ -7,77 +7,54 @@ A((A)) --> B((B)) --> C(( C )) --> D(( D )) --> E(( None ))
 节点的定义
 ```python
 class Node:
-    def __init__(self, value) -> None:
-        self.value = value
-        self.next_node = None
-    
-    def __repr__(self) -> str:
-        return self.value
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
 
 class LinkedList:
-	def __init__(self, node:Node) -> None:
-		self.head = node
+    def __init__(self):
+        self.head = None
 
-	def go_through_linked_list:
-		ur_node = self.head
-		while cur_node is not None: 
-			print(cur_node.value)
-			cur_node = cur_node.next
-			
-	@go_through_linked_list
-	def print_linked_list(self):
-		cur_node = self.head
-		while cur_node is not None: 
-			print(cur_node.value)
-			cur_node = cur_node.next
+    def add_node(self, data): 
+	    """insert in the head"""
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+        
+	def append_node(self, data)
+		"""Insert at the end"""
+		new_node = Node(data)
+		if self.head is None:
+			self.head = new_node # 如果链表是空的
+			return
+		current_node = self.head
+		while current_node.next:
+			current_node = current_node.next
+		current_node.next = new_node
+
+    def remove_node(self, data):
+        current_node = self.head
+        previous_node = None
+
+        while current_node is not None:
+            if current_node.data == data:
+                if previous_node is not None:
+                    previous_node.next = current_node.next
+                else:
+                    self.head = current_node.next
+                return True
+            previous_node = current_node
+            current_node = current_node.next
+
+        return False
+
+    def traverse_list(self):
+        current_node = self.head
+        while current_node is not None:
+            print(current_node.data)
+            current_node = current_node.next
 		
-
-	def add_node_to_end(self, node):
-		
-		
-	
-
-node_a = Node('A')
-node_b = Node('B')
-node_c = Node('C')
-node_d = Node('D')
-
-node_a.next_node = node_b
-node_b.next_node = node_c
-node_c.next_node = node_d
-
-
-# 迭代方法打印链表
-def print_linked_list(head):
-	cur_node = head
-	while cur_node.next_node is not None:
-	    print(cur_node)
-	    cur_node = cur_node.next_node
-
-# 用递归的方式打印链表
-def print_linked_list(head):
-	if head is None:
-		return
-	print(head)
-	print_linked_list(head.next_node)
-
-# 找到链表中的第 n 个 元素并返回它的值
-# 迭代方法
-def get_node_value(head, index):
-	cur = head
-	while index > 0:
-		cur = cur_next_node
-		index -= 1
-	return cur.value
-
-# 递归方法
-def get_node_value(head, index):
-	if head is None:
-		return
-	if index == 0:
-		return head.value
-	return get_node_value(head.next_node, index - 1)
-    
 ```
 
 ## Reverse linked list
