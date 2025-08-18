@@ -299,7 +299,56 @@ class TestLenJoke(unittest.TestCase):
 		mock_requests.get.return_value = mock_response
 		self.assertEqual(get_joke(), 'No Jokes')
 ```
+注意: 如果有需要`@patch()` 可以叠加使用
 
+patch 实例中的方法
+类的定义
+```python
+import random
+
+class Programmer:
+    def __init__(self):
+        self.tech_names = set()
+
+    def add_tech(self, tech_name):
+        name = tech_name.lower()
+        if name not in self.tech_names:
+            self.tech_names.add(name)
+        return self
+	# 这里有随机值, 所以用patch方法来替代
+    def get_random_tech(self):
+        if not self.tech_names:
+            raise ValueError('No technologies added yet')
+        return random.choice(list(self.tech_names))
+
+```
+
+
+```python
+import unittest
+from unittest.mock import patch
+from employees import Programmer
+
+
+class TestProgrammer(unittest.TestCase):
+    def setUp(self):
+        self.programmer = Programmer()
+        self.programmer.add_tech('python') \
+            .add_tech('sql') \
+            .add_tech('java') \
+            .add_tech('c++') \
+            .add_tech('aws')
+            
+	# 这里path.object中是使用的是类, 类中的方法是 get_random_tech
+    @patch.object(Programmer, 'get_random_tech')
+    def test_get_random_tech_mocked_python(self, mock_tech):
+	    # 将整个实例中的方法定义了返回值
+        mock_tech.return_value = 'python'
+        # 在通过实例调用方法来实现mock
+        actual = self.programmer.get_random_tech()
+        expected = 'python'
+        self.assertEqual(actual, expected)
+```
 
 
 
@@ -310,8 +359,8 @@ from unittest.mock import Mock, MagicMock, patch
 mock_obj = Mock(name='first_mock')
 # attribute
 mock_obj.call_count
-# Create a MagicMock object that behaves like a real object
-magic_mock_obj = MagicMock()
+# 基于某个类构建实例
+weather_api = mock.MagicMock(spec=WeatherAPI)
 ```
 
 you can configure the behavior of mock objects by assigning return values, side effects, or exceptions that they should raise when called. You can also inspect how they were called.
@@ -342,6 +391,76 @@ mock_obj.assert_called_once_with(1, 2) # 被调用一次
 self.assertEqual(mock_obj.call_count, 3) # 被调用3次
 mock_obj.assert_not_called()
 ```
+assert has calls
+email client 
+```python
+import smtplib
+
+
+class EmailClient:
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+    def send_email(self, recipient, subject, body):
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(self.email, self.password)
+        message = f"Subject: {subject}\n\n{body}"
+        server.sendmail(self.email, recipient, message)
+        server.quit()
+
+
+class EmailSender:
+    def __init__(self, email_client):
+        self.email_client = email_client
+
+    def send_emails(self, recipients, subject, body):
+        for recipient in recipients:
+            self.email_client.send_email(recipient, subject, body)
+
+```
+写一个email_sender 的测试
+```python
+import unittest
+from unittest import mock
+from email_client import EmailClient, EmailSender
+
+
+# Enter your solution here
+class TestEmailSender(unittest.TestCase):
+    def test_send_emails(self):
+	    # 这里mock的对象是 email_client, 所以这个对象的 send_email是mocked function
+        email_client = mock.MagicMock(spec=EmailClient)
+        recipients = [
+            "recipient1@example.com",
+            "recipient2@example.com",
+        ]
+       
+        email_sender = EmailSender(email_client)
+         # 这里是执行了函数, 函数会被执行两次
+        email_sender.send_emails(
+            recipients, "Test email", "This is a test email"    
+        )
+        # 这里要检验被mocked function 被调用了2次
+        email_client.send_email.assert_has_calls(
+            [
+                mock.call(
+                    "recipient1@example.com",
+                    "Test email",
+                    "This is a test email"
+                ),
+                mock.call(
+                    "recipient2@example.com",
+                    "Test email",
+                    "This is a test email",
+                ),
+            ]    
+        )
+```
+
+
+
 
 mock function
 ```python

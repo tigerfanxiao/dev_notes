@@ -34,6 +34,13 @@ def is_valid_password(password):
     if not any(c.islower() for c in password): # 是否是小写字母
         return False
     return True
+
+# 字符串的拼接
+url = (
+        f"https://api.openweathermap.org/data/2.5/weather"
+        f"?q={city}&appid={self.api_key}"
+    )
+        
 ```
 
 全局变量
