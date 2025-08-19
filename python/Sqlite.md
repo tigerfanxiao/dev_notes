@@ -14,7 +14,7 @@ result = cursor.fetchall()
 
 
 
-
+ conn.close()
 
 ```
 

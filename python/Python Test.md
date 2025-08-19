@@ -460,8 +460,6 @@ class TestEmailSender(unittest.TestCase):
 ```
 
 
-
-
 mock function
 ```python
 import random

@@ -18,7 +18,9 @@ def generate_password(n):
         random.choices(
             string.ascii_uppercase # 所有大写字母
             + string.ascii_lowercase # 所有小写字母
-            + string.digits, # 说有数字
+            + string.ascii_letters # 所有字母
+            + string.digits, # 所有数字
+            + string.punctuation # 所有标点
             k=n, # 抽出几个字符
         )
     )
