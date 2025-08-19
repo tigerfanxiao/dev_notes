@@ -448,3 +448,1161 @@ HTTP Status
 400 页面不催在
 401 Authentication error
 302 页面跳转
+
+# 整体编程过程
+
+8/12
+
+我想要自己构建一个项目
+
+- 这个项目的最终目的是学会自己写 django rest_framework
+
+- 这个项目可以是用 docker 的, 或者直接在本地虚拟环境运行. 但是开发环境不是这个项目的最重要的目的.
+
+- 这个项目最基本的需要亲手实现 drf 框架和课程中的讲到的所有功能
+
+
+# UV
+
+为什么要学 UV?
+- UV 一个工具可以同时实现 python 包管理和 python 版本管理两个作用
+- 第二 UV 比 PIP 快 10 倍到 100 倍, 可以快速构建自己的环境
+- install uv
+```shell
+# on mac
+brew install uv
+# on others
+pip install uv
+```
+
+Q: how to use docker with uv
+use uv to install python
+
+```shell
+# show all available python version
+uv python list
+
+# install python version 3.8
+
+uv python install 3.8
+
+# find the specific python version on the local host
+
+# uninstall specific python version
+
+uv python uninstall 3.9
+
+uv python find 3.8
+
+```
+
+use uv to run python
+
+```shell
+
+# run python script with specific python version
+
+uv run --python 3.9.21 main.py
+
+# run python script with specific package or module
+
+uv run --with rich --with requests --python 3.8 main.py
+
+  
+
+# generate a script at the beginning of main.py
+
+uv init --script main.py --python 3.9.21
+
+# add package to the script
+
+uv add --script main.py "rich"
+
+# now you can run main.py directly
+
+uv run main.py
+
+```
+
+use uv for project
+
+```shell
+
+# 在本地目录下创建项目文件
+
+uv init
+
+# 在本地目录下先创建项目文件夹后, 再在项目文件夹里面创建项目文件
+
+uv init my_project
+
+  
+
+# install python package, and create .venv folder
+
+uv add django==2.2
+
+source .venv/bin/activate
+
+# remove dependency
+
+uv remove requests
+
+  
+
+# 如果修改了 pyproject.toml中的依赖, 可以用下面的命令, 将 uv 的配置同步到.venv中
+
+uv sync
+
+# generate uv lock file manually
+
+uv lock
+
+```
+
+  
+
+# 初始话项目
+
+激活本地的虚拟环境
+
+```shell
+
+source .venv/bin/activate
+
+# 使用 django-admin 命令创建项目
+
+django-admin.py startproject profilesproject .
+
+# 创建 app
+
+python manage.py startapp profiles_api
+
+# 运行 django 服务器
+
+python manage.py runserver 0.0.0.0:8000
+
+  
+
+```
+
+  
+
+# 如果 django 想要使用定制的 user, 比如使用 email 作为用户名
+
+首先在 profiles_api 中修改model.py
+
+```python
+
+  
+
+from django.contrib.auth.models import AbstractBaseUser
+
+from django.contrib.auth.models import PermissionsMixin
+
+from django.contrib.auth.models import BaseUserManager
+
+  
+
+# 下面这个类是必须要写的, 因为如果修改了 djang 的默认用户类, python manage.py createsuperuser 执行的时候, 还是会使用默认的类. 新建一个 UserManager 的类
+
+class UserProfileManager(BaseUserManager):
+
+"""Manager for user profiles"""
+
+# django-cli 用来穿管用户的方法
+
+def create_user(self, email, name, password=None):
+
+"""Create a new user profile"""
+
+if not email:
+
+raise ValueError('User must have an email address')
+
+email = self.normalize_email(email)
+
+user = self.model(email=email, name=name)
+
+  
+
+user.set_password(password)
+
+user.save(using=self._db)
+
+  
+
+return user
+
+  
+
+def create_superuser(self, email, name, password=None):
+
+"""Create a new super with given details"""
+
+user = self.create_user(email, name, password)
+
+user.is_superuser = True
+
+user.is_staff = True
+
+user.save(using=self._db)
+
+  
+
+return user
+
+  
+  
+
+class UserProfile(AbstractBaseUser, PermissionsMixin):
+
+"""Database model for users in the system"""
+
+  
+
+email = models.EmailField(max_length=255, unique=True)
+
+name = models.CharField(max_length=255)
+
+is_active = models.BooleanField(default=True)
+
+is_staff = models.BooleanField(default=False)
+
+  
+
+# 因为django cli默认是和默认的用户模型打交道的
+
+# 我们自己定了用户模型后, 就需要告诉django-cli怎么和我们的模型打交道
+
+objects = UserProfileManager()
+
+USERNAME_FIELD = "email" # 我们用 email 字段替换了默认的username字段
+
+REQUIRED_FIELDS = ["name"] # 制定了哪些字段是必须字段
+
+  
+
+def get_full_name(self):
+
+"""Retrieve full name of user"""
+
+return self.name
+
+  
+
+def get_short_name(self):
+
+"""Retrieve short name of user"""
+
+return self.name
+
+  
+
+def __str__(self):
+
+"""Return string reprensation of user"""
+
+return self.email
+
+```
+
+  
+
+因为使用了定制的 user 模型, 所以在创建 superuser 管理员账户之前, 需要先修改模型
+
+在创建完上面自定义的 usermodel 之后, 需要新使用 migrate 命令, 对和模型有关的数据的表结构进行更改.
+
+  
+
+需要把这个 model 注册到 admin 中, 否则登录django 后台无法查看
+
+```shell
+
+python manage.py makemigrations profiles_api # 需要指定那个 app, 创建修改数据库的计划
+
+python manage.py migrates # 实际执行修改数据库的动作
+
+  
+
+# 完成上面两步操作后, 创建超级账户, 这个账户在开发环境中是存在本地的sqlite数据库里的
+
+python manage.py createsuperuser
+
+```
+
+创建超级用户 tigerfanxiao@gmail.com/Fx926926
+
+可以通过 127.0.0.1:8000/admin 登录来访问 django 后台, 可以看到 userprofile 模型中的 tigerfanxiao@gmail.com 用户
+
+  
+
+在 django rest framework 中有两种方法来创建 API endpoint. APIView 和 ViewSet
+
+注意, 这两个类其实是 DRF 中的, 和 Django 本身的 view 不同. 这两个类默认就支持 HTTP 的那些 REST 请求(get, post, put, delete, etc.).
+
+创建了 API View 之后, 我们还要创建 router, 运行用户通过指定的 URL 来调用某个 View 函数
+
+此外对于用户的输入的内容, 我们还需要创建 Serializer 来处理. 所以View, route, Serializer 三个模块一起构成了一个 API Endpoint
+
+restful 的几个方式都在 apiview 里面去实现
+
+APIViews 作用
+
+- Perfect for implementing complex logic
+
+- Calling other APIs
+
+- Working for local files
+
+  
+
+如果定义一个 APIView
+
+1. 定义一个类继承 rest_framework中的 APIView的类
+
+2. 重写 get, post, put, patch, delete 方法, 这写方法里面都有 request 作为参数, 返回值都是 Response 对象
+
+3. 在APIView 中定义serializer_class, 在 post 方法中, 就需要用客户的输入, 创建一个 serializer 对象
+
+  
+  
+
+以下是 APIView 的一个例子, 例子里api 调用没有涉及数据库的访问, 只是通过用户提交的数据, 返回
+
+```python
+
+from rest_framework.views import APIView
+
+from rest_framework.response import Response
+
+  
+  
+
+# 创建一个类, 继承 APIView
+
+class HelloApiView(APIView):
+
+"""Test API View"""
+
+# 这里是直接传一个 serializer 类进去
+
+serializer_class = serializers.HelloSerializer
+
+  
+
+def get(self, request, format=None):
+
+"""Returns a list of APIView features"""
+
+an_apiview = [
+
+'Uses HTTP methods as function (get, post, patch, put, delete)',
+
+'Is similar to a traditional Django View',
+
+'Gives you the most control over you application logic',
+
+'Is mapped manually to URLs',
+
+]
+
+  
+
+# Response 里面都是放字典的
+
+return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+
+  
+
+def post(self, request):
+
+"""Create a hello message with our name"""
+
+# 注意这里self.searializzer_class 是调用了在类里定义的 serializer_class
+
+# 这里通过用户的输入, 创建了一个 serializer 对象
+
+serializer = self.serializer_class(data=request.data)
+
+  
+
+if serializer.is_valid(): # serializer 的校验方法
+
+name = serializer.validated_data.get('name') # 校验好的数据中取到 name 的值
+
+message = f'Hello {name}'
+
+return Response({'message': message})
+
+else:
+
+return Response(
+
+serializer.errors, # 如果 Serializer 失败, 返回的是serializer.errors 表示验证失败
+
+status=status.HTTP_400_BAD_REQUEST
+
+)
+
+  
+
+# 注意到下面的 put, patch, delete 代码都是需要 pk 作为参数的
+
+def put(self, request, pk=None):
+
+"""Handle updating an object"""
+
+return Response({'method':'PUT'})
+
+  
+
+def patch(self, request, pk=None):
+
+"""Handle a partical update of an object"""
+
+return Response({'method', "PATCH"})
+
+  
+
+def delete(self, request, pk=None):
+
+"""Delete an object"""
+
+return Response({'method', "DELETE"})
+
+  
+
+```
+
+  
+
+下面定义了 APIView 的 Serializer
+
+  
+
+```python
+
+from rest_framework import serializers
+
+from profiles_api import models
+
+  
+  
+
+class HelloSerializer(serializers.Serializer):
+
+"""Serializes a name field for testing our APIView"""
+
+# 这里定义了, 用户的输入, request 中的有一个键值对 name, 用户输入的name, 不能长于 10 个字符
+
+# 注意, 这里的用的是serializers.CharField, 并不是 models.CharField 可以查看 Serialzier 的行为是校验
+
+# 这里其实定义了用户的输入, 在APIView 的页面上可以看到 name 这个字段, 如果有别的用户输入, 就在这里定义
+
+name = serializers.CharField(max_length=10)
+
+```
+
+  
+
+下面是构建 app 下的 url, 然后在 project 先的 url 中引入
+
+```python
+
+# url file under profiles_api
+
+from django.urls import path
+
+from profiles_api import views
+
+  
+
+# 使用 as_view() 方法来调用 APIView
+
+urlpatterns = [
+
+path("hello-view/", views.HelloApiView.as_view()),
+
+]
+
+  
+
+```
+
+注意: 如果是 put, patch, delete 这些方法, 其实他们 PK 是要从用户这里获取的, 所以需要多定义一种 url 类型.
+
+这种定义方式就不适合对有model 访问数据库的方法来做了
+
+```python
+
+urlpatterns = [
+
+path("books/", BookAPIView.as_view()), # list all
+
+path("books/<int:pk>/", BookAPIView.as_view()) # retrieve one
+
+]
+
+```
+
+  
+
+在项目下的 url 文件中引入 app 下的 url
+
+```python
+
+from django.urls import path, include
+
+# 注意到这里的 urlpatterns 的写法是 django 自带的. 但是后面讲到的 viewset 中的 router 就是 rest_framework的特殊对象
+
+urlpatterns = [
+
+# 新增这一行, api/下面
+
+# 这里用 include 引入 app 下 url 的路径
+
+# 如果访问 api/ 可以看到 app 下所有的 endpoints
+
+path("api/", include("profiles_api.urls")),
+
+]
+
+```
+
+url 定义好之后, 就可以启动服务器, 测试了
+
+  
+
+# ViewSet
+
+ViewSet (High-Level, Resource-Oriented View)
+
+- Encapsulates a set of related views (e.g., list, create, retrieve, update, destroy) into one class.
+
+- You don’t write get/post methods; instead, you implement list(), retrieve(), create(), update(), partial_update(), destroy().
+
+- Usually used with Routers, which automatically generate the URL patterns.
+
+- 多用于 crud 的操作, 和数据库有关
+
+- 不需要想 APIView 那样定义多个不同的 URL pattern, 通过 router 可以自动定义
+
+- HTTP 方法, 对应 URL template, 对应 ViewSet 方法
+
+• GET /books/ → list
+
+• GET /books/{id}/ → retrieve
+
+• POST /books/ → create
+
+• PUT/PATCH /books/{id}/ → update
+
+• DELETE /books/{id}/ → delete
+
+  
+  
+
+```python
+
+from rest_framework.routers import DefaultRouter
+
+  
+
+router = DefaultRouter()
+
+# 只要定义这个就可以同时用于 books/<pk> 了
+
+# 注意 r'books' 是 url 的 prefix, basename 是一个 url 的称呼. 两者可以不同.
+
+# basename 可以在代码中被引用, 并通过 reverse('book') 返回 url的前缀 books, 这样, 当 url 变动时, 我们只需要在一处修改. 其他代码都不需要修改
+
+router.register(r'books', BookViewSet, basename='book')
+
+urlpatterns = [
+
+path('', include(router.urls)),
+
+]
+
+```
+
+  
+
+下面我要对之前自定义的用户模型 UserProfile 做一个ViewSet, 使我们可以通过 API 调用来修改他
+
+因为允许用户自己提交和修改数据, 所以就需要为用户输入定义个 Serializer, 在 Rest_frame 中有一个 ModelSeriliazer 专门用于给模型做 Serializer
+
+在 viewset 中的 create, update 等方法是面向 http 请求的, 而在 ModelSerializer 中的 create, update方法是面向对数据模型操作的. 也可以认为是数据库操作. 按照流程来理解就是用户发出 http post 请求, django 收到后, 先调用 viewset 中的 create 方法, viewset中的create 方法调用 Serializer 中的 create 方法, 把数据写入数据库中, 然后 viewset 中的 create 方法, 返回 Response 对象给到用户
+
+  
+
+```python
+
+  
+
+from rest_framework import serializers
+
+from profiles_api import models
+
+  
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+"""Serializer a user profile object"""
+
+class Meta:
+
+model = models.UserProfile # 这里指定了使用 ModelSerializer 的模型
+
+# fields 定义了哪些model 中的字段是需要我们做 serializer 的
+
+fields = ('id', 'email', 'name', 'password')
+
+extra_kwargs = {
+
+'password': {
+
+'write_only': True, # 只能是create 和 update 的时候使用, 不能在 retrive 时使用
+
+'style': {'input_type':'password'} # 指定了HTML 页面上的显示方式, input_type: password 说明不要明文显示. 用****显示
+
+}
+
+}
+
+# 必须要实现 create 和 update 两个方法, 对应 ViewSet 中 Create 和 Update方法
+
+# override这个函数, 就可以用模型中自己定义的create_user方法来构造实例
+
+# 这里参数是 Validated_data
+
+def create(self, validated_data):
+
+"""Create and return a new user"""
+
+# 这个是数据库操作, 在数据库中新建一个对象
+
+user = models.UserProfile.objects.create_user(
+
+email = validated_data['email'],
+
+name = validated_data['name'],
+
+password = validated_data['password']
+
+)
+
+return user
+
+# 这里有两个参数, 一个 instance, 因为要制定修改某一个对象, 一个 validated_data
+
+def update(self, instance, validated_data):
+
+"""Handle updating user account"""
+
+if 'password' in validated_data:
+
+password = validated_data.pop('password')
+
+# 如果要修改密码, 就用模型中的 set_password方法
+
+# 查看模型的定义, AbstractBaseUser类中自带了这个方法
+
+instance.set_password(password)
+
+# 直接调用父类ModelSerializer 中的 update 方法
+
+return super().update(instance, validated_data)
+
+  
+
+```
+
+  
+
+这里介绍一下 ModelSerializer 有哪些 validate data 的方法
+
+1. Built-in field validation (required, max_length, etc.) # 这是 django 内置的方法
+
+2. Field-level custom methods (validate_<fieldname>) # 定义一个单独的函数, 都某个 field 做验证
+
+3. Object-level custom method (validate) # 可以对多个 field 做交缠验证
+
+4. Model’s own full_clean() (if saving an instance)
+
+  
+
+既然使用了 ModelSerializer 就也要用到 ModelViewSet
+
+ModelViewSet 会自动帮你写好下面这些函数
+
+  
+
+That’s it — DRF automatically wires up:
+
+• .list() → GET /users/
+
+• .create() → POST /users/
+
+• .retrieve() → GET /users/{pk}/
+
+• .update() → PUT /users/{pk}/
+
+• .partial_update() → PATCH /users/{pk}/
+
+• .destroy() → DELETE /users/{pk}/
+
+  
+
+```python
+
+from rest_framework import viewsets
+
+  
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+
+# 最少要写两个属性
+
+serializer_class = serializers.UserProfileSerializer # 指定了 serializer
+
+queryset = models.UserProfile.objects.all() # 指定了模型
+
+  
+
+```
+
+  
+
+定义好 ModelSerializer 和 ModelViewSet 之后, 就写 url 了
+
+```python
+
+# 注意, 只要 ViewSet 中定义了 queryset, 就可以不必加 basename, django 可以根据 queryset 中关联的 model 找到模型
+
+router.register('profile', views.UserProfileViewSet)
+
+  
+
+```
+
+测试 profile, 注意使用过的 id 不能再使用, 即使用户已经被删除了
+
+创建用户
+
+id 2
+
+xiao.fan@alibaba-inc.com
+
+xiao
+
+123456
+
+  
+
+id 4
+
+xiao.fan@cainiao.com
+
+xiao
+
+123456
+
+  
+
+此时用户可以通过 api 来创建了. 但是出现了几个问题
+
+1. 没有给用户登录的 login 页面
+
+2. 没有控制用户的权限, 谁都能看到所有用户的信息, 即 list 方法, 谁都能修改甚至删除其他用户的信息
+
+  
+
+在课程中, 首先处理的是权限问题
+
+新建一个 permissions.py 文件
+
+```python
+
+from rest_framework import permissions
+
+  
+  
+
+class UpdateOwnProfile(permissions.BasePermission):
+
+"""Allow user to edit their own profile"""
+
+# 注意这里的参数, 用户请求 request, view, obj 是当前请求要处理的对象,比如 profile/1
+
+def has_object_permission(self, request, view, obj):
+
+"""Check user is trying to edit their own profile"""
+
+# 这里说明 request 中是有 method 字段的.
+
+if request.method in permissions.SAFE_METHODS: # SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
+
+return True # 这里允许用户产看所有的数据
+
+# 下面定义了, 修改数据只能是本人
+
+# 注意这里的返回值, 只有对象的 id 和发起请求的用户的 id 一直, 才有权限
+
+# 这里 django 自己的 authentication中间件决定了在用户发送请求的里使用 request.user.id 这些字段的
+
+# 可以通过 hasattr(request, 'user') 来打印验证
+
+return obj.id == request.user.id
+
+  
+
+```
+
+  
+
+定义某个 viewset 独特的 authentication 方法
+
+```python
+
+  
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+
+# 注意这里定理 authentication 方法是一个 tuple, 且只应用于这个 viewset
+
+# authentication 和 permission 并不相同. ToenAuthentication说的是当用户登录后, django 会生成一个 token 给这个用户
+
+# 然后用户不用再次登录, django 只要验证用户有这个 token, 就完成了使用这个 Endpoint 的身份验证
+
+authentication_classes = (TokenAuthentication,)
+
+# 这里定义了这个 viewset 的权限.也是一个 tuple
+
+permission_classes = (permissions.UpdateOwnProfile,)
+
+  
+
+```
+
+增加 filter 功能
+
+  
+
+```python
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+
+# filter 功能等于 ?search=cainiao
+
+filter_backends = (filters.SearchFilter,) # 可选, 增加 filter 功能
+
+search_fields = ( # 对两个字段进行 filter
+
+"name",
+
+"email",
+
+)
+
+  
+
+```
+
+接下来我们建立一个 login 的 viewset, 这个 viewset 的作用是给一个页面, 让用户登录
+
+用户在登录后, 会返回一个 token, 默认情况下这个 token 会存在数据库里, 不会改变. 所以和密码是一样的
+
+  
+
+```python
+
+from rest_framework.setting import api_setting
+
+  
+
+class UserLoginApiView(ObtainAuthToken):
+
+"""Handle creating user authentication tokens"""
+
+# 默认情况下, 这个 ObtainAuthToken 是返回 json, 定义了下面的 renderer_classes 之后, 就会在 html 页面上呈现
+
+renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+  
+
+```
+
+用
+
+tigerfanxiao@gmail.com/Fx926926 登录后, 返回如下 token
+
+token 6bb8647d98ba68d36a224f00b58a19493a11a9dd
+
+  
+
+用
+
+xiao.fan@cainiao.com/123456 登录后, 返回如下 token
+
+token 951afacf2153e05f74a3ab6e7d18c5f33de6894f
+
+  
+
+用
+
+xiao.fan@alibaba-inc.com/123456 登录后, 返回如下 token
+
+token a29aa9aba8183af13f8668e0a1e4c439444ea0e3
+
+  
+
+```python
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+
+# 增加这条命令后, 就可以用 token 验证登录了, 可以修改对象
+
+# 没有这条命令的话, 就需要用户用账户密码登录, 再跳转
+
+authentication_classes = (TokenAuthentication,)
+
+```
+
+使用 chrome 浏览器的 ModHeader 插件可以模拟 token, 注意这个插件的使用, 会让正在登录的其他网站登出
+
+输入key/value 是
+
+Authorization: token 6bb8647d98ba68d36a224f00b58a19493a11a9dd
+
+  
+
+# 创建一个 feed 的 model 和 viewset
+
+  
+
+```python
+
+# profiles_api/models.py
+
+from django.conf import settings # 引入 settings 文件
+
+  
+
+class ProfileFeedItem(models.Model):
+
+"""Profile status update"""
+
+# 这里定义了一个外键, 关联默认的
+
+user_profile = models.ForeignKey(
+
+settings.AUTH_USER_MODEL, # 这里是最佳实践, 使用 setting 中的变量. 一般情况下是用 model 的名字, 文本形式
+
+on_delete=models.CASCADE,
+
+)
+
+status_text = models.CharField(max_length=255)
+
+created_on = models.DateTimeField(auto_now_add=True)
+
+  
+
+def __str__(self):
+
+"""Return the model as a string"""
+
+return self.status_text
+
+  
+
+```
+
+因为这里创建了 model, 所以需要用 migration
+
+  
+
+```python
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+```
+
+然后在 admin 页面注册这个 model, 就可以在 ui 中管理了
+
+```python
+
+from django.contrib import admin
+
+from profiles_api import models
+
+  
+
+admin.site.register(models.ProfileFeedItem)
+
+  
+
+```
+
+如果要构建API endpoint 就需要创建 serializer 和 Viewset
+
+  
+
+```python
+
+  
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+
+"""Serializes profile feed item"""
+
+class Meta:
+
+model = models.ProfileFeedItem
+
+fields = ('id', 'user_profile', 'status_text', 'created_on')
+
+extra_kwargs = {'user_profile': {'read_only': True}} # 不希望用户自己修改, 而是从认证信息中获得
+
+```
+
+  
+
+这里有个有趣的东西 perform_create
+
+In Django REST Framework (DRF), perform_create is a hook method that gets called after your serializer is validated, but before the HTTP response is returned — specifically during the create() flow of a ViewSet or GenericAPIView.
+
+  
+
+It’s basically a place for you to add extra logic right after saving, without having to fully rewrite the create() method.
+
+  
+
+Where it fits in the flow
+
+  
+
+When a POST request hits a view that inherits from DRF’s mixins:
+
+1. Serializer is created with incoming request.data.
+
+2. .is_valid() is called — validation happens.
+
+3. If valid, DRF calls perform_create(serializer).
+
+4. By default, perform_create() just calls serializer.save().
+
+5. DRF builds and returns the HTTP 201 Created response.
+
+  
+
+```python
+
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+
+"""Handle creating, reading and updating profile feed items"""
+
+authentication_classes = (TokenAuthentication,)
+
+serializer_class = serializers.ProfileFeedItemSerializer
+
+queryset = models.ProfileFeedItem.objects.all()
+
+permission_classes = (
+
+permissions.UpdateOwnStatus,
+
+IsAuthenticated, # 如果没有认证身份则无法查看, IsAuthenticatedOrReadOnly 如果没有认证则可以看, 不能修改
+
+)
+
+  
+
+def perform_create(self, serializer):
+
+"""Sets the user profile to the logged in user"""
+
+# 这里把用户的 request.user 传进去, 而不是把 request.data["user_profile"]传进去
+
+# 因为我们在上面定义了 authentication_classes = (TokenAuthentication,), 所以用户必然是受过验证的, 所以一定有request.user 存在
+
+serializer.save(user_profile=self.request.user)
+
+  
+
+```
+
+注意, 这里还有 permission 的要求, 怎么要求 UpdateOwnStatus, 和之前的 UpdateOwnProfile 一样
+
+```python
+
+  
+
+class UpdateOwnStatus(permissions.BasePermission):
+
+"""Allow user to update their own status"""
+
+def has_object_permission(self, request, view, obj):
+
+"""Check the user is trying to update their own status"""
+
+if request.method in permissions.SAFE_METHODS:
+
+return True
+
+return obj.user_profile.id == request.user.id
+
+```
+
+  
+  
+
+既然 viewset 都定义好了, 最后就是定义 URL
+
+  
+
+```python
+
+  
+  
+
+```
+
+  
+  
+
+# 感想
+
+- 在使用 chatgpt 的情况下, 是加快了我们学习的速度. 但是也会让人失去思考能力, 让人产生一种我已经会了的错觉.
+
+就好像看着数学习题集的答案来做题. 当人们遇到真的问题时, 可能还是毫无办法.
+
+chatgpt 是一种即使反馈的机制, 帮助很大, 但是也要用好这种机制, 迅速发现自己不足的地方, 然后还是不要放弃用刻意记忆去弥补自己的不足, 达到能力增长的目的
+
+- api 的搭建除了本身功能性的部分, 主要指业务逻辑方面. 另外一个大部分就是权限管理, 需要确定哪些人能用 API, 哪些人能看到哪些内容.
+
+- 这部分权限管理应该在一个权限管理的中台统一管理, 即 SSO, 类似 AWS IAM, 也称为 Authenticate 的中台. 后面的项目应该考虑这部分的时间 jwt, auth2.0 之类的东西
+
+-
+
+  
+
+## 这个项目没有讲的地方
+
+  
+
+### 其他数据库引擎.
+
+在 settings.py 在数据库的部分, 其实是给了一个网址, 提供了连接其他数据库的模板
+
+https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+  
+
+### 日志
+
+这个项目没有定义日志的打印方式
