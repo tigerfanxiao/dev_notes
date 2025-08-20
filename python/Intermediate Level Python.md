@@ -1,3 +1,17 @@
+condition
+```python
+if [] # 这里是 [] 表示 False, 任何非空序列是 True
+# 这里 max([]) 里面不能放空序列. 用 if word 规避了 max([]) 的计算, 直接返回0
+return  max(len(word) for in words) if word else 0
+```
+
+recursion
+```python
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1) 
+```
+
+
 number
 ```python
 positive_infinity = float('inf')
@@ -92,13 +106,13 @@ import uuid
 
 class Product:
     def __init__(self, product_name, price):
-        self._product_id = self._generate_id()
+        self._product_id = self._generate_id() # 这属性被保护起来了
         self.product_name = product_name
         self.price = price
 
     def __repr__(self):
         return f"Product(product_name='{self.product_name}', price={self.price})"
-
+	
     def _generate_id(self):
         return str(uuid.uuid4().fields[-1])[:6]
 
@@ -131,7 +145,7 @@ hasattr(obj, 'attr1')
 hasattr(my_class, 'attr1')
 
 # 查看属性的类型
-getattr(my_class, 'email') # 可以查看是否是@property对象
+getattr(my_class, 'email', None) # 可以查看是否是@property对象
 getattr(obj, 'email') # 直接获得对象的属性值
 
 # 查看对象是否属于某一个类
@@ -161,11 +175,37 @@ any(char.isdigit() for char in password)
 all(char in string.ascii_letters for char in password) 
 
 
-# 返回序列, 都是偶数的
-filter(lambda x: x % 2 ==0, my_list)
+# 返回的iterable, 需要转换为序列
+list(filter(lambda x: x % 2 ==0, my_list))
 # map function to object
 list(map(len, my_list)
+# reduce
+from functools import reduce
+import operator
+reduce(operator.mul, range(1, n+1), 1) # 这个乘法写得好
+reduce(lambda x, y: x*y, range(1, n+1), 1)
+
+# 计算一个序列中 True的数量
+sum([True, False, True]) == 2 
 ```
+
+Counter
+```python
+
+
+fruits = ["apple", "banana", "apple", "orange", "banana", "apple"]
+
+Counter(fruits) # 返回一个字典, 里面是每个元素出现的次数
+Counter({'apple': 3, 'banana': 2, 'orange': 1})
+
+
+from collections import Counter
+
+def is_distinct(items):
+	counts = Counter(items)
+	return all(count == 1 for count in counts.values())
+```
+
 
 # Handle Exception
 
@@ -176,6 +216,7 @@ if not my_list:
 	return None
 
 # 使用instanceof 判断input参数类型和正负值
+# isinstance(word, str) # 判断是否是字符串
 if not isinstance(width, (int, float)) or width < 0:
     raise ValueError("Width must be a positive number")
 ```

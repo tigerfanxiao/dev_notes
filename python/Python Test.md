@@ -757,6 +757,49 @@ class TestAverage(unittest.TestCase):
             self.assertEqual(result, expected)
 ```
 
+# test suites
+组织Test, 来构建特点的Scenario
+
+```python
+import unittest
+
+# 把某个TestCase中的方法加到 suite中
+suite = unittest.TestSuite()
+suite.addTest(MyTestCase('test_method1'))
+suite.addTest(MyTestCase('test_method2'))
+```
+自动发现测试方法, 加到suite
+```python
+# 在一个suite加入多个TestCase
+suite.addTest(unittest.makeSuite(TestAdditionAndSubtraction))
+suite.addTest(unittest.makeSuite(TestMultiplicationAndDivision))
+```
+
+
+```python
+import unittest
+# Create a test loader
+loader = unittest.TestLoader()
+# 把 TestCase 下面的所有测试方法都加入 suite
+suite = loader.loadTestsFromTestCase(MyTestCase)
+# Create a test runner and run the suite
+runner = unittest.TextTestRunner()
+runner.run(suite)
+```
+那多个suite 有顺序的组合在一起
+```python
+import unittest
+
+# Create test loaders and load test cases
+loader1 = unittest.TestLoader()
+suite1 = loader1.loadTestsFromTestCase(MyTestCase1)
+
+loader2 = unittest.TestLoader()
+suite2 = loader2.loadTestsFromTestCase(MyTestCase2)
+
+# Create a master test suite containing the individual test suites
+master_suite = unittest.TestSuite([suite1, suite2])
+```
 
 # Pytest
 
