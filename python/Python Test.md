@@ -1,4 +1,14 @@
+# 问题
+1. 怎么确定测试覆盖范围的报告
+2. 找一些 assert_called, assert_called_once 这些的练习
+3. 模拟数据库不能访问的测试函数
+4. 了解一些Integration test的内容
+5. 发送邮件的测试函数, patch mock的例子
 
+# 概念
+黑盒白盒测试 black-box testing and white-box testing
+- 黑盒是不懂程序内部结构的, 只知道输入和预期的返回值.
+- 白盒是了解程序内部架构的
 # Unit test
 
 执行某个特定的测试方法
@@ -27,8 +37,9 @@ if __name__ == '__main__':
 
 各种assert 方法
 ```python
-
-# 不等于
+# 对比两个序列
+self.assertListEqual(result, expected) 
+# 不等于 None
 self.assertNotEqual(result, 5, msg=None)
 # 其他assert True or False
 self.assertTrue(result, True)
@@ -399,6 +410,8 @@ with patch('module_name.function_name', new=mock_obj):
 
 - **Verifying Calls**: You can use various methods like `assert_called_with`, `assert_called_once_with`, and `assert_not_called` to verify how the mock object was called during the test.
 ```python
+mock_obj.assert_called() # 如果某个mock对象的方法被调用了
+mock_obj.assert_called_once() # 如果这个mock对象, 被某个函数作为参数调用了
 mock_obj.assert_called_with(1, 2) # 被调用的参数
 mock_obj.assert_called_once_with(1, 2) # 被调用一次
 self.assertEqual(mock_obj.call_count, 3) # 被调用3次
