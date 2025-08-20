@@ -1,5 +1,15 @@
 
 # Unit test
+
+执行某个特定的测试方法
+```shell
+# MyTestCase 是某个TestCase, test_data 是def test_data(self) 方法
+python -m unittest MyTestCase.test_data
+```
+测试用例写法
+1. 先定义 TestCase类
+2. 再定义test_ 方法
+
 ```python
 import unittest
 
@@ -41,6 +51,9 @@ with self.assertRaises(ValueError):
 	rect = Rectangle(-4, 5)
 # 不使用context manager
 self.assertRaises(TypeError, callable, *args, **kwargs)
+# 上面的表达式等同于
+with self.assertRaises(TypeError):
+	callable(*args, **kwargs)
 	
 # 是否在容器中
 self.assertIn(member, container, msg=None)
@@ -651,6 +664,86 @@ class TestGetContent(unittest.TestCase):
 		self.assertEqual(result, "Hello, world!")
 		self.assertEqual(mock_get.call_count, 3)
 ```
+
+# parameterized
+
+### subTest
+```python
+import unittest
+from rectangle import area, perimeter
+
+class TestArea(unittest.TestCase):
+	def test_area(self):
+		test_cases = [
+			(1, 5, 5),
+			(2, 10, 20),
+			(100, 50, 5000)
+		]
+		for width, height, expected in test_cases:
+			with self.subTest(
+				width=width, height=height, expected=expected
+			):
+				self.assertEqual(area(width, height), expected)
+```
+
+### parameterized
+```shell
+pip install parameterized
+```
+
+```python
+import unittest  
+from parameterized import parameterized  
+  
+def add(x, y):  
+    return x + y  
+
+class TestAddition(unittest.TestCase):  
+    @parameterized.expand([  
+        (1, 2, 3),  
+        (0, 0, 0),  
+        (-1, 1, 0),  
+        (10, -5, 5),  
+    ])  
+    def test_addition(self, a, b, expected_result):  
+        result = add(a, b)  
+        self.assertEqual(result, expected_result)
+```
+
+how parameterized to handle Exception
+```python
+import unittest  
+from parameterized import parameterized  
+  
+def average(numbers):  
+    if not isinstance(numbers, list):  
+        raise TypeError("Input must be a list")  
+    if len(numbers) == 0:  
+        raise ValueError("List must not be empty")  
+    if not all(isinstance(n, (int, float)) for n in numbers):  
+        raise TypeError("All input must be numbers")  
+    return sum(numbers) / len(numbers)  
+  
+class TestAverage(unittest.TestCase):  
+    @parameterized.expand([  
+        ([1, 2, 3], 2),  
+        ([10, 20, 30, 40], 25),  
+        ([5], 5),  
+        ([0, 0, 0], 0),  
+        ([], None),  
+        (["not a number"], None),  
+        (["1", 2, 3], None),  
+        ([None], None)  
+    ])  
+    def test_average(self, numbers, expected):  
+        if expected is None:  
+            with self.assertRaises((TypeError, ValueError)):  
+                average(numbers)  
+        else:  
+            result = average(numbers)  
+            self.assertEqual(result, expected)
+```
+
 
 # Pytest
 

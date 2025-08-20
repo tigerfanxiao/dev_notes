@@ -148,31 +148,32 @@ if not all(isinstance(score, (int, float)) for score in scores):
 if not all(0 <= score <= 100 for score in scores):
 	raise ValueError("Elements of list must be between 0 and 100")
 
-# max
-max(words, key=len) # 可以传入比较的方案
-
-
 # 删除对象
 del obj
 
 ```
 
-all and any function
+### all, any, filter, map
 ```python
+# return True or False, 常用语条件判断
+any(char.isdigit() for char in password)
+# 返回boolena值, 所有都是字符
+all(char in string.ascii_letters for char in password) 
 
-if not any(char.isdigit() for char in password):
+
+# 返回序列, 都是偶数的
+filter(lambda x: x % 2 ==0, my_list)
+# map function to object
+list(map(len, my_list)
 ```
 
 # Handle Exception
 
 Input Validation and Propagate Exception
 ```python
-
-
 # 如果输入是空序列
 if not my_list:
 	return None
-
 
 # 使用instanceof 判断input参数类型和正负值
 if not isinstance(width, (int, float)) or width < 0:
@@ -195,7 +196,6 @@ class Timer:
         # 注意这里能返回的对象只有是在__enter__中定义的, 并操作的  
         # 在__exit__中的定义的和修改的是在 Context Manager 执行完毕退出后才执行的  
         return self  
-  
   
     def __exit__(self, exc_type, exc_val, exc_tb):  
         # 这里打印的是如果 content manager wrap 的代码发生错误, 做 exception 处理的类型, 对象, traceback 信息  
@@ -271,8 +271,6 @@ class MyTestCase(unittest.TestCase):
 		# 调用 context manager
 		with temp_file() as file:
 			file.write('hello, world')
-			
-	
 ```
 
 # Pycharm
