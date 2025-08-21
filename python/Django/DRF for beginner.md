@@ -1039,25 +1039,15 @@ path('', include(router.urls)),
 
 ```python
 
-  
-
 from rest_framework import serializers
-
 from profiles_api import models
 
-  
-
 class UserProfileSerializer(serializers.ModelSerializer):
-
-"""Serializer a user profile object"""
-
-class Meta:
-
-model = models.UserProfile # 这里指定了使用 ModelSerializer 的模型
-
-# fields 定义了哪些model 中的字段是需要我们做 serializer 的
-
-fields = ('id', 'email', 'name', 'password')
+	"""Serializer a user profile object"""
+	class Meta:
+		model = models.UserProfile # 这里指定了使用 ModelSerializer 的模型
+		# fields 定义了哪些model 中的字段是需要我们做 serializer 的
+		fields = ('id', 'email', 'name', 'password')
 
 extra_kwargs = {
 
@@ -1119,38 +1109,22 @@ return super().update(instance, validated_data)
 
 ```
 
-  
 
 这里介绍一下 ModelSerializer 有哪些 validate data 的方法
-
 1. Built-in field validation (required, max_length, etc.) # 这是 django 内置的方法
-
 2. Field-level custom methods (validate_<fieldname>) # 定义一个单独的函数, 都某个 field 做验证
-
 3. Object-level custom method (validate) # 可以对多个 field 做交缠验证
-
 4. Model’s own full_clean() (if saving an instance)
-
-  
-
 既然使用了 ModelSerializer 就也要用到 ModelViewSet
-
 ModelViewSet 会自动帮你写好下面这些函数
-
-  
 
 That’s it — DRF automatically wires up:
 
 • .list() → GET /users/
-
 • .create() → POST /users/
-
 • .retrieve() → GET /users/{pk}/
-
 • .update() → PUT /users/{pk}/
-
 • .partial_update() → PATCH /users/{pk}/
-
 • .destroy() → DELETE /users/{pk}/
 
   
