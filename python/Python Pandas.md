@@ -11,9 +11,8 @@ import pandas as pd
 specific_cols_names = ['col1', 'col2']
 # 对于一些欧洲字符
 df = pd.read_csv(csv_file_path,  encoding='iso8859-1', usecols=specific_cols_names)
-
-
 wine_reviews = pd.read_csv("csv_filepath", index_col=0)
+
 
 # 输出到 csv
 df.to_csv('path')
@@ -78,7 +77,8 @@ path_type_df = pd.DataFrame(PATH_LIST, columns=['path_type'])  # 需要定义列
 
 用字典的方式给df增加一行
 ```python
-df.append({'col1': 'val1', 'col2': 'val2'}, ignore_index=True)  # 增加一个字典来增加一行
+# 增加一个字典来增加一行
+df.append({'col1': 'val1', 'col2': 'val2'}, ignore_index=True)  
 ```
 
 用Series给df增加一行
@@ -343,7 +343,6 @@ freq           25514
 Name: taster_name, dtype: object
 """
 
-
 ```
 
 ### 列操作
@@ -494,9 +493,6 @@ df.groupby('Year')['Height'].mean()  # group by
 ```
 
 
-
-
-
 # 构建新的DF
 
 ### explode
@@ -543,8 +539,6 @@ conn.close()
 df.to_dict('records')
 
 ```
-
-
 
 # 透视表
 本质上要找两个categorize的分类。 

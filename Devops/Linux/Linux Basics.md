@@ -11,9 +11,9 @@ ctrl + alt + f2 # 切换到 gui
 ```shell
 sudo -i
 # for rocky 8
-yum -y install openssh-server openssh-clients
+yum -y install openssh-server openssh-client
 # for ubuntu or debian
-apt-get install openssh-server openssh-clients
+apt-get install openssh-server openssh-client
 
 systemctl start sshd # start ssh service 
 systemctl status sshd # show ssh service status

@@ -1,10 +1,36 @@
 condition
+python代表 false 的值
+```python
+None
+False
+0
+0.0
+''
+()
+[]
+{}
+```
+具体在if中的用法
 ```python
 if [] # 这里是 [] 表示 False, 任何非空序列是 True
 # 这里 max([]) 里面不能放空序列. 用 if word 规避了 max([]) 的计算, 直接返回0
 return  max(len(word) for in words) if word else 0
 ```
+python 中的对象, 也可以判断True False
+注意: 如果一个对象没有`__nonzero__()`和 `__len__()`两种方法, 则这个对象永远为真
 
+```python
+obj.__nonzero__() # 如果设置了这个方法, 且方法的返回值为True 则非空
+# 如果没有定义 __nonzero__() 方法
+obj.__len__() # 为空, 则对象为空
+```
+
+三元表达式
+表达式中只能放返回值, 不能是某种执行的动作
+```python
+
+value_true if a == a else value_false
+```
 recursion
 ```python
 def factorial(n):
