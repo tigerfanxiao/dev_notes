@@ -238,7 +238,7 @@ df.iloc[-5:]
 ### Label-based selection 可以放列名
 # 选择第 0 行, country 列
 df.loc[0, 'country']
-# 选在所有行, 指定列
+# 选中所有行, 指定列
 df.loc[:, ['taster_name', 'taster_twitter_handle', 'points']]
 ```
 
@@ -306,13 +306,14 @@ countries = reviews.country.unique()
 # 列中内容重复重现的次数, 类似与 groupby 的统计
 reviews.taster_name.value_counts()
 # 最大值的 index, 对 NaN 过滤了
-bargain_idx = (reviews.points / reviews.price).idxmax()
+bargain_idx = (reviews.points / reviews.price).idmax()
 bargain_wine = reviews.loc[bargain_idx, 'title']
 
 # mapping 
 # map是对 Series 的函数, 对一列中的每一个元素进行操作
 review_points_mean = reviews.points.mean()
 reviews.points.map(lambda p: p - review_points_mean)
+n_fruity = reviews.description.map(lambda desc: "fruity" in desc).sum()
 
 # apply 是对 DF 操作的函数
 # apply 使用的函数的入参是行, 可以返回行
@@ -345,6 +346,12 @@ Name: taster_name, dtype: object
 
 ```
 
+map 和 apply 的区别
+map 会快, apply 要慢
+apply 只能对 DF 用
+map 可以对 DF, Series
+- Use **map()** when transforming a **single column/Series** element-wise.
+- Use **apply()** when you need **row/column-wise** operations or DataFrame-level logic.
 ### 列操作
 ```python
 # 列数字操作
