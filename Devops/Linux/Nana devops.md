@@ -16,10 +16,73 @@ lsmem
 sudo su 
 # switch to root with password of current user
 sudo -i
+# switch to root 
+su - # specify the password of root user
 
 exit # exit root 
 ```
 
+user and group management
+```shell
+# 这两个命令是 interactive, user friendly
+adduser <username>
+addgroup <groupname> 
+deluser
+
+# low-level command, 可以使用在脚本中的
+useradd <uername>
+groupadd <groupname>
+delgroup
+
+# create user and add to the current group
+useradd -G <groupname> <username>
+# remove user from the group
+gpasswd -d <usernaem> <groupname>
+```
+modify user
+```shell
+# change the primary group of user
+usermod -g <primary_group> <username>
+# set the user group list, replace the current one
+usermod -G <primary_group>,<secondary_group> <username> 
+# add secondary group to user
+usermod -aG <secondary_group> <username> 
+
+# show all the groups for current user logged in 
+groups 
+```
+
+modify file owner
+```shell
+chmod user:group filename
+chgrp groupname filenaem # change only group owner for the file
+```
+文件权限
+```shell
+drwxrwxr-x 
+- # regular file
+d # folder
+l # symboic 软连接
+
+chmod g-w filename # remvoe the write permissino from group owner
+chmod g=rwx filename # configure it directly
+chmod 777 filename 
+```
+
+pipe, redicrect, stdin, stdout
+```python
+ls /usr/bin | less
+
+ls /usr/bin > file.txt
+ls /usr/bin >> file.txt # 追加
+
+stdin 0
+stdout 1
+stderr 2
+
+# 多个命令的组合
+command;commend
+```
 # File system
 Linux 所有的文件都在根目录下. 是一个树形结构
 - 家目录. root 用户的家目录在 `/root`下, 其他用户的家目录在 `/home/`下. 不同用户的家目录是相互隔离的
