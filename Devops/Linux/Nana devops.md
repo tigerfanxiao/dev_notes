@@ -65,6 +65,7 @@ d # folder
 l # symboic 软连接
 
 chmod g-w filename # remvoe the write permissino from group owner
+chmod a+x filename # add permission for all users
 chmod g=rwx filename # configure it directly
 chmod 777 filename 
 ```
@@ -227,16 +228,24 @@ result=$? # 这里获取到了调用函数得到的结果
 echo "The result is $result"
 ```
 
-
-
-VIM
+设置环境变量
 ```shell
-# vim 练习模拟换机
-vimtutor 
+# 临时设置环境变量
+export DB_USERNAME=dbuser
+# remove the environment variable
+unset DB_NAME
 
-vim +10 test.txt # 直接进入第 10 行
+# 永久设置环境变量
+# 修改 ~/.bashrc 增加
+export DB_USERNAME=dbuser
+source ~/.bashrc # 使修改生效
+
+# PATH 环境变量
+# 如果只是给某个用户使用, 在到该用户的 ~/.bashrc下修改
+PATH=$PATH:/NEWPATH
 ```
-# 模式
+
+模式
 - vim 有下面 4种模式
 
 | 模式      | 作用         | 转换                              | 注释                    |
@@ -259,7 +268,7 @@ set paste #
 ```shell
 i # 在光标前插入 
 a # 在光标后插入 
-I # 在行首插入, 或者 0
+I # 在行首插入
 A # 在行尾插入 
 
 o # 在当前光标的下一行插入
@@ -376,3 +385,77 @@ di"
 di[ 
 ```
 
+# 网络
+
+```shell
+# 两条非常有用的网络命令
+# 注意: 使用这两个命令都需要安装 net-tools
+ifconfig
+netstat # 查看 active connection, 查看端口的占用
+
+ps aux # 查看应用占用的资源 
+nslookup # 查看对应网址的域名解析
+ping
+```
+
+SSH
+1. ssh 可以用来传文件
+2. ssh 可以用来cmd line 访问
+ssh key pair = Private Key + Public Key
+Jenkins 也是用ssh 和remote server 沟通
+ssh 使用22端口, 所以被访问的服务器, 需要在防火墙上放开22号端口. 但是防火墙上也需要控制来源的IP地址, 整个也称为限源. 即给来访问的某些IP开白名单
+
+使用密码访问
+```shell
+# 使用ssh 访问, 密码方式
+ssh username@ip_address
+# 需要输入密码
+```
+
+使用秘钥访问
+```shell
+# 使用ssh key pair 访问
+# 生成密码对
+ssh-keygen -t rsa
+# 此时生成 id_rsa 私钥, 和 id_rsa.pub 公钥
+
+# 到remote服务器上, 去把客户端的公钥添加进去
+vim .ssh/authorized_keys
+# 此时再从客户端访问服务器
+ssh root@ip_address # 不再需要输入密码
+
+
+# 注意如果客户端有多个私钥, 则需要指明使用那个私钥
+ssh -i .ssh/id_rsa root@ip_address
+```
+
+复制文件到远端服务器
+```shell
+scp test.sh root@ip_address:/location
+```
+
+# git
+version control
+working directory - staged area - local-repository- remote repository
+
+```shell
+
+git log # show commit history
+git log --oneline # show oneline commit
+```
+
+把本地的项目推送到远端
+```shell
+# create local git repository
+git init 
+# then you need to create remote repo on gitlab or github
+# then you add remote repo as origin with address
+git remote add origin git@address
+git push
+```
+
+克隆远端的项目到本地
+```shell
+# clone remote repository
+git clone ssh@address
+```
