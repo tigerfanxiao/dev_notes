@@ -66,6 +66,43 @@ cat /etc/apt/sources.list
 
 ppa Personal Package Archive, 是指没有Linux 版本审核过的个人包, 有一定风险
 
+# bash
+首先在#!制定了执行.sh文件的shell. 因为在一个系统中可能存在多种shell, bash, zsh 等. 
+然后个人通过创建文件方式创建的 .sh 文件一般没有执行权限. 通过
+```shell
+chmod u+x file.sh # 给当前用户增加执行权限
+```
+最后可以通过制定shell来运行脚本
+```shell
+bash file.sh
+```
+bash 的例子
+```shell
+#!/bin/bash
+echo "Setup"
+# 定义变量 
+file_name=config.yaml
+# 引用变量
+echo "using $file_name to configure something"
+# 将命令的结果赋值给变量
+config_files  = $(ls config)
+
+
+# conditionals
+# 查看config是不是一个目录
+if [ -d "config" ]
+then
+	echo "reading config directory contents"
+	config_files = $(ls config)
+else
+	echo "config dir not found. Creating one"
+	mkdir config
+fi
+
+```
+
+
+
 VIM
 ```shell
 # vim 练习模拟换机
@@ -127,8 +164,8 @@ N # 往前走
 # VIM 命令模式
 保存和退出
 ```shell
-ZZ # 存盘退出
-ZQ # 不存盘退出
+shift + ZZ # 存盘退出
+shift + ZQ # 不存盘退出
 ```
 光标行间移动
 ```shell
