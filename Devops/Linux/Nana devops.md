@@ -103,6 +103,7 @@ iptable
 - `/usr/` 这个目录下一套 `/bin`, `/sbin`, `/lib`, 这些也是系统层面可以调用的命令, 因为历史原因, 系统层面可以调用的命令被分在两个地方. `/usr/local/`下面又有一套 `/bin`, `/sbin`, `/lib`, 这里放的是用户自己在使用过程中安装的应用, 比如 java, docker, minikube, python. 注意安装这里的程序, 所有人都可以使用的, 不是用户独享的
 
 # 用户管理
+Linux 其实可以看做是三种用户, 一种是系统管理员root用户, 一种是普通用户, 一种是为应用创建的用户, 比如数据库管理员
 ```shell
 sudo adduser <username>
 su - username # 切换用户, 并进入该用户的家目录
@@ -138,6 +139,8 @@ chmod u+x file.sh # 给当前用户增加执行权限
 最后可以通过制定shell来运行脚本
 ```shell
 bash file.sh
+# 如果文件已经有了可执行权限
+./file.sh
 ```
 bash 的例子
 ```shell
@@ -153,16 +156,78 @@ config_files  = $(ls config)
 
 # conditionals
 # 查看config是不是一个目录
-if [ -d "config" ]
+if [ -d "config" ] # 注意: 这里的两个方括号前必须要有空格
 then
 	echo "reading config directory contents"
 	config_files = $(ls config)
+elif [ -f "config" ]
+	echo "do something"
 else
 	echo "config dir not found. Creating one"
 	mkdir config
 fi
 
+
+# operation
+num = 10
+if [ num -lt 10 ] # 小于10
+-gt # 大于
+-ge # >=
+-ne # not equal
+
+# 事实上, condition也可以写 [[]], 这是bash的写法, posix不支持
+
+
+
+# compare two string
+user_group = $1 # read input from command line
+if [ $user_group == "xiao" ]
+
+read -p  "Please enter your password: " user_pwd # save the user input to user_pwd
+echo "thanks for your password $user_pwd"
+
+# 在执行命令的时候, 如果没有控制输入变量的个数. 即使这些变量没有在脚本中被引用, 但是也是可以通过下面的方法来取得信息
+$* # 代表所有的的用户输入参数用一个字符串表示
+$# # 一共提供了多少个参数
+$? # 获取到上一条命令的返回值
+
+# for loop
+for param in $*
+  do
+    echo $param
+  done
+
+# while loop
+sum=0
+while true
+do 
+  read -p "enter a score" score
+  if [ $score == "q" ]
+  then
+    break
+  fi
+  sum=(($sum+$score))
+done
+echo "total score: $sum"
+
+$sum + $score # 注意: 会被解释为两个字符串的相加
+$(($sum+$score)) # 才会被解释称两个数字的运算
 ```
+在bash脚本中写函数
+
+```shell
+function sum() {
+ total = $($1 + $2)
+ return $total
+}
+
+sum 2 10 # 这里直接调用了函数, 并传入两个参数
+result=$? # 这里获取到了调用函数得到的结果
+
+echo "The result is $result"
+```
+
+
 
 VIM
 ```shell
@@ -227,6 +292,9 @@ N # 往前走
 ```shell
 shift + ZZ # 存盘退出
 shift + ZQ # 不存盘退出
+
+# 文件打开直接到指定行
+vim +11 test.sh
 ```
 光标行间移动
 ```shell
