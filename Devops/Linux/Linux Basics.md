@@ -222,12 +222,11 @@ groupadd -g <GID> groupname
 # modify group
 groupmod -g <DID> -n oldgroupname newgroupname
 # change the primary group for user
-uermod -g <username> <groupname>
+usermod -g <username> <groupname>
 # 只有当没有用户使用该组为主组是, 才能删除这个组
 # remove group
 groupdel <groupname>
 ```
-
 对于一些服务, 创建用户和组的实例
 ```shell
 # -r 表示系统组
@@ -261,7 +260,6 @@ drwxr-xr-x.   4 root root   39 Aug 27  2020 .mozilla
 rm -R /userb # 删除家目录及下面所有文件
 chown userb:userb .bash* # 修改所有.bash开头的文件的用户权限和组权限
 ```
-
 ### Remove user
 
 ```shell
@@ -274,7 +272,6 @@ find / -user <username>
 # /var/spool/mail 会在userdel后自动删除
 # 3. 删除用户和家目录和邮箱
 userdel -r <username>
-
 ```
 ### Change user expiration time
 
