@@ -464,6 +464,7 @@ branch
 - 在develop branch 下还有feature 和 bugfix branch. 这两个branch向 develop branch merge
 - 在每个sprint后面, develop branch向master 合并
 - 注意, 我觉得一般不会在本地将其他branch merge到main branch上, 而是在分支的feature branch push到remote后, 在remote 申请 pull request, 经过主管同意后, 在merge到main上
+- 实际工作中, 往往是开发者在自己的branch上工作了很久, 其他的开发者对master branch进行push, 并被接受了, 所以master branch上的内容要更新. 开发者先要pull 最新的内容到本地master branch上, 然后, 在checkout 到feature branch上, 做merge main的操作. 当本地开发完成之后, push feature branch到remote, 再申请pull request, 合并到master branch上
 - 通常情况下, 当一个branch本合并后, 是需要删除的. 如果有新的问题, 再创建新的branch
 - 注意remote的branch如果被删除, 本地的branch应该还在的. 如果此时git pull, 会得到提示 but no such ref was fetched. 此时进入main branch, 运行git pull 获得merge之后的最新代码. 运行 `git branch -d <branch_name>` 删除分支branch
 ```shell
@@ -511,5 +512,45 @@ use case
 git stash # 将改动的代码都放到cache中, 此时在 git status 的commit信息中, 就看不到修改了
 # 所以当你切换到新的分支时, 先要看看有没有没有处理的stash内容
 git stash pop # get the changes back 
- 
+```
+go back to previous version
+```shell
+# 如果要回退到之前的某个版本
+git log # 先查看要回去的commit id
+# 注意, 需要先确保当前分支没有没有报错的commit, 才能切换. 否则用 stash 先暂时保存一下
+git checkout <commit-id>
+
+# 此时会提示, 我在 detached HEAD state, 表示我不在最新most-updated的版本上. 
+# 注意: 你不能在这个分支修改, 如果要做实验, 或者修改测试, 需要先在整个commit上新建一个分支. 
+# 回到 most-updated 版本上
+git checkout branchname
+
+```
+undo commit
+如果还没有push到remote
+```shell
+# 注意, 整个操作会直接修改本地的git log, 上一次修改的所有内容都会消失
+git reset --hard HEAD~1 # 撤销上一个commit, 如果是撤销前两个commit, HEAD~2 
+
+# 如果只是修改上一次commit中的部分代码, 保留大部分的代码不变. 
+# 测试在 git log 中上次commit已经删除. 但是被修改的文件保留在working directory中
+git reset --soft HEAD~1
+```
+
+如果只是修改上一次commit, 不删除 git log 中信息
+```shell
+# 如果你已经commit, 然后发现有问题, 修改后, 想把代码并入上一次的commit中
+# 直接先修改代码, 然后
+git commit --amend -m "modifed last commit message"
+```
+如果你的代码已经push到remote
+注意: 下面的操作绝对不能在master或者develop的branch上做, 因为此时有可能有别的开发者已经下载你之前删除的代码, 当他们再次提交自己的修改时, 会发现之前rebase的内容已经被你删除了. 造成reference问题. 所以只能在只有自己的branch上做
+```shell
+git reset --hard HEAD~1 # 现在本地删除这个commit
+git push --force # 将本地的变动强制推送到remote. 注意如果远端branch是protect, 就不能被这种方式修改
+```
+如果你要删除已经在master和develop branch上的commit, 只能用revert
+```shell
+git revert <commit-id> # 如果你需要删除上一次的变化, 就要放最后一次commit的ID
+git push # create a new commit to rever the old commit 
 ```
