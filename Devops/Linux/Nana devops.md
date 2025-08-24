@@ -39,6 +39,23 @@ useradd -G <groupname> <username>
 # remove user from the group
 gpasswd -d <usernaem> <groupname>
 ```
+Create app user for security best practice
+- Create separate user for every application
+- Give it only the permission it needs to run App
+- Don't work with the Root user
+```shell
+adduser xiao
+# add user to sudo group
+usermod -aG sudo xiao # add xiao to sudo group
+su - xiao # switch to xiao 
+
+# 复制我本地电脑的pub ssh key, 到远端设备的家目录
+mkdir .ssh # 在xiao的家目录下创建 .ssh
+sudo vim .ssh/authorized_keys 
+# 复制公钥
+# 此时本地采用 ssh key来访问远端的xiao的账号
+```
+
 modify user
 ```shell
 # change the primary group of user
@@ -391,9 +408,9 @@ di[
 # 两条非常有用的网络命令
 # 注意: 使用这两个命令都需要安装 net-tools
 ifconfig
-netstat # 查看 active connection, 查看端口的占用
+netstat -lpnt # 查看 active connection, 查看端口的占用
 
-ps aux # 查看应用占用的资源 
+ps aux | grep java  # 查看应用占用的资源, 进程ID
 nslookup # 查看对应网址的域名解析
 ping
 ```
@@ -553,4 +570,120 @@ git push --force # 将本地的变动强制推送到remote. 注意如果远端br
 ```shell
 git revert <commit-id> # 如果你需要删除上一次的变化, 就要放最后一次commit的ID
 git push # create a new commit to rever the old commit 
+```
+
+# Build & Package Manager Tools
+封装: 就是把你在开发环境里用到的包, 和你的源代码一起封装打包, 然后这样就可以放到服务器上去直接部署了. 而不需要从头到尾去安装和下载依赖
+Build code 
+- Compiling
+- compress
+代码的版本也需要分为 dev, test, production
+artifact repository
+Artificat: including whole code plus dependencies
+java - JAR, WARn(把前端的react包和后端的jar包, 打包在一起的一种技术)
+
+Maven可以正常运行需要满足三个条件
+1. Java SDK
+2. Java in "Path"
+3. Set JAVA_HOME
+
+```shell
+mvn --version
+mvn package # build our project
+mvn install # build our project in target folder
+```
+
+Gradle 安装
+1. 下载并解压, 添加到环境变量
+2. 配置Intellij
+```shell
+grade build # in build folder
+```
+java 程序封装后如何运行
+```shell
+java -jar <file.jar> & # 最后 & 表示关掉terminal 也可以运行
+```
+
+nodejs
+webpack
+- transpiled
+- compressed/minified
+- Build Tool / Bundler 
+
+```shell
+# 在有 package.json 的目录下
+npm install
+# 进入app的目录下, 有server.js 的地方, 运行
+node server
+# 或者
+npm start
+npm stop
+npm test
+npm publish 
+
+# pakage manger npm, yarn 不是封装工具, 没有build
+# package manager just install dependency
+# 在部署的时候, 复制artifact 和 package.json到目录下
+# 安装 dependency
+# unpack zip/tar
+# run app
+npm pack # 给程序打包 .tgz
+
+```
+
+# Artifactory repository
+Nexus
+
+
+# jenkin
+Build Dokcer image -> Push to Repo -> Run on Server
+You need to execute tests on the build servers
+Build and package into Docker image 
+
+
+# Docker
+docker和virtual machine的区别呢, docker virtualize 应用层. 但是Linux core是使用宿主机的. Virtual Machine是linux core和应用层一起虚拟出来的
+- size: docker 小
+- speed: docker 快
+- compatibility: 在linux上变异的docker container就以为是使用linux内核, 所以只能运行在linux的服务器上. 在windows上开发就需要wsl了
+
+docker engine
+- server
+- api
+- cli
+docker enginer components
+- Container runtime
+	- Pulling images
+	- Managing container lifecycle
+- Volumes
+	- Persist data
+- Network
+	- Configuring network for container communication
+- Build Images
+	- Build own docker image
+Docker image
+- Layers of image, 如果某个layer本地有了, 则不需要下载. 比如不同版本的postgres, 在很多层可能是一样的, 比如base image, 就不用下载
+- 大部分 Linux base Image 是 alpine:3.17 因为小
+```shell
+docker pull redis # pull images
+docker images # show local existing images
+
+```
+
+docker container
+```shell
+# 构建container中的环境变量
+# postgres:13.10 是image的版本,如果本地没有就从docker hub上拉取
+docker run -e POSTGRES_PASSWORD=myscretpassword postgres:13.10 
+docker run -d # detach mode, 在后台运行, 返回container id
+# 查看正在运行的container
+docker run -p <host_port>:<container_port> -d redis
+docker ps 
+docker ps -a # including not running or stopped container
+
+docker stop <container_id>
+docker start <container_id>
+
+
+
 ```
