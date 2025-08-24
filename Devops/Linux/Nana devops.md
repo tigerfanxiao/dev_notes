@@ -459,3 +459,57 @@ git push
 # clone remote repository
 git clone ssh@address
 ```
+branch
+- 一般情况下, 只要有一个master branch 和 develop branch. 
+- 在develop branch 下还有feature 和 bugfix branch. 这两个branch向 develop branch merge
+- 在每个sprint后面, develop branch向master 合并
+- 注意, 我觉得一般不会在本地将其他branch merge到main branch上, 而是在分支的feature branch push到remote后, 在remote 申请 pull request, 经过主管同意后, 在merge到main上
+- 通常情况下, 当一个branch本合并后, 是需要删除的. 如果有新的问题, 再创建新的branch
+- 注意remote的branch如果被删除, 本地的branch应该还在的. 如果此时git pull, 会得到提示 but no such ref was fetched. 此时进入main branch, 运行git pull 获得merge之后的最新代码. 运行 `git branch -d <branch_name>` 删除分支branch
+```shell
+# 首先产看是否remote 仓库有新的branch
+git pull
+git branch # show all branches
+git checkout <branch_name>
+
+git checkout -b <new_branch_name> # 创建一个新的branch
+git add .
+git commit 
+# 如果remote没有本地新建的branch, 则需要使用下面的命令, 先创建branch再push变更
+git push --set-upstream feature/database-connection 
+
+```
+
+Trunk Based vs Feature Based
+`git pull --rebase`
+如果两个程序员在一个branch上修改. 程序员B修改, 并提交了一个commit, 程序员A不知道. 此时他把他自己修改的部分提交了, 就会遇到报错. 让后他想用 git pull 把程序员B修改的代码拉下来, 但是也会冒出一个 merge conflict 需要处理. 因为git pull = git fetch + git merge 就是已经将远端的新代码和本地做了合并. 合并不起来就有conflict, 就需要手动处理. 当你修改完本地conflict后, 你可以用 git push 将代码推送到远端. 问题是, 整个push里面会包含两个commit, 一个commit是程序员B做的, 一个commit是程序员A自己的做的. 因为程序员B做的commit, 在他自己的commit中已经提交过了, 所以这里再提交一般就重复了. 所以会使用 git pull --rebase 就是把开始拉去程序员的改动到本地时, 就把本地的git 状态修改为同步之后. 这样就只要考虑自己的变更
+
+```shell
+git pull -r # 就是rebase
+# 如果遇到conflit, 就修改conflict 文件
+# 修改conflict文件后, 运行下面的代码继续做 rebase
+git rebase --continue
+# 上面rebase完成后, 在push本地的代码到remote
+git push 
+# 成功后, 远程就看到一个新的commit, 这里我本地修改好的. 
+# 且我本地推送上去的, 不会出现两个commit
+# 所以在明确知道一个branch上有多个同事在修改时, 一定要使用 git pull -r 来经常rebase自己的代码
+```
+
+gitignore
+```shell
+/folder/* # ignore folder
+.DS_STORE # ignore file
+# untrack the tracked the folder, 这些文件可以是已经commit过并push了的
+git rm -r --cached .idea # 被remove 的文件会出现在 git status 中, delete 的状态
+```
+git stash
+use case
+1. 如果你有没有修改, 但是有没有达到可以提交commit的地步. 但是此时你有需要去其他的branch去修改代码. 此时如果你直接checkout master, 就会报错. 提示需要commit或者stash当前代码
+2. 如果你修改的代码, break了, 你想退回最初的代码, 此时上一次commit在修改之前是否能正常运行
+```shell
+git stash # 将改动的代码都放到cache中, 此时在 git status 的commit信息中, 就看不到修改了
+# 所以当你切换到新的分支时, 先要看看有没有没有处理的stash内容
+git stash pop # get the changes back 
+ 
+```
