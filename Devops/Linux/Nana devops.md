@@ -44,16 +44,23 @@ Create app user for security best practice
 - Give it only the permission it needs to run App
 - Don't work with the Root user
 ```shell
+# 在 root 账户下
 adduser xiao
 # add user to sudo group
+# 使用sudo命令时, 输入是xiao的密码
+# 注意, 使用sudo命令创建的文件的user owner 和 group owner都是root
 usermod -aG sudo xiao # add xiao to sudo group
 su - xiao # switch to xiao 
 
+# 下面整个操作允许我本地电脑直接连接到 xiao的账户下, 而不是默认的root账户
+# 因为这是某个droplex中的用户账户, 所以不能使用保存在digital ocean中的ssh-pubkey
 # 复制我本地电脑的pub ssh key, 到远端设备的家目录
 mkdir .ssh # 在xiao的家目录下创建 .ssh
-sudo vim .ssh/authorized_keys 
-# 复制公钥
-# 此时本地采用 ssh key来访问远端的xiao的账号
+
+vim .ssh/authorized_keys 
+# 复制公钥, 并保存
+# 此时本地电脑就可以使用xiao的账号来访问远端droplet, 在本地电脑输入
+ssh xiao@<ip>
 ```
 
 modify user
@@ -71,7 +78,7 @@ groups
 
 modify file owner
 ```shell
-chmod user:group filename
+chown user:group filename
 chgrp groupname filenaem # change only group owner for the file
 ```
 文件权限
@@ -119,6 +126,7 @@ iptable
 ```
 - `/lib`, `/lib32`, `/lib64`, `libx32` 这些都是 library. 是`/bin`和`/sbin`下的可执行程序的依赖
 - `/usr/` 这个目录下一套 `/bin`, `/sbin`, `/lib`, 这些也是系统层面可以调用的命令, 因为历史原因, 系统层面可以调用的命令被分在两个地方. `/usr/local/`下面又有一套 `/bin`, `/sbin`, `/lib`, 这里放的是用户自己在使用过程中安装的应用, 比如 java, docker, minikube, python. 注意安装这里的程序, 所有人都可以使用的, 不是用户独享的
+- `/opt` 一般是用于非linux标准库中的第三方应用, 比如chrome, vscode等
 
 # 用户管理
 Linux 其实可以看做是三种用户, 一种是系统管理员root用户, 一种是普通用户, 一种是为应用创建的用户, 比如数据库管理员
@@ -407,6 +415,7 @@ di[
 ```shell
 # 两条非常有用的网络命令
 # 注意: 使用这两个命令都需要安装 net-tools
+apt install net-tools
 ifconfig
 netstat -lpnt # 查看 active connection, 查看端口的占用
 
@@ -599,9 +608,19 @@ Gradle 安装
 ```shell
 grade build # in build folder
 ```
-java 程序封装后如何运行
+使用java命令, 运行jar包
 ```shell
 java -jar <file.jar> & # 最后 & 表示关掉terminal 也可以运行
+# 查看正在运行的 java 程序
+ps aux | grep java # 看到进程号 2804
+root        2804 36.3 26.7 2227164 125548 pts/0  Sl   04:20   0:08 java -jar java-react-example.jar
+root        2835  0.0  0.4   7076  2048 pts/0    S+   04:20   0:00 grep --color=auto java
+
+# 使用 netstat -lpnt 命令查看java程序监听的端口是 7071
+tcp6       0      0 :::7071                 :::*                    LISTEN      2804/java
+
+# 需要确认防火墙上已经开启了7071端口
+
 ```
 
 nodejs
@@ -631,15 +650,45 @@ npm pack # 给程序打包 .tgz
 
 ```
 
-# Artifactory repository
-Nexus
-
 
 # jenkin
 Build Dokcer image -> Push to Repo -> Run on Server
 You need to execute tests on the build servers
 Build and package into Docker image 
 
+
+# digital ocean
+在digital ocean上的ec2被称为 droplet, 
+可以在setting 中统一配置ssh pub-key, 这个key可以用于所有的droplet的访问
+在networking中可以配置防火墙, 限制ssh访问的IP地址, 然后关联到droplet上去
+在ubuntu系统中安装java 17
+
+# Artifact repository Management
+
+**Sonatype Nexus Repository** 是一种artifact repository manager 产品
+市场上还有public artifact repository manager, 比如 Maven Central Repository, NPM
+Artifacts: Apps built into a single file
+Repository Type
+- proxy: 我们从maven-central把会用到的依赖下载到Nexus作为缓存. 以后相同的包就不用从Maven-Central中下载了. 可以直接从Nexus 中找. 这种模式需要在本地IDE工具中配置Maven的源
+- host: 我们本地自己开发的代码, 可以推送到Nexus的repository中
+- group: 如果一个repository即充当了proxy和host的角色, 我们就称这种类型是 group
+Component 和 Asset的区别
+- A component can have one or more assets
+- Each asset belongs to a component.
+- Use **components** when you think about _logical versions_ of software.
+- Use **assets** when you think about _actual files_ stored on disk.
+
+Nexus 在整个CICD Pipeline中的位置
+![[Pasted image 20250826072721.png]]
+
+Features of Repository Manager
+- Integrate with LDAP
+- Flexible and powerful REST API for integration with other tools
+- Backup and restore
+- Multi-format support (different file types - zip, tar, docker etc)
+- Metadata tagging (labelling and tagging artifacts)
+- Cleanup policies
+- Search functionality
 
 # Docker
 docker和virtual machine的区别呢, docker virtualize 应用层. 但是Linux core是使用宿主机的. Virtual Machine是linux core和应用层一起虚拟出来的
