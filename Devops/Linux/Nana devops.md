@@ -651,11 +651,39 @@ npm pack # 给程序打包 .tgz
 ```
 
 
-# jenkin
+# Jenkin
 Build Dokcer image -> Push to Repo -> Run on Server
 You need to execute tests on the build servers
 Build and package into Docker image 
 
+Jenkin Syntax
+
+Using Credientials in Jenkinsfile
+1. Define Credential in Jenkins GUI 
+2. `credentials("credentialID")` binds the credentials to your env variable
+3. For that you need the *Credentials Binding* Plugin
+
+基本结构
+```groovy
+pipeline { // 标准开头
+	agent any // 表示jenkins cluster中任意的agent
+	stages("build") { // 阶段
+		steps {
+			echo 'building the application...'
+		}
+	}
+	stages("test") {
+		steps {
+			echo 'testing the application'
+		}
+	}
+	stages("deploy") {
+		steps {
+			echo 'deploying the application'
+		}	
+	}
+}
+```
 
 # digital ocean
 在digital ocean上的ec2被称为 droplet, 
