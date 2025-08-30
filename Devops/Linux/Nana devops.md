@@ -770,6 +770,9 @@ docker start <container_id>
 - 
 
 ## AWS CLI
+
+aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/config`文件定义了默认的region和输出格式(一般选择json). 同事默认的用户的ak/sk 保存在 `~/.aws/credential` 文件中
+
 创建 ec2 instance 需要先创建 Security Group 和 key pair
 
 ```shell
