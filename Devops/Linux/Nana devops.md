@@ -764,3 +764,58 @@ docker start <container_id>
 
 
 ```
+
+# AWS
+- 创建一个账户后, 会自带一个vpc 对应你选在的region, 每个vpc会自带3个subnet, 对应三个AZ
+- 
+
+## AWS CLI
+创建 ec2 instance 需要先创建 Security Group 和 key pair
+
+```shell
+# 创建 ec2 instance
+aws ec2 run-instances \
+--image-id ami-015cbce10f839bd0c
+--count 1
+--instance-type t3.micro
+--key-name MyKpCli
+--security-group-ids sg-0f95dd6c794953eed
+--subnet-id subnet-0f91f273239d7af16
+
+# 获取 ec2 instance
+aws ec2 describe-instance
+```
+获取到subnet id
+```shell
+aws ec2 describe-subnets
+```
+
+创建 Security Group
+```shell
+# create security-group 创建sg必须是要与vpc绑定的
+aws ec2 create-security-groups --group-name my-sg --description "My SG" --vpc-id <vpc-id>
+
+# show security groups
+aws ec2 describe-security-groups --group-ids <sg_id>
+
+aws ec2 authorize-security-group-ingress \
+--group-id <group-id> \
+--protocol TCP \
+--port 22 \
+--cidr 95.39.129.114/32
+```
+
+创建 key pair
+```shell
+aws ec2 create-key-pair \
+--key-name MyKpCli \
+--query 'KeyMaterial' \ # 如果没有这个参数在回返回 KeyName 等其他, 字段
+--output text > MyKpCli.pem # 把返回的字段输出到文本文件中. 在mac或者ubuntu上使用.pem格式
+```
+使用ssh访问ec2
+```shell
+# 修改permission
+chmod 400 MyKpCli.pem # 必须要去除others的访问权限
+ssh -i MyKpCli.pem ec2-user@3.67.39.67
+
+```
