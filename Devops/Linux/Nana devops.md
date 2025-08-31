@@ -822,3 +822,46 @@ chmod 400 MyKpCli.pem # 必须要去除others的访问权限
 ssh -i MyKpCli.pem ec2-user@3.67.39.67
 
 ```
+
+
+# K8s
+
+## k8s的组件
+Pod k8s 的最小单位. 在一个 pod 上含有一个或者多个 container.
+  - 一般在一个 pod 上只部署单个应用. 因为多个容器可以共享同一个 pod 中的一片存储
+  - 在一个 pod 内部, 多个 container 之间是 shared network namespace. 对外面向别的pod时用同一个 IP 地址, 使用相同的端口范围.
+  - 一般在一个 pod 内部, 放一个 main app container 和它的 sidecar container. Sidecar 通过 localhost 和 main app 交互
+  - 默认情况下每次 pod 被重构都会被分配一个新的 IP 地址. 而 pod 中的 container 是没有独立 IP 地址的
+
+Service 是 K8s 构建的内部虚拟网络. 用户不同的的pod之间相互通信. 
+- Service是独立于Pod存在的. 即如果pod被销毁了. Service不会一起被销毁. 它会找到备份的pod关联上. 
+- Service给每个 Pod 分配一个 Permanent IP, 注意不是给每个 container 分配一个 IP 地址.
+- Service 是pod之间内部使用. 如果K8s要接受外部的流量请求, 则是通过另一个组件Ingress来处理
+- Service和Ingress的另一个区别在于, Service的双方通信地址是 Pod的IP地址, 而Ingress提供给外部访问的地址是 node的ip地址和port号, 再有port号映射到Service的分配给Pod的IP地址上. 整个思路我理解有点像NAT
+- 如果一个 pod 在另外一个 node 上有一个备份 pod, 主备 pod 可以共用一个 service, 实现 HA, 或者作为负载分担.
+
+Ingress 是面向公网访问请求提供的组件. 为公网访问提供 URL, HTTPS验证, 并将外部流量通过负载分担的方式分配给 Service
+
+Deployment 是blueprint. 定义了需要pod需要多少个replica. 
+- Deployment 只能处理 Stateless的应用, 不能用来处理数据库这种stateful的应用. 因为数据库是Stateful, 在多个replica的情况下会有consistency 一致性的问题. 就是写入的数据的时候, 从那个replica先写入. 另外一个replica就有数据不一致和同步问题. 在K8s中提供了处理stateful 应用的blueprint 工具, Stateful Set
+
+StatefulSet (STS) 是用来处理stateful 应用, 比如数据库应用的blueprint. 但是通常的做法是数据放在K8s集群外部, 不通过K8s进行管理
+
+Configmap 用来配置pod 的. 因为有些pod, 比如环境变量这些信息, 应该放在image外部配置, 这样环境变量的信息稍有改动, 就不需要重新build整个镜像. 比如数据库的URL. 对应的另外一个概念是Secret
+
+Secret 用于保存哪些不同被公开的配置信息, 比如访问数据库的用户名和密码
+
+Daemonset 在node scale down和scale up时, 简化了在 Deployment 中手动修改 replica 数量的问题. 确保每个node上只有一套pod replica, 即pod被均匀分布在不同的node上
+
+Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 上, 或者在远端非 K8s Cluster 上
+## K8s的进程 Process
+在worker node上的进程必须有 3 个. 可选一个Kube log collection
+1. Container Runtime 并非docker image, 而是通过image构造出来的实例. 
+2. Kubelet Kubelet可以看做是worker node和在node上的pod的接口. master node发送配置需求给某个node上的kubelet, kubelet查看当前node上的资源, 具体去创建和销毁node上的pod
+3. Kube-Proxy 可以看做是Service和Pod之间的接口. 因为Service和Pod其实是分离的, Service其实是通过Kube-proxy来找到pod. 但是Kube-proxy也是有智能的, 他会把流量优先分配给和发出请求的pod在同一个node的上到目标pod replica, 而不是别的node上的pod replica
+
+在Master node 也称为control plan 上的进程,
+1. API Server 在K8s中, 所有的对pod或者node的操作, 都是一次API调用, 都通过API Server来实现. 同时作为gatekeeper 和 authentication 不是所有请求都是安全可靠的. Kubectl 就是和ApiServer打交道
+2. Kube-scheduler 决定了一个新的pod要在那个Node上创建, 取决于当前node 的cpu和内存资源占用情况. 然后通知Node上的kubelet进行具体的pod操作
+3. Controller Manager 首先是监控所有的node的状态. 如果一个node down了, 在整个node上的pod就都挂了. 根据deployment中node replica的数量, 我们就需要再别的node上去创建pod. 基于已经定义好的manifest, 如果发现某个node有问题, 就通过kube-scheduler 决策调整方案, 然后通知node 上kubelet去实施
+4. ETCD 是一个Key-Value数据库, 所有的对于node和pod的操作历史都保存在这个数据库中
