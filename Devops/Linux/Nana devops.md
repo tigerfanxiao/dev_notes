@@ -865,3 +865,12 @@ Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 
 2. Kube-scheduler 决定了一个新的pod要在那个Node上创建, 取决于当前node 的cpu和内存资源占用情况. 然后通知Node上的kubelet进行具体的pod操作
 3. Controller Manager 首先是监控所有的node的状态. 如果一个node down了, 在整个node上的pod就都挂了. 根据deployment中node replica的数量, 我们就需要再别的node上去创建pod. 基于已经定义好的manifest, 如果发现某个node有问题, 就通过kube-scheduler 决策调整方案, 然后通知node 上kubelet去实施
 4. ETCD 是一个Key-Value数据库, 所有的对于node和pod的操作历史都保存在这个数据库中
+
+## Minikube
+```shell
+# 如果遇到minikube起不来, 可以先删除, 然后重新建立. 并指定容器所需要cpu数量和内存
+minikube delete
+minikube start --driver=docker --memory=4096 --cpus=2
+
+
+```
