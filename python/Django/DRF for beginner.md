@@ -483,21 +483,16 @@ use uv to install python
 uv python list
 
 # install python version 3.8
-
 uv python install 3.8
 
 # find the specific python version on the local host
-
-# uninstall specific python version
-
-uv python uninstall 3.9
-
 uv python find 3.8
 
+# uninstall specific python version
+uv python uninstall 3.9
 ```
 
 use uv to run python
-
 ```shell
 
 # run python script with specific python version
@@ -511,29 +506,19 @@ uv run --with rich --with requests --python 3.8 main.py
   
 
 # generate a script at the beginning of main.py
-
 uv init --script main.py --python 3.9.21
 
 # add package to the script
-
 uv add --script main.py "rich"
 
 # now you can run main.py directly
-
 uv run main.py
-
 ```
 
 use uv for project
 
 ```shell
-
-# 在本地目录下创建项目文件
-
-uv init
-
 # 在本地目录下先创建项目文件夹后, 再在项目文件夹里面创建项目文件
-
 uv init my_project
 
   
@@ -541,7 +526,6 @@ uv init my_project
 # install python package, and create .venv folder
 
 uv add django==2.2
-
 source .venv/bin/activate
 
 # remove dependency

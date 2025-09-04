@@ -1,3 +1,6 @@
+Nana devops repo
+https://gitlab.com/twn-devops-bootcamp/latest/10-kubernetes
+
 Ubuntu 22.04
 ```shell
 # check Ubuntu version
@@ -526,7 +529,8 @@ git push
 gitignore
 ```shell
 /folder/* # ignore folder
-.DS_STORE # ignore file
+.DS_Store # ignore file
+**/.DS_Store # under any folder
 # untrack the tracked the folder, 这些文件可以是已经commit过并push了的
 git rm -r --cached .idea # 被remove 的文件会出现在 git status 中, delete 的状态
 ```
@@ -770,6 +774,15 @@ docker start <container_id>
 - 
 
 ## AWS CLI
+```shell
+# install on mac
+brew intall aws
+aws --version 
+
+# config aws account
+aws configure
+```
+
 
 aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/config`文件定义了默认的region和输出格式(一般选择json). 同事默认的用户的ak/sk 保存在 `~/.aws/credential` 文件中
 
@@ -778,7 +791,7 @@ aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/
 ```shell
 # 创建 ec2 instance
 aws ec2 run-instances \
---image-id ami-015cbce10f839bd0c
+--image-id ami-015cbce10f839bd0c # 从aws页面上获得
 --count 1
 --instance-type t3.micro
 --key-name MyKpCli
@@ -867,10 +880,24 @@ Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 
 4. ETCD 是一个Key-Value数据库, 所有的对于node和pod的操作历史都保存在这个数据库中
 
 ## Minikube
+Minikube 需要运行在docker内, 在minikube容器内部也有一个docker来运行类似k8s的实例. 一个实例
+
+```shell
+# 安装minikube
+brew install minikube
+# 启动之前必须要先启动docker
+# 启动minikube
+minikube start --driver=docker --memory=4096 --cpus=2
+# 查看 minikube 运行状态
+minikube status
+# 默认情况下, minikube 已经安装了kubectl
+kubectl get nodes
+
+```
+
+if you have issue to start minikube
 ```shell
 # 如果遇到minikube起不来, 可以先删除, 然后重新建立. 并指定容器所需要cpu数量和内存
 minikube delete
 minikube start --driver=docker --memory=4096 --cpus=2
-
-
 ```
