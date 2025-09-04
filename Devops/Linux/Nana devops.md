@@ -902,3 +902,52 @@ if you have issue to start minikube
 minikube delete
 minikube start --driver=docker --memory=4096 --cpus=2
 ```
+
+kubectl commands 以下这些命令主要是排错时用
+```shell
+kubectl create deployment nginx-depl --image=nginx 
+kubectl get deployment
+kubectl get deployment -l app=nginx
+kubectl get pod
+kubectl get replicaset # 整个命令可以看到之前被销毁的pod
+
+# 修改 deployment. 每次修改deployment都会删除现在的pod, 重新构建pod
+kubectl edit deployment nginx-depl 
+# 查看pod内部的log
+kubectl logs <pod_name>
+# 
+kubectl describe pod <pod_name>
+# 进度container 
+kubectl exec -it <pod_name> -- bin/bash
+
+kubectl delete deployment <deployment_name>
+```
+
+
+```shell
+kubectl apply -f <yaml_file>
+```
+deployment yaml file
+```yaml
+apiVersion: apps/v1
+kind:Deployment
+metadata:
+  name: ngnix-deployment # deployment name
+  labels: 
+	app: nginx # 这里是删选deployment时用的label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx # 这里是告诉deployment 去找到 label是 app: nginx 的pod去处理
+  template:
+    metadata:
+      labels: 
+        app: nginx # 这里定义了 pod使用app: nginx这个label, 和上面的 selector中的label必须一致
+    spec:
+      containers: # 这里是container的要求
+      - name: nginx
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+```
