@@ -745,13 +745,16 @@ docker enginer components
 Docker image
 - Layers of image, 如果某个layer本地有了, 则不需要下载. 比如不同版本的postgres, 在很多层可能是一样的, 比如base image, 就不用下载
 - 大部分 Linux base Image 是 alpine:3.17 因为小
+
+docker image 相关的命令
 ```shell
-docker pull redis # pull images
-docker images # show local existing images
+# pull images
+docker pull redis 
+# show local existing images
+docker images
 
 ```
-
-docker container
+docker container 相关的命令
 ```shell
 # 构建container中的环境变量
 # postgres:13.10 是image的版本,如果本地没有就从docker hub上拉取
@@ -764,9 +767,6 @@ docker ps -a # including not running or stopped container
 
 docker stop <container_id>
 docker start <container_id>
-
-
-
 ```
 
 # AWS
