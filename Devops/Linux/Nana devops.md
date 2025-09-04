@@ -865,6 +865,7 @@ Configmap 用来配置pod 的. 因为有些pod, 比如环境变量这些信息, 
 Secret 用于保存哪些不同被公开的配置信息, 比如访问数据库的用户名和密码
 
 Daemonset 在node scale down和scale up时, 简化了在 Deployment 中手动修改 replica 数量的问题. 确保每个node上只有一套pod replica, 即pod被均匀分布在不同的node上
+在 Node增加时, Pods会自动增加到node上, 在node减少是, Pod会被garbage回收
 
 Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 上, 或者在远端非 K8s Cluster 上
 ## K8s的进程 Process
