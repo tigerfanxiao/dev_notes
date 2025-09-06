@@ -781,6 +781,9 @@ aws --version
 
 # config aws account
 aws configure
+# get current cli user name
+aws sts get-caller-identity
+
 ```
 
 
@@ -791,12 +794,12 @@ aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/
 ```shell
 # 创建 ec2 instance
 aws ec2 run-instances \
---image-id ami-015cbce10f839bd0c # 从aws页面上获得
+--image-id ami-0360c520857e3138f # 从aws页面上获得
 --count 1
---instance-type t3.micro
---key-name MyKpCli
---security-group-ids sg-0f95dd6c794953eed
---subnet-id subnet-0f91f273239d7af16
+--instance-type t2.median
+--key-name m4macbookair
+--security-group-ids sg-08e3efc606ea1b353
+--subnet-id subnet-0154f9bf85b890da1
 
 # 获取 ec2 instance
 aws ec2 describe-instance
@@ -835,6 +838,13 @@ chmod 400 MyKpCli.pem # 必须要去除others的访问权限
 ssh -i MyKpCli.pem ec2-user@3.67.39.67
 
 ```
+注意: 不同的镜像使用的用户名是不同的
+```shell
+Amazon Linux / RHEL → use ec2-user
+Ubuntu → use ubuntu 
+Debian → use admin
+CentOS → use centos
+```
 
 
 # K8s
@@ -868,6 +878,19 @@ Daemonset 在node scale down和scale up时, 简化了在 Deployment 中手动修
 在 Node增加时, Pods会自动增加到node上, 在node减少是, Pod会被garbage回收
 
 Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 上, 或者在远端非 K8s Cluster 上
+
+namespace 不同的namespace 不能分享的资源
+- configmap 和 secret不能分享
+可以分享的内容
+- service
+不在任何namespace中的, 而是只属于cluster的
+- volume是不在任何namespace中的
+```shell
+kubectl api-resources --namespaced=false # 查看不在namespace中的资源
+kubectl get ns 
+kubectl get pod -n kube-system
+```
+
 ## K8s的进程 Process
 在worker node上的进程必须有 3 个. 可选一个Kube log collection
 1. Container Runtime 并非docker image, 而是通过image构造出来的实例. 
@@ -879,6 +902,8 @@ Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 
 2. Kube-scheduler 决定了一个新的pod要在那个Node上创建, 取决于当前node 的cpu和内存资源占用情况. 然后通知Node上的kubelet进行具体的pod操作
 3. Controller Manager 首先是监控所有的node的状态. 如果一个node down了, 在整个node上的pod就都挂了. 根据deployment中node replica的数量, 我们就需要再别的node上去创建pod. 基于已经定义好的manifest, 如果发现某个node有问题, 就通过kube-scheduler 决策调整方案, 然后通知node 上kubelet去实施
 4. ETCD 是一个Key-Value数据库, 所有的对于node和pod的操作历史都保存在这个数据库中
+
+### TLS
 
 ## Minikube
 Minikube 需要运行在docker内, 在minikube容器内部也有一个docker来运行类似k8s的实例. 一个实例
@@ -950,4 +975,91 @@ spec:
         image: nginx:1.25
         ports:
         - containerPort: 80
+```
+
+
+## 安装K8s 1.28 on Ubuntu 24.04
+
+1. 关闭swap
+```shell
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y apt-transport-https ca-certificates curl
+
+
+# 所有3个server都需要
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+# 配置master和node不同的端口号, 在aws上用security group来配置
+# 配置hostname
+sudo vim /etc/hosts 
+# 增加3个ip地址和node名字
+172.31.1.225 master
+172.31.1.83 worker01
+172.31.1.111 worker02
+
+sudo hostnamectl set-hostname master
+# 重新连接 ssh
+
+```
+
+安装containerd
+创建一个 install.sh
+```shell
+
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+
+sudo sysctl --system
+
+sudo apt install -y containerd
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo systemctl restart containerd
+sudo systemctl enable containerd
+
+```
+
+安装kubeadm, install_kubernetes_components.sh
+```shell
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt update
+
+
+sudo apt install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+apt-cache madison kubeadm
+
+sudo kubeadm init --kubernetes-version=1.28.0
+# 安装完毕后
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+```
+
+
+```shell
+kubectl cluster-info
+kubectl create namespace my-namespace
+
+kubectl get namespace
+
 ```
