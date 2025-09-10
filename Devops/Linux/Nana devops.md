@@ -890,6 +890,9 @@ kubectl api-resources --namespaced=false # 查看不在namespace中的资源
 kubectl get ns 
 kubectl get pod -n kube-system
 ```
+k8s本身是不带有网络组建的. 网络组建的目的是使得个pod之间能够通信. 实现网络组建的接口定义是k8s完成的. 有几个标准
+- 没有的node在一个子网中. 但是网段和pod所在的网段是不重叠的. 相当于从pod到node是经过一次NAT
+- 每个node上的所有的pod是在同一个子网段里. 从一个node上的pod向另外一个node上的pod进行通信是, 利用路由表进行通信
 
 ## K8s的进程 Process
 在worker node上的进程必须有 3 个. 可选一个Kube log collection
@@ -991,11 +994,11 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
 # 配置master和node不同的端口号, 在aws上用security group来配置
 # 配置hostname
-sudo vim /etc/hosts 
-# 增加3个ip地址和node名字
-172.31.1.225 master
-172.31.1.83 worker01
-172.31.1.111 worker02
+cat <<EOF | sudo tee -a /etc/hosts 
+172.31.1.92 master
+172.31.1.152 worker01
+172.31.1.45 worker02
+EOF
 
 sudo hostnamectl set-hostname master
 # 重新连接 ssh
@@ -1053,6 +1056,7 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+kubectl get nodes
 ```
 
 
@@ -1061,5 +1065,214 @@ kubectl cluster-info
 kubectl create namespace my-namespace
 
 kubectl get namespace
+kubectl get pod -n kube-system
+
+```
+
+join control panel
+```shell
+kubeadm token create --print-join-command
+sudo kubeadm join 172.31.1.92:6443 --token k5xkj8.6ob3olyij6mdtlxc --discovery-token-ca-cert-hash sha256:5697d662e32341348b76f9058aa150b36eb7c413207d153ed3ec7ce455fca32b
+
+# 需要打来6783 端口
+# 查看日志
+kubectl logs weave-net-znr4h -n kube-system -c weave
+# 查看3个node上守护进程的状态
+kubectl get pod -n kube-system -o wide | grep weave
+
+kubectl exec -n kube-system weave-net-znr4h -c weave -- /home/weave/weave --local status
+
+weave-net-b2skb
+weave-net-czxjg
+weave-net-znr4h
+```
+
+
+### Service
+```yaml
+apiVersion: v1
+kind: Service
+metadata: 
+  name: my-service
+spec:
+  selector: 
+    app: MyApp # 这里制定了给某个deployment用
+  ports:
+  - protocol: TCP # 这里默认是clusterIP, 在在创建的时候才有的
+    port: 80 # 暴露给外部的端口号
+    targetPort: 9376 # development 容器内部端口号
+```
+
+```yaml
+kubectl describe <component> <component name>
+
+# 查看 label
+kubectl get pod --show-labels
+# 过滤出 label
+kubectl get pod -l app=nginx
+# show los of all pods with same label
+kubectl log -l app=nginx
+```
+
+scale
+```shell
+kubectl scale deployment nginx-deployment --replicas=4
+```
+record the history
+```shell
+# record the history of change
+kubectl scale deployment nginx-deployment --replicas=4 --record 
+# view the history of chagne
+kubectl rollout history deployment nginx-deployment
+```
+
+kubectl run 用于测试
+- 使用curl命令测试 pod是否正常运行
+```shell
+kubect get svc # show name and ip address of the service
+kubectl run test-nginx-svc --image=nginx
+kubectl get pod 
+# enter into the pod container interactive terminal
+kubectl exec -it test-nginx-svc -- bash
+
+# now inside of the container
+curl http://10.96.0.1:8080
+
+```
+coreDNS
+需要给pod中的container 配置 dns, 从 k8s 1.2之后. 需改 `/etc/resolv.conf`, 但是kubelet 在创建pod的时候, 已经主动配置了. 通过查看 `sudo cat /var/lib/kubelet/config.yaml`
+Troubleshooting: 如果发现用service name无法访问, 但是ip地址可以访问. 那多半是两个pod不在一个namespace里
+```shell
+# search for the ip address of dns service
+kubectl get svc -n kube-system | dns
+
+kubectl exec -it test-nginx-svc -- bash
+vim /etc/resolv.conf
+# edit it as
+nameserver 10.96.0.10
+```
+coreDns 给service 配置的域名规律是
+```shell
+# 如果是同一个namespace
+<servicename> 开始可以访问的
+# FQDN Fully Qualified domain name
+# 只在在访问不同namespace下的service的时候, 才需要FQDN
+<servicename>.<namespace>.svc.cluster.local
+<ervicename>.<namespace> #可以简写, 是因为在 /etc/resolv.conf 中有search的entry, 已经在域名中搜索了
+
+```
+
+k8s 重要的服务的配置文件都是放在 `/etc/kubernetes/manifests/`
+service 的cluster ip CIDR 是在 `/etc/kubernetes/manifests/kube-apiserver.yaml` 中定义的 `--service-cidr` 这个文件本身是 kube-adm 创建的. 有一个默认值. 
+```shell
+kubeadm config print init-default # review config
+
+```
+任何一次修改了 kube-apiserver.yaml 文件, kubelet 会周期性的发现变动, update
+新的cidr只对新建的service起作用, 不会修改老的service
+```shell
+kubectl create service clusterip test-new-cidr --tcp=80:80
+kubectl get svc
+
+```
+
+preview or dry run 这样可以快速创建template
+```shell
+kubectl create service clusterip test-new-cidr 80:80 --dry-run=client -o yaml>my-svc.yaml
+
+kubectl create deployment my-deployment --image=nginx:1.20 --port=80 --replicas=3 --dry-run=client -o yaml > my-deployment.yaml
+
+kubectl run my-pod --image=nginx:1.20 --labels="app=nginx,env=prod" --dry-run=client -o yaml > my-pod.yaml
+```
+
+
+signing certificate
+一个用户要能方位k8s cluster, 需要申请certificate, 这个certificate需要被k8s的CA签名, 步骤如下
+1. 使用openssh 创建一个私钥
+2. 将私钥的内容放入 certificate signing request 中, 并构建一个csr对象
+3. k8s 管理员approve 这个csr
+4. 然后把这个approved的csr 保存为, 公钥证书 crt
+```shell
+openssh genrsa -out dev-tom.key 2048
+# create certificate signing request fro the key
+openssh req -new dev-tom.key -subj "/CN=tom" -out dev-tom.csr 
+
+```
+
+编辑一个yaml文件 `vim dev-tom-csr.yaml`
+```yaml
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: my-user-csr   # <-- change this to something unique
+spec:
+  groups:
+  - system:authenticated   # optional, depends on RBAC
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBS...   # <-- base64-encoded CSR
+  signerName: kubernetes.io/kube-apiserver-client   # common for client certs
+  expirationSeconds: 31536000   # optional (1 year), default is 90 days
+  usages:
+  - client auth
+```
+
+```shell
+# create certificate signing request
+kubectl apply -f dev-tom-csr.yaml 
+
+# list all the signning reqeust, which is in pending status
+kubectl get csr 
+# find current k8s user is kubernetes-admin
+cat ~/.kube/config | grep kubenetes-admin -A
+
+# approve the certificate
+kubectl certificate approve dev-tom
+kubectl get csr dev-tom -o yaml
+
+# encode the certificate
+base64 dev-tom.crt | tr -d "\n"
+
+# which you can think a public key to sign in k8s
+echo 'base64 encoded csr' | base64 --decode > dev-tom.crt
+```
+
+```shell
+kubectl option
+# find control plan api-service ip address
+kubectl cluster-info 
+
+# tell kubectl to use dev-tom to authenticate the k8s access
+# 注意这里 ~/.kube/config 中不能有文件
+kubectl --server https://172.31.44.88:6443 \
+--certificate-authority /etc/kubernetes/pki/ca.crt \
+--client-certificate dev-tom.crt \
+--client-key dev-tom.key 
+get pod
+
+# 修改config文件, 创建profile, 创建certificate和key的文件路径
+
+kubectl --kubeconfig dev-tom.conf get pod
+# 或者把 dev-tom.conf 直接复制到 ~/.kube/config 下, 就可以直接用kubectl来访问了
+
+```
+
+
+```shell
+kubectl create clusterrole dev-cr --verb=get,list,create,update,delete --resource=deployments.app,pods --dry-run=client -o yaml > dev-cr.yaml
+# 默认有两个apiGroups, 一个core group, 一个其他group
+
+kubectl api-resources
+
+# binding the cluster role to user
+kubectl create clusterrolebinding dev-crb --clusterrole=dev-cr --user=tom --dry-run=client -o yaml > dev-crb.yaml
+
+kubectl describe clusterrolebinding dev-crb
+
+# 查看tom是否有权限做 create pod
+kubectl auth --kubeconfig config can-i create pod --as tom 
+```
+
+service account
+```shell
+kubectl create serviceaccount jenkins --dry-run=client -o yaml > jenkins-sa.yaml
 
 ```
