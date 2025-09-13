@@ -2,6 +2,7 @@ Nana devops repo
 https://gitlab.com/twn-devops-bootcamp/latest/10-kubernetes
 
 Ubuntu 22.04
+
 ```shell
 # check Ubuntu version
 lsb_release -a
@@ -9,27 +10,30 @@ lsb_release -a
 uname -a
 cat /etc/os-release
 # 查看cpu
-lscpu 
+lscpu
 # 查看内存
 lsmem
 ```
- root 用户切换
+
+root 用户切换
+
 ```shell
 # switch to root without password
-sudo su 
+sudo su
 # switch to root with password of current user
 sudo -i
-# switch to root 
+# switch to root
 su - # specify the password of root user
 
-exit # exit root 
+exit # exit root
 ```
 
 user and group management
+
 ```shell
 # 这两个命令是 interactive, user friendly
 adduser <username>
-addgroup <groupname> 
+addgroup <groupname>
 deluser
 
 # low-level command, 可以使用在脚本中的
@@ -42,10 +46,13 @@ useradd -G <groupname> <username>
 # remove user from the group
 gpasswd -d <usernaem> <groupname>
 ```
+
 Create app user for security best practice
+
 - Create separate user for every application
 - Give it only the permission it needs to run App
 - Don't work with the Root user
+
 ```shell
 # 在 root 账户下
 adduser xiao
@@ -53,40 +60,44 @@ adduser xiao
 # 使用sudo命令时, 输入是xiao的密码
 # 注意, 使用sudo命令创建的文件的user owner 和 group owner都是root
 usermod -aG sudo xiao # add xiao to sudo group
-su - xiao # switch to xiao 
+su - xiao # switch to xiao
 
 # 下面整个操作允许我本地电脑直接连接到 xiao的账户下, 而不是默认的root账户
 # 因为这是某个droplex中的用户账户, 所以不能使用保存在digital ocean中的ssh-pubkey
 # 复制我本地电脑的pub ssh key, 到远端设备的家目录
 mkdir .ssh # 在xiao的家目录下创建 .ssh
 
-vim .ssh/authorized_keys 
+vim .ssh/authorized_keys
 # 复制公钥, 并保存
 # 此时本地电脑就可以使用xiao的账号来访问远端droplet, 在本地电脑输入
 ssh xiao@<ip>
 ```
 
 modify user
+
 ```shell
 # change the primary group of user
 usermod -g <primary_group> <username>
 # set the user group list, replace the current one
-usermod -G <primary_group>,<secondary_group> <username> 
+usermod -G <primary_group>,<secondary_group> <username>
 # add secondary group to user
-usermod -aG <secondary_group> <username> 
+usermod -aG <secondary_group> <username>
 
-# show all the groups for current user logged in 
-groups 
+# show all the groups for current user logged in
+groups
 ```
 
 modify file owner
+
 ```shell
 chown user:group filename
 chgrp groupname filenaem # change only group owner for the file
 ```
+
 文件权限
+
 ```shell
-drwxrwxr-x 
+drwxrwxr-x
 - # regular file
 d # folder
 l # symboic 软连接
@@ -94,10 +105,11 @@ l # symboic 软连接
 chmod g-w filename # remvoe the write permissino from group owner
 chmod a+x filename # add permission for all users
 chmod g=rwx filename # configure it directly
-chmod 777 filename 
+chmod 777 filename
 ```
 
 pipe, redicrect, stdin, stdout
+
 ```python
 ls /usr/bin | less
 
@@ -111,8 +123,11 @@ stderr 2
 # 多个命令的组合
 command;commend
 ```
+
 # File system
+
 Linux 所有的文件都在根目录下. 是一个树形结构
+
 - 家目录. root 用户的家目录在 `/root`下, 其他用户的家目录在 `/home/`下. 不同用户的家目录是相互隔离的
 - `/bin` 和 `/sbin` 存放的二进制的可执行程序, 编译好的. 区别在于, 一般`/bin`内程序是普通用户就可以执行的, 用户和系统交互时使用的. `/sbin`则多为系统自己调用使用的, 或者高危的需要 root 用户才能执行的程序
 
@@ -127,18 +142,23 @@ adduser
 password
 iptable
 ```
+
 - `/lib`, `/lib32`, `/lib64`, `libx32` 这些都是 library. 是`/bin`和`/sbin`下的可执行程序的依赖
 - `/usr/` 这个目录下一套 `/bin`, `/sbin`, `/lib`, 这些也是系统层面可以调用的命令, 因为历史原因, 系统层面可以调用的命令被分在两个地方. `/usr/local/`下面又有一套 `/bin`, `/sbin`, `/lib`, 这里放的是用户自己在使用过程中安装的应用, 比如 java, docker, minikube, python. 注意安装这里的程序, 所有人都可以使用的, 不是用户独享的
-- `/opt` 一般是用于非linux标准库中的第三方应用, 比如chrome, vscode等
+- `/opt` 一般是用于非 linux 标准库中的第三方应用, 比如 chrome, vscode 等
 
 # 用户管理
-Linux 其实可以看做是三种用户, 一种是系统管理员root用户, 一种是普通用户, 一种是为应用创建的用户, 比如数据库管理员
+
+Linux 其实可以看做是三种用户, 一种是系统管理员 root 用户, 一种是普通用户, 一种是为应用创建的用户, 比如数据库管理员
+
 ```shell
 sudo adduser <username>
 su - username # 切换用户, 并进入该用户的家目录
 ```
+
 # Package Management
-apt-get 和 apt是两个不同的包管理工具. apt比apt-get更好用, apt more user-friendly output
+
+apt-get 和 apt 是两个不同的包管理工具. apt 比 apt-get 更好用, apt more user-friendly output
 
 ```shell
 # ubuntu 20.04
@@ -152,30 +172,36 @@ apt intall <package_name>
 apt remove <package_name>
 
 # 查看 repository, 增加的repository都会放在这个文件中
-cat /etc/apt/sources.list 
+cat /etc/apt/sources.list
 
 
 ```
 
-ppa Personal Package Archive, 是指没有Linux 版本审核过的个人包, 有一定风险
+ppa Personal Package Archive, 是指没有 Linux 版本审核过的个人包, 有一定风险
 
 # bash
-首先在#!制定了执行.sh文件的shell. 因为在一个系统中可能存在多种shell, bash, zsh 等. 
+
+首先在#!制定了执行.sh 文件的 shell. 因为在一个系统中可能存在多种 shell, bash, zsh 等.
 然后个人通过创建文件方式创建的 .sh 文件一般没有执行权限. 通过
+
 ```shell
 chmod u+x file.sh # 给当前用户增加执行权限
 ```
-最后可以通过制定shell来运行脚本
+
+最后可以通过制定 shell 来运行脚本
+
 ```shell
 bash file.sh
 # 如果文件已经有了可执行权限
 ./file.sh
 ```
+
 bash 的例子
+
 ```shell
 #!/bin/bash
 echo "Setup"
-# 定义变量 
+# 定义变量
 file_name=config.yaml
 # 引用变量
 echo "using $file_name to configure something"
@@ -229,7 +255,7 @@ for param in $*
 # while loop
 sum=0
 while true
-do 
+do
   read -p "enter a score" score
   if [ $score == "q" ]
   then
@@ -242,7 +268,8 @@ echo "total score: $sum"
 $sum + $score # 注意: 会被解释为两个字符串的相加
 $(($sum+$score)) # 才会被解释称两个数字的运算
 ```
-在bash脚本中写函数
+
+在 bash 脚本中写函数
 
 ```shell
 function sum() {
@@ -257,6 +284,7 @@ echo "The result is $result"
 ```
 
 设置环境变量
+
 ```shell
 # 临时设置环境变量
 export DB_USERNAME=dbuser
@@ -274,50 +302,63 @@ PATH=$PATH:/NEWPATH
 ```
 
 模式
-- vim 有下面 4种模式
 
-| 模式      | 作用         | 转换                              | 注释                    |
-| ------- | ---------- | ------------------------------- | --------------------- |
-| Normal  | 移动光标       | `i` 转 Insert 模式                 |                       |
-| Insert  | 键盘输入       | `jj` 或者 `esc`退出 Insert 到 Normal |                       |
-| Vistual | 选择内容       | `v` 进入或者退出 Visual 模式            | ctrl + v block select |
-| Command | 查找, 替换, 保存 | 在 normal 模式下, 输入冒号 :            |                       |
+- vim 有下面 4 种模式
+
+| 模式    | 作用             | 转换                                 | 注释                  |
+| ------- | ---------------- | ------------------------------------ | --------------------- |
+| Normal  | 移动光标         | `i` 转 Insert 模式                   |                       |
+| Insert  | 键盘输入         | `jj` 或者 `esc`退出 Insert 到 Normal |                       |
+| Vistual | 选择内容         | `v` 进入或者退出 Visual 模式         | ctrl + v block select |
+| Command | 查找, 替换, 保存 | 在 normal 模式下, 输入冒号 :         |                       |
+
 ### vim 配置
+
 ```shell
 # 修改配置文件 .vimrc
 set ts=4 # 一个 tab 是 4 个空格
 set expandtab # 用空格代替 tab
 set ai # 自动缩进
-set paste # 
+set paste #
 ```
 
 ### 模式转换
+
 在普通模式下移动光标, 并插入
+
 ```shell
-i # 在光标前插入 
-a # 在光标后插入 
+i # 在光标前插入
+a # 在光标后插入
 I # 在行首插入
-A # 在行尾插入 
+A # 在行尾插入
 
 o # 在当前光标的下一行插入
 O # 在当前光标的上一行插入
 ```
+
 在命令模式下移动光标, 但是不插入
+
 ```shell
 $ # 将光标移动到行位
 0 # 将光标移动到行首
 ```
+
 光标跳到某一行
+
 ```shell
-gg # 文档头部 
-G # 文档底部 
-12G # 跳转到第 12 行 
+gg # 文档头部
+G # 文档底部
+12G # 跳转到第 12 行
 ```
+
 替换
+
 ```Shell
-%s/old/new 
+%s/old/new
 ```
+
 撤销
+
 ```shell
 u # 撤销 1 个动作
 10u # 撤销 10 个动作
@@ -325,7 +366,9 @@ N # 往前走
 ```
 
 # VIM 命令模式
+
 保存和退出
+
 ```shell
 shift + ZZ # 存盘退出
 shift + ZQ # 不存盘退出
@@ -333,7 +376,9 @@ shift + ZQ # 不存盘退出
 # 文件打开直接到指定行
 vim +11 test.sh
 ```
+
 光标行间移动
+
 ```shell
 H # 当前页的第一行
 M # 当前页的中间
@@ -344,7 +389,9 @@ e # 当前或者下一个单词的词尾
 b # 当前或者下一个单词的词首
 5w # 下面 5 个单词
 ```
+
 光标行内移动
+
 ```shell
 h # 左移
 l # 右移
@@ -354,19 +401,25 @@ k # 上移
 0 # 包含空白字符的行首
 $ # 行尾
 ```
+
 段落移动
+
 ```shell
 } # 下一段
 { # 上一段
 ```
+
 复制行
+
 ```shell
 yy # 复制光标当前行
 3yy # 复制光标当前所在的连续三行
 
 100iwang+esc # 把wang 复制了 100 次
 ```
+
 删除替换
+
 ```shell
 # 删除字符
 x # 剪切一个字符
@@ -385,15 +438,21 @@ d$ # 删除到行末
 dgg # 删除到文件开头
 dG # 删除到文件末尾
 ```
+
 大小写
+
 ```shell
 ~ # 大小写切换
 ```
+
 快速删除换行符
+
 ```shell
 J # 不需要把光标切换到行末, 直接把下面一行提上来
 ```
+
 撤销命令
+
 ```shell
 
 ctrl + r # 重新执行撤销的命令
@@ -401,16 +460,20 @@ ctrl + r # 重新执行撤销的命令
 . # 重复执行上一个操作 9 次
 
 ```
+
 搜索
+
 ```shell
 / # 搜索 n 下一个 N 上一个
 ```
+
 高级用法
+
 ```shell
 # 删除双引号中间的内容
 di"
 # 删除中括号中间的内容
-di[ 
+di[
 ```
 
 # 网络
@@ -428,13 +491,15 @@ ping
 ```
 
 SSH
+
 1. ssh 可以用来传文件
-2. ssh 可以用来cmd line 访问
-ssh key pair = Private Key + Public Key
-Jenkins 也是用ssh 和remote server 沟通
-ssh 使用22端口, 所以被访问的服务器, 需要在防火墙上放开22号端口. 但是防火墙上也需要控制来源的IP地址, 整个也称为限源. 即给来访问的某些IP开白名单
+2. ssh 可以用来 cmd line 访问
+   ssh key pair = Private Key + Public Key
+   Jenkins 也是用 ssh 和 remote server 沟通
+   ssh 使用 22 端口, 所以被访问的服务器, 需要在防火墙上放开 22 号端口. 但是防火墙上也需要控制来源的 IP 地址, 整个也称为限源. 即给来访问的某些 IP 开白名单
 
 使用密码访问
+
 ```shell
 # 使用ssh 访问, 密码方式
 ssh username@ip_address
@@ -442,6 +507,7 @@ ssh username@ip_address
 ```
 
 使用秘钥访问
+
 ```shell
 # 使用ssh key pair 访问
 # 生成密码对
@@ -459,11 +525,13 @@ ssh -i .ssh/id_rsa root@ip_address
 ```
 
 复制文件到远端服务器
+
 ```shell
 scp test.sh root@ip_address:/location
 ```
 
 # git
+
 version control
 working directory - staged area - local-repository- remote repository
 
@@ -474,9 +542,10 @@ git log --oneline # show oneline commit
 ```
 
 把本地的项目推送到远端
+
 ```shell
 # create local git repository
-git init 
+git init
 # then you need to create remote repo on gitlab or github
 # then you add remote repo as origin with address
 git remote add origin git@address
@@ -484,18 +553,22 @@ git push
 ```
 
 克隆远端的项目到本地
+
 ```shell
 # clone remote repository
 git clone ssh@address
 ```
+
 branch
-- 一般情况下, 只要有一个master branch 和 develop branch. 
-- 在develop branch 下还有feature 和 bugfix branch. 这两个branch向 develop branch merge
-- 在每个sprint后面, develop branch向master 合并
-- 注意, 我觉得一般不会在本地将其他branch merge到main branch上, 而是在分支的feature branch push到remote后, 在remote 申请 pull request, 经过主管同意后, 在merge到main上
-- 实际工作中, 往往是开发者在自己的branch上工作了很久, 其他的开发者对master branch进行push, 并被接受了, 所以master branch上的内容要更新. 开发者先要pull 最新的内容到本地master branch上, 然后, 在checkout 到feature branch上, 做merge main的操作. 当本地开发完成之后, push feature branch到remote, 再申请pull request, 合并到master branch上
-- 通常情况下, 当一个branch本合并后, 是需要删除的. 如果有新的问题, 再创建新的branch
-- 注意remote的branch如果被删除, 本地的branch应该还在的. 如果此时git pull, 会得到提示 but no such ref was fetched. 此时进入main branch, 运行git pull 获得merge之后的最新代码. 运行 `git branch -d <branch_name>` 删除分支branch
+
+- 一般情况下, 只要有一个 master branch 和 develop branch.
+- 在 develop branch 下还有 feature 和 bugfix branch. 这两个 branch 向 develop branch merge
+- 在每个 sprint 后面, develop branch 向 master 合并
+- 注意, 我觉得一般不会在本地将其他 branch merge 到 main branch 上, 而是在分支的 feature branch push 到 remote 后, 在 remote 申请 pull request, 经过主管同意后, 在 merge 到 main 上
+- 实际工作中, 往往是开发者在自己的 branch 上工作了很久, 其他的开发者对 master branch 进行 push, 并被接受了, 所以 master branch 上的内容要更新. 开发者先要 pull 最新的内容到本地 master branch 上, 然后, 在 checkout 到 feature branch 上, 做 merge main 的操作. 当本地开发完成之后, push feature branch 到 remote, 再申请 pull request, 合并到 master branch 上
+- 通常情况下, 当一个 branch 本合并后, 是需要删除的. 如果有新的问题, 再创建新的 branch
+- 注意 remote 的 branch 如果被删除, 本地的 branch 应该还在的. 如果此时 git pull, 会得到提示 but no such ref was fetched. 此时进入 main branch, 运行 git pull 获得 merge 之后的最新代码. 运行 `git branch -d <branch_name>` 删除分支 branch
+
 ```shell
 # 首先产看是否remote 仓库有新的branch
 git pull
@@ -504,15 +577,15 @@ git checkout <branch_name>
 
 git checkout -b <new_branch_name> # 创建一个新的branch
 git add .
-git commit 
+git commit
 # 如果remote没有本地新建的branch, 则需要使用下面的命令, 先创建branch再push变更
-git push --set-upstream feature/database-connection 
+git push --set-upstream feature/database-connection
 
 ```
 
 Trunk Based vs Feature Based
 `git pull --rebase`
-如果两个程序员在一个branch上修改. 程序员B修改, 并提交了一个commit, 程序员A不知道. 此时他把他自己修改的部分提交了, 就会遇到报错. 让后他想用 git pull 把程序员B修改的代码拉下来, 但是也会冒出一个 merge conflict 需要处理. 因为git pull = git fetch + git merge 就是已经将远端的新代码和本地做了合并. 合并不起来就有conflict, 就需要手动处理. 当你修改完本地conflict后, 你可以用 git push 将代码推送到远端. 问题是, 整个push里面会包含两个commit, 一个commit是程序员B做的, 一个commit是程序员A自己的做的. 因为程序员B做的commit, 在他自己的commit中已经提交过了, 所以这里再提交一般就重复了. 所以会使用 git pull --rebase 就是把开始拉去程序员的改动到本地时, 就把本地的git 状态修改为同步之后. 这样就只要考虑自己的变更
+如果两个程序员在一个 branch 上修改. 程序员 B 修改, 并提交了一个 commit, 程序员 A 不知道. 此时他把他自己修改的部分提交了, 就会遇到报错. 让后他想用 git pull 把程序员 B 修改的代码拉下来, 但是也会冒出一个 merge conflict 需要处理. 因为 git pull = git fetch + git merge 就是已经将远端的新代码和本地做了合并. 合并不起来就有 conflict, 就需要手动处理. 当你修改完本地 conflict 后, 你可以用 git push 将代码推送到远端. 问题是, 整个 push 里面会包含两个 commit, 一个 commit 是程序员 B 做的, 一个 commit 是程序员 A 自己的做的. 因为程序员 B 做的 commit, 在他自己的 commit 中已经提交过了, 所以这里再提交一般就重复了. 所以会使用 git pull --rebase 就是把开始拉去程序员的改动到本地时, 就把本地的 git 状态修改为同步之后. 这样就只要考虑自己的变更
 
 ```shell
 git pull -r # 就是rebase
@@ -520,13 +593,14 @@ git pull -r # 就是rebase
 # 修改conflict文件后, 运行下面的代码继续做 rebase
 git rebase --continue
 # 上面rebase完成后, 在push本地的代码到remote
-git push 
-# 成功后, 远程就看到一个新的commit, 这里我本地修改好的. 
+git push
+# 成功后, 远程就看到一个新的commit, 这里我本地修改好的.
 # 且我本地推送上去的, 不会出现两个commit
 # 所以在明确知道一个branch上有多个同事在修改时, 一定要使用 git pull -r 来经常rebase自己的代码
 ```
 
 gitignore
+
 ```shell
 /folder/* # ignore folder
 .DS_Store # ignore file
@@ -534,68 +608,83 @@ gitignore
 # untrack the tracked the folder, 这些文件可以是已经commit过并push了的
 git rm -r --cached .idea # 被remove 的文件会出现在 git status 中, delete 的状态
 ```
+
 git stash
 use case
-1. 如果你有没有修改, 但是有没有达到可以提交commit的地步. 但是此时你有需要去其他的branch去修改代码. 此时如果你直接checkout master, 就会报错. 提示需要commit或者stash当前代码
-2. 如果你修改的代码, break了, 你想退回最初的代码, 此时上一次commit在修改之前是否能正常运行
+
+1. 如果你有没有修改, 但是有没有达到可以提交 commit 的地步. 但是此时你有需要去其他的 branch 去修改代码. 此时如果你直接 checkout master, 就会报错. 提示需要 commit 或者 stash 当前代码
+2. 如果你修改的代码, break 了, 你想退回最初的代码, 此时上一次 commit 在修改之前是否能正常运行
+
 ```shell
 git stash # 将改动的代码都放到cache中, 此时在 git status 的commit信息中, 就看不到修改了
 # 所以当你切换到新的分支时, 先要看看有没有没有处理的stash内容
-git stash pop # get the changes back 
+git stash pop # get the changes back
 ```
+
 go back to previous version
+
 ```shell
 # 如果要回退到之前的某个版本
 git log # 先查看要回去的commit id
 # 注意, 需要先确保当前分支没有没有报错的commit, 才能切换. 否则用 stash 先暂时保存一下
 git checkout <commit-id>
 
-# 此时会提示, 我在 detached HEAD state, 表示我不在最新most-updated的版本上. 
-# 注意: 你不能在这个分支修改, 如果要做实验, 或者修改测试, 需要先在整个commit上新建一个分支. 
+# 此时会提示, 我在 detached HEAD state, 表示我不在最新most-updated的版本上.
+# 注意: 你不能在这个分支修改, 如果要做实验, 或者修改测试, 需要先在整个commit上新建一个分支.
 # 回到 most-updated 版本上
 git checkout branchname
 
 ```
+
 undo commit
-如果还没有push到remote
+如果还没有 push 到 remote
+
 ```shell
 # 注意, 整个操作会直接修改本地的git log, 上一次修改的所有内容都会消失
-git reset --hard HEAD~1 # 撤销上一个commit, 如果是撤销前两个commit, HEAD~2 
+git reset --hard HEAD~1 # 撤销上一个commit, 如果是撤销前两个commit, HEAD~2
 
-# 如果只是修改上一次commit中的部分代码, 保留大部分的代码不变. 
+# 如果只是修改上一次commit中的部分代码, 保留大部分的代码不变.
 # 测试在 git log 中上次commit已经删除. 但是被修改的文件保留在working directory中
 git reset --soft HEAD~1
 ```
 
-如果只是修改上一次commit, 不删除 git log 中信息
+如果只是修改上一次 commit, 不删除 git log 中信息
+
 ```shell
 # 如果你已经commit, 然后发现有问题, 修改后, 想把代码并入上一次的commit中
 # 直接先修改代码, 然后
 git commit --amend -m "modifed last commit message"
 ```
-如果你的代码已经push到remote
-注意: 下面的操作绝对不能在master或者develop的branch上做, 因为此时有可能有别的开发者已经下载你之前删除的代码, 当他们再次提交自己的修改时, 会发现之前rebase的内容已经被你删除了. 造成reference问题. 所以只能在只有自己的branch上做
+
+如果你的代码已经 push 到 remote
+注意: 下面的操作绝对不能在 master 或者 develop 的 branch 上做, 因为此时有可能有别的开发者已经下载你之前删除的代码, 当他们再次提交自己的修改时, 会发现之前 rebase 的内容已经被你删除了. 造成 reference 问题. 所以只能在只有自己的 branch 上做
+
 ```shell
 git reset --hard HEAD~1 # 现在本地删除这个commit
 git push --force # 将本地的变动强制推送到remote. 注意如果远端branch是protect, 就不能被这种方式修改
 ```
-如果你要删除已经在master和develop branch上的commit, 只能用revert
+
+如果你要删除已经在 master 和 develop branch 上的 commit, 只能用 revert
+
 ```shell
 git revert <commit-id> # 如果你需要删除上一次的变化, 就要放最后一次commit的ID
-git push # create a new commit to rever the old commit 
+git push # create a new commit to rever the old commit
 ```
 
 # Build & Package Manager Tools
+
 封装: 就是把你在开发环境里用到的包, 和你的源代码一起封装打包, 然后这样就可以放到服务器上去直接部署了. 而不需要从头到尾去安装和下载依赖
-Build code 
+Build code
+
 - Compiling
 - compress
-代码的版本也需要分为 dev, test, production
-artifact repository
-Artificat: including whole code plus dependencies
-java - JAR, WARn(把前端的react包和后端的jar包, 打包在一起的一种技术)
+  代码的版本也需要分为 dev, test, production
+  artifact repository
+  Artificat: including whole code plus dependencies
+  java - JAR, WARn(把前端的 react 包和后端的 jar 包, 打包在一起的一种技术)
 
-Maven可以正常运行需要满足三个条件
+Maven 可以正常运行需要满足三个条件
+
 1. Java SDK
 2. Java in "Path"
 3. Set JAVA_HOME
@@ -607,12 +696,16 @@ mvn install # build our project in target folder
 ```
 
 Gradle 安装
+
 1. 下载并解压, 添加到环境变量
-2. 配置Intellij
+2. 配置 Intellij
+
 ```shell
 grade build # in build folder
 ```
-使用java命令, 运行jar包
+
+使用 java 命令, 运行 jar 包
+
 ```shell
 java -jar <file.jar> & # 最后 & 表示关掉terminal 也可以运行
 # 查看正在运行的 java 程序
@@ -629,9 +722,10 @@ tcp6       0      0 :::7071                 :::*                    LISTEN      
 
 nodejs
 webpack
+
 - transpiled
 - compressed/minified
-- Build Tool / Bundler 
+- Build Tool / Bundler
 
 ```shell
 # 在有 package.json 的目录下
@@ -642,7 +736,7 @@ node server
 npm start
 npm stop
 npm test
-npm publish 
+npm publish
 
 # pakage manger npm, yarn 不是封装工具, 没有build
 # package manager just install dependency
@@ -654,20 +748,22 @@ npm pack # 给程序打包 .tgz
 
 ```
 
-
 # Jenkin
+
 Build Dokcer image -> Push to Repo -> Run on Server
 You need to execute tests on the build servers
-Build and package into Docker image 
+Build and package into Docker image
 
 Jenkin Syntax
 
 Using Credientials in Jenkinsfile
-1. Define Credential in Jenkins GUI 
+
+1. Define Credential in Jenkins GUI
 2. `credentials("credentialID")` binds the credentials to your env variable
-3. For that you need the *Credentials Binding* Plugin
+3. For that you need the _Credentials Binding_ Plugin
 
 基本结构
+
 ```groovy
 pipeline { // 标准开头
 	agent any // 表示jenkins cluster中任意的agent
@@ -684,36 +780,39 @@ pipeline { // 标准开头
 	stages("deploy") {
 		steps {
 			echo 'deploying the application'
-		}	
+		}
 	}
 }
 ```
 
 # digital ocean
-在digital ocean上的ec2被称为 droplet, 
-可以在setting 中统一配置ssh pub-key, 这个key可以用于所有的droplet的访问
-在networking中可以配置防火墙, 限制ssh访问的IP地址, 然后关联到droplet上去
-在ubuntu系统中安装java 17
+
+在 digital ocean 上的 ec2 被称为 droplet,
+可以在 setting 中统一配置 ssh pub-key, 这个 key 可以用于所有的 droplet 的访问
+在 networking 中可以配置防火墙, 限制 ssh 访问的 IP 地址, 然后关联到 droplet 上去
+在 ubuntu 系统中安装 java 17
 
 # Artifact repository Management
 
-**Sonatype Nexus Repository** 是一种artifact repository manager 产品
-市场上还有public artifact repository manager, 比如 Maven Central Repository, NPM
+**Sonatype Nexus Repository** 是一种 artifact repository manager 产品
+市场上还有 public artifact repository manager, 比如 Maven Central Repository, NPM
 Artifacts: Apps built into a single file
 Repository Type
-- proxy: 我们从maven-central把会用到的依赖下载到Nexus作为缓存. 以后相同的包就不用从Maven-Central中下载了. 可以直接从Nexus 中找. 这种模式需要在本地IDE工具中配置Maven的源
-- host: 我们本地自己开发的代码, 可以推送到Nexus的repository中
-- group: 如果一个repository即充当了proxy和host的角色, 我们就称这种类型是 group
-Component 和 Asset的区别
+
+- proxy: 我们从 maven-central 把会用到的依赖下载到 Nexus 作为缓存. 以后相同的包就不用从 Maven-Central 中下载了. 可以直接从 Nexus 中找. 这种模式需要在本地 IDE 工具中配置 Maven 的源
+- host: 我们本地自己开发的代码, 可以推送到 Nexus 的 repository 中
+- group: 如果一个 repository 即充当了 proxy 和 host 的角色, 我们就称这种类型是 group
+  Component 和 Asset 的区别
 - A component can have one or more assets
 - Each asset belongs to a component.
 - Use **components** when you think about _logical versions_ of software.
 - Use **assets** when you think about _actual files_ stored on disk.
 
-Nexus 在整个CICD Pipeline中的位置
+Nexus 在整个 CICD Pipeline 中的位置
 ![[Pasted image 20250826072721.png]]
 
 Features of Repository Manager
+
 - Integrate with LDAP
 - Flexible and powerful REST API for integration with other tools
 - Backup and restore
@@ -723,46 +822,51 @@ Features of Repository Manager
 - Search functionality
 
 # Docker
-docker和virtual machine的区别呢, docker virtualize 应用层. 但是Linux core是使用宿主机的. Virtual Machine是linux core和应用层一起虚拟出来的
+
+docker 和 virtual machine 的区别呢, docker virtualize 应用层. 但是 Linux core 是使用宿主机的. Virtual Machine 是 linux core 和应用层一起虚拟出来的
+
 - size: docker 小
 - speed: docker 快
-- compatibility: 在linux上变异的docker container就以为是使用linux内核, 所以只能运行在linux的服务器上. 在windows上开发就需要wsl了
+- compatibility: 在 linux 上变异的 docker container 就以为是使用 linux 内核, 所以只能运行在 linux 的服务器上. 在 windows 上开发就需要 wsl 了
 
 docker engine
+
 - server
 - api
 - cli
-docker enginer components
+  docker enginer components
 - Container runtime
-	- Pulling images
-	- Managing container lifecycle
+  - Pulling images
+  - Managing container lifecycle
 - Volumes
-	- Persist data
+  - Persist data
 - Network
-	- Configuring network for container communication
-- Build Images
-	- Build own docker image
-Docker image
-- Layers of image, 如果某个layer本地有了, 则不需要下载. 比如不同版本的postgres, 在很多层可能是一样的, 比如base image, 就不用下载
+  - Configuring network for container communication
+- Build Images - Build own docker image
+  Docker image
+- Layers of image, 如果某个 layer 本地有了, 则不需要下载. 比如不同版本的 postgres, 在很多层可能是一样的, 比如 base image, 就不用下载
 - 大部分 Linux base Image 是 alpine:3.17 因为小
 
 docker image 相关的命令
+
 ```shell
 # pull images
-docker pull redis 
+docker pull redis
 # show local existing images
 docker images
 
 ```
+
 docker container 相关的命令
+
 ```shell
 # 构建container中的环境变量
 # postgres:13.10 是image的版本,如果本地没有就从docker hub上拉取
-docker run -e POSTGRES_PASSWORD=myscretpassword postgres:13.10 
+docker run -e POSTGRES_PASSWORD=myscretpassword postgres:13.10
 docker run -d # detach mode, 在后台运行, 返回container id
 # 查看正在运行的container
 docker run -p <host_port>:<container_port> -d redis
-docker ps 
+docker ps
 docker ps -a # including not running or stopped container
 
 docker stop <container_id>
@@ -770,14 +874,16 @@ docker start <container_id>
 ```
 
 # AWS
-- 创建一个账户后, 会自带一个vpc 对应你选在的region, 每个vpc会自带3个subnet, 对应三个AZ
-- 
+
+- 创建一个账户后, 会自带一个 vpc 对应你选在的 region, 每个 vpc 会自带 3 个 subnet, 对应三个 AZ
+-
 
 ## AWS CLI
+
 ```shell
 # install on mac
 brew intall aws
-aws --version 
+aws --version
 
 # config aws account
 aws configure
@@ -786,8 +892,7 @@ aws sts get-caller-identity
 
 ```
 
-
-aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/config`文件定义了默认的region和输出格式(一般选择json). 同事默认的用户的ak/sk 保存在 `~/.aws/credential` 文件中
+aws cli 安装完成后, 会在家目录下产生一个目录 `~/.aws`, `~/.aws/config`文件定义了默认的 region 和输出格式(一般选择 json). 同事默认的用户的 ak/sk 保存在 `~/.aws/credential` 文件中
 
 创建 ec2 instance 需要先创建 Security Group 和 key pair
 
@@ -804,12 +909,15 @@ aws ec2 run-instances \
 # 获取 ec2 instance
 aws ec2 describe-instance
 ```
-获取到subnet id
+
+获取到 subnet id
+
 ```shell
 aws ec2 describe-subnets
 ```
 
 创建 Security Group
+
 ```shell
 # create security-group 创建sg必须是要与vpc绑定的
 aws ec2 create-security-groups --group-name my-sg --description "My SG" --vpc-id <vpc-id>
@@ -825,91 +933,124 @@ aws ec2 authorize-security-group-ingress \
 ```
 
 创建 key pair
+
 ```shell
 aws ec2 create-key-pair \
 --key-name MyKpCli \
 --query 'KeyMaterial' \ # 如果没有这个参数在回返回 KeyName 等其他, 字段
 --output text > MyKpCli.pem # 把返回的字段输出到文本文件中. 在mac或者ubuntu上使用.pem格式
 ```
-使用ssh访问ec2
+
+使用 ssh 访问 ec2
+
 ```shell
 # 修改permission
 chmod 400 MyKpCli.pem # 必须要去除others的访问权限
 ssh -i MyKpCli.pem ec2-user@3.67.39.67
 
 ```
+
 注意: 不同的镜像使用的用户名是不同的
+
 ```shell
 Amazon Linux / RHEL → use ec2-user
-Ubuntu → use ubuntu 
+Ubuntu → use ubuntu
 Debian → use admin
 CentOS → use centos
 ```
 
-
 # K8s
 
-## k8s的组件
-Pod k8s 的最小单位. 在一个 pod 上含有一个或者多个 container.
-  - 一般在一个 pod 上只部署单个应用. 因为多个容器可以共享同一个 pod 中的一片存储
-  - 在一个 pod 内部, 多个 container 之间是 shared network namespace. 对外面向别的pod时用同一个 IP 地址, 使用相同的端口范围.
-  - 一般在一个 pod 内部, 放一个 main app container 和它的 sidecar container. Sidecar 通过 localhost 和 main app 交互
-  - 默认情况下每次 pod 被重构都会被分配一个新的 IP 地址. 而 pod 中的 container 是没有独立 IP 地址的
+## k8s 的组件
 
-Service 是 K8s 构建的内部虚拟网络. 用户不同的的pod之间相互通信. 
-- Service是独立于Pod存在的. 即如果pod被销毁了. Service不会一起被销毁. 它会找到备份的pod关联上. 
-- Service给每个 Pod 分配一个 Permanent IP, 注意不是给每个 container 分配一个 IP 地址.
-- Service 是pod之间内部使用. 如果K8s要接受外部的流量请求, 则是通过另一个组件Ingress来处理
-- Service和Ingress的另一个区别在于, Service的双方通信地址是 Pod的IP地址, 而Ingress提供给外部访问的地址是 node的ip地址和port号, 再有port号映射到Service的分配给Pod的IP地址上. 整个思路我理解有点像NAT
+Pod k8s 的最小单位. 在一个 pod 上含有一个或者多个 container.
+
+- 一般在一个 pod 上只部署单个应用. 因为多个容器可以共享同一个 pod 中的一片存储
+- 在一个 pod 内部, 多个 container 之间是 shared network namespace. 对外面向别的 pod 时用同一个 IP 地址, 使用相同的端口范围.
+- 一般在一个 pod 内部, 放一个 main app container 和它的 sidecar container. Sidecar 通过 localhost 和 main app 交互
+- 默认情况下每次 pod 被重构都会被分配一个新的 IP 地址. 而 pod 中的 container 是没有独立 IP 地址的
+
+Service 是 K8s 构建的内部虚拟网络. 用户不同的的 pod 之间相互通信.
+
+- Service 是独立于 Pod 存在的. 即如果 pod 被销毁了. Service 不会一起被销毁. 它会找到备份的 pod 关联上.
+- Service 给每个 Pod 分配一个 Permanent IP, 注意不是给每个 container 分配一个 IP 地址.
+- Service 是 pod 之间内部使用. 如果 K8s 要接受外部的流量请求, 则是通过另一个组件 Ingress 来处理
+- Service 和 Ingress 的另一个区别在于, Service 的双方通信地址是 Pod 的 IP 地址, 而 Ingress 提供给外部访问的地址是 node 的 ip 地址和 port 号, 再有 port 号映射到 Service 的分配给 Pod 的 IP 地址上. 整个思路我理解有点像 NAT
 - 如果一个 pod 在另外一个 node 上有一个备份 pod, 主备 pod 可以共用一个 service, 实现 HA, 或者作为负载分担.
 
-Ingress 是面向公网访问请求提供的组件. 为公网访问提供 URL, HTTPS验证, 并将外部流量通过负载分担的方式分配给 Service
+Ingress 是面向公网访问请求提供的组件. 为公网访问提供 URL, HTTPS 验证, 并将外部流量通过负载分担的方式分配给 Service
 
-Deployment 是blueprint. 定义了需要pod需要多少个replica. 
-- Deployment 只能处理 Stateless的应用, 不能用来处理数据库这种stateful的应用. 因为数据库是Stateful, 在多个replica的情况下会有consistency 一致性的问题. 就是写入的数据的时候, 从那个replica先写入. 另外一个replica就有数据不一致和同步问题. 在K8s中提供了处理stateful 应用的blueprint 工具, Stateful Set
+Deployment 是 blueprint. 定义了需要 pod 需要多少个 replica.
 
-StatefulSet (STS) 是用来处理stateful 应用, 比如数据库应用的blueprint. 但是通常的做法是数据放在K8s集群外部, 不通过K8s进行管理
+- Deployment 只能处理 Stateless 的应用, 不能用来处理数据库这种 stateful 的应用. 因为数据库是 Stateful, 在多个 replica 的情况下会有 consistency 一致性的问题. 就是写入的数据的时候, 从那个 replica 先写入. 另外一个 replica 就有数据不一致和同步问题. 在 K8s 中提供了处理 stateful 应用的 blueprint 工具, Stateful Set
 
-Configmap 用来配置pod 的. 因为有些pod, 比如环境变量这些信息, 应该放在image外部配置, 这样环境变量的信息稍有改动, 就不需要重新build整个镜像. 比如数据库的URL. 对应的另外一个概念是Secret
+StatefulSet (STS) 是用来处理 stateful 应用, 比如数据库应用的 blueprint. 但是通常的做法是数据放在 K8s 集群外部, 不通过 K8s 进行管理
+
+Configmap 用来配置 pod 的. 因为有些 pod, 比如环境变量这些信息, 应该放在 image 外部配置, 这样环境变量的信息稍有改动, 就不需要重新 build 整个镜像. 比如数据库的 URL. 对应的另外一个概念是 Secret
 
 Secret 用于保存哪些不同被公开的配置信息, 比如访问数据库的用户名和密码
 
-Daemonset 在node scale down和scale up时, 简化了在 Deployment 中手动修改 replica 数量的问题. 确保每个node上只有一套pod replica, 即pod被均匀分布在不同的node上
-在 Node增加时, Pods会自动增加到node上, 在node减少是, Pod会被garbage回收
+Daemonset 在 node scale down 和 scale up 时, 简化了在 Deployment 中手动修改 replica 数量的问题. 确保每个 node 上只有一套 pod replica, 即 pod 被均匀分布在不同的 node 上
+在 Node 增加时, Pods 会自动增加到 node 上, 在 node 减少是, Pod 会被 garbage 回收
 
 Volume 用于数据持久化. 数据可以保存在本地的 pod 所在的 node 上, 或者在远端非 K8s Cluster 上
 
-namespace 不同的namespace 不能分享的资源
-- configmap 和 secret不能分享
-可以分享的内容
+namespace 不同的 namespace 不能分享的资源
+
+- configmap 和 secret 不能分享
+  可以分享的内容
 - service
-不在任何namespace中的, 而是只属于cluster的
-- volume是不在任何namespace中的
+  不在任何 namespace 中的, 而是只属于 cluster 的
+- volume 是不在任何 namespace 中的
+
 ```shell
 kubectl api-resources --namespaced=false # 查看不在namespace中的资源
-kubectl get ns 
+kubectl get ns
 kubectl get pod -n kube-system
 ```
-k8s本身是不带有网络组建的. 网络组建的目的是使得个pod之间能够通信. 实现网络组建的接口定义是k8s完成的. 有几个标准
-- 没有的node在一个子网中. 但是网段和pod所在的网段是不重叠的. 相当于从pod到node是经过一次NAT
-- 每个node上的所有的pod是在同一个子网段里. 从一个node上的pod向另外一个node上的pod进行通信是, 利用路由表进行通信
 
-## K8s的进程 Process
-在worker node上的进程必须有 3 个. 可选一个Kube log collection
-1. Container Runtime 并非docker image, 而是通过image构造出来的实例. 
-2. Kubelet Kubelet可以看做是worker node和在node上的pod的接口. master node发送配置需求给某个node上的kubelet, kubelet查看当前node上的资源, 具体去创建和销毁node上的pod
-3. Kube-Proxy 可以看做是Service和Pod之间的接口. 因为Service和Pod其实是分离的, Service其实是通过Kube-proxy来找到pod. 但是Kube-proxy也是有智能的, 他会把流量优先分配给和发出请求的pod在同一个node的上到目标pod replica, 而不是别的node上的pod replica
+k8s 本身是不带有网络组建的. 网络组建的目的是使得个 pod 之间能够通信. 实现网络组建的接口定义是 k8s 完成的. 有几个标准
 
-在Master node 也称为control plan 上的进程,
-1. API Server 在K8s中, 所有的对pod或者node的操作, 都是一次API调用, 都通过API Server来实现. 同时作为gatekeeper 和 authentication 不是所有请求都是安全可靠的. Kubectl 就是和ApiServer打交道
-2. Kube-scheduler 决定了一个新的pod要在那个Node上创建, 取决于当前node 的cpu和内存资源占用情况. 然后通知Node上的kubelet进行具体的pod操作
-3. Controller Manager 首先是监控所有的node的状态. 如果一个node down了, 在整个node上的pod就都挂了. 根据deployment中node replica的数量, 我们就需要再别的node上去创建pod. 基于已经定义好的manifest, 如果发现某个node有问题, 就通过kube-scheduler 决策调整方案, 然后通知node 上kubelet去实施
-4. ETCD 是一个Key-Value数据库, 所有的对于node和pod的操作历史都保存在这个数据库中
+- 没有的 node 在一个子网中. 但是网段和 pod 所在的网段是不重叠的. 相当于从 pod 到 node 是经过一次 NAT
+- 每个 node 上的所有的 pod 是在同一个子网段里. 从一个 node 上的 pod 向另外一个 node 上的 pod 进行通信是, 利用路由表进行通信
 
-### TLS
+## K8s 的进程 Process
+
+在 worker node 上的进程必须有 3 个. 可选一个 Kube log collection
+
+1. Container Runtime 并非 docker image, 而是通过 image 构造出来的实例.
+2. Kubelet Interacts with both: the container and node, kubectl starts the pod with a container inside. master node 发送配置需求给某个 node 上的 kubelet, kubelet 查看当前 node 上的资源, 具体去创建和销毁 node 上的 pod
+3. Kube-Proxy 可以看做是 Service 和 Pod 之间的接口. 因为 Service 和 Pod 其实是分离的, Service 其实是通过 Kube-proxy 来找到 pod. 但是 Kube-proxy 也是有智能的, 他会把流量优先分配给和发出请求的 pod 在同一个 node 的上到目标 pod replica, 而不是别的 node 上的 pod replica
+
+在 Master node 也称为 control plan 上的进程,
+
+1. API Server 在 K8s 中, 所有的对 pod 或者 node 的操作, 都是一次 API 调用, 都通过 API Server 来实现. 同时作为 gatekeeper 和 authentication 不是所有请求都是安全可靠的. Kubectl 就是和 ApiServer 打交道
+2. Kube-scheduler 决定了一个新的 pod 要在那个 Node 上创建, 取决于当前 node 的 cpu 和内存资源占用情况. 然后通知 Node 上的 kubelet 进行具体的 pod 操作
+3. Controller Manager 首先是监控所有的 node 的状态. 如果一个 node down 了, 在整个 node 上的 pod 就都挂了. 根据 deployment 中 node replica 的数量, 我们就需要再别的 node 上去创建 pod. 基于已经定义好的 manifest, 如果发现某个 node 有问题, 就通过 kube-scheduler 决策调整方案, 然后通知 node 上 kubelet 去实施
+4. ETCD 是一个 Key-Value 数据库, 所有的对于 node 和 pod 的操作历史都保存在这个数据库中
+
+### Yaml 语法
+
+```yaml
+--- # 分割不同的yaml 分拣
+
+# multiline
+multilineString: |
+  this is multipline
+  next line
+
+# singeline
+singlelineString: >
+	this is singleline
+	next line
+
+# place holder
+name: {{ .Value.s }}
+```
 
 ## Minikube
-Minikube 需要运行在docker内, 在minikube容器内部也有一个docker来运行类似k8s的实例. 一个实例
+
+Minikube 需要运行在 docker 内, 在 minikube 容器内部也有一个 docker 来运行类似 k8s 的实例. 一个实例
 
 ```shell
 # 安装minikube
@@ -925,6 +1066,7 @@ kubectl get nodes
 ```
 
 if you have issue to start minikube
+
 ```shell
 # 如果遇到minikube起不来, 可以先删除, 然后重新建立. 并指定容器所需要cpu数量和内存
 minikube delete
@@ -932,36 +1074,38 @@ minikube start --driver=docker --memory=4096 --cpus=2
 ```
 
 kubectl commands 以下这些命令主要是排错时用
+
 ```shell
-kubectl create deployment nginx-depl --image=nginx 
+kubectl create deployment nginx-depl --image=nginx
 kubectl get deployment
 kubectl get deployment -l app=nginx
 kubectl get pod
 kubectl get replicaset # 整个命令可以看到之前被销毁的pod
 
 # 修改 deployment. 每次修改deployment都会删除现在的pod, 重新构建pod
-kubectl edit deployment nginx-depl 
+kubectl edit deployment nginx-depl
 # 查看pod内部的log
 kubectl logs <pod_name>
-# 
+#
 kubectl describe pod <pod_name>
-# 进度container 
+# 进度container
 kubectl exec -it <pod_name> -- bin/bash
 
 kubectl delete deployment <deployment_name>
 ```
 
-
 ```shell
 kubectl apply -f <yaml_file>
 ```
+
 deployment yaml file
+
 ```yaml
 apiVersion: apps/v1
 kind:Deployment
 metadata:
   name: ngnix-deployment # deployment name
-  labels: 
+  labels:
 	app: nginx # 这里是删选deployment时用的label
 spec:
   replicas: 1
@@ -970,7 +1114,7 @@ spec:
       app: nginx # 这里是告诉deployment 去找到 label是 app: nginx 的pod去处理
   template:
     metadata:
-      labels: 
+      labels:
         app: nginx # 这里定义了 pod使用app: nginx这个label, 和上面的 selector中的label必须一致
     spec:
       containers: # 这里是container的要求
@@ -980,10 +1124,10 @@ spec:
         - containerPort: 80
 ```
 
+## 安装 K8s 1.28 on Ubuntu 24.04
 
-## 安装K8s 1.28 on Ubuntu 24.04
+1. 关闭 swap
 
-1. 关闭swap
 ```shell
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y apt-transport-https ca-certificates curl
@@ -994,7 +1138,7 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
 # 配置master和node不同的端口号, 在aws上用security group来配置
 # 配置hostname
-cat <<EOF | sudo tee -a /etc/hosts 
+cat <<EOF | sudo tee -a /etc/hosts
 172.31.1.92 master
 172.31.1.152 worker01
 172.31.1.45 worker02
@@ -1005,8 +1149,9 @@ sudo hostnamectl set-hostname master
 
 ```
 
-安装containerd
+安装 containerd
 创建一个 install.sh
+
 ```shell
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -1035,7 +1180,8 @@ sudo systemctl enable containerd
 
 ```
 
-安装kubeadm, install_kubernetes_components.sh
+安装 kubeadm, install_kubernetes_components.sh
+
 ```shell
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
@@ -1059,7 +1205,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl get nodes
 ```
 
-
 ```shell
 kubectl cluster-info
 kubectl create namespace my-namespace
@@ -1070,6 +1215,7 @@ kubectl get pod -n kube-system
 ```
 
 join control panel
+
 ```shell
 kubeadm token create --print-join-command
 sudo kubeadm join 172.31.1.92:6443 --token k5xkj8.6ob3olyij6mdtlxc --discovery-token-ca-cert-hash sha256:5697d662e32341348b76f9058aa150b36eb7c413207d153ed3ec7ce455fca32b
@@ -1087,20 +1233,20 @@ weave-net-czxjg
 weave-net-znr4h
 ```
 
-
 ### Service
+
 ```yaml
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: my-service
 spec:
-  selector: 
+  selector:
     app: MyApp # 这里制定了给某个deployment用
   ports:
-  - protocol: TCP # 这里默认是clusterIP, 在在创建的时候才有的
-    port: 80 # 暴露给外部的端口号
-    targetPort: 9376 # development 容器内部端口号
+    - protocol: TCP # 这里默认是clusterIP, 在在创建的时候才有的
+      port: 80 # 暴露给外部的端口号
+      targetPort: 9376 # development 容器内部端口号
 ```
 
 ```yaml
@@ -1115,23 +1261,28 @@ kubectl log -l app=nginx
 ```
 
 scale
+
 ```shell
 kubectl scale deployment nginx-deployment --replicas=4
 ```
+
 record the history
+
 ```shell
 # record the history of change
-kubectl scale deployment nginx-deployment --replicas=4 --record 
+kubectl scale deployment nginx-deployment --replicas=4 --record
 # view the history of chagne
 kubectl rollout history deployment nginx-deployment
 ```
 
 kubectl run 用于测试
-- 使用curl命令测试 pod是否正常运行
+
+- 使用 curl 命令测试 pod 是否正常运行
+
 ```shell
 kubect get svc # show name and ip address of the service
 kubectl run test-nginx-svc --image=nginx
-kubectl get pod 
+kubectl get pod
 # enter into the pod container interactive terminal
 kubectl exec -it test-nginx-svc -- bash
 
@@ -1139,9 +1290,11 @@ kubectl exec -it test-nginx-svc -- bash
 curl http://10.96.0.1:8080
 
 ```
+
 coreDNS
-需要给pod中的container 配置 dns, 从 k8s 1.2之后. 需改 `/etc/resolv.conf`, 但是kubelet 在创建pod的时候, 已经主动配置了. 通过查看 `sudo cat /var/lib/kubelet/config.yaml`
-Troubleshooting: 如果发现用service name无法访问, 但是ip地址可以访问. 那多半是两个pod不在一个namespace里
+需要给 pod 中的 container 配置 dns, 从 k8s 1.2 之后. 需改 `/etc/resolv.conf`, 但是 kubelet 在创建 pod 的时候, 已经主动配置了. 通过查看 `sudo cat /var/lib/kubelet/config.yaml`
+Troubleshooting: 如果发现用 service name 无法访问, 但是 ip 地址可以访问. 那多半是两个 pod 不在一个 namespace 里
+
 ```shell
 # search for the ip address of dns service
 kubectl get svc -n kube-system | dns
@@ -1151,7 +1304,9 @@ vim /etc/resolv.conf
 # edit it as
 nameserver 10.96.0.10
 ```
-coreDns 给service 配置的域名规律是
+
+coreDns 给 service 配置的域名规律是
+
 ```shell
 # 如果是同一个namespace
 <servicename> 开始可以访问的
@@ -1163,20 +1318,24 @@ coreDns 给service 配置的域名规律是
 ```
 
 k8s 重要的服务的配置文件都是放在 `/etc/kubernetes/manifests/`
-service 的cluster ip CIDR 是在 `/etc/kubernetes/manifests/kube-apiserver.yaml` 中定义的 `--service-cidr` 这个文件本身是 kube-adm 创建的. 有一个默认值. 
+service 的 cluster ip CIDR 是在 `/etc/kubernetes/manifests/kube-apiserver.yaml` 中定义的 `--service-cidr` 这个文件本身是 kube-adm 创建的. 有一个默认值.
+
 ```shell
 kubeadm config print init-default # review config
 
 ```
+
 任何一次修改了 kube-apiserver.yaml 文件, kubelet 会周期性的发现变动, update
-新的cidr只对新建的service起作用, 不会修改老的service
+新的 cidr 只对新建的 service 起作用, 不会修改老的 service
+
 ```shell
 kubectl create service clusterip test-new-cidr --tcp=80:80
 kubectl get svc
 
 ```
 
-preview or dry run 这样可以快速创建template
+preview or dry run 这样可以快速创建 template
+
 ```shell
 kubectl create service clusterip test-new-cidr 80:80 --dry-run=client -o yaml>my-svc.yaml
 
@@ -1185,42 +1344,44 @@ kubectl create deployment my-deployment --image=nginx:1.20 --port=80 --replicas=
 kubectl run my-pod --image=nginx:1.20 --labels="app=nginx,env=prod" --dry-run=client -o yaml > my-pod.yaml
 ```
 
-
 signing certificate
-一个用户要能方位k8s cluster, 需要申请certificate, 这个certificate需要被k8s的CA签名, 步骤如下
-1. 使用openssh 创建一个私钥
-2. 将私钥的内容放入 certificate signing request 中, 并构建一个csr对象
-3. k8s 管理员approve 这个csr
-4. 然后把这个approved的csr 保存为, 公钥证书 crt
+一个用户要能方位 k8s cluster, 需要申请 certificate, 这个 certificate 需要被 k8s 的 CA 签名, 步骤如下
+
+1. 使用 openssh 创建一个私钥
+2. 将私钥的内容放入 certificate signing request 中, 并构建一个 csr 对象
+3. k8s 管理员 approve 这个 csr
+4. 然后把这个 approved 的 csr 保存为, 公钥证书 crt
+
 ```shell
 openssh genrsa -out dev-tom.key 2048
 # create certificate signing request fro the key
-openssh req -new dev-tom.key -subj "/CN=tom" -out dev-tom.csr 
+openssh req -new dev-tom.key -subj "/CN=tom" -out dev-tom.csr
 
 ```
 
-编辑一个yaml文件 `vim dev-tom-csr.yaml`
+编辑一个 yaml 文件 `vim dev-tom-csr.yaml`
+
 ```yaml
 apiVersion: certificates.k8s.io/v1
 kind: CertificateSigningRequest
 metadata:
-  name: my-user-csr   # <-- change this to something unique
+  name: my-user-csr # <-- change this to something unique
 spec:
   groups:
-  - system:authenticated   # optional, depends on RBAC
-  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBS...   # <-- base64-encoded CSR
-  signerName: kubernetes.io/kube-apiserver-client   # common for client certs
-  expirationSeconds: 31536000   # optional (1 year), default is 90 days
+    - system:authenticated # optional, depends on RBAC
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBS... # <-- base64-encoded CSR
+  signerName: kubernetes.io/kube-apiserver-client # common for client certs
+  expirationSeconds: 31536000 # optional (1 year), default is 90 days
   usages:
-  - client auth
+    - client auth
 ```
 
 ```shell
 # create certificate signing request
-kubectl apply -f dev-tom-csr.yaml 
+kubectl apply -f dev-tom-csr.yaml
 
 # list all the signning reqeust, which is in pending status
-kubectl get csr 
+kubectl get csr
 # find current k8s user is kubernetes-admin
 cat ~/.kube/config | grep kubenetes-admin -A
 
@@ -1238,14 +1399,14 @@ echo 'base64 encoded csr' | base64 --decode > dev-tom.crt
 ```shell
 kubectl option
 # find control plan api-service ip address
-kubectl cluster-info 
+kubectl cluster-info
 
 # tell kubectl to use dev-tom to authenticate the k8s access
 # 注意这里 ~/.kube/config 中不能有文件
 kubectl --server https://172.31.44.88:6443 \
 --certificate-authority /etc/kubernetes/pki/ca.crt \
 --client-certificate dev-tom.crt \
---client-key dev-tom.key 
+--client-key dev-tom.key
 get pod
 
 # 修改config文件, 创建profile, 创建certificate和key的文件路径
@@ -1254,7 +1415,6 @@ kubectl --kubeconfig dev-tom.conf get pod
 # 或者把 dev-tom.conf 直接复制到 ~/.kube/config 下, 就可以直接用kubectl来访问了
 
 ```
-
 
 ```shell
 kubectl create clusterrole dev-cr --verb=get,list,create,update,delete --resource=deployments.app,pods --dry-run=client -o yaml > dev-cr.yaml
@@ -1268,10 +1428,11 @@ kubectl create clusterrolebinding dev-crb --clusterrole=dev-cr --user=tom --dry-
 kubectl describe clusterrolebinding dev-crb
 
 # 查看tom是否有权限做 create pod
-kubectl auth --kubeconfig config can-i create pod --as tom 
+kubectl auth --kubeconfig config can-i create pod --as tom
 ```
 
 service account
+
 ```shell
 kubectl create serviceaccount jenkins --dry-run=client -o yaml > jenkins-sa.yaml
 
