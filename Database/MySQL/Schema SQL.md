@@ -1,0 +1,7 @@
+
+```sql
+show databases;  
+
+```
+
+
