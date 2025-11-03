@@ -836,12 +836,23 @@ chgrp app /app
 	- 系统 8G-64G, 建议用 4G 到 RAM 的 0.5 倍
 	- 超过 64G, 独立负载(至少 4GB)
 ```shell
-free -h # 查看内存
+# 查看内存, 用以判断要使用多少swap
+free -h 
+```
 
+```shell
 # 永久禁用 swap
 # 在 /etc/fstab 中把 swap 的一行注释掉
+# -i 表示in place edit 在原有的文件上修改
+# .bak 表示将原来的文件做一个.bak的备份
+# /swap 表示搜索含有 swap 字符的行
+# /s 表示 substitution 替换 sed 's/pattern/replacement/flags'
+# @^/@#@ 表示把行首替换为# 即注释改行
+# /etc/fstab 表示要操作的文件
 sed -i.bak `/swap/s@^@#@` /etc/fstab
+```
 
+```shell
 # 禁用所有 swap
 swapoff -a 
 # 启用 swap

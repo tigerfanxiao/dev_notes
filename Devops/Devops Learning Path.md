@@ -1,14 +1,92 @@
-I would like to find a position as DevOps or SRE site reliability engineer. 
-The idea I am interested in is IaC. Infrastructure as Code
 
 # 学习过程
-1. 7 月 15 日 完成 AWS System Ops Associate 考试
-2. 8 月 24 日 完成 AWS Solution Architect Professional 考试
-3. 9 月 25 日 完成 AWS DATA Engineer Associate考试
-4. 10 月 1 日 完成Python 基础练习的复习
-5. 10 月 3 日 完成 SQL 基础语法的复习
-6. 10 月 10 日完成 Pandas 的基础语法复习
-7. 10 月 28 日完成 Intro development Flask API Udemy 课程
+### 2024 年
+2024年 7 月 15 日 完成 AWS System Ops Associate 考试
+2024年 8 月 24 日 完成 AWS Solution Architect Professional 考试
+2024年 9 月 25 日 完成 AWS DATA Engineer Associate考试
+2024年 10 月 1 日 完成Python 基础练习的复习
+2024年 10 月 3 日 完成 SQL 基础语法的复习
+2024年 10 月 10 日完成 Pandas 的基础语法复习
+2024年 10 月 28 日完成 Intro development Flask API Udemy 课程
+### 2025年
+2025年7月 完成CKA考试
+2025年9月 完成CKS考试
+2025年10月30 完成CKAD考试
+
+# Learning Diary
+2025/10/28 
+- Linux Learning
+	- install virtualbox on macbook air
+	- download and install ubuntu 24.04 arm version in virtualbox
+	- install SecureCRT on macbook air
+
+2025/10/29
+
+2025/10/30
+
+2025/10/31
+
+2025/11/1
+
+
+2025/11/2
+- Lose fat 10,000 steps
+- Find google AI mode
+- React Learning [udemy course](https://www.udemy.com/course/react-tutorial-and-projects-course/learn/lecture/36321450#overview)
+	- 每天计划完成20个小节
+	- Complete Section 3
+
+2025/11/3
+- install iterm2 on macbook air, terminal has styled format
+- Linux Learning
+	- 学习 sed 的一个语法, 用于k8s中关闭swap的命令
+```shell
+# -i 表示in place edit 在原有的文件上修改
+# .bak 表示将原来的文件做一个.bak的备份
+# /swap 表示搜索含有 swap 字符的行
+# /s 表示 substitution 替换 sed 's/pattern/replacement/flags'
+# @^/@#@ 表示把行首替换为# 即注释改行. 其中 @是delimiter
+# /etc/fstab 表示要操作的文件
+sed -i.bak `/swap/s@^@#@` /etc/fstab
+```
+-  复习了swap的概念, 查询内存的命令
+	- swap 有两种, 一种是磁盘中的一部分作为swap, 一种是swapfile
+```shell
+free -h
+```
+- K8s
+	- 安装k8s的准备工作, 先关闭swap
+```shell
+sudo swapoff -a # 临时关闭swap
+sed -i.bak `/swap/s@^@#@` /etc/fstab # 永久关闭swap
+
+# 检查是否开了swap
+swapon --show 
+cat /etc/fstab | grep swap
+```
+- AWS Learning
+	- 复习了一下aws cli
+```shell
+# 查看aws是否安装成功
+aws --version 
+aws configure list # 查看当前aws 配置
+aws sts get-caller-identity # 查看当前IAM User
+{
+    "UserId": "AIDA4CWA3HTHVOOII5E7V",
+    "Account": "830406868175",
+    "Arn": "arn:aws:iam::830406868175:user/Xiao"
+}
+aws s3 ls # 查看当前用户使用的S3仓库
+```
+- Devops Learning 
+	- 学习内容列表
+
+| Tools/Topic | Learning Material                                                                                  |
+| ----------- | -------------------------------------------------------------------------------------------------- |
+| Jenkins     |                                                                                                    |
+| Linux       | [udemy linux course](https://www.udemy.com/course/mastering-linux/learn/lecture/39613022#overview) |
+
+
 # Job Description
 K8s 很重要
 AWS production Experience很重要

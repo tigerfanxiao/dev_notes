@@ -1,3 +1,19 @@
+# Environment
+安装node, node中自带npm Node Package Management
+```shell
+npm install <package>
+npm i <package> # in short
+
+# 安装后立刻执行包
+npx create-react-app@latest <my-app> # execute package 
+# 创建完成app后, 进入制定文件夹, 跑起来
+npm start
+```
+
+
+
+
+
 ### Import react from CDN
 
 React 有三大组件, 需要引入
@@ -75,6 +91,7 @@ npm start
 ### Create project Vite
 - Bundle
 - Babel
+
 
 ### nvm
 nvm 可以在一台设备上安装多个 node 版本, 有点像 python 的虚拟化环境

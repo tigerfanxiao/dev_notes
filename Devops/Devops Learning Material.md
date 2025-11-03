@@ -90,8 +90,6 @@ https://www.youtube.com/watch?v=d6WC5n9G_sM
 CICD
 https://www.youtube.com/watch?v=MIWH2CpVyXs&t=29s
 
-Cloud Engineer in 3 month
-https://www.youtube.com/watch?v=x6-SfRSp28M
 
 
 Chagpt OpenAI

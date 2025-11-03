@@ -83,11 +83,16 @@ git check-ignore
 # Local Repo
 
 ## branch
-本地默认有一个分支, 就是 master, 有些情况下, 会改为 main
+By default, you have only one branch **master**, which you can renamed as **main**
 ```shell
-git branch  # list all branches
-# create new branch and switch to it
-git checkout -b 
+# list all local branches
+git branch 
+# list all remote branches
+git branch -r 
+# create new branch locally and switch to it
+git checkout -b <branch_name>
+# download the remote branch which is not in local
+git checkout -b <branch_name> origin/<branch_name>
 # switch branch
 git checkout <branch_name>
 # delete branch
@@ -99,6 +104,7 @@ git branch -d <branch_name>
 git push --set-upstream origin shipping_calculator_fixes
 
 ```
+你会遇到本地repo分支和remote分支不同的情况, 即本地只有一个分支, remote有多个分支
 
 ### revert
 如果你对最近的一次 commit 不满意, 用 git revert 可以撤销最近 commit 的改动, 并把撤销作为一个新的 commit 提交. 不是很推荐, 会造成 commit 记录太多
