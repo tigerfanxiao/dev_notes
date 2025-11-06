@@ -1,7 +1,6 @@
 
 # 学习过程
 ### 2024 年
-2024年 7 月 15 日 完成 AWS System Ops Associate 考试
 2024年 8 月 24 日 完成 AWS Solution Architect Professional 考试
 2024年 9 月 25 日 完成 AWS DATA Engineer Associate考试
 2024年 10 月 1 日 完成Python 基础练习的复习
@@ -14,14 +13,17 @@
 2025年10月30 完成CKAD考试
 
 # Learning Diary
-2025/10/28 
+# 2024/7/15
+- 完成 AWS System Ops Associate 考试
+
+# 2025/10/28 
 - Linux Learning
 	- install virtualbox on macbook air
 	- download and install ubuntu 24.04 arm version in virtualbox
 	- install SecureCRT on macbook air
 
 2025/10/29
-
+- Create new dev_notes obsidian notes on macbook air
 2025/10/30
 
 2025/10/31
@@ -36,8 +38,8 @@
 	- 每天计划完成20个小节
 	- Complete Section 3
 
-2025/11/3
-- install iterm2 on macbook air, terminal has styled format
+# 2025/11/3
+- install oh my zsh on macbook air, terminal has styled format
 - Linux Learning
 	- 学习 sed 的一个语法, 用于k8s中关闭swap的命令
 ```shell
@@ -55,6 +57,7 @@ sed -i.bak `/swap/s@^@#@` /etc/fstab
 free -h
 ```
 - K8s
+	- 在thinkbook上安装3台ubuntu 22.04 的虚拟机, 网络配通
 	- 安装k8s的准备工作, 先关闭swap
 ```shell
 sudo swapoff -a # 临时关闭swap
@@ -85,7 +88,28 @@ aws s3 ls # 查看当前用户使用的S3仓库
 | ----------- | -------------------------------------------------------------------------------------------------- |
 | Jenkins     |                                                                                                    |
 | Linux       | [udemy linux course](https://www.udemy.com/course/mastering-linux/learn/lecture/39613022#overview) |
+- react Learning
+```shell
+npx create-react-app@latest <my_app>
+cd my_app
+npm install 
+npm start 
+```
 
+- vscode
+```shell
+cmd + d # 选中内容, 每按一次cmd + d, 都会多选一个选中内容
+cmd + shift + L # 一次选中所有相同的内容
+```
+
+# 2025/11/4
+- react Learning
+	- 学习到65
+	
+# 2025年11/5
+- react learning 
+	- 学习到 73, 完成Section 4
+	- 发布页面到 netlify
 
 # Job Description
 K8s 很重要
