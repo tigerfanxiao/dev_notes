@@ -110,6 +110,76 @@ cmd + shift + L # 一次选中所有相同的内容
 - react learning 
 	- 学习到 73, 完成Section 4
 	- 发布页面到 netlify
+- K8s Learning
+[reference](https://www.cherryservers.com/blog/install-kubernetes-on-ubuntu#step-5-install-kubelet-kubeadm-and-kubectl-on-each-node)
+定义开机启动kernal module 组件, 在所有节点都要做
+```shell
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+sudo lsmodprobe overlay
+sudo lsmodprobe br_netfilter
+
+```
+配置 kernel 中的parameter, 在所有节点都要做
+```shell
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptable  = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward                = 1
+EOF
+
+sudo sysctl --system # 立即生效
+```
+install kubelet
+```shell
+sudo apt update
+sudo apt upgrade 
+sudo apt install curl ca-certificates apt-transport-https
+```
+
+```shell
+sudo mkdir /etc/apt/keyrings
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt install -y kubelet=1.26.5-00 kubeadm=1.26.5-00 kubectl=1.26.5-00
+sudo apt install docker.io
+sudo mkdir /etc/containerd
+sudo sh -c "containerd config default > /etc/containerd/config.toml"
+sudo sed -i 's/ SystemdCgroup = false/ SystemdCgroup = true/' /etc/containerd/config.toml
+
+sudo systemctl restart containerd.service
+sudo systemctl restart kubelet.service
+sudo systemctl enable kubelet.service
+
+sudo kubeadm config images pull
+sudo kubeadm init --pod-network-cidr=10.10.0.0/16
+# 这步完成之后, 会出现join的命令 
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml -O
+
+sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.10.0.0\/16/g' custom-resources.yaml
+kubectl create -f custom-resources.yaml
+# on master node
+kubeadm init
+
+# on workder node
+sudo kubeadm join &lt;MASTER_NODE_IP>:&lt;API_SERVER_PORT> --token &lt;TOKEN> --discovery-token-ca-cert-hash &lt;CERTIFICATE_HASH>
+
+kubectl get node
+kubectl get po -A
+
+```
+
 
 # Job Description
 K8s 很重要
