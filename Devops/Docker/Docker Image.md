@@ -1,16 +1,10 @@
 
 
 ```bash
-
-docker images # 查看本地镜像列表, 一般会看到基础镜像, 和基于基础镜像构建的新镜像
-
 # 查看所有的镜像 ID
 docker images -aq
 
-# 通过镜像名来删除镜像
-docker rmi centos
-# 查看 images 的 hash
-docker images --digest
+
 # 删除所有的image, 包括正在运行容器的镜像
 docker rmi -f $(docker images -aq)
 
