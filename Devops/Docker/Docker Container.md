@@ -1,4 +1,4 @@
-- ` docker run` 本质上是创建的一个容器, 不是启动一个容器. 一般在调试的时候用. 在生产中拉容器, 一般是用 docker compose 文件
+
 
 
 常见 docker run 的命令文档

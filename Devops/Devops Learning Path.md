@@ -119,15 +119,18 @@ overlay
 br_netfilter
 EOF
 
-sudo lsmodprobe overlay
-sudo lsmodprobe br_netfilter
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+lsmod | grep overlay
+lsmod | grep br_netfliter
 
 ```
 配置 kernel 中的parameter, 在所有节点都要做
 ```shell
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-iptable  = 1
-net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                = 1
 EOF
 
@@ -146,7 +149,7 @@ curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --de
 
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt install -y kubelet=1.26.5-00 kubeadm=1.26.5-00 kubectl=1.26.5-00
+sudo apt install -y kubelet=1.29.15-00 kubeadm=1.29.15-00 kubectl=1.29.15-00
 sudo apt install docker.io
 sudo mkdir /etc/containerd
 sudo sh -c "containerd config default > /etc/containerd/config.toml"
