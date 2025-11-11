@@ -1965,7 +1965,48 @@ grub2-mkconfig -o /etc/grub2.cfg; reboot
 
 ```shell
 ip a a 10.0.0.8/24 dev ens160
+```
+固定IP地址
+```shell
+# find network interface card name is ens33
+ip a
+ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:0c:29:3e:47:8c brd ff:ff:ff:ff:ff:ff
+    altname enp2s1
+    inet 11.0.1.131/24 metric 100 brd 11.0.1.255 scope global dynamic ens33
+       valid_lft 1120sec preferred_lft 1120sec
+    inet6 fe80::20c:29ff:fe3e:478c/64 scope link
+       valid_lft forever preferred_lft forever
 
+# find gateway is 11.0.1.2
+xiao@ubuntu:~$ ip route
+default via 11.0.1.2 dev ens33 proto dhcp src 11.0.1.131 metric 100
+
+
+```
+
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses:
+        - 11.0.1.151/24 # fixed ip 
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+      routes:
+        - to: default
+          via: 11.0.1.2
+```
+
+
+```shell
+# make the config of fixed ip effective
+sudo netplan apply
 ```
 # 进程
 

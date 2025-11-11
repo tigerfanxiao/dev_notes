@@ -33,6 +33,12 @@ config file
 region = eu-west-1
 output = json
 ```
+configure region
+```shell
+aws configure get region # show current region
+aws configure seet region eu-south-2 # set spain as region
+
+```
 
 # credencial
 

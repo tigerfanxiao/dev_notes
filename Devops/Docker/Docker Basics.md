@@ -205,6 +205,10 @@ vm.swappiness=0
 -   `always` - Always restart when stopped
 -   `unless-stopped` - Restart unless manually stopped
 -   `on-failure<:retries>` - Restart when the container fails; we can supply the maximum amount of retries
+```shell
+# update the restart policy
+docker container update --restart=unless-stopped <container>
+```
 
 # Docker Compose
 Docker Compose 是 docker 之外的服务

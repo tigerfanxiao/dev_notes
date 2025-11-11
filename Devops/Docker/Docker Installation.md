@@ -43,6 +43,15 @@ sudo apt install docker-ce docker-ce-cli containerd.io
 sudo usermod cloud_user -aG docker
 ```
 
+简单的方法, 不适合生产环境
+```shell
+curl -o get-docker.sh https://get.docker.com/
+bash get-docker.sh
+sudo usermod -aG docker $(whoami)
+# relogin 
+groups # show groups of current user
+```
+
 
 docker 安装完成后
 
