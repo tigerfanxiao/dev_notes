@@ -56,13 +56,14 @@ git commit -m 'initial commit'
 ```shell
 git diff origin master # 对比远端和本地master
 ```
-### git history
-
+### Restore the previous state
 ```shell
 # show all commit history line by line 
 git log --oneline
 # go back to previous commit
 git checkout 1a 
+# restore state for specific file
+git checkout a1b2c3d -- app.ts
 ```
 
 # Staging Area

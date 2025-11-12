@@ -1966,7 +1966,7 @@ grub2-mkconfig -o /etc/grub2.cfg; reboot
 ```shell
 ip a a 10.0.0.8/24 dev ens160
 ```
-固定IP地址
+### 固定IP
 ```shell
 # find network interface card name is ens33
 ip a

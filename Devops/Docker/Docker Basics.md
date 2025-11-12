@@ -93,12 +93,6 @@ docker stats
 # vieww specific container status
 docker status <container_name>
 
-# copy local file to container
-docker cp <local_file> <container_name>:<container_file_path>
-# copy file from container to local directory
-docker cp <container_name>:<container_file_path> 
-<local_directory>
-
 # remove all container
 docker container prune
 ```
@@ -111,11 +105,8 @@ docker restart <container_id> # 重启
 ```
 创建容器， 但是不运行
 ```shell
-docker run # 等于下面两条命令的组合
-
+# docker run 等于下面两条命令的组合
 docker create -it --name mycontainer nginx # 有的container在创建的时候没有关联vty
-# 这里可以做很多别的操作
-
 docker start mycontainer
 
 ```
@@ -156,7 +147,68 @@ docker exec -it <container> <shell> # shell=/bin/bash
 docker exec -it <container> <command> # issue command to the running container
 ```
 
+## Copy, Mount
+- `docker cp` for transferring files during production deployments and bind mounts for ongoing development and testing
 
+```shell
+# copy all files in current dir to the container specific path
+ docker cp . 83caf5a0edc6:/usr/share/nginx/html
+
+# copy file from container to local directory
+docker cp <container_name>:<container_file_path> 
+<local_directory>
+
+
+# mount
+docker run -it --mount type=bind,source=.,destination=/app python bash
+
+```
+
+
+## Docker Volume
+
+当我们用  docker inspect 中看到 dockerfile 中有 Volume 这个键被定义时, docker 会在host 宿主机开一个目录存储卷. 这个位置在 mountpoint 键下的 source 被定义
+即使容器被删除了, 卷不会被删除
+
+```shell
+# 查看所有卷
+docker volume ls 
+# 删除指定卷
+docker volume rm volume_id 
+```
+
+匿名挂载
+很少用
+只指定容器内部的目录, 不指定宿主机的目录. docker 会随机产生一个宿主机的目录
+```shell
+docker run -it -v /DATA/QYT --name my_centos centos8
+```
+
+具名挂载, 外面使用绝对路径. 双向可读写
+```shell
+docker run -it -v /root/psql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_PASSWORD=Cisc0123 -d postgres
+```
+
+外面可读写, 容器里面是只读的`ro`
+```shell
+docker run -it --name qytcentos -v /test:/test:ro centos 
+```
+
+
+### 同步卷
+两个容器使用相同的卷
+
+```shell
+docker run -it --name qytcentos-2 --volumes-from qytcentos centos 
+```
+
+# nginx & httpd
+```shell
+# httpd
+/usr/local/apache2/htdocs/
+# nginx
+/usr/share/nginx/html/
+```
 # Tuning container
 ```shell
 

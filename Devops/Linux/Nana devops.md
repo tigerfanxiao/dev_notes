@@ -460,7 +460,12 @@ ssh -i .ssh/id_rsa root@ip_address
 
 复制文件到远端服务器
 ```shell
-scp test.sh root@ip_address:/location
+scp test.sh root@11.0.1.152:/home/xiao
+# if the port is changed
+scp -p 223 test.sh root@11.10.1.151:/home/xiao
+# all file and folders in current dir
+scp -r . ubuntu@12.2.2.2:/home/ubuntu/app 
+
 ```
 
 # git
