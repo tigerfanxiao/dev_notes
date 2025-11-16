@@ -106,11 +106,24 @@ cmd + shift + L # 一次选中所有相同的内容
 - react Learning
 	- 学习到65
 	
-# 2025年11/5
+# 2025/11/5
 - react learning 
 	- 学习到 73, 完成Section 4
 	- 发布页面到 netlify
 - K8s Learning
+	- 在Thinkbook上安装完成K8s 1.29
+# 2025/11/15
+- css
+	- flex
+	- grid
+# 2024/11/16
+- K8s Learning 
+	- KCNA 50题
+	- KCNA KCSA 考试券购买225欧元
+- 
+
+
+
 [reference](https://www.cherryservers.com/blog/install-kubernetes-on-ubuntu#step-5-install-kubelet-kubeadm-and-kubectl-on-each-node)
 定义开机启动kernal module 组件, 在所有节点都要做
 ```shell
@@ -245,6 +258,38 @@ Create an AWS Lambda function within the Database Activity Streams feature of Au
 
 
 
+
+
+# Profile
+
+Title CCIE, Kubestronaut, SRE, AWS SAP
+
+需要做的事情
+- 学习K8s
+	- Kubustronaut 证书 会增加Title
+		- KCNA 161 题. 11/16 日50题
+	- 练习K8s
+		- ArgoCD
+		- Prometheus
+- 学习AWS
+	- Security Speciality 会增加高端岗位
+	- Network Speciality 会增加高端岗位
+	- Devops Professional
+- 学习Terraform
+- 学习Anisble
+- 学习DevSecOps 3 会增加高端岗位
+- 学习DataEngineer
+- 学习 React
+- 学习 NodeJS
+- 学习算法
+先把profile的内容想清楚, 再一点一点做profile
+- 我把profile 网站只有css的放在netify上
+- 我把profile 网站修改成react 凡在netify上
+- 我把profile 网站放在react的container里面, 部署在aws上
+- 部署aws的动作看看能不能通过学习terraform来固定化
+
+
+
 # Cloud Computing
 ### AWS Certificate
 
@@ -259,7 +304,9 @@ Security Speciality Zero Trust
 ## Education & Certificates
 - Bachelor and Master Degree major in Mathematics
 - CCIE Cisco Enterprise Internet Expert for Enterprise
-- AWS SAA
+- AWS SAP
+
+
 ## Experience
 - Python Developer. Automate network cutover for 7K network equipment for Orange Core Network in Huawei 
 - Frontend: Basic CSS, JS knowledge. Develop form page with HybirdForm (like a frontend framework) for automating process of asset audit for 2000 Radio site in Germany

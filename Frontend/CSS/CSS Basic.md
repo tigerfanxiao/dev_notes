@@ -363,17 +363,41 @@ absolute 经常和 relative 连用. 配置了 absolute 标签首先会推出当�
 }
 ```
 ## Flexbox
-- 首先flex 需要配置在 container 上, 这个 container 下面一级的元素设置 `display: flex`, 会把这些元素放在一行里. 注意这个只作用于一级
+- 首先flex 需要配置在一个大的容器上 `display: flex`,, 这个div中下一级元素收到flex的作用 这个 container 下面一级会把这些元素放在一行里. 注意这个只作用于一级
 - 默认情况下, main axis 是横向的, 从左往右. cross axis 是纵向的, 从上往下. 通过 `flex-direction: row` 默认来控制
 - 如果 container 的尺寸已经定义了. 内部的元素很大. 在不定义 display 的情况下是会撑大容器的. 但是定了 flex 之后, 就会根据容器的尺寸来
+### justify-content
+`justify-content` property, which aligns items horizontally and accepts the following values:
+- `flex-start`: Items align to from the beginning of the row direction
+- `flex-end`: Items align to the right side of the container.
+- `center`: Items align at the center of the container.
+- `space-between`: Items display with equal spacing between them.
+- `space-around`: Items display with equal spacing around them.
+
+### align-items
+`align-items` This CSS property aligns items vertically and accepts the following values:
+
+- `flex-start`: Items align to the top of the container.
+- `flex-end`: Items align to the bottom of the container.
+- `center`: Items align at the vertical center of the container.
+- `baseline`: Items display at the baseline of the container.
+- `stretch`: Items are stretched to fit the container.
+
+![[Pasted image 20251115202126.png]]
+### flex-direction
+ `flex-direction`. This CSS property defines the direction items are placed in the container, and accepts the following values:
+- `row`: Items are placed the same as the text direction.
+- `row-reverse`: Items are placed opposite to the text direction.
+- `column`: Items are placed top to bottom.
+- `column-reverse`: Items are placed bottom to top.
+
+
 ### Flexbox Default Property
 ```css
 flex-direction: row
-
 /* 在flex-direction 是column时 */
 align-item: stretch
-
-flex-wrap: nowrap;
+flex-wrap: nowrap; /* 所有的元素都挤在一行里 */
 ```
 ### flex-direction
 
@@ -446,7 +470,9 @@ flex-shrink: 0;
 }
 ```
 
+### align-self
 align-self 找到 flex 容器的内的元素. 指定它的属性
+- 注意: 即使单个元素的位置变动了, order并没有变动
 ```css
 .logout {
 	align-self: flex-start /* 移动到纵向的顶部 */
@@ -455,6 +481,7 @@ align-self 找到 flex 容器的内的元素. 指定它的属性
 ![[Pasted image 20241108124057.png]]
 
 ### order
+sometimes reversing the row or column order of a container is not enough. In these cases, we can apply the `order` property to individual items. By default, items have a value of 0, but we can use this property to also set it to a positive or negative integer value (-2, -1, 0, 1, 2).
 元素逆序. 默认的order是0
 ```css
 .container {
@@ -475,17 +502,25 @@ align-self 找到 flex 容器的内的元素. 指定它的属性
 }
 ```
 ![[Pasted image 20241109152237.png]]
-### mediaquery
-对不同尺寸的屏幕做样式调整
+### flex-wrap
+- `nowrap`: Every item is fit to a single line.
+- `wrap`: Items wrap around to additional lines.
+- `wrap-reverse`: Items wrap around to additional lines in reverse.
 ```css
 @media all and (max-width: 600px) {
 .container {
-	flex-wrap: wrap; 在尺寸缩小时会wrap
+	flex-wrap: wrap; /* 在尺寸缩小时会wrap, 排列到多行 */
 }
 
 .container > li {
-	flex: 1 1 50%; 每个元素占用50%的行
+	flex: 1 1 50%; /* 每个元素占用50%的行 */
 }
+```
+
+### flex-flow
+- flew-flow = flow-direction +  flow-wrap
+```css
+flex-flow: column wrap
 ```
 
 # CSS Grid
@@ -518,20 +553,25 @@ grid-template-rows: repeat(2, 50px); /* == 50px 50 px */
 
 /* 简写 行 / 列 */
 grid-template: repeat(2, 50px) / repeat(3, 1fr);
+
+/* 写0也是允许的, 会增加列数 */
+grid-template-rows: 50px 0 0 0 1fr;
 ```
 grid-column 定义局部单个元素
+
 ```css
 .header {
 	grid-column-start: 1; /* 从第一列开始 */
-	grid-column-end: 3; /* 到最后一列结束 */
+	grid-column-end: 3; /* 第3列前, 不包含第三列 */
+	/* grid-column-start 的数字可以小于 grid-column-end */
 }
 
 /* 简写 */
 .header {
-	grid-column: 1 /3 ;
+	grid-column: 1 / 3 ;
 }
 
-/* 占用两个 column */
+/* 从1开始占用两个 column */
 .footer {
 	grid-column: 1 / span 2;
 }
@@ -547,6 +587,13 @@ grid-column 定义局部单个元素
 }
 ```
 grid-template-area
+- grid-area 的元素可以相互重叠
+```shell
+grid-area: grid-row-start/grid-column-start/grid-row-end/grid-column-end
+```
+
+
+
 ```css
 .container {
 	height: 100%;
@@ -579,6 +626,8 @@ grid-template-area
 ```
 
 ![[Pasted image 20241114073357.png]]
+### Order
+也flex中的order差不多
 ### auto-fix minmax
 ```css
 .container {
@@ -621,7 +670,13 @@ grid-template-area
 
 ![[Pasted image 20241114173736.png]]
 
-### justify-content align-content
+### align-content
+- `flex-start`: Lines are packed at the top of the container.
+- `flex-end`: Lines are packed at the bottom of the container.
+- `center`: Lines are packed at the vertical center of the container.
+- `space-between`: Lines display with equal spacing between them.
+- `space-around`: Lines display with equal spacing around them.
+- `stretch`: Lines are stretched to fit the container.
 ```css
 
 justify-content: space-around;
