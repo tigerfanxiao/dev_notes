@@ -266,17 +266,21 @@ Title CCIE, Kubestronaut, SRE, AWS SAP
 
 需要做的事情
 - 学习K8s
-	- Kubustronaut 证书 会增加Title
+	- Kubestronaut 证书 会增加Title
 		- KCNA 161 题. 11/16 日50题
-	- 练习K8s
-		- ArgoCD
-		- Prometheus
+	- K8s组件
+		- ArgoCD 一种CD工具
+		- Helm 包管理工具
+		- Prometheus 遥测平台 Tele
+		- Grafana 数据可视化工具, 是Prometheus的组件
+		- Istio
+		- falco 一共用来控制容器安全的工具
 - 学习AWS
 	- Security Speciality 会增加高端岗位
 	- Network Speciality 会增加高端岗位
 	- Devops Professional
 - 学习Terraform
-- 学习Anisble
+- 学习Ansible
 - 学习DevSecOps 3 会增加高端岗位
 - 学习DataEngineer
 - 学习 React
