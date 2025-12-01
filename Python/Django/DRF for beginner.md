@@ -479,8 +479,10 @@ Q: how to use docker with uv
 use uv to install python
 
 ```shell
-# show all available python version
+# show all available python version online
 uv python list
+uv python list --only-installed # show all localled installed python list
+
 
 # install python version 3.8
 uv python install 3.8
@@ -521,10 +523,7 @@ use uv for project
 # 在本地目录下先创建项目文件夹后, 再在项目文件夹里面创建项目文件
 uv init my_project
 
-  
-
 # install python package, and create .venv folder
-
 uv add django==2.2
 source .venv/bin/activate
 

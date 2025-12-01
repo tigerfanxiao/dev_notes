@@ -216,7 +216,7 @@ sudo systemctl restart networking
 ```
 
 
-# Routing table
+# netstat
 
 ```shell
 netstat -i # 显示本地所有连接的统计信息
