@@ -148,7 +148,7 @@ docker compose build
 docker build 
 # 两个命令都会新建 image, 在开发的时候, 只要用 docker compose 的命令
 ```
-<<<<<<< HEAD
+
 `.dockerignore` 文件是用来exclude 在某些文件目录下去寻找 Dockerfile或者 docker-compose 文件
 
 docker-compose

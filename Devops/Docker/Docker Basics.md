@@ -126,13 +126,12 @@ For example, Ubuntu is bash, python is interactive python
 ```shell
 docker run -it --rm python bash # change default python interactive to bash
 ```
-Access running container
+和 container 交互
 ```shell
-# 进入容器的console, 一般情况下是被主进程锁死的. 不建议使用, 容易被主进程顶死
-docker attach <container_name> 
 # 进入容器的 vty 链路, 进到交互式界面做操作. 不会影响到主进程, 但是可以做修改
 docker exec -it <container_id> /bin/bash 
-docker exec -it <container_id> ip add # 直接执行 ip add 命令返回结果
+# 直接执行 ip add 命令返回结果, 无需交互
+docker exec <container_id> sh -c "ip add"
 
 # 如果在 docker 的交互界面里
 ctrl + p,ctrl + q  # 可以挂起退出

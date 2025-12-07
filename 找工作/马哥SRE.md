@@ -245,6 +245,8 @@ echo $PS1
 	1. 版本控制 [[Git]] 
 	2. CI/CD
 		1. [[Jenkins]]
+	3. Docker
+		1. [[Docker Basics]]
 3. 项目管理
 	1. 项目管理理论和实践[[Project Management]]
 	2. 项目真是案例
