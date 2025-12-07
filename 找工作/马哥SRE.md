@@ -241,7 +241,7 @@ echo $PS1
 	2. Go
 	3. Java
 	4. NodeJS
-2. Devops 工具
+2. Devops [[DevOps]]
 	1. 版本控制 [[Git]] 
 	2. CI/CD
 		1. [[Jenkins]]
