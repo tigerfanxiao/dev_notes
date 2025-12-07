@@ -20,27 +20,14 @@ git pull =  git fetch + git merge
 git pull 
 
 # 下面两个操作等价于 git pull
-git fetch origin master #从远程主机的master分支拉取最新内容 
+git fetch origin master #从远程主机的master分支拉取最新内容
+git diff HEAD..origin/main # 对比本地最细的commit和remote最新的commit 
 git merge FETCH_HEAD #将拉取下来的最新内容合并到当前所在的分支中
 
 ```
 
 ### Fork
 作用是复制远端的开源仓库到自己的远端仓库中. 这样你就可以在自己的仓库中进行修改和创建新的的分支. 一般通过点击 fork 按钮来实现
-
-### push
-将本地的代码推送到远端的仓库
-- origin 表示我自己的 fork
-- upstream 表示原作者的仓库
-```shell
-# 如果远端没有这个分支,则会创建. 如果有,则添加一个新的 commit
-git push -u origin <local branch> 
-# 查看所有的 remote 仓库
-git remote -v
-git remote add <repo_name> <url>
-git remote rm <repo_name> # 删除连接的仓库
-
-```
 
 
 # pull request

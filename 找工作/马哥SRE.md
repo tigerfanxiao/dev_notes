@@ -18,6 +18,7 @@ tips:md文件使用markdown编辑器下载，思维导图需要使用xmind打开
 所以每周的246会给咱班同步过来视频和资料，在网盘链接里面（基本两天同步一次）
 
 24年就业课程链接：https://edu.magedu.com/course/vip/1804
+Jenkins 课程链接: https://edu.magedu.com/play/1717
 
 给你总结下你报名后拥有的视频
 1.赠送24年全套视频（咱的课都是分为就业和架构两部分；就业课程在网页版平台观看，架构是授权观看）
@@ -88,6 +89,13 @@ BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
 UBUNTU_CODENAME=noble
 LOGO=ubuntu-logo
+
+# ubunt 上显示版本信息
+lsb_release -a
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=24.04
+DISTRIB_CODENAME=noble
+DISTRIB_DESCRIPTION="Ubuntu 24.04.3 LTS"
 ```
 
 查看开源软件
@@ -96,7 +104,10 @@ LOGO=ubuntu-logo
 rpm -qi openssh
 rpm -qi kernel
 ```
-
+查看cpu
+```shell
+lscpu # 查看cpu
+```
 查看内存
 ```shell
 lsmem # 查看内存
@@ -112,10 +123,128 @@ brw-rw---- 1 root disk 8, 0 Dec  1 05:25 /dev/sda
 brw-rw---- 1 root disk 8, 1 Dec  1 05:24 /dev/sda1
 brw-rw---- 1 root disk 8, 2 Dec  1 05:24 /dev/sda2
 ```
+查看终端
+```shell
+# 查看当前终端
+tty
+/dev/pts/0
+w # 查看当前正在工作的终端
 
+
+```
+查看shell
+```shell
+# 设备上其实有很多shell
+**xiao@ubuntu**:**~**$ cat /etc/shells
+/bin/sh
+/usr/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/usr/bin/dash
+/usr/bin/screen
+/usr/bin/tmux
+# 查看当前使用的shell
+echo $SHELL
+echo ${SHELL}
+/bin/bash
+```
+修改主机名
+```shell
+hostname # 查看主机名
+# 临时修改主机名, 重启失效
+hostname es-md-k8s-node1-100-1.xiao.com # 主机名中不能有下划线, 最后为ip地址最后两段
+hostnamectl set-hostname <new_hostname> # 永久修改主机名
+```
+
+关机重启
+```shell
+reboot # 重启
+shutdown -r now # 立即重启
+shutdown -h now # 立即关机
+```
+查看日历
+```shell
+sudo apt install ncall
+cal 9 2026
+```
+命令提示符
+```shell
+echo $PS1
+\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
+
+```
+
+内部命令和外部命令
+- 外部命令在硬盘上有对应的文件
 # 问题
 怎么算需要多少台服务器, 比如平时三台服务器, 大概成承受多少请求?
 压力测试?
 在大促期间, 如何扩充流量
 在维护期间, 做容灾测试, 断电, 断网, 等
 
+# 招工作
+【大表哥内推1】福建朴朴信息技术有限公司，福建福州 30K * 15薪 ，本科
+岗位名称 高级运维工程师(基础网络)  @所有人  
+（实际薪资会浮动，根据职级来定）
+岗位职责
+1、负责制定和落实公有云,数据中心资源的管理流程和规范,推动运维标准化和自动化,以保证运维的服务质量与交付效率;
+2、负责基础设施的故障,风险管理,设计和周期性组织基基础设施的故障演练,保证基础设施的可用性,容灾性,以及故障时的快速主动恢复能力;
+3、负责主机,网络,云资源等基础设施的持续规划和演进,持续使是升稳定性,安全性,以支撑业务持续发展；
+4、负责合理规划团队目标与执行上级交办事项,为团队成员提供技术指旨导与支持,提升团队影响力。
+任职要求
+1、精通Linux/Unix系统管理,网络协议(TCP/IP、HTTP等),运维工具(Ansible、Terraform等),Shell/Python/Go等任意编程语言;
+2、熟悉基础设施可观测性体系的建设(如Prometheus,ELK)；
+3、具备主流云平台(国内外各大公有云)及其上各项云资源管理经验,具备数据中心网络规划,服务器资源规划,虚拟化平台规划的经验;
+4、具备良好的项目管理能力,制定计划,把控进度,协调资源,确保项目交付;
+5、具备良好的故障排查能力和抗压能力,能够快速响应和处理多发事件；
+6、具备良好的沟通能力和团队协作精神,有较强的文档编写能力。
+
+【大表哥内推2】四川融科智联科技有限公司；
+
+地点：新疆（干满两年也可以回成都）
+工资待遇：15-20K
+中间件运维工程师
+任职资格：
+1、本科及以上学历（能力强的专科也可以）
+2、精通一门运维开发语言，不仅限于python, golang, java等；
+3、深入理解并掌握Linux、Docker、Kubernetes、spring cloud等开源系统组件的架构及实现原理，具备容器、微服务等技术的二次开发与上层应用部署能力；
+4、熟悉常见服务的应用运维，以及常见问题和参数调优。包括：nginx、MySQL、Redis、ElasticSearch、Spark、Prometheus、grafana、Zabbix、Zookeeper、RocketMQ、Nacos、RabbitMQ、Kafka、eurka、fastdfs、infuxdb、skywalking等；
+5、熟悉 DevOps 理念及相关生态，具备3年以上大规模高可用分布式系统集群的实践经验；
+6、具备较强的问题分析和解决能力，务实主动且有良好的沟通协作能力；
+7、有较强学习能力，具有良好的团队协作精神，具备管理能力者优先，能适应出差。
+
+# 学习方法
+1. 目前不再是跟着马哥的一个课程走, 而是按照Topic走. 每段时间只关注一个Topic, 知道把这个topic相关的内容就理解记忆完成. 最后在整体做项目的时候, 查看哪个topic还需要加码
+2. 看过的视频内容不要想着过一段时间再会看, 要在第一次看的时候, 尽量搞懂要学习的内容, 做好笔记
+3. 固定和有计划的安排学习时间. 因为要学习和做实验的内容太多了, 加上工作忙碌, 很容易就忘记自己走到哪里了
+4. 在这个文件中把所有找工作需要用的技术栈的内容整理出来, 链接到对应的文档上去. 还要分析技术章的成熟度
+5. 设定每天的学习目标
+
+### 找工作
+1. 证书
+	1. K8s
+	2. AWS
+### Soft Skill 技能栈
+1. Business Sence
+	1. 站在管理者的角度. 用工成本的和收益, 最好的人, 最合适的人, 最搞性价比的人, 取决于不同的岗位吗?
+	2. 人员的培训, 人员的潜力, 人员的服从性, 人员的自主意识. 人员的发展路径Carrer Path
+	3. 人员的薪资, 人员的激励, 人力的成本, 服务质量和成本的控制. 收益
+	4. 工程师的价值. 降低成本, 提高效率
+	5. 技术的选型, 软件包的供应链
+2. 项目管理
+3. 
+### 专业技能栈分析
+1. 精通一门运维开发语言
+	1. Python
+	2. Go
+	3. Java
+	4. NodeJS
+2. Devops 工具
+	1. 版本控制 [[Git]] 
+	2. CI/CD
+		1. [[Jenkins]]
+3. 项目管理
+	1. 项目管理理论和实践[[Project Management]]
+	2. 项目真是案例

@@ -367,7 +367,6 @@ SSH configuration is important
 Two CICD tools I am going to learn
 ### Gitlab
 I can install gitlab by docker
-### Jenkins
 
 
 ## Database
