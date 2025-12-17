@@ -41,7 +41,7 @@ delgroup
 # create user and add to the current group
 useradd -G <groupname> <username>
 # remove user from the group
-gpasswd -d <usernaem> <groupname>
+gpasswd -d <username> <groupname>
 ```
 Create app user for security best practice
 - Create separate user for every application

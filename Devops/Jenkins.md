@@ -7,6 +7,7 @@
 - Jenkins和docker 配合使用
 	- Jenkins 调用私有的docker image
 	- Jenkins 调用AWS ECR上或者docker hub 上的镜像
+- playwright 是一种E2E 测试工具, 如果做全栈JS开发的话, 值得学习一下
 
 学习资料
 Jenkins: Jobs, Pipelines, CI/CD and DevOps for Beginners
@@ -118,7 +119,6 @@ docker compose up -d
 docker compose down # 关闭容器
 
 # 删除全部volumes和image
-
 docker compose down --volumes --rmi all
 ```
 
@@ -142,12 +142,26 @@ agent {
 - post 和stages 平级
 	- success
 	- always
+	- test Junit test report Jenkins 可以读取最后测试的结果, 看到那个test是失败的
 - actions
 	- cleanWs()
 	- archiveArtifacts
 - 环境变量 environment
 	- 在sh 中不需要双引号
 	- 单独echo命令中, 需要双引号
+- 注释 
+	- 单行
+	- 多行 用于注释build stage, 可以在调试的时候节省时间
+```groovy
+// this one line comment
+
+/*
+this block comment
+*/
+
+
+sh '#shell comment'
+```
 - Job fail的情况
 	- exit code 0 表示成功运行. 如果exit code 1-255 都是失败
 ```groovy
@@ -188,10 +202,88 @@ pipeline {
 	    }
         always {
             cleanWs()
+            junit 'test-results/junit.xml'
         }
     }
 }
 ```
+
+### parallel
+```groovy
+pipeline {
+    agent any
+    stages {
+        /*
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -al
+                '''
+            }
+        }
+        */
+        stage('Tests'){
+            parallel { // make it parallel
+                stage('Unit Test') {
+                    agent {
+                        docker {
+                            image 'node:18-alpine'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        sh '''
+                        #test -f build/index.html
+                        echo "Test stage"
+                        npm run test
+                        '''
+                    }
+                    post {
+                        always {
+                            junit 'jest-results/junit.xml'
+        }
+    }
+                }
+                stage('E2E') {
+                    agent {
+                        docker {
+                            image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        sh '''
+                            npm install serve
+                            node_modules/.bin/serve -s build &
+                            sleep 10
+                            npx playwright test --reporter=html
+                        '''
+                    }
+                    post {
+                        always {
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        }
+    }
+                } 
+            }
+        }
+        
+    }
+    
+}
+```
+
 
 # Jenkins Configuration
 ### Credentials
@@ -236,6 +328,9 @@ pipeline {
 }
 
 ```
+### Plugins: html publisher
+
+### Blue Ocean
 
 
 # 各种语言环境
@@ -286,6 +381,60 @@ pipeline {
 				'''
 			}
 		}
+		 stage('E2E') {
+            agent {
+                docker { // 特殊的docker
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy' 
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install serve
+                    node_modules/.bin/serve -s build & # 在后台执行, 不会阻断
+                    sleep 10
+                    npx playwright test --reporter=html
+                '''
+            }
+        }
 	}
+	post {
+        always {
+            junit 'jest-results/junit.xml' // 这里修改了做test的输出目录
+        }
+    }
 }
 ```
+
+packages.json
+```json
+"jest-junit": {
+    "suiteName": "jest tests",
+    "outputDirectory": "jest-results", // 这里修改了jest输出的目录
+    "outputName": "junit.xml",
+    "uniqueOutputName": "false",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  }
+```
+### 在使用playwright 时, 规避使用
+- 在jenkins规避reporter的CSP问题, 做了下面脚本的配置
+- 还需要安装html publisher 插件
+```groovy
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts;"
+```
+
+
+# 升级 Jenkins
+`<jenkins url>/restart` 可以重启Jenkins
+每次更新, 都要记录update的组件, 版本. 不要一次升级太多. 因为会不知道什么plugin会造成问题
+
+# CD
+## Netlify
+```shell
+npm install netlify-cli -g
+netlify --version
+```
+
