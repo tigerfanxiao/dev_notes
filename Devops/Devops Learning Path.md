@@ -398,3 +398,60 @@ Very popular Software Load Balancer, even can be containerized.
 
 
 
+# Udemy
+
+CICD
+GitHub Actions - The Complete Guide
+GitHub Actions: The Complete Guide from Beginner to Expert
+The Git & Github Bootcamp
+The Complete GitHub Actions & Workflows Guide
+Git & GitHub - The Practical Guide
+
+AWS Crash Course | Job Interview| World's 1st QnA Style 2025
+AWS DevOps & CI/CD with AWS CodePipeline for Engineers
+AWS Cloud Computing : Beginner to Industry-Ready
+Master AWS with Python and Boto3
+Docker, Kubernetes & AWS: Real-World Deployment in 25 Days # 学了4分之一
+AWS Fundamentals with 2 Projects: Cloud for Beginners [2025]
+AWS Lambda - A Practical Guide - Learn from an Expert
+AWS Networking Zero to Hero : Masterclass
+Rocking AWS for Beginners (Hands On)
+AWS Technical Essentials - Build Real World Projects
+
+python
+Build a Backend REST API with Python & Django - Beginner 学完了
+Build a Backend REST API with Python & Django - Advanced 学了4分之一
+
+devops
+Decoding DevOps – From Basics to Advanced Projects with AI
+DevOps in the Cloud with Terraform, Ansible, and Jenkins
+
+
+Jenkins
+Jenkins: Beginner To Pro, Learn CI/CD Pipelines & Automation
+Jenkins: Jobs, Pipelines, CI/CD and DevOps for Beginners 学完了
+
+
+Linux
+Introduction to LINUX® Commands for DevOps
+The Linux Command Line Bootcamp: Beginner To Power User
+Linux Administration: The Complete Linux Bootcamp
+Bash Scripting and Shell Programming (Linux Command Line)
+Linux Sysadmin:Build 5 Hands-On Linux Projects for Real Jobs
+Mastering Linux: The Comprehensive Guide
+Complete Linux Training Course to Get Your Dream IT Job 2026
+Complete Linux Bash Shell Scripting with Real Life Examples
+Bash Mastery: The Complete Guide to Bash Shell Scripting
+Applied Linux Command Line and Shell Scripting Zero to Elite
+Bash / Shell | 100 Hands On Challenge with 10 Live Projects
+Linux Shell Scripting: A Project-Based Approach to Learning 自己买过
+LINUX Command Line Mastery: Get Your Dream Job + 50 Projects 学完了
+
+
+Terraform
+Terraform: The Complete Guide from Beginner to Expert
+HashiCorp Certified Terraform Associate 003 - Practice Exams
+HashiCorp Certified: Terraform Associate 003 - Hands-On Labs
+HashiCorp Terraform: The Ultimate Beginner's Guide with Labs
+More than Certified in Terraform 2025
+
