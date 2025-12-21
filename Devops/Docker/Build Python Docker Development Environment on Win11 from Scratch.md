@@ -11,7 +11,7 @@ WSL, aka Windows Sub-system Linux is a tool to help build virtual environment on
 Let's see how to enable WSL on win11
 Open Powershell to install wsl
 ```powershell
-wls --install 
+wsl --install 
 # By default widnows will install Ubuntu as WSL. 
 # You need to configure user / password to complete the installation.
 ```
