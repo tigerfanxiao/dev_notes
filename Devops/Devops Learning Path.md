@@ -407,30 +407,55 @@ The Git & Github Bootcamp
 The Complete GitHub Actions & Workflows Guide
 Git & GitHub - The Practical Guide
 
+K8s
+Kubernetes Introduction - Docker, Kubernetes + Hands On Labs
+Kubernetes Certified (KCNA) + Hands On Labs + Practice Exams
+Docker Introduction - Docker, Containers & DevOps - Hands On
+Docker & Kubernetes: The Practical Guide [2025 Edition]
+Kubernetes Masterclass for Beginners
+Kubernetes Training: Learn K8s from Zero to Cloud
+Docker and Kubernetes: The Complete Course from Zero to Hero
+Docker, Kubernetes & AWS: Real-World Deployment in 25 Days # 学了4分之一
+Docker Mastery: with Kubernetes +Swarm from a Docker Captain
+Docker and Kubernetes: The Complete Guide 买过
+Kubernetes Hands-On - Deploy Microservices to the AWS Cloud 买过
+Helm: The Definitive Guide from Beginner to Master
+Istio Hands-On for Kubernetes
+Labs ICA - Exercise Istio Certified Associate 2025
+Complete Istio Service Mesh (1.8) Masterclass + AWS EKS
+Practical Kubernetes - Beyond CKA and CKAD | Hands-on
+
+Ansible
+Dive Into Ansible - Beginner to Expert in Ansible - DevOps
+
+ELK
+Elasticsearch 9 and the Elastic Stack: In Depth and Hands On 买过
+
+AWS
 AWS Crash Course | Job Interview| World's 1st QnA Style 2025
+AWS Technical Essentials - Build Real World Projects
 AWS DevOps & CI/CD with AWS CodePipeline for Engineers
 AWS Cloud Computing : Beginner to Industry-Ready
 Master AWS with Python and Boto3
-Docker, Kubernetes & AWS: Real-World Deployment in 25 Days # 学了4分之一
 AWS Fundamentals with 2 Projects: Cloud for Beginners [2025]
 AWS Lambda - A Practical Guide - Learn from an Expert
 AWS Networking Zero to Hero : Masterclass
 Rocking AWS for Beginners (Hands On)
-AWS Technical Essentials - Build Real World Projects
 
 python
 Build a Backend REST API with Python & Django - Beginner 学完了
 Build a Backend REST API with Python & Django - Advanced 学了4分之一
+Python for DevOps: Mastering Real-World Automation
+Clean Code: 20 Code Smells and How to Get Rid of Them
 
 devops
 Decoding DevOps – From Basics to Advanced Projects with AI
 DevOps in the Cloud with Terraform, Ansible, and Jenkins
-
+DevOps in the Real World
 
 Jenkins
 Jenkins: Beginner To Pro, Learn CI/CD Pipelines & Automation
 Jenkins: Jobs, Pipelines, CI/CD and DevOps for Beginners 学完了
-
 
 Linux
 Introduction to LINUX® Commands for DevOps
