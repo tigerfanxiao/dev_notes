@@ -1,5 +1,5 @@
 
-# 数据类型
+# Date Type
 
 ### Primitive Type
 ```java
@@ -11,6 +11,8 @@ boolean isOK = false;
 String message = "hello" + "world";
 
 final float pi = 3.14F  // change not change value later
+
+Double.NEGATIVE_INFINITY
 ```
 
 ### Reference Type
@@ -50,3 +52,4 @@ Array.deepToString() //
 import Collections
 
 ```
+

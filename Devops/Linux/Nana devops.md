@@ -33,8 +33,8 @@ adduser <username>
 addgroup <groupname> 
 deluser
 
-# low-level command, 可以使用在脚本中的
-useradd <uername>
+# useradd 一般是不创建home directory and password, 用于特定应用
+useradd <uername> 
 groupadd <groupname>
 delgroup
 
@@ -421,7 +421,8 @@ di[
 # 注意: 使用这两个命令都需要安装 net-tools
 apt install net-tools
 ifconfig
-netstat -lpnt # 查看 active connection, 查看端口的占用
+# -l listening, -t tcp, -n numeric ip add, -p pid
+netstat -ltnp # 查看 active connection, 查看端口的占用
 
 ps aux | grep java  # 查看应用占用的资源, 进程ID
 nslookup # 查看对应网址的域名解析
@@ -924,7 +925,6 @@ kubectl exec -it <pod_name> -- bin/bash
 
 kubectl delete deployment <deployment_name>
 ```
-
 
 ```shell
 kubectl apply -f <yaml_file>

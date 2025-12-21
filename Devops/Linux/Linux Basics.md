@@ -1,3 +1,22 @@
+在mac上安装虚拟环境
+```shell
+brew install --cask multipass
+multipass launch --name linuxlab
+multipass launch \
+  --name linuxlab \
+  --cpus 2 \
+  --memory 4G \
+  --disk 20G
+
+multipass list
+multipass shell <vm>
+multipass delete <vm>
+multipass purge
+multipass start <vm>
+multipass stop <vm>
+```
+
+
 # GUI
 ```shell
 ctrl + alt + f3 # 切换到非 gui
@@ -453,9 +472,8 @@ setfacl -b <filename>
 
  案例
 ```shell
-# 如果删除了 chmod 的可执行权限
+# 如果删除了 chmod 的可执行权限, chmod +x 也就不能使用了
 chmod -x "which chmod"
-# chmod +x 也就不能使用了
 # 此时就要用 acl把权限加回来
 setfacl -m u:root:rwx /usr/bin/chmod
 chmod +x /usr/bin/chmod
@@ -512,9 +530,9 @@ echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
 ### 环境变量
 ```shell
 $SHELL # 使用哪一种 Shell
-$PS1 # 命令提示符
+$PS1 # 用户登录后的提示符
 $PATH # 外部命令的搜索路径
-
+$PS2 # 输入命令时的提示符变化 >
 ```
 
 内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
@@ -576,6 +594,29 @@ hostnamectl \
 set-hostname \
 newhost
 ```
+### Associate Array
+类似于python的字典
+```shell
+declare -A http_code
+http_code["200"]="OK - The request succeed"
+http_code["404"]="Not Found - The requested resource could not be found"
+http_code["500"]="Internal Server Error - The server encountered an error"
+http_code["403"]="Forbidden - The server understood but refuses to authorize"
+http_code["301"]="Moved Permanently - The resource has been moved"
+
+read -p "Enter a http status code (type all to view every code) " code
+if [[ "$code" == "all" ]]; then
+	echo "All HTTP status and descriptions:"
+	for key in "${!http_code[@]}"; do
+		echo "HTTP $key: ${http_code[$key]}"
+	done
+elif [[ -n "${http_code[$code]}" ]];then
+	echo "HTTP $code: ${http_code[$code]}"
+else
+	echo "Unknown HTTP status code: $code"
+fi
+```
+
 
 ### 命令帮助查询
 - 内部命令使用help查询
@@ -1599,7 +1640,7 @@ echo $BASHPID;{ echo $BASHPID;sleep 100; } | { echo $BASHPID;sleep 100; }
 ```
 
 ### 软链接和硬链接
-硬链接
+Hard Link
 - 把一个文件起另外一个新的名称, 节点编号是相同的, 文件是同一个. 两个硬链接是平等关系
 - 删除其中一个, 并不会删除文件. 除非把所有的名字都删除了. 节点编号则会被回收, 文件才会被删除
 - 删除一个文件后, 文件的数据并没有立即被清空. 利用专业的数据恢复软件, 文件可以被找回
@@ -1607,10 +1648,10 @@ echo $BASHPID;{ echo $BASHPID;sleep 100; } | { echo $BASHPID;sleep 100; }
 - 硬链接但是必须在同一个分区中. 不能跨分区不能创建硬链接
 - 硬链接只支持文件, 不支持文件夹
 ```shell
-ln target hardlink # 创建硬链接文件
+ln target hardlink_name # 创建硬链接文件
 ```
-软链接
-- 软链接也称为符号链接. 类似 windows 的快捷方式
+Symbolic Link
+- 软链接也称为符号链接. 只是保存去到目标文件夹的相对路径
 - 在升级版本时, 可以把原来的软链接删除, 为 app 指向新的文件夹, 创建一个软连接. 
 - 删除软连接的方法, 只能删除软链接文件`rm -f app`, 不是删除软连接下的文件 `rm -rf app/`
 - 创建软连接要么使用绝对路径, 或者相对于目标软链接的相对路径
@@ -1618,17 +1659,8 @@ ln target hardlink # 创建硬链接文件
 - 软连接可以跨设备, 跨分区
 
 ```shell
-ln -s target softlink 
-# 给老的版本创建一个软连接
-ln -s app1.0 app
-# 删除软链接,版本文件夹保存
-rm -f app
-# 为新的版本文件夹创建一个软连接
-ln -s app2.0 app
-
-# 回退到老的版本
-rm -f app
-ln -s app1.0 app
+# Abosolute Symbolic Link
+ln -s absulute symboliclink_name 
 ```
 
 # 传输文件
@@ -1824,7 +1856,29 @@ tar xf file.tar.xz -C <target_dir> # 通用解压 gz, bzip, xz 文件
 split -b 1M -d filename filename_suffix # -d 表示数字小编号, 每个文件切成 1M
 cat filename* > filename # 合并这些文件
 ```
-# 软件管理
+# Package Management
+debien
+`/etc/apt/sources.list.d/ubuntu.sources` ubuntu 的库文件内容
+```shell
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports
+Suites: noble noble-updates noble-backports
+Components: main universe restricted multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+  
+## Ubuntu security updates. Aside from URIs and Suites,
+## this should mirror your choices in the previous section.
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports
+Suites: noble-security
+Components: main universe restricted multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+```
+keyrings 的存储地方 `/usr/share/keyrings/ubuntu-archive-keyring.gpg`
+
+
+
 - 大量的软件可能是没有包的, 只是提供了源码, 需要编译安装
 - ABI 应用程序的二进制接口. windows 和 linux 的二进制程序默认是不兼容的
 	- ELF (Exectable and Linable Format) Linux
@@ -2058,10 +2112,3 @@ CentOS7: BaseOs, epel
 6. 常用软件
 ```shell
 yum -y install bash-completion psmisc lzsz tree man-pages redhat-lsb-core zip unzip bzip2 wget tcpdump ftp rsync wim lsof
-```
-7. 网卡 NAT
-```shell
-
-```
-1. 时间同步
-
