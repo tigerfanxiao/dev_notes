@@ -52,6 +52,9 @@ Install python3 and pip3
 ```shell
 # check which version of python3 installed on your os
 python3 --version
+# add universe apt repo 
+sudo add-apt-repository universe
+sudo apt update
 # Install pip3 
 sudo apt install python3-pip
 pip3 --version # check pip3 installed correctly
