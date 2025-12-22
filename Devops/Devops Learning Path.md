@@ -471,7 +471,7 @@ Applied Linux Command Line and Shell Scripting Zero to Elite
 Bash / Shell | 100 Hands On Challenge with 10 Live Projects
 Linux Shell Scripting: A Project-Based Approach to Learning 自己买过
 LINUX Command Line Mastery: Get Your Dream Job + 50 Projects 学完了
-
+The 50 Most Popular Linux & Terminal Commands
 
 Terraform
 Terraform: The Complete Guide from Beginner to Expert

@@ -1,3 +1,5 @@
+course [Build a Backend REST API with Python & Django - Beginner](https://github.com/LondonAppDev/profiles-rest-api)
+[code](https://github.com/LondonAppDev/profiles-rest-api)
 # Thoughts
 技术本质上是为了商业服务的, 至少目前我的这个情况下. 我们这是用代码去实现商业的价值. 从这个意义上看, 我们是来解决问题的. 要解决问题就要看需要实现的目标和成本. 在目标和成本有一个比较清晰的认识之后, 我们才能选定技术方案
 
@@ -15,6 +17,7 @@
 - 当前vagrant和EC2的ubuntu版本不一致, 后期可以更改
 - python的生产环境的服务器uwsgi, 还是ngnix, 这是什么关系, 生产中真的用吗
 - 能用Firebase和DRF合作吗. 本质是Firebase是一个基本能取代django rest framework的东西, 只要前端就好了
+- 怎么和Jenkins联系起来
 ### Move on
 - Development
 	- 这个项目没有写怎么开发Log, 记录程序的一些动作, 比如用户登录了, 用户的行为, 用于排错
@@ -102,7 +105,7 @@
 		
 # Django
 Django和Django Restful 的关系是什么. 其实Django和Django Restful是不同的包. 因为在开发的过程中, 我们可以看到有些包使用Django中直接import的, 有些包是从Rest Framework中import的, 注意区分
-todo: 哪些包是Rest Framework中的能
+todo: 哪些包是DRF中的
 ### Framework
 ```shell
 # requirements.txt
@@ -111,14 +114,12 @@ djangorestframework=3.9.2 # drf framework 2019
 
 ```
 ### Develop environment
-
 1. 使用venv模块创建python虚拟环境
 2. 通过requirements.txt 安装
 ```shell
-# 制定虚拟环境的路径, 非本地路径
+# create env
 python -m venv ~/env
-
-# 在非本地路径激活虚拟环境
+# activate env
 source ~/env/bin/activate
 # 退出虚拟环境
 deactivate
@@ -180,17 +181,7 @@ INSTALLED_APPS = [
 
 ### Nginx
 学习方法: 在学习完django开发后, 学习部署时才专门学习
-web-components:
-- Forward Proxy 站在用户的前面, 替用户发出请求Internet. 
-	- Access Control: Block access to certain website, or restrict internet usage within a company
-	- Security: Scan for any viruses and block
-	- Monitoring: In theory, it could log employee's web activity
-	- Caching Response
-- Reverse Proxy, 站在服务器的前面, 替服务器去接受来自Internet的用户请求
-	- Load Balancer 站在服务器的前面, 将流量分给不同的服务器
-	- Protect Servers: Expose proxy server as entry point. Configure security measures on the proxies
-	- Ensure SSL encryption is enabled 
-	- Caching: 加速用户访问
+
 在云的环境中, 比如AWS本身是提供ALB或者NLB的, 在这种情况下, 是否还需要再VPC内部署Nginx呢, 答案是肯定的. 原因是这样的部署方式, 更安全, 因为ALB或者NLB都是public network, 而vpc是private network. 而Nginx有颗粒度更细的路由分发能力, 可以依据7层, header, cookie, session data 分发策略.
 以下是在VPC中还需要部署Nginx的理由
 1. 用户的session persistence 需要在内网做
@@ -929,8 +920,6 @@ path("books/<int:pk>/", BookAPIView.as_view()) # retrieve one
 
 ```
 
-  
-
 在项目下的 url 文件中引入 app 下的 url
 
 ```python
@@ -1018,10 +1007,7 @@ path('', include(router.urls)),
 
 在 viewset 中的 create, update 等方法是面向 http 请求的, 而在 ModelSerializer 中的 create, update方法是面向对数据模型操作的. 也可以认为是数据库操作. 按照流程来理解就是用户发出 http post 请求, django 收到后, 先调用 viewset 中的 create 方法, viewset中的create 方法调用 Serializer 中的 create 方法, 把数据写入数据库中, 然后 viewset 中的 create 方法, 返回 Response 对象给到用户
 
-  
-
 ```python
-
 from rest_framework import serializers
 from profiles_api import models
 
@@ -1088,18 +1074,16 @@ instance.set_password(password)
 
 return super().update(instance, validated_data)
 
-  
-
 ```
-
-
 这里介绍一下 ModelSerializer 有哪些 validate data 的方法
+```
 1. Built-in field validation (required, max_length, etc.) # 这是 django 内置的方法
 2. Field-level custom methods (validate_<fieldname>) # 定义一个单独的函数, 都某个 field 做验证
 3. Object-level custom method (validate) # 可以对多个 field 做交缠验证
 4. Model’s own full_clean() (if saving an instance)
 既然使用了 ModelSerializer 就也要用到 ModelViewSet
 ModelViewSet 会自动帮你写好下面这些函数
+```
 
 That’s it — DRF automatically wires up:
 
@@ -1109,8 +1093,6 @@ That’s it — DRF automatically wires up:
 • .update() → PUT /users/{pk}/
 • .partial_update() → PATCH /users/{pk}/
 • .destroy() → DELETE /users/{pk}/
-
-  
 
 ```python
 
@@ -1129,8 +1111,6 @@ queryset = models.UserProfile.objects.all() # 指定了模型
   
 
 ```
-
-  
 
 定义好 ModelSerializer 和 ModelViewSet 之后, 就写 url 了
 
