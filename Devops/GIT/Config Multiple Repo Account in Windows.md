@@ -71,11 +71,3 @@ git pull upstream
 git branch -M main
 git push -u <remote_repo> main
 ```
-
-
-# 回退
-
-```shell
-# 本地完全删除当前的 commit, 回到上一个 commit 的状态. history 会改变
-git reset --hard HEAD~1
-```

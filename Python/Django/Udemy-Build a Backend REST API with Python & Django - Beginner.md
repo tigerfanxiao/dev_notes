@@ -1,4 +1,4 @@
-course [Build a Backend REST API with Python & Django - Beginner](https://github.com/LondonAppDev/profiles-rest-api)
+course [Build a Backend REST API with Python & Django - Beginner](https://www.udemy.com/course/django-python/)
 [code](https://github.com/LondonAppDev/profiles-rest-api)
 # Thoughts
 技术本质上是为了商业服务的, 至少目前我的这个情况下. 我们这是用代码去实现商业的价值. 从这个意义上看, 我们是来解决问题的. 要解决问题就要看需要实现的目标和成本. 在目标和成本有一个比较清晰的认识之后, 我们才能选定技术方案
@@ -103,26 +103,43 @@ course [Build a Backend REST API with Python & Django - Beginner](https://github
 		- JS
 		- React
 		
+
+# 环境
+- 在windows上安装virtual box, vagrant(是命令行的)
+### Vagrant
+```shell
+vagrant --version # verify
+
+# 从repo上下载vagrantfile
+# 一下是初始化的命令
+vagrant init ubuntu/bionic64
+vagrant up # 拉起虚拟机
+vagrant ssh # 进入虚拟机
+vagrant global-status # 查看所有虚拟机
+vagrant halt # 终止vm
+
+# 所有的/vagrant内创建的文件都和Vagrantfile所在的文件目录同步
+cd /vagrant # 进入host和虚拟机的共享目录
+```
 # Django
 Django和Django Restful 的关系是什么. 其实Django和Django Restful是不同的包. 因为在开发的过程中, 我们可以看到有些包使用Django中直接import的, 有些包是从Rest Framework中import的, 注意区分
 todo: 哪些包是DRF中的
-### Framework
-```shell
-# requirements.txt
-django==2.2 # django framework 2019
-djangorestframework=3.9.2 # drf framework 2019
-
-```
 ### Develop environment
 1. 使用venv模块创建python虚拟环境
 2. 通过requirements.txt 安装
 ```shell
 # create env
-python -m venv ~/env
+python -m venv ~/env # 这里制定的目录不是和vagrant同步的目录, 所以环境只是和vagrant实例中
 # activate env
 source ~/env/bin/activate
 # 退出虚拟环境
 deactivate
+```
+### Framework
+```shell
+# requirements.txt
+django==2.2 # django framework 2019
+djangorestframework==3.9.2 # drf framework 2019
 ```
 
 通过`requirements.txt` 安装虚拟环境的包
@@ -130,6 +147,22 @@ deactivate
 # 在虚拟环境被激活的情况下
 pip install -r requirements.txt 
 ```
+### django admin
+```shell
+# 创建项目目录和 manage.py 文件
+django-admin.py startproject profileproject .
+# 创建一个应用
+python manage.py startapp profiles_api
+
+# 运行 django server
+python manage.py runserver 0.0.0.0:8000
+
+# 创建sql
+python manage.py migrate
+# create super user, 这个命令在运行 migrate之前是不能运行的. 因为sqlite中还没有用户列表
+python manage.py createsuperuser
+```
+
 ### Create Project and App
 区分Project和App两个概念
 - 项目是一个大的集合, 在整个大的集合项目不同的功能模块都是App. 一个项目至少包含一个App, 所以创建完项目后就要创建App
@@ -155,6 +188,7 @@ python manage.py runserver 0.0.0.0:8000
 python manage.py createsuperuser
 ```
 在`settings.py`中注册增加三行, 注册rest_framework 和 app
+注意: 这里面的顺序也是有讲究的
 ```python
 # settings.py
 INSTALLED_APPS = [
@@ -169,6 +203,9 @@ INSTALLED_APPS = [
     'profiles_api', # 添加自定义的 app
 ]
 ```
+这个 rest_framework.authtoken 添加只有, 在admin里面就会多下面这个东西
+![[Pasted image 20251222192356.png]]
+
 ## Servers
 区分几个概念
 - 服务器分为Application Server和Web-server两种

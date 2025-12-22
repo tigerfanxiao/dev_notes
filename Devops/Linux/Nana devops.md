@@ -447,7 +447,7 @@ ssh username@ip_address
 ```shell
 # 使用ssh key pair 访问
 # 生成密码对
-ssh-keygen -t rsa
+ssh-keygen -t rsa -b 4096 -C "email@address"
 # 此时生成 id_rsa 私钥, 和 id_rsa.pub 公钥
 
 # 到remote服务器上, 去把客户端的公钥添加进去
