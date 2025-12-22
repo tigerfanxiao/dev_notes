@@ -104,9 +104,7 @@ DISTRIB_DESCRIPTION="Ubuntu 24.04.3 LTS"
 rpm -qi openssh
 rpm -qi kernel
 ```
-查看cpu
-```shell
-lscpu # 查看cpu
+
 ```
 查看内存
 ```shell
