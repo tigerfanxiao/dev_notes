@@ -113,7 +113,8 @@ vagrant --version # verify
 # 从repo上下载vagrantfile
 # 一下是初始化的命令
 vagrant init ubuntu/bionic64
-vagrant up # 拉起虚拟机
+
+vagrant up # 启动或重启虚拟机
 vagrant ssh # 进入虚拟机
 vagrant global-status # 查看所有虚拟机
 vagrant halt # 终止vm
@@ -121,9 +122,14 @@ vagrant halt # 终止vm
 # 所有的/vagrant内创建的文件都和Vagrantfile所在的文件目录同步
 cd /vagrant # 进入host和虚拟机的共享目录
 ```
+通过修改 Vagrantfile 来变更环境
+```shell
+config.vm.box = "ubuntu/bionic64" 
+# 切换到
+config.vm.box = "ubuntu/jammy64"
+```
 # Django
 Django和Django Restful 的关系是什么. 其实Django和Django Restful是不同的包. 因为在开发的过程中, 我们可以看到有些包使用Django中直接import的, 有些包是从Rest Framework中import的, 注意区分
-todo: 哪些包是DRF中的
 ### Develop environment
 1. 使用venv模块创建python虚拟环境
 2. 通过requirements.txt 安装
@@ -207,13 +213,14 @@ INSTALLED_APPS = [
 ![[Pasted image 20251222192356.png]]
 
 ## Servers
-区分几个概念
-- 服务器分为Application Server和Web-server两种
+服务器分为Application Server和Web-server两种
+	- Application server: Django, Flask, Spring Boot, 用来处理业务逻辑, 和数据库沟通
+	- Web server: Nginx, Apache, 用来处理http请求, 反馈静态内容
+	- Application Server 往往部署在 Web-server的后面
 - 在python中, Application Server 有wsgi和asgi 两种, 即asgi可以处理异步请求, wsgi不行
 - wsgi和asgi都是Application Server的接口规范, 不是产品本身
-- Application Server 往往部署在 Web-server的后面
 - 市场上成熟的wsgi服务器有 uWSGI, Gunicorn ASGI 服务器有 Uvicorn
-- wsgi和asgi都是都提供python的运行环境, 就是说, python通过接受到达这些服务器的request, 来处理和响应
+- wsgi和asgi都提供python的运行环境, 就是说, python通过接收到达这些服务器的request, 来处理和响应
 - 无论是wsgi还是asgi 其实都是开发中使用的服务器. 真正在生产环境中, 其实还有一种服务器类型叫 web-server, 这种服务器本身用来承接海量的需求. 将承接到的需求是转交给wsgi/asgi服务器来处理. 如果需求只是获取静态文件, 那么这种需求就可以直接到static文件的存储中提取文件反馈给用户, 不需要进过python wsgi和asgi 服务器来处理. 这也就解释了 `python manage.py collectstatic --noinput` 的作用. 在实际生产环境部署中, ngnix需要知道静态内容的存储路径的. 这些内容应该在nginx的配置文件中写明
 
 ### Nginx
@@ -285,7 +292,7 @@ model 可以认为是一种数据模型. 在数据库中是以一张表的形式
 3. 定义models中的字段, 是否有`models.ForeignKey()`
 4. 定义模型实例的字符串表述方式 `__str__()`
 5. 使用`makemigrations` 构造数据库的表
-6. 把model注册到 Django admin
+6. 把model注册到 Django admin, 就能在Django admin中看到
 7. 定义model的Serializer
 8. 为model创建ViewSet
 9. 为Viewset创建URL
@@ -382,47 +389,7 @@ STATIC_ROOT = 'static/'
 from django.conf import settings
 ```
 
-# Operation
-### Vagrant
-```shell
-config.vm.box = "ubuntu/bionic64" 
-# 切换到
-config.vm.box = "ubuntu/jammy64"
 
-```
-
-```shell
-
-# 关闭当前的虚拟机
-vagrant hault
-
-# 删除现在的虚拟机
-vagrant destroy 
-
-# 修改vagrantfile之后, 重新创建虚拟机
-vagrant up
-```
-
-### Git
-1. 首先在github上创建项目
-2. 从github上把项目拉倒本地 ??
-```shell
-# git 项目初始化
-git clone <link> <target_path>
-
-# 每次更新代码
-git add .
-git commit -am "Added user profile API"
-git push origin main
-
-# 修改刚提交的commit的说明
-git commit --amend -m "changed description"
-# 查看之前提交的说明
-git log --oneline
-```
-
-在github上的查看提交的commit 次数和历史
-![[Pasted image 20250802231153.png]]
 ## AWS
 ### 构建EC2实例
 1. 配置本地电脑ssh到实例
@@ -604,127 +571,63 @@ python manage.py runserver 0.0.0.0:8000
 首先在 profiles_api 中修改model.py
 
 ```python
-
-  
-
 from django.contrib.auth.models import AbstractBaseUser
-
 from django.contrib.auth.models import PermissionsMixin
-
 from django.contrib.auth.models import BaseUserManager
 
   
 
 # 下面这个类是必须要写的, 因为如果修改了 djang 的默认用户类, python manage.py createsuperuser 执行的时候, 还是会使用默认的类. 新建一个 UserManager 的类
-
 class UserProfileManager(BaseUserManager):
+	"""Manager for user profiles"""
+	# django-cli 用来穿管用户的方法
+	def create_user(self, email, name, password=None):
+		"""Create a new user profile"""
+		if not email:
+			raise ValueError('User must have an email address')
+		email = self.normalize_email(email)
+		user = self.model(email=email, name=name)
+		user.set_password(password)
+		user.save(using=self._db)
+		return user
 
-"""Manager for user profiles"""
-
-# django-cli 用来穿管用户的方法
-
-def create_user(self, email, name, password=None):
-
-"""Create a new user profile"""
-
-if not email:
-
-raise ValueError('User must have an email address')
-
-email = self.normalize_email(email)
-
-user = self.model(email=email, name=name)
-
-  
-
-user.set_password(password)
-
-user.save(using=self._db)
-
-  
-
-return user
-
-  
-
-def create_superuser(self, email, name, password=None):
-
-"""Create a new super with given details"""
-
-user = self.create_user(email, name, password)
-
-user.is_superuser = True
-
-user.is_staff = True
-
-user.save(using=self._db)
-
-  
-
-return user
-
-  
-  
-
+	def create_superuser(self, email, name, password=None):
+		"""Create a new super with given details"""
+		user = self.create_user(email, name, password)
+		user.is_superuser = True
+		user.is_staff = True
+		user.save(using=self._db)
+		return user
+	
 class UserProfile(AbstractBaseUser, PermissionsMixin):
+	"""Database model for users in the system"""
+	email = models.EmailField(max_length=255, unique=True)
+	name = models.CharField(max_length=255)
+	is_active = models.BooleanField(default=True)
+	is_staff = models.BooleanField(default=False)
+	# 因为django cli默认是和默认的用户模型打交道的
+	# 我们自己定了用户模型后, 就需要告诉django-cli怎么和我们的模型打交道
+	objects = UserProfileManager()
+	USERNAME_FIELD = "email" # 我们用 email 字段替换了默认的username字段
+	REQUIRED_FIELDS = ["name"] # 制定了哪些字段是必须字段
 
-"""Database model for users in the system"""
-
-  
-
-email = models.EmailField(max_length=255, unique=True)
-
-name = models.CharField(max_length=255)
-
-is_active = models.BooleanField(default=True)
-
-is_staff = models.BooleanField(default=False)
-
-  
-
-# 因为django cli默认是和默认的用户模型打交道的
-
-# 我们自己定了用户模型后, 就需要告诉django-cli怎么和我们的模型打交道
-
-objects = UserProfileManager()
-
-USERNAME_FIELD = "email" # 我们用 email 字段替换了默认的username字段
-
-REQUIRED_FIELDS = ["name"] # 制定了哪些字段是必须字段
-
-  
-
-def get_full_name(self):
-
-"""Retrieve full name of user"""
-
-return self.name
-
-  
-
-def get_short_name(self):
-
-"""Retrieve short name of user"""
-
-return self.name
-
-  
-
-def __str__(self):
-
-"""Return string reprensation of user"""
-
-return self.email
-
+	def get_full_name(self):
+		"""Retrieve full name of user"""
+		return self.name
+	
+	def get_short_name(self):
+		"""Retrieve short name of user"""
+		return self.name
+	
+	def __str__(self):
+		"""Return string reprensation of user"""
+		return self.email
 ```
 
   
 
 因为使用了定制的 user 模型, 所以在创建 superuser 管理员账户之前, 需要先修改模型
-
 在创建完上面自定义的 usermodel 之后, 需要新使用 migrate 命令, 对和模型有关的数据的表结构进行更改.
-
-  
 
 需要把这个 model 注册到 admin 中, 否则登录django 后台无法查看
 

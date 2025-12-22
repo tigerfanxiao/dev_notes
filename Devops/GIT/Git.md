@@ -380,4 +380,7 @@ master/develop/feature/release/hotfix
 
 # Git Sec
 - 一个新程序员将自己的代码推送到了master或者develop 分支上?
-- 
+
+# Github
+在github上的查看提交的commit 次数和历史
+![[Pasted image 20250802231153.png]]
