@@ -211,6 +211,62 @@ INSTALLED_APPS = [
 ```
 这个 rest_framework.authtoken 添加只有, 在admin里面就会多下面这个东西
 ![[Pasted image 20251222192356.png]]
+# Django Model
+
+### Model, Model Management, Serializer, ViewSet
+model 可以认为是一种数据模型. 在数据库中是以一张表的形式出现. 如果我们在Django中定义了一个model模型, 那么在Django的数据库中就会定一张表
+
+![[Pasted image 20251223075627.png]]
+
+定义模型的方式
+1. 在App的目录下找到 `models.py`文件
+2. 在`models.py`中定义模型
+3. 定义models中的字段, 是否有`models.ForeignKey()`
+4. 定义模型实例的字符串表述方式 `__str__()`
+5. 使用`makemigrations` 构造数据库的表
+6. 把model注册到 Django admin, 就能在Django admin中看到
+7. 定义model的Serializer
+8. 为model创建ViewSet
+9. 为Viewset创建URL
+```python
+from django.db import models
+
+class MyModel(models.Model):
+	"""What this model is"""
+	# 定义model的字段
+	field1 = models.CharField(max_length=255) # 字符串字段
+	field2 = models.DateTimeField(auto_now_add=True) # 时间戳
+
+	def __str__(self):
+		return field1
+	
+```
+
+把模型注册到Django admin中
+```python
+from django.contrib import admin
+from profile_api import models # 从自定义的app中引入models.py
+
+# 注册模型
+admin.site.register(models.ProfileFeedItem) # 自定义的模型
+```
+在注册完成后, 可以在admin中对应的app下, 看到model的名字
+![[Pasted image 20250802203527.png]]
+为模型在数据库中构造表的命令
+```shell
+python manage.py makemigrations # 生成构造表的方案
+'''
+profiles_api/migrations/0002_profilefeeditem.py
+    - Create model ProfileFeedItem
+'''
+python manage.py migrate # 连接数据库构造表
+'''
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, profiles_api, sessions
+Running migrations:
+  Applying profiles_api.0002_profilefeeditem... OK
+'''
+```
 
 ## Servers
 服务器分为Application Server和Web-server两种
@@ -275,66 +331,6 @@ http://127.0.0.0:8000/admin
 ### `ViewSet`
 我们通过Viewset来定义Restful的动作. 包括有 create, reading, update这些
 定义Viewset的方法
-
-```python
-
-```
-### URL
-
-### Permissions
-
-### Model
-model 可以认为是一种数据模型. 在数据库中是以一张表的形式出现. 如果我们在Django中定义了一个model模型, 那么在Django的数据库中就会定一张表
-
-定义模型的方式
-1. 在App的目录下找到 `models.py`文件
-2. 在`models.py`中定义模型
-3. 定义models中的字段, 是否有`models.ForeignKey()`
-4. 定义模型实例的字符串表述方式 `__str__()`
-5. 使用`makemigrations` 构造数据库的表
-6. 把model注册到 Django admin, 就能在Django admin中看到
-7. 定义model的Serializer
-8. 为model创建ViewSet
-9. 为Viewset创建URL
-```python
-from django.db import models
-
-class MyModel(models.Model):
-	"""What this model is"""
-	# 定义model的字段
-	field1 = models.CharField(max_length=255) # 字符串字段
-	field2 = models.DateTimeField(auto_now_add=True) # 时间戳
-
-	def __str__(self):
-		return field1
-	
-```
-
-把模型注册到Django admin中
-```python
-from django.contrib import admin
-from profile_api import models # 从自定义的app中引入models.py
-
-# 注册模型
-admin.site.register(models.ProfileFeedItem) # 自定义的模型
-```
-在注册完成后, 可以在admin中对应的app下, 看到model的名字
-![[Pasted image 20250802203527.png]]
-为模型在数据库中构造表的命令
-```shell
-python manage.py makemigrations # 生成构造表的方案
-'''
-profiles_api/migrations/0002_profilefeeditem.py
-    - Create model ProfileFeedItem
-'''
-python manage.py migrate # 链接数据库构造表
-'''
-Operations to perform:
-  Apply all migrations: admin, auth, authtoken, contenttypes, profiles_api, sessions
-Running migrations:
-  Applying profiles_api.0002_profilefeeditem... OK
-'''
-```
 
 ### `serializer`
 当我们为模型构建实例的时候, 用户的输入是需要检验的, 比如姓名不能超过255个字符. 我们用Serializer来做数据合规的校验. 
@@ -443,20 +439,6 @@ HTTP Status
 400 页面不催在
 401 Authentication error
 302 页面跳转
-
-# 整体编程过程
-
-8/12
-
-我想要自己构建一个项目
-
-- 这个项目的最终目的是学会自己写 django rest_framework
-
-- 这个项目可以是用 docker 的, 或者直接在本地虚拟环境运行. 但是开发环境不是这个项目的最重要的目的.
-
-- 这个项目最基本的需要亲手实现 drf 框架和课程中的讲到的所有功能
-
-
 # UV
 
 为什么要学 UV?
@@ -538,34 +520,6 @@ uv lock
 
 ```
 
-  
-
-# 初始话项目
-
-激活本地的虚拟环境
-
-```shell
-
-source .venv/bin/activate
-
-# 使用 django-admin 命令创建项目
-
-django-admin.py startproject profilesproject .
-
-# 创建 app
-
-python manage.py startapp profiles_api
-
-# 运行 django 服务器
-
-python manage.py runserver 0.0.0.0:8000
-
-  
-
-```
-
-  
-
 # 如果 django 想要使用定制的 user, 比如使用 email 作为用户名
 
 首先在 profiles_api 中修改model.py
@@ -574,8 +528,6 @@ python manage.py runserver 0.0.0.0:8000
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
-
-  
 
 # 下面这个类是必须要写的, 因为如果修改了 djang 的默认用户类, python manage.py createsuperuser 执行的时候, 还是会使用默认的类. 新建一个 UserManager 的类
 class UserProfileManager(BaseUserManager):
@@ -598,7 +550,8 @@ class UserProfileManager(BaseUserManager):
 		user.is_staff = True
 		user.save(using=self._db)
 		return user
-	
+
+# 定制用户模型
 class UserProfile(AbstractBaseUser, PermissionsMixin):
 	"""Database model for users in the system"""
 	email = models.EmailField(max_length=255, unique=True)
@@ -1226,9 +1179,6 @@ Authorization: token 6bb8647d98ba68d36a224f00b58a19493a11a9dd
   
 
 # 创建一个 feed 的 model 和 viewset
-
-  
-
 ```python
 
 # profiles_api/models.py
@@ -1268,15 +1218,9 @@ return self.status_text
 ```
 
 因为这里创建了 model, 所以需要用 migration
-
-  
-
 ```python
-
 python manage.py makemigrations
-
 python manage.py migrate
-
 ```
 
 然后在 admin 页面注册这个 model, 就可以在 ui 中管理了
@@ -1284,15 +1228,8 @@ python manage.py migrate
 ```python
 
 from django.contrib import admin
-
 from profiles_api import models
-
-  
-
 admin.site.register(models.ProfileFeedItem)
-
-  
-
 ```
 
 如果要构建API endpoint 就需要创建 serializer 和 Viewset
@@ -1300,30 +1237,18 @@ admin.site.register(models.ProfileFeedItem)
   
 
 ```python
-
-  
-
 class ProfileFeedItemSerializer(serializers.ModelSerializer):
-
-"""Serializes profile feed item"""
-
-class Meta:
-
-model = models.ProfileFeedItem
-
-fields = ('id', 'user_profile', 'status_text', 'created_on')
-
-extra_kwargs = {'user_profile': {'read_only': True}} # 不希望用户自己修改, 而是从认证信息中获得
-
+	"""Serializes profile feed item"""
+	class Meta:
+		model = models.ProfileFeedItem
+		fields = ('id', 'user_profile', 'status_text', 'created_on')
+		extra_kwargs = {'user_profile': {'read_only': True}} # 不希望用户自己修改, 而是从认证信息中获得
 ```
 
   
 
 这里有个有趣的东西 perform_create
-
 In Django REST Framework (DRF), perform_create is a hook method that gets called after your serializer is validated, but before the HTTP response is returned — specifically during the create() flow of a ViewSet or GenericAPIView.
-
-  
 
 It’s basically a place for you to add extra logic right after saving, without having to fully rewrite the create() method.
 
