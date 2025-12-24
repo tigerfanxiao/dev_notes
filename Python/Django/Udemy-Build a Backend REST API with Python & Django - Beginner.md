@@ -147,6 +147,7 @@ deactivate
 ### Framework
 ```shell
 # requirements.txt
+# 这个requirement.txt 这是开发环境中使用, 生产环境比如使用 uwsgi还需要创建一个新的requirement.txt
 django==2.2 # django framework 2019
 djangorestframework==3.9.2 # drf framework 2019
 ```
@@ -407,7 +408,6 @@ server {
 ### `ViewSet`
 我们通过Viewset来定义Restful的动作. 包括有 create, reading, update这些
 定义Viewset的方法
-=======
 ### Model
 model 可以认为是一种数据模型. 在数据库中是以一张表的形式出现. 如果我们在Django中定义了一个model模型, 那么在Django的数据库中就会定一张表
 
@@ -456,15 +456,114 @@ serializer 定义的方式
 	3. extra_kwargs 那个字段有特殊的需求, 比如read_only
 
 ```python
-from rest_framework import serializers
+class UserProfileSerializer(serializer.ModelSerializer):
+	"""Serializes a user profile object"""
+	class Meta:
+		model = models.UserProfile
+		fields = ['id', 'email', 'name', 'password'] # 会对model中的这些字段进行校验
+		extra_kwargs = {
+			'password': {
+				'write_only': True,
+			}
+		}
+		
+	def create(self, validated_data):
+        """Create and return a new user"""
+        user = models.UserProfile.objects.create_user( # 这里调用的是 UserProfileManager 里的 create_user 方法
+            email=validated_data['email'],
+            name=validated_data['name'],
+            password=validated_data['password']
+        )
+        return user
 
+    def update(self, instance, validated_data):
+        """Handle updating user account"""
+        if 'password' in validated_data:
+            password = validated_data.pop('password') # 这里从validated_data 中取出 password, 单独处理
+            instance.set_password(password) # UserProfile 继承自 AbstractBaseUser, 这里将输入的password进行hash
+        return super().update(instance, validated_data) # validated_data 中剩下的字段交给父类的 update 写入model
+```
+这里做好了serializer 就需要把它关联到 ModelViewSet, 不是普通的ViewSet
+```python
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handle creating and updating profiles"""
+    # 在所有的 ModelViewSet中, 这两个是必须要定义的
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    # 注意:  如果没有写 login Viewset 所以增加了这个验证之后, 因为没有用户登录, 所以都是修改不了的 
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+    # 增加了查找功能
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name', 'email',)
+```
+定义好了ModelViewSet后, 在定义url
+```python
+router.register('profile', views.UserProfileView) # 如果使用ModelViewSet, 这里不需要定义base_name, django会自己定义为Userprofile
+```
+写loginViewSet
+```python
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
+
+# 只有定义了这个view, 才能在浏览器出现login页面
+class UserLoginApiView(ObtainAuthToken):
+	"""Handle creating user authentication tokens"""
+	renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES # Django提供的
+```
+写loginViewSet的url
+```python
+urlpatterns = {
+	path('login/', views.UserLoginView.as_view()),
+}
+```
+
+### Token based authorization
+测试生成token, 如果用户的http请求头中有这个token, 那么用户就不用输入用户名和密码
+ ```
+tigerfanxiao@gmail.com
+  "token": "ebde47b3e3a04b22fe072691ef9491f380b8de3c"
+test@londonappdev.com
+  "token": "aa09232dd3e41d6f3c1fc122fbedbe5a785fd963"
+ ```
+在chrome中安装modeheader 插件. 修改http request中的字段, authorization 
+token 的前面要加 Token. 注意这里修改了浏览器中所有请求的head
+ ![[Pasted image 20251224170451.png]]
+创建 ProfileFeedItem model
+```python
+class ProfileFeedItem(models.Model):
+    """Profile status update"""
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    status_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return the model as a string"""
+        return self.status_text
+```
+
+```shell
+python manage.py makemigrations
+Migrations for 'profiles_api':
+  profiles_api/migrations/0002_profilefeeditem.py
+    - Create model ProfileFeedItem
+python manage.py migrate
+```
+把这个模型注册到admin中
+
+
+```python
+from rest_framework import serializers
 from profiles_api import models
 
-
+# ModelSerializer是直接和model绑定的
 class ProfileFeedItemSerializer(serializers.ModelSerializer)
 	"""Serializer profile feed items"""
 	class Meta:
-		model = models.ProfileFeedItem
+		model = models.ProfileFeedItem # 这里注册了model     
 		fields = ('id', 'user_profile', 'status_text', 'created_on')
 		extra_kwargs = {'user_profile': {'read_only': True}}
 ```
