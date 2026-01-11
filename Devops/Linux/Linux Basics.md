@@ -705,10 +705,7 @@ cat /proc/cpuinfo
 # 产看内存
 free -h
 cat /proc/meminfo
-# 关闭图形界面
-init 3
-# 打开图形界面
-init 5
+
 
 # 查看分区信息
 df -h
@@ -721,19 +718,6 @@ uname -p
 # 查询操作系统发行版本
 cat /etc/os-release
 lsb_release -a
-
-# 重启
-reboot
-init 6
-shutdown -r now # 立即重启
-# ctrl + alt + delete 在生产中物理机可以重启
-
-# 关机
-halt
-poweroff
-init 0
-shutdown # 一分钟以后关机
-shutdown -h now # 立即关机
 ```
 
 # Storage 存储
@@ -2086,8 +2070,65 @@ GET /HTTP/1.0
 # 返回页面
 ```
 # 系统初始化
+## Ubuntu
+### 安装vmtools 
+```shell
+sudo apt update -y
+sudo apt instal open-vm-tools open-vm-tools-desktop -y
+```
 
-### Rocky
+
+### 配置root ssh
+- desktop 版本默认没有安装openssh-server
+	- 默认情况下禁止root用户登录, 且没有为root用户设置密码
+安装openssh-server
+```shell
+sudo apt update -y
+sudo apt install openssh-server
+sudo systemctl status ssh
+```
+允许root用户登录. 修改 `/etc/ssh/sshd_config` 文件, 并重启 ssh服务
+```shell
+#PermitRootLogin prohibit-password
+PermitRootLogin yes
+```
+root用户, 默认没有密码
+```shell
+sudo passwd root
+```
+重启ssh服务
+```shell
+sudo systemctl restart ssh
+```
+
+### 配置或调整图形界面
+```shell
+# 关闭图形界面
+init 3
+# 打开图形界面
+init 5
+
+# 禁用桌面图形方式启动
+systemctl set-default multi-user.target
+reboot
+```
+### 关机和重启
+```shell
+# 重启
+reboot
+init 6
+shutdown -r now # 立即重启
+# ctrl + alt + delete 在生产中物理机可以重启
+
+# 关机
+halt
+poweroff
+init 0
+shutdown # 一分钟以后关机
+shutdown -h now # 立即关机
+```
+
+## Rocky
 1. 最小化安装
 2. 关闭防火墙
 ```shell

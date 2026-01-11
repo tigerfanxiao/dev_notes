@@ -51,6 +51,11 @@ docker rmi -f $(docker images -aq) # 删除所有镜像
 注意:
 1. tag 不同, 但是镜像可能是相同的. 可以通过hash 值来判断两个镜像是否相同
 2. 不同镜像的有些层是一样的, docker 不会重复拉. 所以两个镜像真正占据的磁盘空间是小于纸面上两个镜像大小的和
+### Docker build
+```shell
+docker build -t my-django-image .
+```
+
 ### Docker run
 `docker run` 是 `docker container run` 的缩写。 本质上是**创建**的一个容器, 不是启动一个容器. 一般在调试的时候用. 在生产中拉容器, 一般是用 docker compose 文件
 `docker run` 每次都会新建一个container， 计时container停止运行， 还是会有留存起来， 直到使用rm命令才能删除。可以使用`--rm`参数， 才能在退出container后自动删除container。
@@ -67,7 +72,7 @@ docker ps -aq # 不显示容器名, 只显示容器 hash code， 多用于和其
 
 ```shell
  # 交互式运行
-docker run -it --name <container-alias> <image_name> bash
+docker run --rm -it -u <user_name> --name <container-alias> <image_name> bash
 # bash表示 shell
 # -i or -interactive 可以接受user input
 # -t or -vty 使用vty模式
@@ -108,11 +113,10 @@ docker restart <container_id> # 重启
 # docker run 等于下面两条命令的组合
 docker create -it --name mycontainer nginx # 有的container在创建的时候没有关联vty
 docker start mycontainer
-
 ```
 
 
-删除容器
+### Remove container
 ```shell
 docker rm <container_id> # 删除已经停止的容器, 一般情况下无法直接删除一个正在运行的容器
 docker rm -f <container_id> # 强行删除一个正在运行的容器
@@ -160,7 +164,6 @@ docker cp <container_name>:<container_file_path>
 
 # mount
 docker run -it --mount type=bind,source=.,destination=/app python bash
-
 ```
 
 

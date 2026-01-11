@@ -1,18 +1,33 @@
-
+``
 目标
 0. 整个项目做三遍
 1. 跟着视频完整做一遍
 2. 不看视频, 根据自己的笔记能够完整做一遍
 3. 精简文档, 快速开发做一遍. 看看这个项目有没有扩展的地方. 变体或者和其他项目打通
 
+docker hub
+在docker hub 上创建一个private token给这个项目, 那本机和github就可以通过这个token去访问和修改docker hub上的image
+在dockerhub上为这个项目创建一个token
+![[Pasted image 20251225075649.png]]
+在本地电脑的命令行登录docker
+```shell
+docker login -u tigerfanxiao
+
+# copy your token
+```
+在github上给这个项目创建actions的secret
+![[Pasted image 20251225075625.png]]
+
+```shell
+docker-compose run --rm app sh -c "python manage.py collectstatic"
+```
+
+
 API Feature
 - user authentication, Django有自己的 authentication 模块, 但是对于 flask 的话, 就需要自己找组件了
 - creating object
 - Filtering & sorting objects
 - uploading & viewing images
-
-django 3.2 
-项目中会涉及平时运维中的, 升级 api 的工作, 这部分是 devops 的
 
 # Dev
 ### unit test
@@ -45,6 +60,53 @@ app/recipe # Receip related code
 ```
 Django>=3.2.4,<3.3
 djangorestframework>=3.12.4,<3.13
+```
+
+# dockerfile
+
+```Dockerfile
+FROM python:3.9-alpine3.13
+LABEL maintainer="londonappdevelper.com"
+ENV PYTHONUNBUFFERED=1
+
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements.dev.txt /tmp/requirements.dev.txt
+COPY ./app /app
+WORKDIR /app
+EXPOSE 8000
+
+ARG DEV=false # 这里build arg 在docker compose的文件中是可以替换的
+RUN python -m venv /py && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    if [ $DEV = "true" ]; \
+	    then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+    fi && \
+    rm -rf /tmp && \
+    useradd -m -s /bin/bash django-user && \
+    chown -R django-user:django-user /app
+ENV PATH="/py/bin:$PATH"  # 这里就类似于激活虚拟环境了
+USER django-user # best pratice
+```
+
+```yaml
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+```
+
+```shell
+docker-compose build
 ```
 ### TDD
 TDD is software development practice. 特点是先写根据 feature 写测试用例, 在写开发代码
@@ -187,12 +249,7 @@ docker compose down
 # 如果修改了 Dockerfile 和 requirements.txt 意味着有新的依赖加入, 就需要重新构造镜像
 docker compose build
 ```
-=======
 `.dockerignore` 文件是用来exclude 在某些文件目录下去寻找 Dockerfile或者 docker-compose 文件 
-login with docker hub from terminal
-```shell
-
-```
 ### Github action
 Github action 类似于 Travis-CI, Giblab CI/CD, Jenkins. 功能有
 - Deployment
@@ -206,13 +263,6 @@ Pricing
 - Charged per minutes
 - 2000 free minute
 - 给全球用户使用的 shared IP address
-
-```
-
-```
-
-
->>>>>>> 39440c9 (add notes)
 ### git
 构建 github repo recipe-app-api
  一般先在 github 上创建 repo, github 上提供了, 基于编程语言个 gitignore 文件和不同的 License 选择
@@ -229,7 +279,7 @@ docker compose run -rm app sh -c "flake8"
 ```
 因为 linting 是开发使用的, 所以只有在 requirement.dev.txt 中才需要安装
 flake是需要configuration 文件来exclude 不需要分析 linting 的目录的
-flake8 的配置文件, 是放在 manage.py 并行的目录下, 这个是项目的根目录
+flake8 的配置文件, 是放在 manage.py 并行的目录下, 这个是项目的根目录 `.flake8`
 
 ```
 [flake8]
@@ -248,6 +298,7 @@ exclude = 
 
 ```shell
 docker compose run --rm app sh -c "django-admin startproject app ."
+docker-compose up
 ```
 
 如果要构造一个 core app,需要使用命令. 注意: 和创建项目时使用的命令完全不同 (可以查询 django 文档)
@@ -315,6 +366,31 @@ django 连接数据库, 这些信息是定义在 setting.py中的
 - password
 
 为了解决数据库服务起来, 但是 posgresql 没有起来, 造成 django 崩溃的问题. 我们要创建一个 core app 来轮询查询数据库是否connection
+
+# create core app
+```shell
+docker compose run --rm app sh -c "python manage.py startproject core"
+```
+还需要在setting中注册应用
+```python
+INSTALLED_APPS = [
+	'core',
+]
+```
+
+# customized CLI command
+```shell
+your_app/management/commands/wait_for_db.py
+```
+
+```python
+from django.core.management.base import BaseCommand
+
+class Command(BaseCommand):
+    help = "Wait for database to be ready"
+    def handle(self, *args, **options):
+        self.stdout.write("Waiting for DB...")
+```
 
 # 其他想法
 

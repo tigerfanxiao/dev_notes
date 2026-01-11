@@ -29,17 +29,20 @@ pyenv exec python3.8.10 test.py
 ```
 
 # UV
+UV installation for mad
 ```shell
 # install uv
 brew install uv
 # use pip
 pip install uv
-
 ```
 
 ```shell
+# show all available python online
 uv python list
 uv python install 3.9
+# create python 3.9 virtual env with uv
+uv venv --python 3.9 myenv
 
 uv run --python 3.8 # run script with specific python version
 

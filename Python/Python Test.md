@@ -663,10 +663,10 @@ class TestGetContent(unittest.TestCase):
 	def test_success(self, mock_get):
 		mock_response = MagicMock(
 			status_code=200, content=b"Hello, world!"
-		)
-		mock_get.return_value = mock_response
-		result = get_content("http://example.com")
-		self.assertEqual(result, "Hello, world!")
+		) # 这里定义了返回值是一个对象
+		mock_get.return_value = mock_response # 把这个对象最为patch函数的返回值
+		result = get_content("http://example.com") # 如果真的调用get_content函数
+		self.assertEqual(result, "Hello, world!") # 
 		mock_get.assert_called_once_with("http://example.com")
 
 	@patch("requests.get")
