@@ -16,7 +16,10 @@ multipass start <vm>
 multipass stop <vm>
 ```
 
-
+补全
+```shell
+apt install bash-completion -y # 补全功能
+```
 # GUI
 ```shell
 ctrl + alt + f3 # 切换到非 gui
@@ -333,6 +336,20 @@ sudo whoammi # 应该显示root
 
 ```
 
+查看系统信息
+```shell
+
+# red-hat, rocky
+/etc/redhat-release
+/etc/os-release
+
+
+/etc/os-release
+/etc/lsb-release
+
+# 查看系统架构  x86
+arch 
+```
 # Centos 7 破解root账户密码
 
 3. 重启设备 按e, 进入内核参数修改模式
@@ -2049,6 +2066,7 @@ sudo netplan apply
 # 进程
 
 ```shell
+ps -aux 
 pstree -p # 查看进程树, 子进程
 
 echo $BASHPID # 查看 bash 进程的 ID
