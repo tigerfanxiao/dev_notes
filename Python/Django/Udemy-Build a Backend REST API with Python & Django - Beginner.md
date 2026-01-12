@@ -10,7 +10,6 @@ course [Build a Backend REST API with Python & Django - Beginner](https://www.ud
 3. 久坐和锻炼身体
 4. 问自己问题, 解答自己的问题. 然后是假设要去叫别人怎么开发Django Rest Framework API
 ### Questions
-- supervisorctl 在linux 中是什么工具?
 - 当前vagrant和EC2的ubuntu版本不一致, 后期可以更改
 - python的生产环境的服务器uwsgi, 还是ngnix, 这是什么关系, 生产中真的用吗
 - 能用Firebase和DRF合作吗. 本质是Firebase是一个基本能取代django rest framework的东西, 只要前端就好了
@@ -634,10 +633,56 @@ http://ec2-54-225-44-73.compute-1.amazonaws.com/api/
 ```
 ### supervisor
 https://www.youtube.com/watch?v=KPCSh79GCCE
+https://blog.jcharistech.com/2023/03/18/supervisor-a-process-management-tool-in-python/
 上面这个视频是一个简单的supervisor教程. 简单的来说, supervisor是一个linux上的应用, 这个应用的作用是管理Linux上运行的进程. 比如说Django server进程, 如果用run server 在生产环境上跑起来之后, 如果出现了server中断, supervisor可以自动重启这个进程. 我们也可以通过supervisor来关闭和启动django进程. 同事supervisor还有GUI界面, 通过9001端口可以访问. 
 ```shell
 environment = 
 	DEBUG=0 # 给系统这是环境变量
+```
+
+supervisor 的config文件
+`/etc/supervisor/conf.d/profiles_api.conf`
+
+
+```shell
+# /etc/supervisor 
+supervisord
+# point to directory with supervisor.conf 
+supervisord -c supervisor.conf
+```
+
+```shell
+[program:profiles_api]
+environment =
+  DEBUG=0
+command = /usr/local/apps/profiles-rest-api/env/bin/uwsgi --http :9000 --wsgi-file /usr/local/apps/profiles-rest-api/profiles_project/wsgi.py
+directory = /usr/local/apps/profiles-rest-api/
+user = root
+autostart = true
+autorestart = true
+stdout_logfile = /var/log/supervisor/profiles_api.log
+stderr_logfile = /var/log/supervisor/profiles_api_err.log
+```
+
+#### How to Use Supervisorctl Web UI
+
+As we mentioned earlier, supervisorctl is a CLI to communicate with Supervisord via a unix socket. However  
+you can also communicate via TCP/HTTP socket using the **_inet_http_server_** section. This allows you to spin up a local Web UI by which you can do the same things with supervisorctl CLI.  
+Then you can navigate in your browser to **_localhost:9001_** to see the Web UI
+
+```shell
+# check status of all programs 
+supervisorctl status all # reread the supervisor.conf file if you made changes to it 
+supervisorctl reread # reload the supervisor.conf file and restart programs 
+supervisorctl update # start a program specified on supervisor.conf file 
+supervisorctl start <myprogram>
+
+sudo systemctl enable supervisor 
+sudo systemctl start supervisor
+
+sudo systemctl status supervisor 
+sudo systemctl stop supervisor 
+sudo systemctl restart supervisor
 ```
 
 Socket 是一种双向通信机制. 常见的socket有
