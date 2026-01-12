@@ -1256,6 +1256,16 @@ rm file_*
 # 查询指定目录下, 文件夹的磁盘占用
 du -h --max-depth=1 <dir_path> | sort -rh | head -n 20
 ```
+查看文件内容
+```shell
+cat -A <file> # 显示行结束符
+cat -n <file> # 显示行号
+
+
+more
+less 
+```
+
 
 # 进程
 ```shell
@@ -1304,6 +1314,7 @@ echo {a..c}{1..3}
 touch a{1..10}.log # 创建10 个文件
 ```
  history
+`~/.bash_history` 历史执行的命令记录, 目前终端连接中生成的命令, 没有输入进去
 ```shell
 !s # 执行最近一次 s 开头的命令
 !?con # 执行最近一次命令中包含 con 字符的命令
@@ -1314,6 +1325,7 @@ echo !* # 前一个命令的全部参数
 echo `!!` # 获得前一条命令的执行结果
 
 # 快速获取前一条命令的参数 esc (松手)+ .
+# ctrl + r # 倒过来查 history 中的命令
 cat /etc/motd
 ll /etc/motd
 ```
@@ -1328,9 +1340,13 @@ ctrl + < # 光标向左移动一个单词
 ctrl + u # 光标删除直命令行首
 ctrl + k # 光标删除直命令行末
 ctrl + d # 向后删除
+ctrl + y # 粘贴删除的内容
 
 ctrl + s # 锁死屏幕, 屏幕不会显示
 ctrl + q # 两次 解锁屏幕
+
+esc + b # 移动到当前单词的开头
+esc + f # 移动到当前单词的结尾
 ```
 
 

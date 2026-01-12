@@ -363,10 +363,12 @@ a= around
 is 句子
 ip 段落
 
-
-
-
-# VIM Visual 模式
+# Vim
+```shell
+G # 文末
+gg # 文首
+```
+## Visual 模式
 
 ```shell
 v # 进入可视化模式, 选中单个字符
