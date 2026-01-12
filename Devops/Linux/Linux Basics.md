@@ -46,7 +46,7 @@ ssh username@<ip>
 
 使用公钥文件登录ssh
 ```bash
-chown 400 perm # 400 means read and execute
+chown 400 perm # 400 means read
 ssh usernanme@ip_addriess -i perm
 ```
 
@@ -191,11 +191,15 @@ cd $HOME
 ```
 
 Create User
+- root的家目录在 `/root`
+- 普通用户的家目录在 `/home/username`
 `/etc/default/useradd`
 ```shell
+# 不会创建家目录
+useradd <username>
 # 会自动创建一个和用户同名的家目录 在/home下
-useradd <username> 
-# 同时会在家目录下创建 .bash_logout .bash_profile .bashrc 三个文件
+useradd -m <username> # 同时会在家目录下创建 .bash_logout .bash_profile .bashrc 三个文件
+userdel -r <username> # 删除用户, 并删除家目录
 # 如果要制定家目录位置
 useradd -d </userb> userb # 在根目录下创建 /userb 作为家目录
 # 修改用户的家目录
@@ -2111,6 +2115,9 @@ init 5
 # 禁用桌面图形方式启动
 systemctl set-default multi-user.target
 reboot
+
+# 默认使用图形界面登录
+systemctl set-default graphical.target
 ```
 ### 关机和重启
 ```shell
@@ -2129,8 +2136,45 @@ shutdown -h now # 立即关机
 ```
 
 ## Rocky
-1. 最小化安装
-2. 关闭防火墙
+
+### Rocky 更改IP地址
+```shell
+hostnamectl set-hostname rocky9-15
+exit  # 退出shell生效
+sudo nmcli con down ens160 # 断开网卡
+# 修改配置文件
+
+```
+修改配置文件
+```shell
+vim /etc/NetworkManager/system-connections/ens160.nmconnection
+
+# 删除网卡的uuid
+[ipv4]
+address1=11.0.1.15/24,11.0.1.2
+dns=11.0.1.2
+method=manual
+```
+更改网卡配置
+```shell
+systemctl restart NetworkManager
+```
+
+### 安装GUI
+```shell
+yum grouplist
+yum groupinstall "带 GUI 的服务器"
+sudo dnf update # dnf 是yum 的升级版本
+sudo yum update # 软件依赖升级
+
+yum makecache # 更新软件源信息
+
+```
+
+
+
+2. 最小化安装
+3. 关闭防火墙
 ```shell
 systemctl diable --now firewalld
 ```
