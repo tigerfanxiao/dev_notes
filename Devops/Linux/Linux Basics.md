@@ -22,8 +22,8 @@ apt install bash-completion -y # 补全功能
 ```
 # GUI
 ```shell
-ctrl + alt + f3 # 切换到非 gui
-ctrl + alt + f2 # 切换到 gui
+init 3
+init 5
 ```
 
 # Linux SSH
@@ -545,6 +545,9 @@ $ # 普通用户
 在 ubuntu 中写入 `.bashrc`
 
 ```shell
+
+echo -e "\33[43;37m 黄底白字 \33[0m" # 这里 \33[ 和 \33[0m 是固定的
+echo -e "\e[43;37m 黄底白字 \e[0m" # 这里用 \e 代替 \33
 echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
 ```
 # Shell
@@ -561,6 +564,10 @@ $PS2 # 输入命令时的提示符变化 >
 > 有的命令可能即是内部命令, 优势外部命令. 
 
 命令的执行顺序： Shell 会先查看命令别名， 然后内存中寻找内部命令, 如果找不到, 最后就在环境变量 Path 中定义的目录中找
+```shell
+\ls # 原始的 ls 命令
+ls # 其实是别名 ls --color=auto
+```
 
 ```shell
 enable # 显示所有内部命令
@@ -651,7 +658,7 @@ mandb
 # 回复命令的作用简述, 帮助文档的类别, 可以用man使用
 whatis rm 
 # 查看命令帮助文档路径
-where is rm
+whereis rm
 # 内部命令
 help cmd
 # 外部命令
@@ -675,7 +682,7 @@ clock
 clock -s
 # 用软件时间来矫正硬件时间
 clock -w
-# 查看时间
+# 查看时区
 timedatectl
 # 配置时区为马德里
 timedatectl set-timezone Europe/Madrid
@@ -741,7 +748,7 @@ cat /etc/os-release
 lsb_release -a
 ```
 
-# Storage 存储
+# Storage
 磁盘类型
 - SCSI 早期
 - SAS 是企业级存储, 家用对标的协议的是 SATA
@@ -808,7 +815,10 @@ w # 存盘退出
 q # 不存盘退出
 ```
 ### 文件系统
-如果没有文件系统, 就没有文件的概念. 所以的数据就是 0 1 存放在硬盘上
+文件系统就是组织和管理文件的一种方式
+- 文件放在哪里: 数据的存储
+- 文件在哪里获取: 文件的查找
+- 文件本身: 文件的属性, 权限
 linux中常见的文件系统
 - xfs 支持的硬盘和分区空间更大, 支持 8E, 不支持文件系统的缩减, 只能扩展
 - ext4 支持 1E, 支持缩减. ubuntu 偏好
@@ -820,6 +830,16 @@ windows 使用的文件系统
 - exFAT
 ```shell
 ls /lib/modules/`uname -r`/kernel/fs # 查看内核中支持的文件系统
+
+df -Th # 查看当前文件系统
+Filesystem                        Type   Size  Used Avail Use% Mounted on
+tmpfs                             tmpfs  387M  1.2M  386M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4    97G  6.3G   86G   7% /
+tmpfs                             tmpfs  1.9G     0  1.9G   0% /dev/shm
+tmpfs                             tmpfs  5.0M     0  5.0M   0% /run/lock
+/dev/sda2                         ext4   2.0G  186M  1.7G  11% /boot
+tmpfs                             tmpfs  387M   12K  387M   1% /run/user/1000
+
 ```
 创建文件系统
 - 也就是 windows 中常说的格式化. 会有文件的元数据存储的地方
@@ -871,16 +891,9 @@ chgrp app /app
 
 ```
 ### swap 文件系统
-- 虚拟内存使用
+- 一种虚拟内存技术, 因为性能问题, 建议禁用
 - 安装 k8s 的时候, 要禁用 swap. 因为硬盘性能太低, 不能满足 k8s 性能要求
-- swap建议放在硬盘的最外圈或者 ssd
-- 可以用分区的方式或者文件的方式当 swap 用, 但是分区的方式性能好
-- 如果是一个文件形式的 swap 是可以迁移的
-- swap 容量推荐
-	- 系统内存低于 2G, RAM量的两倍
-	- 系统 2GB-8GB, 等于 RAM 的量
-	- 系统 8G-64G, 建议用 4G 到 RAM 的 0.5 倍
-	- 超过 64G, 独立负载(至少 4GB)
+
 ```shell
 # 查看内存, 用以判断要使用多少swap
 free -h 
@@ -1352,32 +1365,45 @@ esc + f # 移动到当前单词的结尾
 
 # Linux 文件系统
 - `/bin`和 `/sbin` 的区别是, `/bin` 是普通用户可以还行, `/sbin` 是管理员才能执行的程序
-- linux 内核文件保存在 `/boot`下, 只有 12M
 ```shell
+# 以下是Linux的通用目录
+/home # 所有用户的文件夹都放在 home 下面
+/root # root 用户的家目录
+# 系统目录
+/etc # 相当于 windows 中的注册表, 存储 linux 所有程序的配置文件
+/boot # 存放开机启动需要的程序, linux 内核也在里面, 只有12M
+/sys # 保存在内存中的文件, 用于硬件
+/lib # 库文件
+# 与命令相关的目录, 一般都保存在$PATH中
 /bin # 存储 cd, mv 等命令的的二进制文件, 比如 ls 命令, 就是/bin/ls 文件
 /sbin # 系统管理员使用的命令的二进制文件
-/usr  # used for sharing files between users
-/media # usb 介质
-/home # 所有用户的文件夹都放在 home 下面
-/etc # 相当于 windows 中的注册表, 存储 linux 所有程序的配置文件
-/boot # 存放开机启动需要的程序, linux 内核也在里面
+/usr/bin  # used for sharing files between users, 类似windows中的Program files
+/usr/sbin
+/usr/share # 共享的
+# 与程序相关的
 /run # 程序运行的时候的临时文件
-/tmp # 用户和程序的临时文件
-/var # 日志等文件
+/var/run 
 /proc # 吧保存在内存中的文件, 用于进程
-/sys # 保存在内存中的文件, 用于硬件
+# 经常变化的文件目录
+/var/log # 日志等文件
+/tmp # 用户和程序的临时文件, 重启后会自动清理
+# 与设备相关的
+/dev # 硬件设备文件, 硬盘
+/media # usb 介质
+/mnt # 光盘挂载的入口
 ```
 
 `/dev`下有块设备, 字符设备
 块设备, 比如硬盘. 一个块包含多个字节
 字符设备, 一个字符一个字符为单位 比如 `/dev/zero`, /dev/pst/1
 
-蓝色: 文件夹, 绿色: 可执行程序, 红色: 压缩文件, 浅蓝色:链接 `/etc/DIR_COLORS` 定义
+蓝色: 文件夹
+绿色: 可执行程序
+红色: 压缩文件
+浅蓝色:链接
+`/etc/DIR_COLORS` 定义
 
-```shell
-\ls # 原始的 ls 命令
-ls # 其实是别名 ls --color=auto
-```
+
 ### File Privilege
 Linux 文件权限有三个维度, 使用 `chmod`修改
 - user是文件的所有者
@@ -1635,7 +1661,7 @@ cat mail.txt | mail -s subject receiver@email.com
 # tr 命令用来转换
 tr a-z A-Z < filename # 小写转换为大写
 tr -d abc < filename # 删除 abc
-tr -dc abc < filename # 除了 abc, 其他都删除
+tr -dc abc < filename # 除了 a管道bc, 其他都删除
 tr -s abc < filename # 发现连续的 a, 连续的 b, 连续的 c, 压缩成一个
 tr -s ' ' <filename # 压缩空格
 df | tail -n +2 | tr -s ' ' | cut -d" " -f5 | tr -d %
@@ -1878,7 +1904,17 @@ split -b 1M -d filename filename_suffix # -d 表示数字小编号, 每个文件
 cat filename* > filename # 合并这些文件
 ```
 # Package Management
-debien
+```shell
+whereis ls # 查看命令的地址
+whatis # 命令是什么, 一句话解释
+
+# 命令精简信息
+cmd -h
+cmd --hel
+help cmd
+```
+
+
 `/etc/apt/sources.list.d/ubuntu.sources` ubuntu 的库文件内容
 ```shell
 Types: deb
