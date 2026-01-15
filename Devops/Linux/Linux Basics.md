@@ -375,7 +375,23 @@ arch
 	- 执行 - 看不到文件夹列表, 但是可以看到里面的文件的内容和属性, 如果你知道文件名
 	- 所以一般要能访问目录, 一般会给 rx
 - 如果只相对文件夹内的所有子文件夹加 x 权限, 对文件不加 x 权限, 可以使用 X 选项
-- 
+```shell
+# 查看文件类型, 可以看出是不是zip文件, 我
+file <filename> 
+stats <filename> # 查看inode信息 
+[xiao@localhost ~]$ stat test.txt
+  文件：test.txt
+  大小：9               块：8          IO 块：4096   普通文件
+设备：fd02h/64770d      Inode：448         硬链接：1
+权限：(0644/-rw-r--r--)  Uid：( 1000/    xiao)   Gid：( 1000/    xiao)
+环境：unconfined_u:object_r:user_home_t:s0
+最近访问：2026-01-15 19:51:01.383704397 +0100
+最近更改：2026-01-15 19:51:17.350441802 +0100
+最近改动：2026-01-15 19:51:17.350441802 +0100
+创建时间：2026-01-15 19:51:01.383704397 +0100
+```
+
+
 ```shell
 # 制定用户或者群做相同的配置
 # 增加用户的权限为
@@ -1272,9 +1288,10 @@ du -h --max-depth=1 <dir_path> | sort -rh | head -n 20
 查看文件内容
 ```shell
 cat -A <file> # 显示行结束符
+cat -A test.txt
+add test$
+
 cat -n <file> # 显示行号
-
-
 more
 less 
 ```
@@ -1316,7 +1333,18 @@ echo $LANG
 ```
 - windows 中, 如果按回车, 会增加 `\r\n`, linux只是`\n`, 所以在 windows 中编辑的文本文件放在 windows 中, 容易出问题
 ```shell
-hexdump -C text.txt # 可以查看文件 16 进制表示
+# 安装可以使用hexdump的工具, 用ascii嘛的风格来看字符
+sudo apt install util-linux
+hexdump -C text.txt # 可以查看文件, 同时显示字符和 16 进制表示
+[xiao@localhost ~]$ hexdump -C test.txt
+00000000  61 64 64 20 74 65 73 74  0a                       |add test.|
+00000009
+
+# installl dos2unit to convert windows file to linux
+sudo apt install dos2unit
+dos2unit file.txt
+# 或者使用 notepad++ 配置 Unix(LF)
+
 ```
 
 扩展符号
@@ -1504,6 +1532,8 @@ file <filename>
 [124] # 1或者 2, 或者 4
 [^12] # 不是 1,不是 2
 [c-f] # c到f, 包含大写字母. 先出现小写字母后出现大写字母 cCdDeEf
+[:blank:] # 空格
+[:space:] # 空格
 [:lower:] # 所有小写字母你[[:lower:]]表示所有小写字母中取一个
 [:upper:] # 左右大写字母 [[:upper:]]表示所有大写字母中取一个
 [:digit:] # 数字
@@ -1511,6 +1541,9 @@ file <filename>
 
 .* # 注意 表示包含所有.开头的隐藏文件, 且包含父目录.., 如果此时是在家目录下做操作, 则可能删除根目录
 
+# 多个字符
+{1..3} # 1,2,3
+{1, 5} # 1, 5
 ```
 
 复制
@@ -1601,6 +1634,7 @@ ls /data dataa &>all.txt # 标准输出和错误输出都在同一个文件里
 # 老的写法, 标准输出和标准错误都写在同一个文件里, 注意前后次序不能变
 ls /data dataa >all.txt 2>&1 #
 
+sleep 5000 & # 重定向到后台运行
 
 # 标准输入的重定向
 echo 2+3>bc.txt
@@ -1634,7 +1668,7 @@ csh # 切换为 cshell
 - `<<EOF`其中 EOF 表示重定向结束, 是一个习惯
 - **EOF后面不能包含空格, 否则会有语法错误** 
 ```shell
-# 覆盖
+# 在脚本场景中的定制配置文件, 且格式繁琐, 可以使用 cat eof 的方法
 cat > a.txt <<EOF
 newline1
 newline2
@@ -1647,6 +1681,26 @@ newline1
 newline2
 newlo3
 EOF # 当重启一行输入 EOF 时, 才会把内容输出到文件
+
+cat >> a.txt <<-EOF # - 可以用于取消最后的 EOF 前的tab 键, 不能取消空格
+newline1
+newline2
+newlo3
+	EOF 
+```
+tee 的和cat 却别在于cat在重定向之后不会在终端输出, 但是tee会同时在终端输出. 用于观察之脚本执行的过程
+```shell
+# tee 命令 支撑标准输入
+tee out.txt
+hello # 同时在屏幕上打印和输出到文件
+# 追加内容
+echo hello3 | tee -a new.out | tr 'a-z' 'A-Z'
+
+# 使用 tee 命令生成配置文件
+tee /data/text.conf <<EOF
+line1
+line2
+EOF
 ```
 
 管道符
@@ -1665,18 +1719,6 @@ tr -dc abc < filename # 除了 a管道bc, 其他都删除
 tr -s abc < filename # 发现连续的 a, 连续的 b, 连续的 c, 压缩成一个
 tr -s ' ' <filename # 压缩空格
 df | tail -n +2 | tr -s ' ' | cut -d" " -f5 | tr -d %
-
-# tee 命令 支撑标准输入
-tee out.txt
-hello # 同时在屏幕上打印和输出到文件
-# 追加内容
-echo hello3 | tee -a new.out | tr 'a-z' 'A-Z'
-
-# 使用 tee 命令生成配置文件
-tee /data/text.conf <<EOF
-line1
-line2
-EOF
 
 ```
 管道符后面创建一个子进程
@@ -1708,6 +1750,8 @@ Symbolic Link
 ```shell
 # Abosolute Symbolic Link
 ln -s absulute symboliclink_name 
+# 读取连接文件
+readlink
 ```
 
 # 传输文件
