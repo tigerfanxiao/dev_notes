@@ -2087,6 +2087,20 @@ find -size +100M -size -130M -ls # 大于 100M 小于 130M 的文件
 # 列出目录下所有文件, 并按照文件大小排序
 find /etc/ -type f | xargs ls -Sl 
 
+# 动作进阶
+find ./ -name "*.txt" -print0 # 输出不换行, 配合xargs
+find ./ -name "*.txt" -exec cp {} {}-bak \;  # 对每个匹配的文件执行指定的命令
+
+
+
+-delete # 删除匹配到的文件
+-ls # ls -dils 的格式显示匹配的文件
+find ./ -name "*.txt" -ls
+457      4 -rw-r--r--   1 xiao     xiao           70 1月 16 21:46 ./test.txt
+448      4 -rw-r--r--   1 xiao     xiao         2128 1月 16 22:45 ./test_passwd.txt
+462      4 -rw-r--r--   1 xiao     xiao           22 1月 16 23:36 ./number.txt
+
+
 ```
 
 ### xargs
@@ -2115,7 +2129,7 @@ seq 60 | xargs -i -P3 you-get https://www.bilibili.com/video/BV14K11w7uF?p={}
 使用 null 或者 ascii 码中的 0 作为分隔符, 用于规避文件名中的空格, 影响了分隔符
 ```shell
 # -0 xargs 指定 \0 为分隔符
-find -type f print0 | xargs -0 ls -l
+find -type f -print0 | xargs -0 ls -l
 ```
 # 压缩
 - compress 压缩成.z 文件, 效率不高
