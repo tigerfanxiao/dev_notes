@@ -985,6 +985,81 @@ uniq -c text.txt # 计数
 % # 代表全文
 
 ```
+# grep
+- 文本处理三剑客 grep, sed, awk
+- `grep <word> stdin` 如果没有带文件, 那就是用来接收标准输入的
+- 多用于处理标准输出, 而不是文件
+``` shell
+# 使用管道符
+ifconfig eth0 | grep netmask
+
+# 使用标准输入重定向
+grep root < /etc/passwd
+
+# 只看前三个结果
+grep -m3 nologin /etc/passwd
+
+# 不区分大小写
+grep -i ROOT /etc/passwd
+grep -in root /etc/passwd # 结果显示行号
+grep -nir root / # 查询目录中递归
+
+# 取反或者过滤
+grep -v nologin /etc/passwd
+grep -v "#" /etc/fstab # 过滤掉注释行
+
+# 统计出现的次数
+grep -c root /etc/passwd
+
+# 只显示匹配到的字符串
+grep -o root /etc/passwd
+
+grep '^ssh' passwd # 查看ssh开头的行
+grep 'in$' passwd # 查看in结尾的行
+
+# quiet mode, 与 $? 连用, 判断上一个命令是否有返回
+grep -q root /etc/passwd
+if [ $? -eq 0 ]; then # 如果上一条命令返回是0, 则表示成功
+    echo "Command succeeded"
+else
+    echo "Command failed"
+fi
+
+# 了解关联行信息
+# 后续行数
+grep -A3 root /etc/passwd # 在 root 后面的 3 行, After
+# 前多少行
+grep -nB3 root /etc/passwd # Before 并列出行号
+# 前后多少行
+grep -C3 root /etc/passwd 
+
+# 包含多个关键词, 或者关系
+grep -e root -e bash /etc/passwd
+# 包含多个关键词, 并且, 使用两个命令的组合
+grep root /etc/passwd | grep bash
+
+# 如果把过滤条件放入文件(每一行为一个条件, 条件之间是或的关系), 使用这个文件过滤另一个文件. 
+grep -f test.txt /etc/passwd 
+# 快速找出两个文件的相同之处
+grep -f a.txt b.txt 
+
+# 递归查询文件内容, 但不处理软连接
+grep -r root /etc/* # 查询所有文件中的内容
+# # 递归查询文件内容, 处理软连接
+grep -R root /etc/*
+
+
+# 使用命令的结果来搜索
+grep `whoami` /etc/passwd
+grep "$USER" /etc/passwd
+
+# 扩展的正则表达式
+grep -E 
+grep -Ev # 查看变动
+egrep # 扩展的正则表达式, 这个是上面命令的简写
+egrep -v "^#|^*" # 多个条件
+
+```
 
 # Storage
 磁盘类型
