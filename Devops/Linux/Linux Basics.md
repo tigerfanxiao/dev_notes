@@ -521,6 +521,7 @@ chmod +x /usr/bin/chmod
 ```shell
 # 查看 Selinux看是否 Diable
 getenforce
+setenforce # 设置selinux
 
 # 在 selinux 被禁用后, 创建的新标签, 没有这个.
 # 属性中最后又一个.是 selinux 的标签,用下面的命令可以看到
@@ -762,6 +763,227 @@ uname -p
 # 查询操作系统发行版本
 cat /etc/os-release
 lsb_release -a
+```
+
+# Motion 动作
+i = inner 
+a= around
+选中双引号中的所有字符 i"
+选中双引号中的所有字符, 包括双引号本身 a"
+
+选中光标所在的单词 iw
+选中光标所在单词, 包含前后的空格 aw
+选中小括号内的字符 i( 或者 ib
+选中小括号内的字符包含括号本身 a(
+选中花括号内的字符 i{ 或者 iB
+选中 html tag 中的字符 it
+is 句子
+ip 段落
+
+# Vim
+```shell
+# 复制粘贴
+d # 删除选中内容
+dd # 删除一行
+5dd # 删除5行
+5yy # 复制5行
+5p # 粘贴5遍
+```
+
+```shell
+G # 文末
+gg # 文首
+
+vim filename +6 # 定位到指定行数
+vim filename +/sag/ # 定为到关键词
+
+# 搜索 
+/
+# 搜索到之后, n 或者/加回传 往下走 N, 或者?加回车往上走
+:set cul # 辅助线
+:set nu # 显示行号
+# 撤销
+u
+```
+## Visual 模式
+```shell
+v # 进入可视化模式, 选中单个字符
+V # 进入可视化模式, 选中整行
+
+ctrl + v # 纵向光标
+
+viw # 选中一个单词
+vib # 选中括号中的内容
+```
+
+案例: 在选中行的行首快速插入#
+```shell
+20G # 光标移动到 20 行
+ctrl + v
+# 使用方向键选中多行
+I # 进入插入模式
+# # 输入井号键
+ESC # 退出插入模式
+
+# 此时#号被插入多行
+```
+案例: 删除多行注释
+```shell
+20G # 光标移动到 20 行
+ctrl + v
+# 使用方向键选中多行
+d # 直接删除
+```
+### 分屏
+```shell
+ctrl + w + v # 左右分屏
+ctrl + w + s # 上线分屏
+ctrl + w # 在两个分屏之间切换
+
+ctrl + w + q # 删除当前窗口
+ctrl +w + o # 删除所有窗口
+```
+
+## 扩展命令模式
+```shell
+:r <filename> # 将文件内容读到当前文件中
+:w <filename> # 另存为
+!command # 执行命令
+r!command # 读入命令的输出
+```
+
+删除
+```shell
+:2d # 删除第二行
+:2,5d # 删除第二行到第五行
+:.,$d # 删除当前行到结尾
+```
+
+复制
+```shell
+:2,4y # 复制2到 4 行
+y # 复制
+p # 粘贴到光标的行
+P # 粘贴到光标的前一行
+
+:30:r /etc/isse # 在第 30 行读入一个新文件的内容
+```
+搜索替代
+```shell
+:%s/root/ROOT/ # 全文同一行只替代第一个
+:%s/root/ROOT/g # 全文全局替换
+5,12 s/root/ROOT/ # 在一定范围内替换
+
+# 在每一行的行首加#
+:$s/^/#/
+```
+锚定符号
+```shell
+^ # 行首
+$ # 行位
+G # 文末
+gg # 文首
+:8 # 第8行
+
+```
+加行号
+```shell
+:set nu # 显示行号
+:set nonu # 不显示行号
+```
+通过修改 vim 的配置文件加行号
+```shell
+# /etc/vimrc 全局修改
+# ~/.vimrc # 个人的配置
+
+# 在文件中加入
+set nu
+
+```
+忽略大小写
+```shell
+:set ic # igonrecase
+:set noic
+```
+缩进
+```shell
+:set ai # autoindent 自动缩进 默认是 8 个
+:set noai
+:set ts=2 # 这是tab=2个字符的长度
+:set et # 用空格代替tab, 只对修改增加的tab键会转换为空格
+
+:set shiftwidth=4 # 配置缩进为 4 个字符
+>> 缩进
+<< 反缩进
+```
+
+保留格式
+```shell
+:set paste
+```
+显示不可见字符
+```shell
+:set list # tab键是 ^I
+```
+高亮
+```shell
+:set hlsearch 
+:set nohl # 取消高亮
+```
+语法高亮
+```shell
+:set syntax
+```
+把 windows 文件转换为 linux 文件
+- vim会把 windows 格式识别为 dos 文件
+- 使用 `hexdump -C win.txt` 可以看到 `0d 0a`, 如果是 linux 文件不会看到 `0d`
+```shell
+:set ff=unix # 转换为 linux 格式
+:set ff=dos # 转换为 windows 格式
+```
+tab 用空格替代
+```shell
+:set et # extend tab 把 tab 转换为空格, 默认是 8 个空格
+:set ts=4 # 一个 tab 键=4 个空格
+```
+加横线标记
+```shell
+:set cul # cursorline
+```
+加密
+```shell
+:set key=<yourpass>
+:set key= # 清空密码
+```
+
+### CUT
+```shell
+cut -d" " -f5 # 取第5列
+```
+### sort
+```shell
+sort -u # 去除重复行
+sort -r 3 # 降序
+sort -n # 以数字排序
+```
+### uniq
+```shell
+uniq text.txt # 去重连续的数字
+uniq -i text.txt # 大小写不明感
+uniq -c text.txt # 计数
+```
+
+# SED
+```shell
+
+# 行号
+3,7
+3,+5 # 后面5行
+# 关键字
+/str/,/stb/
+,7 # 空代表光标所在行
+% # 代表全文
+
 ```
 
 # Storage
@@ -1781,10 +2003,17 @@ set smtp-auth-user@29355@qq.com
 set smtp-auth-password=dfasdfasdf
 ```
 # 文件搜索
+- 实时查找 find
+- 离线查找 locate
 ### `locate`
 - 搜索速度非常快, 需要首先构建文件索引数据库
 - 搜索依赖于数据库
 ```shell
+# Rocky
+yum install -y mlocate
+# ubuntu
+apt install -y plocate
+
 updatedb # 构建或者更新数据库
 locate <filename> # 搜索文件
 locate -r '\.conf$' # 支持基本正则表达式
@@ -1796,7 +2025,9 @@ locate -r '\.conf$' # 支持基本正则表达式
 - 默认就是递归搜索当前目录下的所有文件
 - 
 ```shell
-find # 
+# 指定文件名来查找 
+find / -name "ni*.txt"
+find / -iname "ni*.txt"
 find /etc/ -maxdeptch 1 # 只搜索目录本身, 算作第一级目录
 find /etc/ -mindeptch 2 # 只搜索第二级
 
@@ -1810,6 +2041,7 @@ find /etc/ -type f -iname "example.txt"
 
 # 文件的所有者, 所属组
 find /var/ -user wang -ls 
+find / -group <groupname>
 find /home -nouser -ls # 搜索没有用户的文件, 用户被删除后遗留下来的
 
 # 搜索文件类型
@@ -1835,7 +2067,9 @@ find -size -6k # (5K, 6K)
 
 # 按照时间搜索
 find /dir/ -atime +30 -delete  # 30 天前触碰过的文件, 删除
+find ./ -amin +5 # 5分钟以前访问的文件
 find -mtime -7 # 过去7天内修改过的文件 
+
 
 # 按照权限搜索
 find -perm 444 # 根据权限来搜索
