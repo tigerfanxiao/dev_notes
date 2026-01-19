@@ -271,7 +271,6 @@ groupdel <groupname>
 - 系统在创建新用户时的行为定义在 `/etc/default/useradd`
 ```shell
 [cloud_user@a130ce37501c ~]$ cd /etc/skel/
-[cloud_user@a130ce37501c skel]$ ls
 [cloud_user@a130ce37501c skel]$ ls -al
 total 24
 drwxr-xr-x.   3 root root   78 Jun 22  2021 .
@@ -788,6 +787,14 @@ dd # 删除一行
 5dd # 删除5行
 5yy # 复制5行
 5p # 粘贴5遍
+
+# 行号
+3,7
+3,+5 # 后面5行
+# 关键字
+/str/,/stb/
+,7 # 空代表光标所在行
+% # 代表全文
 ```
 
 ```shell
@@ -974,16 +981,54 @@ uniq -c text.txt # 计数
 ```
 
 # SED
+- 逐行对文件内容进行操作
 ```shell
+sed 选项参数 数据来源
+sed '1p' text.txt # 打印整个文件, 然后重复打印第一行
+sed -n '5p' test.txt # 只打印第5行
+sed -n '1p;3p' test.txt # 只打印第一行和第三行
+sed -n '1,3p' test.txt # 打印第一行到第三行
 
-# 行号
-3,7
-3,+5 # 后面5行
-# 关键字
-/str/,/stb/
-,7 # 空代表光标所在行
-% # 代表全文
+# 编辑内容, 默认情况下不对文件进行操作
+sed -i 
+sed -a 
+sed '3d' file # 删除第三行
+sed '/str/d' file # 删除str所在行
+sed '3,6d' file # 删除第三行到第六行, 不修改源文件
+sed -i '3,6d' file # 删除第三行到第六行, 修改源文件
+sed -i '/nologin/d' file # 删除 nologin所在的行
 
+sed -i '2a\append_new_content after 2nd line' file
+sed -i '4i\insert new content before 4th line' file
+sed -i '3,6a\add new line to each line' file # 每一行前面增加一行内容
+
+# 替换
+sed -i 's/sed/SED/' file # 替换指定文字, 只替换一行中的第一个位置
+sed -i '2s/sed/SED' file # 只替换第二行
+sed -i 's/sed/SED/g' file # 全文更改
+
+```
+# AWK
+1. 逐行读取, 格式化输出
+2. 默认情况下, 按空格切割成多列
+
+```shell
+awk '范围{print $列数}' sed.txt # 最后一列 $NF, 列数是从1开始的
+awk '{print $(NF-1)}' sed.txt # 倒数第二列
+awk '{print $1,$3}' sed.txt # 第一列和第三列, 使用默认符号拼接(空格)
+awk '/sed2/{print $0}' sed.txt # 打印整行
+# 拼接
+awk '{print $1"---"$3}' sed.txt # 使用特殊符号拼接
+
+# 处理行
+awk 'NR==2{print $1"--"$3}' sed.txt # NR==2 表示第二行
+awk '/keyword/{print $1"--"$3}' sed.txt # 定位到关键词所在行
+
+# 设置分隔符
+awk -F ':' '{print $7}' root.txt
+
+# 前置动作, 核心动作, 后置动作
+awk 'BEGIN{FS=":"}{print $2}END{print "ok"}' root.txt
 ```
 # grep
 - 文本处理三剑客 grep, sed, awk
@@ -1055,10 +1100,20 @@ grep "$USER" /etc/passwd
 
 # 扩展的正则表达式
 grep -E 
-grep -Ev # 查看变动
+grep -Ev '^$|#' keepalived.conf # 查看非空行,也非注释
 egrep # 扩展的正则表达式, 这个是上面命令的简写
 egrep -v "^#|^*" # 多个条件
 
+# 组合
+grep server1.zoo.cfg | sed -r "s/(.*)=(.*):(.*):(.*)/\1/" # 把找到的内容, 替换为第一个匹配到的内容
+
+# 特殊符号
+a? # 0或1次a
+a* # 0或很多次a
+a{n,m} # n到m次
+a[,m] # 最多m次
+a[n,] # 至少n次
+a+ # 至少1次
 ```
 
 # Storage
