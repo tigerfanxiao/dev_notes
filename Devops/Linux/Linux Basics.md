@@ -1127,6 +1127,26 @@ a+ # 至少1次
 - ext 协议有 lost+found
 
 ```shell
+ls /dev # 也可以看到字符设备
+# 设备
+vda, vdb # 在云环境上的虚拟硬盘
+sda, sdb # 机械硬盘
+nvmea, nvmeb # 固态盘
+/dev/null # 黑洞
+/dev/zero 
+
+fdisk -l | grep dev # 查看盘符
+
+df # 分区, 文件系统等信息
+du # 目录的存储空间
+dd # 定制文件, 仅仅是测试用
+lsblk # 
+```
+
+
+
+
+```shell
 # 1. 查看所有硬盘信息, 包括插在设备上的 U盘. 这些硬盘对应文件 /dev/xvdb
 lsblk # 只是查看内存中的分区表
 # 2. 在硬盘上创建分区
@@ -1136,7 +1156,7 @@ p # 主分区， 其他选默认
 w # 保存
 # 3. 更新分区表
 partprobe
-# 4. 在分区上创建文件系统
+# 4. 在分区上创建文件系统, 格式化
 mkfs -t ext4 /dev/xvdb1
 ```
 
@@ -1145,10 +1165,10 @@ mkfs -t ext4 /dev/xvdb1
 2. 创建文件系统
 3. 挂载新的文件系统
 分区的类别
-1. MBR, Master Boot Record 早先的方式, 局限性在单个硬盘不能超过 2T
+4. MBR, Master Boot Record 早先的方式, 局限性在单个硬盘不能超过 2T, 表示为dos
 	1. 分区分为 主分区(最多 4 个),  1 个扩展分区(扩展分区里面再可以分逻辑分区). 
 	2. 主分区和扩展分区加起来不能超过 4 个
-2. GPT, 可以支持 128 个分区, 容量可以达到 8Z (T, P, E, Z, B, Y)
+5. GPT, 可以支持 128 个分区, 容量可以达到 8Z (T, P, E, Z, B, Y)
 	1. 本身会自动备份分区表. ubuntu 上默认使用 GPT
 BIOS 和 UEFI
 - BIOS Basic Input Output System 用于完成硬件的自检和操作系统的引导. 如果硬件自检有问题, 会有报警的声音. 在主板上, 仅仅支持 MBR, 空间只有 1M 内存, 只支持英语
@@ -1165,6 +1185,7 @@ hexdemp -C /data/mbr
 
 # 破坏分区表
 dd if=/dev/zero of=/dev/sda bs=1 count=64 seek=446 # 从目标文件的 447 开始修改
+dd if=/dev/zero of=/dev/sda bs=1M count=1 # 抹除分区表
 ```
 分区工具
 - fdisk 管理 MBR 分区
@@ -2247,6 +2268,8 @@ seq 10 | xargs -n3 # 每行 3 个
 
 # 一次创建 10 个用户
 echo user{1..10} | xargs -n1 useradd # -n1 表示每次输入 1 个参数, 调用 10 次
+
+find *.sh | xargs rename "sh" "SH"
 ```
 一个 python 下载视频工具的案例
 ```shell
@@ -2651,6 +2674,16 @@ method=manual
 ```shell
 systemctl restart NetworkManager
 ```
+### 关闭selinux
+```shell
+
+# /etc/selinux/config
+SELINUX=disabled
+
+# shutdown firewall
+systemctl stop firewalld
+```
+
 
 ### 安装GUI
 ```shell
