@@ -1148,9 +1148,9 @@ lsblk #
 
 ```shell
 # 1. 查看所有硬盘信息, 包括插在设备上的 U盘. 这些硬盘对应文件 /dev/xvdb
-lsblk # 只是查看内存中的分区表
+lsblk -f # 查看硬盘和分区的关系
 # 2. 在硬盘上创建分区
-fdisk /dev/xvdb
+fdisk /dev/sda
 n # 创建新的分区
 p # 主分区， 其他选默认
 w # 保存
@@ -1158,6 +1158,65 @@ w # 保存
 partprobe
 # 4. 在分区上创建文件系统, 格式化
 mkfs -t ext4 /dev/xvdb1
+# 或者, 格式化成功后才能看到uuid
+mkfs.ext4 /dev/sdb1
+mkfs.ext4 -f /dev/sdb1 # 强制格式化, 原来已经被格式化的硬盘
+mke2fs 1.46.5 (30-Dec-2021)
+Creating filesystem with 5242624 4k blocks and 1310720 inodes
+Filesystem UUID: cfc24908-a8dc-4889-a7d5-867f46cee83a
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+# 验证格式化成功, 看uuid
+[root@localhost ~]# lsblk  -f
+NAME        FSTYPE      FSVER            LABEL                UUID                                   FSAVAIL FSUSE% MOUNTPOINTS
+sda
+└─sda1      ext4        1.0                                   cfc24908-a8dc-4889-a7d5-867f46cee83a
+sr0         iso9660     Joliet Extension Rocky-9-4-x86_64-dvd 2024-05-05-01-12-25-00
+nvme0n1
+├─nvme0n1p1 xfs                                               99cb0ca4-fd80-4a51-b3ea-12444114719d    656.7M    32% /boot
+└─nvme0n1p2 LVM2_member LVM2 001                              C2dNrC-XyBX-zFFx-sFKu-KpJW-wbrS-9ihn1T
+  ├─rl-root xfs                                               c93be473-47b7-4861-af33-9135d6b368b7     65.3G     7% /
+  ├─rl-swap swap        1                                     c6936202-414a-4610-b57d-02ac62fca83f                  [SWAP]
+  └─rl-home xfs                                               c9d94182-0c7c-42b5-8c96-64381f171310    124.1G     1% /home
+
+# 挂载
+mount -t 文件系统类型 /dev/sda1 /path/to/dir
+# 或者推荐使用
+mount /dev/sda1 /path/to/dir
+
+# 查看现在被挂在这的目录
+mount
+
+# 卸载
+umount /dev/sdb1
+umount /path/to/dir
+
+# 永久挂载, 在os启动时,自动挂载
+[root@localhost ~]# blkid # 查询格式化后的信息uuid
+/dev/mapper/rl-swap: UUID="c6936202-414a-4610-b57d-02ac62fca83f" TYPE="swap"
+/dev/nvme0n1p1: UUID="99cb0ca4-fd80-4a51-b3ea-12444114719d" TYPE="xfs" PARTUUID="1d6de9ac-01"
+/dev/nvme0n1p2: UUID="C2dNrC-XyBX-zFFx-sFKu-KpJW-wbrS-9ihn1T" TYPE="LVM2_member" PARTUUID="1d6de9ac-02"
+/dev/sdb1: UUID="16848623-6880-406e-a8fe-7a7a8a914764" TYPE="xfs" PARTUUID="695c9a0f-01"
+/dev/sr0: UUID="2024-05-05-01-12-25-00" LABEL="Rocky-9-4-x86_64-dvd" TYPE="iso9660" PTUUID="849e8820" PTTYPE="dos"
+/dev/mapper/rl-home: UUID="c9d94182-0c7c-42b5-8c96-64381f171310" TYPE="xfs"
+/dev/mapper/rl-root: UUID="c93be473-47b7-4861-af33-9135d6b368b7" TYPE="xfs"
+/dev/sda1: UUID="cfc24908-a8dc-4889-a7d5-867f46cee83a" TYPE="ext4" PARTUUID="b6412df1-01"
+
+# 修改 /etc/fstab
+# defaults 表示默认挂载方式 0 表示是否需要每天备份, 第二个0 要不要自检
+/dev/sda1     /mnt                   ext4     defaults        0 0
+/dev/sdb1     /mnt                   xfs     defaults        0 0
+
+mount -a # 重新mount
+
+
 ```
 
 硬盘处理三个步骤
@@ -1197,11 +1256,22 @@ dd if=/dev/zero of=/dev/sda bs=1M count=1 # 抹除分区表
 fdisk /dev/sdb
 # 进入交互式界面
 m # 帮助
-p # 打印现有的分区
-n # 创建
-d # 删除
+p # 查看现有的分区
+n # 创建分区
+d # 删除分区
 w # 存盘退出
 q # 不存盘退出
+
+# 创建了3个主分区和1个扩展分区. 在扩展分区里面有2个逻辑分区
+Device     Boot   Start      End  Sectors Size Id Type
+/dev/sda1          2048  2099199  2097152   1G 83 Linux
+/dev/sda2       2099200  4196351  2097152   1G 83 Linux
+/dev/sda3       4196352  6293503  2097152   1G 83 Linux
+/dev/sda4       6293504 41943039 35649536  17G  5 Extended
+/dev/sda5       6295552  8392703  2097152   1G 83 Linux
+/dev/sda6       8394752 10491903  2097152   1G 83 Linux
+
+
 ```
 ### 文件系统
 文件系统就是组织和管理文件的一种方式
@@ -1301,8 +1371,9 @@ sed -i.bak `/swap/s@^@#@` /etc/fstab
 ```
 
 ```shell
-# 禁用所有 swap
+# 临时禁用所有 swap
 swapoff -a 
+free -m # 查看是否禁用
 # 启用 swap
 swapon -a
 # 查看本机 swap
@@ -1338,8 +1409,10 @@ mv /swapfile /dtat/
 /etc/swapfile      none      swap    default     0 0
 swapon -a # 启用
 
-# 修改使用 swap 的阈值
-cat /proc/sys/vm/swappiness
+# 修改使用 swap 的阈值, 值越高表示倾向于使用swap, 值越低表示不使用swap
+cat /proc/sys/vm/swappiness # 注意, 这不是一个文件. 没有文件的实体
+echo 0 > /proc/sys/vm/swappiness # 可以通过这种方式来修改
+
 sysctl -a | grep swappiness # 查看阈值
 vim /etc/sysctl.conf # 在文件中添加
 vm.swappiness = 30 # 可以修改为 0
@@ -1461,8 +1534,8 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 - 是一种软件技术, 可以用来动态扩缩容
 - 首先为每一个 Linux 块设备(分区或者硬盘)分配一个物理卷的标签. 和 RAID 不同的是, 块设备可以是不同大小的
 - 由多个物理卷组成一个虚拟卷组 Volume Group
-- VG Volume group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的
-- LV Logical volume 虚拟卷. 这个就是独立的分区了
+- VG Volume group 虚拟卷组, 这个组里面可以有多个虚拟卷. 每个卷如果磁盘的分区, 是相互独立的. PV是可以加到VG里, 实现扩缩容的
+- LV Logical volume 虚拟卷. 这个就是独立的分区了, 可以挂载到目录下. 注意LV是可以动态扩缩容的
 - 在生产中, 对根目录扩容是比较常见的
 ![[Pasted image 20250316073317.png]]
 分区的类型
@@ -1474,6 +1547,67 @@ alias scandisk="echo '- - -' > /sys/class/scsi_host/host0/scan;echo '- - -' > /s
 # 安装 LVM 工具
 yum -y install lvm2
 
+# 命令汇总
+pvs
+vps
+lvs
+pvdisplay 
+vgdisplay rl
+lvdisplay /dev/rl/home
+pvcreate # pvcreate /dev/sd{c,d,e}1
+vgcreate # vgcreate -s 16M testvg /dev/sd{a,b}1
+lvcreate # lvcreate -l 100 -n lv1 testvg # 100个PE块, 名字是lv1
+pvremove
+vgremove
+lvremove
+lvscan # 查看所有lv
+
+# 扩容, 先扩lv, 在扩文件系统
+vgextend testvg /dev/sdd1 # 给vg添加pv 分两步
+lvextend -L +1G /dev/testvg/lv1 # 给testvg的lv1扩容1个G, 还需在文件系统中增加
+resize2fs /dev/testvg/lv1 # lv已经增加了1G, 在文件系统中要resize
+# 把所有VG所有的给lv, 一步到位
+lvresize -r -l +100%FREE /dev/testvg/lv1 
+
+# 缩容, 先缩文件系统, 在缩lv
+umount /dev/testvg/lv1 # 必须要退出 /mnt1 挂载的目录才能做umount
+e2fsck -f /dev/testvg/lv1 # 检查文件系统
+resize2fs /dev/testvg/lv1 3G # 文件系统缩容到3G
+lvreduce -L 3G /dev/testvg/lv1 # lv缩容到3G
+mount /dev/testvg/lv1 /mnt1 # 重新挂载 
+
+# 卸载
+umount /dev/testvg/lv1
+lvremove /dev/testvg/lv1
+lvremove /dev/testvg/lv2
+lvremove /dev/testvg/lv3
+lvremove /dev/testvg/lv4
+lvs
+vgremove testvg
+pvremove /dev/sd{a..e}1
+
+# lv的路径格式
+/dev/vg名字/lv名字
+lvdisplay # 查看lv详情
+[root@localhost ~]# lvdisplay /dev/rl/home
+  --- Logical volume ---
+  LV Path                /dev/rl/home
+  LV Name                home
+  VG Name                rl
+  LV UUID                NuZ61m-kZpM-clRR-GU6d-fiUo-rvjD-JHSVRJ
+  LV Write Access        read/write
+  LV Creation host, time localhost.localdomain, 2026-01-17 11:55:46 +0100
+  LV Status              available
+  # open                 1
+  LV Size                <125.08 GiB
+  Current LE             32020
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:2
+
+
 # 创建物理卷
 pvcreate /dev/sdb1 /dev/sdc # 这个命令可以单独敲
 pvs # 查看物理卷
@@ -1483,17 +1617,41 @@ pvdisplay # 查看物理卷详情
 vgcreate -s 16M vg_name /dev/sd{b1,c}  # -s 指定 PE 大小为 16M
 # 查看 vg
 vgs
+[root@localhost ~]# vgdisplay testvg
+  --- Volume group ---
+  VG Name               testvg
+  System ID
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               <39.97 GiB
+  PE Size               16.00 MiB
+  Total PE              2558
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       2558 / <39.97 GiB
+  VG UUID               7zm1sf-dIfN-d4IV-CWAe-GVHZ-Y6MF-inewiL
+
 
 # 创建逻辑卷
 lvcreate -n <lv_name> -L 6G <vg_name> # 针对数据库进行扩容, -l表示 PE 的个数, -L 指定容量
+lvcreate -n <lv_name> -l 20%free <vg_name>  # 从空闲的空间创建百分比
+lvcreate -n <lv_name> -l 10%VG <vg_name> # 从VG的10%创建
 # 查看逻辑卷
-lvdisplay
+lvs
 # 可以发现有三个名字对应逻辑卷
 /dev/testvg/log_lv
 /dev/mapper/testvg-log_lv
 ../dm-1
 
-# 创建文件系统
+# 格式化
 mkfs.ext4 /dev/testvg/mysql_lv
 # 查看文件系统
 blkid
@@ -2348,7 +2506,7 @@ tar xf file.tar.xz -C <target_dir> # 通用解压 gz, bzip, xz 文件
 split -b 1M -d filename filename_suffix # -d 表示数字小编号, 每个文件切成 1M
 cat filename* > filename # 合并这些文件
 ```
-# Package Management
+# Package Management 软件管理
 ```shell
 whereis ls # 查看命令的地址
 whatis # 命令是什么, 一句话解释
@@ -2359,6 +2517,11 @@ cmd --hel
 help cmd
 ```
 
+- 在rocky中使用 rpm 离线安装
+	- yum 在线安装
+	- dnf 现在用的多, 从rocky10后都改dnf
+- ubuntu 使用deb, dpkg 离线安装
+	- apt 在线安装
 
 `/etc/apt/sources.list.d/ubuntu.sources` ubuntu 的库文件内容
 ```shell
@@ -2401,11 +2564,13 @@ ldd /usr/bin/ls
 
  包管理器
  - 安装是二进制可执行命令
- - rpm 命令不能解决包的依赖关系, yum 可以
+ - rpm 是离线安装命令, 不能解决包的依赖关系, yum 可以
  - 安装和卸载都有依赖关系
 ```shell
-# 下面这个命令不能解决依赖关系, 很少用
+# 下面这个命令不能解决依赖关系, 很少用, 多用于查询
 rpm -ivh <package_path> # -h 安全进度条
+rpm -e # 卸载, 不太使用
+
 # 查询软件是否已经成功装上
 rpm -q <package_name>
 # 查询软件的版本, 描述, 安装时间
@@ -2415,7 +2580,6 @@ rpm -qpi <package_name>
 rpm -ql <package_name> # 查询包里的文件
 rpm -qf /etc/passwd # 查看文件属于哪个包
 rpm -q vstfd || yum vstfd
-rpm -e # 卸载, 不太使用
 
 ```
 镜像仓库
