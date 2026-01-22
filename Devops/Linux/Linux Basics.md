@@ -567,8 +567,53 @@ echo -e "\e[43;37m 黄底白字 \e[0m" # 这里用 \e 代替 \33
 echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
 ```
 # Shell
+- shell 是命令解释器
+- shell命令的逐行执行的
+
+执行方式
+```shell
+/bin/bash file.sh
+file.sh # chmod +x file.sh
+source file.sh # 常用于加载环境变量
+/bin/bash -x file.sh # 调试, 推荐
+/bin/bash -n file.sh # 检查语法错误
+/bin/bash -v file.sh # 先显示脚本内容, 再显示语法错误
+
+```
 ### 环境变量
 ```shell
+# 查看环境变量
+echo $变量名
+env
+declare # 用于数组
+
+# 环境变量的分类
+# 普通环境变量
+# 1. 普通样式环境变量 - 范围是当前终端, 终端没了就没了
+变量名=变量值 # 变量值范围中不允许出现特殊符号
+变量名='变量值' # 特殊符号会按照源字符输出
+变量名="变量值" # 可以解析 变量
+
+# 2. 命令样式的环境变量
+变量名=`命令`
+变量名=$(命令)
+# 全局环境变量
+export 变量名=变量值 # 声明为全局变量, 在env中有, 属于环境变量了
+# 删除环境变量
+unset 变量名
+
+# 系统级别的变量
+/etc/profile
+/etc/profile.d/xxx.sh
+/etc/bashrc # 系统用户级别
+# 在上面几个文件定制环境变量 export var=value
+
+# 用户级别
+~/.bashrc
+~/.bash_profile
+
+
+内置环境变量 - bash
 $SHELL # 使用哪一种 Shell
 $PS1 # 用户登录后的提示符
 $PATH # 外部命令的搜索路径
@@ -2541,6 +2586,35 @@ name=aliyun - AppStream
 baseurl=https://mirrors.aliyun.com/rockylinux/10/AppStream/x86_64/os/
 gpgcheck=0
 
+[xiao@localhost ~]$ yum makecache
+Repository baseos is listed more than once in the configuration
+Repository appstream is listed more than once in the configuration
+aliyun - BaseOS                                                     860 kB/s | 7.6 MB     00:09
+aliyun - AppStream                                                  593 kB/s | 2.1 MB     00:03
+Rocky Linux 10 - Extras                                              15 kB/s | 5.9 kB     00:00
+Metadata cache created
+
+# 查看本机上有哪些仓库
+yum repolist 
+# 可以查看到仓库里是否有这个包
+[xiao@localhost ~]$ yum list | grep nginx
+
+# 定制一个local的 repo
+mount /dev/cdrom /mnt
+vim local.repo 
+
+[baseos-local]
+name=aliyun - BaseOS
+baseurl=file:///mnt/BaseOS
+gpgcheck=0
+
+[appstream-local]
+name=aliyun - AppStream
+baseurl=file:///mnt/AppStream
+gpgcheck=0
+
+yum makecache
+yum repolist
 ```
 
 `/etc/apt/sources.list.d/ubuntu.sources` ubuntu 的库文件内容
@@ -2561,8 +2635,6 @@ Components: main universe restricted multiverse
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 ```
 keyrings 的存储地方 `/usr/share/keyrings/ubuntu-archive-keyring.gpg`
-
-
 
 - 大量的软件可能是没有包的, 只是提供了源码, 需要编译安装
 - ABI 应用程序的二进制接口. windows 和 linux 的二进制程序默认是不兼容的
@@ -2589,11 +2661,14 @@ ldd /usr/bin/ls
 ```shell
 # 下面这个命令不能解决依赖关系, 很少用, 多用于查询
 rpm -ivh <package_path> # -h 安全进度条
-rpm -e # 卸载, 不太使用
+rpm -evh # 卸载, 不太使用
+
 
 # 查询软件是否已经成功装上
 rpm -q <package_name>
 rpm -ql vsftpd # 查看软件安装在哪些目录下
+rpm -qf /etc/passwd # 查看文件属于哪个包
+rpm -qi <package_name> # 查询软件的版本, 描述, 安装时间
 
 # 反查某个已经安装的工具, 在哪个软件包里
 [root@localhost ~]# whereis whoami
@@ -2602,18 +2677,36 @@ whoami: /usr/bin/whoami /usr/share/man/man1/whoami.1.gz
 [root@localhost ~]# rpm -qf /usr/bin/whoami 
 coreutils-9.5-6.el10.x86_64
 
-
-rpm -qf /etc/passwd # 查看文件属于哪个包
-
-# 查询软件的版本, 描述, 安装时间
-rpm -qi <package_name>
 # 查询没有安装的包
 rpm -qpi <package_name>
 
-
 rpm -q vstfd || yum vstfd
-
 ```
+
+dpkg 用于ubuntu
+```shell
+dpkg -i # install
+dpkg -l vsftpd # 查看是否安装
+dpkg -r vsftpd # remove 
+dpkg -L vsftpd # 查看安装路径
+dpkg -S /usr/bin/whoami # 根据命令路径查看包名
+
+apt update # 更新源信息
+apt clean # 清除之前的缓存
+# 软件源
+/etc/apt/sources.list # 主文件
+/etc/apt/sources.list.d/xxx.list # 子文件, 可以不存在
+
+# 在新的ubuntu中, 在用 /etc/apt/sources.list.d/ubuntu.sources 文件中编辑软件仓库
+# 可以通过重命名来禁用后, 只使用/etc/apt/sources.list 来管理, 否则会造成两者冲突, 但是使用sources.list 是一种相对的传统的方式
+apt search nginx 
+apt-cache madison nginx # 只看这一个软件的版本列表
+apt remove appname # 不会基础依赖
+apt purge appname # 会移除配置文件
+apt purge appname* # 会移除配置文件
+find / -name 软件名 | xargs rm -rf # 删除相关文件
+```
+
 镜像仓库
 ```shell
 cd /etc/yum.repos.d/
@@ -2692,10 +2785,120 @@ yum install sl -y
 ```
 在公司内部搭建私有仓库服务器
 
+检查安装好的程序, 有没有启动
+1. 看端口
+2. 查进程
+3. 查服务
+	1. rocky 系统, 软件安装完成后, 如果有服务的话, 默认不启动
+	2. ubunut 系统, 默认是启动的
+
+二进制包
+- 安装方便, 管理不方便
+管理方便
+- 源码包
+- 安装不方便
+- 安装后, 所有的文件都在一起
+
+
+```shell
+systemctl status appname # 查服务
+
+# 安装编译环境
+apt install build-essential gcc g++ libc6 libc6-dev libpcre3 libpcre3-dev libssl-dev libsystemd-dev zlib1g-dev
+# 下载 nginx
+
+# 使用 configure 配置安装文件, 生成Makefile文件, 并指定安装目录
+./configure --prefix=/data/server/ngnix
+
+# 编译软件
+make
+# 安装软件
+make install
+
+# 启动nginx
+/data/server/nginx/sbin/nginx
+# 检查进程看
+ps aux | grep nginx
+apt install curl
+curl localhost
+
+apt install bind9 # 包的名字
+systemctl status named # 服务的名字
+
+```
+### systemctl
+
+```shell
+systemctl start
+systemctl stop
+systemctl restart # 重启, 杀死旧的进程
+systemctl reload # 重载, 不杀死进程, 直接加载变动的配置, 使立刻生效
+systemctl status ngnix
+systemctl is-active nginx # 查看服务是否启动
+systemctl enable # 设置开机自启动
+systemctl is-enabled nginx # 查看是否设置为开机启动
+systemctl disable nginx # 禁用开机启动
+systemctl cat nginx# 看服务文件内容
+
+# 每个服务有专用的服务配置文件, 如果立刻要让systemctl知道, 等于上户口 
+systemctl daemon-reload
+
+# 服务常见的路径
+/etc/systemd/system
+/usr/lib/systemd/system # 多用这个目录
+/lib/systemd/system
+# 服务文件的名字是用 xxx.service 
+# 服务文件内容: [unit], [service], [install]
+root@ubuntu24-13:~/nginx-1.29.4# cat /etc/systemd/system/bind9.service
+[Unit] # 描述性信息
+Description=BIND Domain Name Server
+Documentation=man:named(8)
+After=network.target
+Wants=nss-lookup.target
+Before=nss-lookup.target
+
+[Service] # 服务启动的配置信息
+Type=notify
+EnvironmentFile=-/etc/default/named
+ExecStart=/usr/sbin/named -f $OPTIONS
+ExecReload=/usr/sbin/rndc reload
+ExecStop=/usr/sbin/rndc stop
+Restart=on-failure
+
+[Install] # 希望被谁管理
+WantedBy=multi-user.target
+Alias=bind9.service
+
+# 定制自己的ngnix服务
+vim /etc/systemd/system/nginx.service
+[Unit]
+Description=Nginx server
+After=network.target
+
+[Service]
+ExecStart=/data/server/ngnix/sbin
+ExecStop=/data/server/ngnix/sbin -s stop
+ExecReload=/data/server/ngnix/sbin -s reload
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+
+# reload
+systemctl daemon-reload
+
+```
+
+```shell
+init 3 # 这里的3 是systemd 里面的服务的运行级别, 每个服务都是一个目标 target, 如何把服务分组管理, 每个小组都是运行级别, 这些级别就是0, 1, 2, 3,4, 5, 6, 其中 3是文字级别, 5是图形级别
+
+# 图形级别 = 文字级别 + 图形服务
+# 文字级别: multi-users 图形服务 graphical
+```
 # 网络
 
 ```shell
-# 需要安装 net-tools 才能使用 mii-tool
+# 需要安装 net-tools 才能使用 mii-tool, netstat
 apt install net-tools
 # mii-tools 查看网卡状态
 mii-tool ens33
@@ -2704,6 +2907,9 @@ ens33: negotiated 1000baseT-FD flow-control, link ok
 # 查看网卡详细状态, 速率
 ethtool ens33 
 ethtool -i ens33 # 查看网卡型号
+
+# 查看端口号
+netstat -tnulp | grep nginx
 ```
 ### 修改网卡名
 ```shell
