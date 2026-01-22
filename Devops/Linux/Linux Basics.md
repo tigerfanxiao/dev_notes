@@ -2523,6 +2523,26 @@ help cmd
 - ubuntu 使用deb, dpkg 离线安装
 	- apt 在线安装
 
+```shell
+yum makecache # 更新软件源的缓存信息
+# 软件源的缓存信息保存在 /etc/yum.conf 主配置文件, 基本不做修改
+# /etc/yum.conf.d/xxx.repo 定制的软件源配置文件
+vim /etc/yum.conf.d/rocky.repo
+
+# 定制软件源 aliyun.repo
+# 指定的路径必须能找到repodata
+[baseos]
+name=aliyun - BaseOS
+baseurl=https://mirrors.aliyun.com/rockylinux/10/BaseOS/x86_64/os/
+gpgcheck=0
+
+[appstream]
+name=aliyun - AppStream
+baseurl=https://mirrors.aliyun.com/rockylinux/10/AppStream/x86_64/os/
+gpgcheck=0
+
+```
+
 `/etc/apt/sources.list.d/ubuntu.sources` ubuntu 的库文件内容
 ```shell
 Types: deb
@@ -2573,12 +2593,24 @@ rpm -e # 卸载, 不太使用
 
 # 查询软件是否已经成功装上
 rpm -q <package_name>
+rpm -ql vsftpd # 查看软件安装在哪些目录下
+
+# 反查某个已经安装的工具, 在哪个软件包里
+[root@localhost ~]# whereis whoami
+whoami: /usr/bin/whoami /usr/share/man/man1/whoami.1.gz
+# 通过工具所在文件的路径来反查软件包的名字 
+[root@localhost ~]# rpm -qf /usr/bin/whoami 
+coreutils-9.5-6.el10.x86_64
+
+
+rpm -qf /etc/passwd # 查看文件属于哪个包
+
 # 查询软件的版本, 描述, 安装时间
 rpm -qi <package_name>
 # 查询没有安装的包
 rpm -qpi <package_name>
-rpm -ql <package_name> # 查询包里的文件
-rpm -qf /etc/passwd # 查看文件属于哪个包
+
+
 rpm -q vstfd || yum vstfd
 
 ```
@@ -2847,20 +2879,13 @@ SELINUX=disabled
 # shutdown firewall
 systemctl stop firewalld
 ```
-
-
 ### 安装GUI
 ```shell
 yum grouplist
 yum groupinstall "带 GUI 的服务器"
-sudo dnf update # dnf 是yum 的升级版本
-sudo yum update # 软件依赖升级
-
-yum makecache # 更新软件源信息
-
+sudo dnf update # dnf 是yum 的升级版本 或者 sudo yum update # 软件依赖升级
+yum makecache # 更新软件源信息, 这里是安全的, 不会安装和更新任何包, 只有meta data的更新
 ```
-
-
 
 2. 最小化安装
 3. 关闭防火墙
