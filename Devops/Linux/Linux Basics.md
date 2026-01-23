@@ -578,7 +578,8 @@ source file.sh # 常用于加载环境变量
 /bin/bash -x file.sh # 调试, 推荐
 /bin/bash -n file.sh # 检查语法错误
 /bin/bash -v file.sh # 先显示脚本内容, 再显示语法错误
-
+# 带参数执行
+/bin/bash /path/to/file arg1 arg2 arg3
 ```
 ### 环境变量
 ```shell
@@ -608,18 +609,43 @@ unset 变量名
 /etc/bashrc # 系统用户级别
 # 在上面几个文件定制环境变量 export var=value
 
+# 内置变量
+man bash # 有说明
+$0 # 当前执行的shell脚本文件名
+$1 # 第一个参数, 第二个参数是$2
+$# # 当前shell命令的参数总数
+$? # 获取上一个指令的返回值 0为成功, 非零为失败
+# 字符串
+${ver_name:其实位置:截取长度}
+${ver_name:0-5:5} # 从倒数第5个数开始,取5个
+${#ver_name} # 字符串的长度
+
 # 用户级别
 ~/.bashrc
 ~/.bash_profile
 
+# 局部变量
+local var=value
 
 内置环境变量 - bash
 $SHELL # 使用哪一种 Shell
 $PS1 # 用户登录后的提示符
 $PATH # 外部命令的搜索路径
 $PS2 # 输入命令时的提示符变化 >
-```
 
+# 获取用户输入
+read -p "please input your name" username
+```
+计算表达式
+```shell
+$[]
+let
+expr
+echo "2+3" | bc
+
+
+
+```
 内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
 外部命令: 有独立的磁盘文件, 需要从磁盘中读取的命令, 理论上说速度慢
 > 有的命令可能即是内部命令, 优势外部命令. 
