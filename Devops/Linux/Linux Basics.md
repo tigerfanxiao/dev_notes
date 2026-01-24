@@ -745,6 +745,94 @@ socket
 内存溢出 OOM out of memory, 内存不足
 - 原本内存是需要20M内存, 但是实际使用超20M, 比如无限循环, 就是溢出. 造成程序死亡
 
+```shell
+lsof # 查看进程打开的文件
+lsof -Pti :80 # 查看在使用80端口的进程
+lsof | head # 列出所有被打开的文件
+
+# 查看哪个程序在使用指定文件
+root@ubuntu24-13:~# lsof /usr/sbin/nginx
+COMMAND  PID     USER  FD   TYPE DEVICE SIZE/OFF    NODE NAME
+nginx   1140     root txt    REG    8,2  1313752 8273989 /usr/sbin/nginx
+nginx   1141 www-data txt    REG    8,2  1313752 8273989 /usr/sbin/nginx
+nginx   1142 www-data txt    REG    8,2  1313752 8273989 /usr/sbin/nginx
+
+```
+杀死进程
+```shell
+kill -9 pid # 杀死单个进程
+killall
+pkilll # 连个命令都可以根据进程的名字来删除
+
+# 在后端运行
+sleep 1000 & # 如果终端关闭, 进程也会关闭
+jobs 3 # 查看扔到后台的进程
+
+nohup sleep 1000 >>/dev/null 2>&1 & # 不和终端绑定
+
+ctrl + z # 可以把正在前台执行的程序扔到后台
+bg # 扔到后面的进程, 可以通过bg查看进程号
+fg %1# 把扔到后台的进程再拿到前台来, 这里1 是任务列表的序号, 这里%可以省略
+kill %1 # 通过任务需要把进程干掉, 注意这个时候通过进程ID是干不掉这个进程的
+
+uptime # 查看开机多久了
+w # 查看所有登录的用户
+```
+并行执行
+```shell
+f1.sh&
+f2.sh&
+f3.sh&
+wait 
+# 测试并行的需要多少时间
+time /bin/bash bing.sh
+```
+
+定时任务 - 守护进程
+- atd 一次性服务
+- crond 周期行任务
+	- 系统级别的周期性任务, 需要增加个人标识
+	- 用户级别的周期性服务
+```shell
+# 一次性任务
+apt install at
+systemctl status atd # 查看守护进程
+
+dpkg -L at # 查看工具安装的所有目录
+/var/spool/cron/atjobs # ubuntu手工定制好的任务在这里
+/var/spool/cron # rocky 的任务在这里
+/etc/at.deny # 黑名单
+
+at now + 5 minutes
+at now + 1 hour
+at now + 3 day
+
+at 02:00 2016-09-20
+ctrl + D # 退出, 执行命令内容保存在上面的目录里
+at -l # 查看任务
+at -d 2 # 删除任务, 2 是任务的编号
+apt install crond 
+
+```
+cron
+```shell
+/etc/crontab  # 主配置文件
+/etc/cron.d # 子配置文件
+
+* * * * *  # 每分钟执行一次
+1 2 * * *  # 每天凌晨2点01分执行
+*/5 * * * # 每5分钟
+1-5 2-6 * * * # 每天的2-6时, 第1到第5分钟, 每分钟一次
+
+
+crontab # 命令级别的周期任务
+vim /etc/crontab # 全局级别的任务
+/var/log/cron # 如果有时间定制的冲突, 会有日志
+crontab -l # 查看全局的任务
+crontab -u username -l # 查看指定用户的任务
+crontab -e # 用户级别的定时任务
+```
+
 
 命令的执行顺序： Shell 会先查看命令别名， 然后内存中寻找内部命令, 如果找不到, 最后就在环境变量 Path 中定义的目录中找
 ```shell
@@ -2693,7 +2781,7 @@ help cmd
 ```shell
 yum makecache # 更新软件源的缓存信息
 # 软件源的缓存信息保存在 /etc/yum.conf 主配置文件, 基本不做修改
-# /etc/yum.conf.d/xxx.repo 定制的软件源配置文件
+# /etc/yum.repos.d/xxx.repo 定制的软件源配置文件
 vim /etc/yum.conf.d/rocky.repo
 
 # 定制软件源 aliyun.repo
@@ -3264,3 +3352,12 @@ CentOS7: BaseOs, epel
 6. 常用软件
 ```shell
 yum -y install bash-completion psmisc lzsz tree man-pages redhat-lsb-core zip unzip bzip2 wget tcpdump ftp rsync wim lsof
+
+```
+
+
+# 内核
+```shell
+lsmod
+
+```
