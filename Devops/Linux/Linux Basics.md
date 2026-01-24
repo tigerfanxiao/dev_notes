@@ -702,10 +702,49 @@ clone
 
 pstree -p  # 1号进程是systemd 或者叫 init(Centos7之前)
 
+ls /proc/进程号 # 里面exe是主程序, status 是进程的状态
+
+
 ```
 内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
 外部命令: 有独立的磁盘文件, 需要从磁盘中读取的命令, 理论上说速度慢
 > 有的命令可能即是内部命令, 优势外部命令. 
+
+进程通信的方式
+- 管道符
+- 信号
+- 共享内容
+- socket
+
+命令优先级
+- 优先级越高的进程, 系统会默认多分配一些时间分片
+- 用户自己的程序的优先级 -20 到 19 , 默认情况下是0
+- 有系统进程的优先级0-100
+```shell
+# 查看当前进程优先级
+root@ubuntu24-13:~# ps axo pid,cmd,nice | head
+    PID CMD                          NI
+      1 /sbin/init splash             0
+      2 [kthreadd]                    0
+      3 [pool_workqueue_release]      0
+      4 [kworker/R-rcu_g]           -20
+      5 [kworker/R-rcu_p]           -20
+      6 [kworker/R-slub_]           -20
+      7 [kworker/R-netns]           -20
+     11 [kworker/u256:0-ext4-rsv-co   0
+     12 [kworker/R-mm_pe]           -20
+     
+# 修改进程优先级
+nice -n -9 ping 8.8.8.8
+
+```
+socket
+- 对于网络来说, 进程是有port端口来标识的. 也就说ip:port定义了进程的接口. 这个ip:port的组合在内部抽象成一个socket, 也就是说我们只需要和socket通信, 即使ip:port变动了
+内存泄漏
+- 进程执行完了, 为进程开辟的资源没有收回来. 可用的内存空间少了, 该收回来的没有收回来,就是内存的泄漏
+内存溢出 OOM out of memory, 内存不足
+- 原本内存是需要20M内存, 但是实际使用超20M, 比如无限循环, 就是溢出. 造成程序死亡
+
 
 命令的执行顺序： Shell 会先查看命令别名， 然后内存中寻找内部命令, 如果找不到, 最后就在环境变量 Path 中定义的目录中找
 ```shell
@@ -2741,6 +2780,7 @@ ldd /usr/bin/ls
  - 安装是二进制可执行命令
  - rpm 是离线安装命令, 不能解决包的依赖关系, yum 可以
  - 安装和卸载都有依赖关系
+ - 对于rocky来说还有epel软件源
 ```shell
 # 下面这个命令不能解决依赖关系, 很少用, 多用于查询
 rpm -ivh <package_path> # -h 安全进度条
@@ -3052,10 +3092,34 @@ sudo netplan apply
 # 进程
 
 ```shell
-ps -aux 
+# 查看进程解构, 包含线程
 pstree -p # 查看进程树, 子进程
+pstree username # 查看只属于某个用户的进程
+pstree -p pid # 只看一个进程
+pstree -p | grep 进程名 # 查询某个进程
 
+# 查看进程状态
+ps -auxf # a 表示所有终端中的进程, x 包括不连接终端的进程, u 进程所有者的信息, f 展示进程之间的关系
+
+ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,comm | head # 自己定义进程的列
 echo $BASHPID # 查看 bash 进程的 ID
+
+# 看细节, 看哪个程序占用的资源多
+top 
+top -n 1 # 刷新一次的数据
+top -n 3 # 刷新3次数据
+top -d 1 # 指定刷新频率为1秒, 默认为3秒
+# top 的交互式命令, 只能按一次
+P # cpu 排序
+M # 内存排序
+N # 进程降序
+T # 时间排序
+O %CPU>0.1# 根据关键排序
+
+
+vmstat # 整体
+vmstat -n 1 # 每秒刷新
+iostat # 看输入输出 ubuntu有, rocky没有
 
 
 ```
