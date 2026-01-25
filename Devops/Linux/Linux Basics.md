@@ -3107,6 +3107,9 @@ init 3 # 这里的3 是systemd 里面的服务的运行级别, 每个服务都�
 # 文字级别: multi-users 图形服务 graphical
 ```
 # 网络
+- 网络命令
+- 网络高可用
+- 网络测试
 
 ```shell
 # 需要安装 net-tools 才能使用 mii-tool, netstat
@@ -3121,6 +3124,10 @@ ethtool -i ens33 # 查看网卡型号
 
 # 查看端口号
 netstat -tnulp | grep nginx
+
+ss
+route
+
 ```
 ### 修改网卡名
 ```shell
@@ -3357,7 +3364,44 @@ yum -y install bash-completion psmisc lzsz tree man-pages redhat-lsb-core zip un
 
 
 # 内核
+- 内核的参数只有查看和修改
 ```shell
-lsmod
+# 内核参数
+CONFIG_EXT4_FS=y # build-in 默认在启动的时候就加载
+CONFIG_USB_SERIAL=m # 需要的时候才加载
+CONFIG_SOME_FEATURE=n # disabled
+
+```
+
+
+```shell
+lsmod # 查看当前安装的内核模块
+modeinfo ipip # 查看模块信息, 依赖
+insmod # 手工解决依赖
+insmod /lib/modules/5.15.0-119-generic/kernel/net/ipv4/ip_tunnel.ko
+insmod /lib/modules/5.15.0-119-generic/kernel/net/ipv4/tunnel4.ko
+insmod /lib/modules/5.15.0-119-generic/kernel/net/ipv4/ipip.ko
+rmmod ipip # 删除模块
+
+modprobe ipip # 自动安装, 解决模块依赖的问题
+
+# 管理linux内核参数
+sysctl -a # 查看参数
+root@ubuntu24-13:~# sysctl -a | grep ip_forward
+net.ipv4.ip_forward = 0
+net.ipv4.ip_forward_update_priority = 1
+net.ipv4.ip_forward_use_pmtu = 0
+
+内核参数以文件的形式存在 /proc/sys 目录中. /proc 和 /sys 是linux系统中的伪文件系统
+临时编辑一个参数
+echo 1 > /proc/sys/net/ipv4/ip_forward
+sysctl -w 'net.ipv4.ip_forward=1' # 立刻临时生效
+
+# 永久生效
+vim /etc/sysctl.conf
+vim /etc/sysctl.d/xxx.conf # 子文件
+sysctl -p # 使主文件的修改立即永久生效
+sysctl -p /etc/sysctl.d/net.conf # 使子文件的修改立即永久生效
+reboot # 使修改立刻永久生效
 
 ```
