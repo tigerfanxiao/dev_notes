@@ -41,7 +41,7 @@ def factorial(n):
 number
 ```python
 positive_infinity = float('inf')
-print('Positive Infinity: ', positive_infinity)
+negative_infinity = float('-inf')
 ```
 uuid
 ```python
