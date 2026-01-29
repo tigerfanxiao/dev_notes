@@ -1261,6 +1261,7 @@ sed -i '3,6a\add new line to each line' file # 每一行前面增加一行内容
 sed -i 's/sed/SED/' file # 替换指定文字, 只替换一行中的第一个位置
 sed -i '2s/sed/SED' file # 只替换第二行
 sed -i 's/sed/SED/g' file # 全文更改
+ifconfig ens33 | sed -nE 's/^\s*inet\s(.*) net.*/\1/p' # p是打印
 
 ```
 # AWK
@@ -2555,7 +2556,7 @@ yum -y install postfix;systemctl enable --now postfix
 配置邮箱
 ```shell
 # rocky 
-# 查询某个配置文件属于哪个软件
+# 查询某个配置文件属于哪个软件包
 rpm -qf /etc/mail.rc
 # 会提示出这个文件是 mailx-12.5-29.el9.x86_64这个软件装的
 # 安装一下这个软件后, 才能编辑这个配置文件
@@ -3114,6 +3115,8 @@ init 3 # 这里的3 是systemd 里面的服务的运行级别, 每个服务都�
 ```shell
 # 需要安装 net-tools 才能使用 mii-tool, netstat
 apt install net-tools
+# 新的默认命网络包时 iproute
+
 # mii-tools 查看网卡状态
 mii-tool ens33
 ens33: negotiated 1000baseT-FD flow-control, link ok
@@ -3125,10 +3128,23 @@ ethtool -i ens33 # 查看网卡型号
 # 查看端口号
 netstat -tnulp | grep nginx
 
-ss
-route
+ifconfig ens33 # 查看具体网卡
+ifconfig ens33 | grep netmask | awk '{print $2}' # 获取网卡的ip地址
+ifconfig ens33 | awk '/netmask/{print $2}'
+
+ifconfig ens33 11.0.1.17/24 # 临时设置IP地址
 
 ```
+
+
+|      | net-tools | iproute    |
+| ---- | --------- | ---------- |
+| 网卡地址 | ifconfig  | ip address |
+| 路由配置 | route     | ip route   |
+| 端口信息 | netstat   | ss         |
+|      |           |            |
+
+
 ### 修改网卡名
 ```shell
 vim /etc/default/grub 
@@ -3137,52 +3153,159 @@ GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/rl-swap rd.lvm.lv=rl/roo
 # 需要执行后重启
 grub2-mkconfig -o /etc/grub2.cfg; reboot
 ```
+
+网络配置文件路径
+```shell
+# Rocky 10 网卡
+cat /etc/NetworkManager/system-connections/ens160.nmconnection
+[connection]
+id=ens160
+uuid=1476ba0b-2d0a-37d5-8a2d-17fab6207b7b
+type=ethernet
+autoconnect-priority=-999
+interface-name=ens160
+timestamp=1769069759
+
+[ethernet]
+
+[ipv4]
+address1=11.0.1.12/24
+dns=11.0.1.2;
+gateway=11.0.1.2
+method=manual
+
+[ipv6]
+addr-gen-mode=eui64
+method=auto
+
+[proxy]
+```
+Openeuler 网卡
+```shell
+# OpenEuler 和 Centos7
+cat /etc/sysconfig/network-scripts/ifcfg-ens160
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=eui64
+NAME=ens160
+UUID=d937ef01-6a63-4760-95a0-f3eaad056718
+DEVICE=ens160
+ONBOOT=yes
+IPADDR=11.0.1.14
+PREFIX=24
+GATEWAY=11.0.1.2
+DNS1=11.0.1.2
+```
+ubuntu 网卡
+```shell
+# Ubuntu
+以下3个文件保留一个就够了
+/etc/netplan/50-cloud-init.yaml # 默认标准的
+/etc/netplan/01-network-manager-all.yaml # 桌面版默认安装network manager 服务产生的
+/etc/netplan/90-nmxxxx.yaml # 在桌面版中有图像页面配置IP地址的地方
+```
+
+在OpenEuler和Centos 7 中对新增的网卡进行静态IP
+修改网卡名很麻烦, 一般是第一次标准化之后, 就不再修改
+```shell
+在虚拟机里添加一个新的网卡
+nmcli device # 查看新设备添加的网卡
+nmcli con # 这是network manager 服务配套的客户端工具, 查看网卡是否处于连接状态
+
+nmcli device up ens224 # 启动网卡, 启动网卡后, 才会有配置文件
+# 修改配置文件
+vim /etc/sysconfig/network-scripts/ifcfg-ens224
+# 修改内容如下
+BOOTPROTO=none
+# 删除UUID, IPV6 # 可以通过直接复制现有网卡的配置文件来配置, 确保文件中没有uuid, 但是网卡名需要更具 nmcli device 中匹配
+IPADDR=10.0.0.114
+NETMASK=255.255.255.0 # 或者 PREFIX=24
+DNS=10.0.0.2
+GATEWAY=10.0.0.2
+# 保存以上内容
+
+nmcli device
+DEVICE  TYPE      STATE                   CONNECTION
+ens160  ethernet  connected               ens160
+ens224  ethernet  connected (externally)  ens224 # 表面网卡不受管理
+lo      loopback  connected (externally)  lo
+
+nmcli device down ens224 # 关闭网卡
+nmcli device set ens224 managed yes # make new NIC managed by NetworkManager
+necli device up ens224 # 重启网卡
+systemctl restart NetworkManager # 对于默认的网卡只需要重启配置文件就能生效
+```
+
+
+在Rocky 9和10里面管理网卡配置属性, Network Manager, 但是如果用复制现有网卡的方式, 不管用
+```shell
+vim /etc/NetworkManager/system-connections/ens160.nmconnection
+# 下面是修改内容
+[connection]
+id=ens160
+type=ethernet
+interface-name=ens160
+
+[ipv4]
+address1=10.0.0.12/24,10.0.0.2 # 在一个网卡上可以定义多个IP地址, 这里表示第一个IP地址, 后面跟着的是路由网关
+dns=10.0.0.2
+method=manual # 手工配置. auto 表示dhcp
+# 以上是修改内容
+
+
+```
+
+# ubuntu 
+默认使用netplan服务
+```yaml
+
+# 修改
+vim /etc/netplan/50-cloud-init.yaml
+# 以下是配置
+network:
+	ethernets:
+        ens33:
+            addresses:
+            - 10.0.0.16/24
+            nameservers:
+                addresses:
+                 - 10.0.0.2
+                search: []
+			routes:
+			- to: default
+			  via: 10.0.0.2
+		ens37:
+			addresses:
+			- 10.0.0.116/24 # 增加新的ip地址
+    version: 2 
+# 以上是修改的配置  
+
+# 修改完成后
+netplan apply 
+```
+
+网络命令
+```shell
+hostname -A # 显示所有的主机名
+hostname xiao # 设置临时的主机名
+vim /etc/hosts # 长久的主机名
+10.0.0.12 rocky10-12.xiao.com xiao
+vim /etc/hostname # 临时的主机名
+
+hostname -I # 显示所有的网卡的IP地址
+```
 ### 加上 IP 地址
 
 ```shell
 ip a a 10.0.0.8/24 dev ens160
-```
-### 固定IP
-```shell
-# find network interface card name is ens33
-ip a
-ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether 00:0c:29:3e:47:8c brd ff:ff:ff:ff:ff:ff
-    altname enp2s1
-    inet 11.0.1.131/24 metric 100 brd 11.0.1.255 scope global dynamic ens33
-       valid_lft 1120sec preferred_lft 1120sec
-    inet6 fe80::20c:29ff:fe3e:478c/64 scope link
-       valid_lft forever preferred_lft forever
-
-# find gateway is 11.0.1.2
-xiao@ubuntu:~$ ip route
-default via 11.0.1.2 dev ens33 proto dhcp src 11.0.1.131 metric 100
-
-
-```
-
-
-```yaml
-network:
-  version: 2
-  ethernets:
-    ens33:
-      dhcp4: no
-      addresses:
-        - 11.0.1.151/24 # fixed ip 
-      nameservers:
-        addresses:
-          - 8.8.8.8
-          - 1.1.1.1
-      routes:
-        - to: default
-          via: 11.0.1.2
-```
-
-
-```shell
-# make the config of fixed ip effective
-sudo netplan apply
 ```
 # 进程
 
@@ -3300,6 +3423,7 @@ shutdown -h now # 立即关机
 ```shell
 hostnamectl set-hostname rocky9-15
 exit  # 退出shell生效
+exec /bin/bash # 重新创建一个终端也能生效
 sudo nmcli con down ens160 # 断开网卡
 # 修改配置文件
 
