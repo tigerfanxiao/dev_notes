@@ -52,7 +52,17 @@ ssh username@<ip>
 chown 400 perm # 400 means read
 ssh usernanme@ip_addriess -i perm
 ```
+复制公钥密码给远程用户
+```shell
+ssh-keygen # 在本地生成公钥和私钥
+ssh-copy-id root@10.0.0.12 # 将本机的公钥发给 ssh 服务端
 
+ssh root@10.0.0.12 command # 测试远程连接, 发送命令
+
+
+# add cloud_user identity to the agent and to reload the agent
+eval $(ssh-agent -s)
+```
 ### 查看当前连接用户
 ```shell
 # 查看当前连接
@@ -648,6 +658,7 @@ $0 # 当前执行的shell脚本文件名
 $1 # 第一个参数, 第二个参数是$2
 $# # 当前shell命令的参数总数
 $? # 获取上一个指令的返回值 0为成功, 非零为失败
+$@ # 所有参数组成的列表
 # 字符串
 ${ver_name:其实位置:截取长度}
 ${ver_name:0-5:5} # 从倒数第5个数开始,取5个
@@ -732,6 +743,7 @@ content
 创建进程的两种方式
 fork
 clone
+	- 定制性参数
 
 pstree -p  # 1号进程是systemd 或者叫 init(Centos7之前)
 
@@ -753,6 +765,11 @@ done
 tasks=("ls -a", "df -h", "free -m", "uptime", "who")
 for task in "${tasks[@]}"; do
 	echo "Available commands: $task"
+done
+
+# 所有参数组成的列表
+for arg in "$@"; do
+	echo "${arg}"
 done
 
 # 构建序列
@@ -2991,7 +3008,7 @@ rpm -evh # 卸载, 不太使用
 # 查询软件是否已经成功装上
 rpm -q <package_name>
 rpm -ql vsftpd # 查看软件安装在哪些目录下
-rpm -qf /etc/passwd # 查看文件属于哪个包
+rpm -qf /etc/passwd # 查看文件属于哪个软件包
 rpm -qi <package_name> # 查询软件的版本, 描述, 安装时间
 
 # 反查某个已经安装的工具, 在哪个软件包里
@@ -3332,6 +3349,10 @@ ubuntu 网卡
 nmcli device # 查看新设备添加的网卡
 nmcli con # 这是network manager 服务配套的客户端工具, 查看网卡是否处于连接状态
 
+systemctl restart NetworkManager # 重启服务, 这条命令等于下面两条命令
+nmcli con reload # 加载网络配置
+nmcli con up xxx # 启动连接
+
 nmcli device up ens224 # 启动网卡, 启动网卡后, 才会有配置文件
 # 修改配置文件
 vim /etc/sysconfig/network-scripts/ifcfg-ens224
@@ -3419,6 +3440,17 @@ hostname -I # 显示所有的网卡的IP地址
 ```shell
 ip a a 10.0.0.8/24 dev ens160
 ```
+curl
+```shell
+
+curl -v www.google.com # 头部和内容都显示
+curl -I www.google.com # 只显示头部
+curl -X GET www.baidu.com # 定义方法
+```
+
+# dns
+dns 劫持, 使用httpdns 解决
+
 # 进程
 
 ```shell

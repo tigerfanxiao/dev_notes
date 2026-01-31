@@ -121,8 +121,6 @@ sudo dpkg -i <package-name>.deb  # 本地安装
 ### Network
 
 ```shell
-#  查询 ip 地址
-ip a s 
 
 # 查看状网卡接口状态
 nmcli
@@ -137,15 +135,6 @@ systemctl restart network.service
 
 ```
 
-ssh
-配置本机为 ssh 客户端
-```shell
-
-ssh-copy-id <SECOND_PUBLIC_IP_ADDRESS> # 将本机的公钥发给 ssh 服务端
-
-# add cloud_user identity to the agent and to reload the agent
-eval $(ssh-agent -s)
-```
 
 连接
 ```shell
