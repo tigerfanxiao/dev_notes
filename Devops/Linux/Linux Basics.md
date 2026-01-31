@@ -566,14 +566,25 @@ echo -e "\33[43;37m 黄底白字 \33[0m" # 这里 \33[ 和 \33[0m 是固定的
 echo -e "\e[43;37m 黄底白字 \e[0m" # 这里用 \e 代替 \33
 echo "PS1='\[\e[1;35m][\u@\h \W]\\$\[\e[0m\]'" >> .bashrc
 ```
-# Shell
-- shell 是命令解释器
-- shell命令的逐行执行的
-
-执行方式
+# Shell Programming 编程
+- Shell 是命令解释器
+- Shell 命令的逐行执行的
+- 干预脚本执行的过程
+	- 通过循环, 函数, 条件判断
+	- 通过用户输入
+	- 通过信号
+#### Shell 脚本的执行方式
 ```shell
-/bin/bash file.sh
+# 在脚本开头增加shbang
+#!/bin/bash
+
+# 完成脚本编辑后, 需要给脚本增加执行权限
 file.sh # chmod +x file.sh
+
+# 执行方式
+./file.sh # 通过文件名直接执行, 如果已经有执行的权限
+/bin/bash file.sh # 执行shell命令来执行, 无论是否有执行权限, 推荐
+
 source file.sh # 常用于加载环境变量
 /bin/bash -x file.sh # 调试, 推荐
 /bin/bash -n file.sh # 检查语法错误
@@ -581,10 +592,32 @@ source file.sh # 常用于加载环境变量
 # 带参数执行
 /bin/bash /path/to/file arg1 arg2 arg3
 ```
+#### 干预执行过程
+- 获取用户输入
+```shell
+# 获取用户输入
+read -p "please input your name" username # 把用户输入保存在username
+```
+#### 通过信号来干预脚本运行
+以下命令也是信号
+```shell
+# 终止进程
+ctrl + c 
+# 在后台挂起, stop的状态
+ctrl + z
+# 查看后台挂起的任务
+jobs 
+fg num # 重新执行后台挂起的任务
+kill %1 # 杀死挂起的进程
+
+kill -9 pid # 杀死进程
+```
+
+
 ### 环境变量
 ```shell
 # 查看环境变量
-echo $变量名
+echo $env_var
 env
 declare # 用于数组
 
@@ -703,12 +736,91 @@ clone
 pstree -p  # 1号进程是systemd 或者叫 init(Centos7之前)
 
 ls /proc/进程号 # 里面exe是主程序, status 是进程的状态
-
-
 ```
 内部命令: Shell 中包含的指令. 随着 shell 加载到内存已经加载在内存中
 外部命令: 有独立的磁盘文件, 需要从磁盘中读取的命令, 理论上说速度慢
 > 有的命令可能即是内部命令, 优势外部命令. 
+
+### Loops in shell 循环
+#### `for` loop
+```shell
+# 通过命令返回获得列表
+for i in $(ls); do
+	echo $i
+done
+
+# 手动构建列表
+tasks=("ls -a", "df -h", "free -m", "uptime", "who")
+for task in "${tasks[@]}"; do
+	echo "Available commands: $task"
+done
+
+# 构建序列
+for i in {11..15}
+do 
+	ping -c1 10.0.0.$i >> /dev/null 2>&1 && echo "10.0.0.$i is alive" || echo "10.0.0.$i is unreachable" 
+done
+
+# 构建序列
+for i in $(seq 2 2 10); do # 从2到10, 步长为2
+	echo $i
+done
+```
+#### `while` loop
+```shell
+
+num=1
+while [ $num -le 6 ] # 如果小于6就执行
+do 
+	echo "$(date +%F-%T)"
+	sleep 0.5
+	let num+=1
+done
+```
+#### `until` loop
+```shell
+num=1
+until [ $num -gt 5 ] # 如果大于5就停止
+do 
+	echo "$num"
+	sleep 0.5
+	let num+=1
+done
+```
+退出循环
+```shell
+exit # 退出整个脚本
+break # 退出当前的循环
+continue # 调到一下个
+```
+#### Shell function 传参
+```shell
+# 函数传参
+# 如果脚本本身会被传递参数, 需要规避$1 在函数和脚本参数中混淆
+name=$1 # 通过定义name来接受脚本的参数
+say_hello() {
+	local name="$1" # 在函数内部使用local 修饰的变量, 不会影响外部定义的name
+	echo "hello world $name" # 调用函数内部的参数
+}
+say_hello "$name" # 向函数传入脚本的参数
+```
+#### Shell function 返回值
+- 函数的状态返回值
+- `$?` 函数体内部最后一条命令的执行结果的状态返回值
+- `return` 自定以状态返回值 0-255, 只能是数字
+- `echo` 可以用过来传递字符串
+```shell
+# 使用echo返回的字符串
+get_os_type() {
+ source /etc/os-release # 加载系统环境变量
+ echo "$ID" # 这里函数返回环境变量
+}
+os_type=$(get_os_type)
+[ "${os_type}"=="ubuntu" ] && cmd_type='apt' || cmd_type='yum'
+echo $cmd_type
+```
+
+
 
 进程通信的方式
 - 管道符
