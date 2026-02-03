@@ -543,6 +543,14 @@ cat /etc/selinux/config
 SELINUX=enforing
 # 改为
 SELINUX=disbled
+
+# 重启才能生效
+reboot
+```
+关闭firewalld
+```shell
+sudo systemctl stop firewalld
+
 ```
 
 # 命令提示符
@@ -3448,8 +3456,204 @@ curl -I www.google.com # 只显示头部
 curl -X GET www.baidu.com # 定义方法
 ```
 
-# dns
-dns 劫持, 使用httpdns 解决
+# DNS
+- www 是主机名, google.com 是域名
+- com 是二级域名, 根是点
+- DNS 劫持, 使用httpdns 解决
+- DNS 解析分为正向解析和逆向解析
+- 如果我向一个DNS服务器做一次请求, 至少会拿到下面3条记录
+	- A 记录
+	- NS 记录
+	- SOA 记录
+
+正向解析记录
+- A 记录, 解析成ipv4地址
+- AAAA记录, 解析成IPv6 记录
+- NS记录, 证明该服务器是域名解析服务器
+- SOA记录, 所有记录的第一条, 记录的版本和保鲜时间
+- CNAME 网站的别名
+- MX 邮件场景
+- SRV 通过关键词解析出某个服务
+- TXT 其他文本
+
+反向解析
+- PTR 把IP地址解析成网站域名
+```shell
+# 解析查看, 下面三个命令的结果可能会受到host文件的影响
+dig # 重要, 专业
+nslookup # 和dig差不多
+host www.jd.com
+# 缓存查看
+
+
+# ubuntu dns 服务器设定
+/etc/netplan/90*
+nameservers
+# rocky
+dns
+# openeuler
+/etc/sysconfig/network-scripts/ifcfg-ens224
+dns1
+
+# 临时设定 dns 服务器地址
+/etc/resolv.conf
+
+# 查看dns 地址信息, 整体查看, 解析查看
+resolvectl # 在ubuntu中默认有 systemd-resolved 服务
+# 在rocky10 中需要自己安装
+yum list | grep systemd-resolved
+systemctl start systemd-resolved
+systemctl status systemd-resolved
+resolvectl static # 查看缓存命中
+
+# systemd-resolved 使用的端口是53号
+netstat -tulnp | grep systemd
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      836/systemd-resolve
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           836/systemd-resolve
+cat /etc/resolv.conf # 这个是临时生效的, 会被systemd-resolve 接管
+cat /etc/systemd/resolv # 定制全局的dns解析配置, 如果网卡和任何一个host文件都没有定义dns服务器时, 则会使用全局dns定制
+# 修改完成后重启服务
+systemctl restart systemd-resolved
+
+
+# 在rocky9 有nscd 命令, rocky10上没有
+apt install nscd
+nscd -g # 查看缓存
+
+# windows
+ipconfig /display # 显示dns缓存
+ipconfig /flushdns # 清理dns
+# windows 上缓存的dns
+c://windows/System32/drivers/etc/hosts
+```
+
+dig
+```shell
+dig google.com
+dig google.com @8.8.8.8 # 定制使用8.8.8.8 来解析ip地址
+dig -t A www.jd.com @114.114.114.114 # 指定记录类型
+dig +trace # 查看多级域名解析
+dig +short # 显示的内容少, 简洁
+```
+nslookup
+```shell
+nslookup www.google.com
+nslookup www.google.com 114.114.114.114
+```
+host
+```shell
+host www.google.com
+host www.jd.com 114.114.114.114
+```
+whois 类似站长工具
+```shell
+whois www.jd.com
+```
+
+## dns 软件 Bind
+- 常见的有pind, knot, coredns等
+```shell
+# 在rocky selinux 环境中安装的话, 最好把防火墙和selinux关掉
+# 关闭防火墙
+
+# 关闭selinux
+
+
+# 在rocky上安装
+yum install bind
+# 服务是named
+systemctl status named
+systemctl start named
+systemctl enabled named # 设置为开机自启动
+systemctl restart named # 修改配置后重启生效
+netstat tunlp | grep named # 53, 如果可以看到自己的ip地址, 说明允许别的主机使用本地dns服务
+
+rpm -ql bind # 查看软件包所在位置
+/etc/named.conf
+
+vim /etc/named.conf # 在里面看到的相对路径是/var/named下的
+# 如果要允许别人来访问, 需要加上any
+options {
+	listen-on port 53 {127.0.0.1; any};
+	allow-query {localhost; any;}
+}
+
+# 数据文件 /var/named
+
+# 在ubunt上安装
+apt install bind9
+# 服务名 bind9 named
+systemctl status bind9
+systemctl status named
+# 默认可以被外部访问
+dpkg -L bind9
+/etc/bind/named.conf # 主配置文件
+
+
+
+```
+## Firewall 防火墙
+
+```shell
+# 查看被允许访问的服务. 如果里面没有http, 则不允许被访问80端口
+firewall-cmd --list-services
+cockpit dhcpv6-client http ssh
+
+# 增加httpd服务
+firewall-cmd --add-service=http --permanent
+firewall-cmd --reload # 重启服务
+
+```
+
+### Apache
+```shell
+# Rocky
+yum install -y httpd
+systemctl start httpd
+systemctl status httpd
+netstat -tulnp  # 查看80 端口是否开启
+
+
+# 在防火墙中配置
+firewall-cmd --add-service=http --permanent
+firewall-cmd --reload # 重启服务
+
+```
+
+配置文件
+```shell
+# Rocky 上 软件包名 httpd
+# web站点目录
+/var/www/html # 目录权限属于 apache
+# 主配置文件
+/etc/httpd/conf/httpd.conf
+# 子配置文件
+/etc/httpd/conf.d/
+# 服务名
+httpd
+
+# ubuntu上 apache2
+apt install apache2
+systemctl status apache2
+# web 站点目录
+/var/www/html # 这目录的权限 www-data
+# 配置文件
+/etc/apache2/apache2.conf
+# 子配置文件
+conf-xxx site-xxx
+# 服务名
+apache2
+
+ps aux | grep apache # www-data
+```
+
+
+
+```shell
+# 更新apache
+apachectl -T 
+
+```
 
 # 进程
 
@@ -3460,7 +3664,7 @@ pstree username # 查看只属于某个用户的进程
 pstree -p pid # 只看一个进程
 pstree -p | grep 进程名 # 查询某个进程
 
-# 查看进程状态
+# 查看进程状态,类似pstree
 ps -auxf # a 表示所有终端中的进程, x 包括不连接终端的进程, u 进程所有者的信息, f 展示进程之间的关系
 
 ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,comm | head # 自己定义进程的列
@@ -3570,22 +3774,17 @@ exit  # 退出shell生效
 exec /bin/bash # 重新创建一个终端也能生效
 sudo nmcli con down ens160 # 断开网卡
 # 修改配置文件
-
-```
-修改配置文件
-```shell
 vim /etc/NetworkManager/system-connections/ens160.nmconnection
 
-# 删除网卡的uuid
+# 删除网卡的uuid, 时间戳, ipv6
 [ipv4]
 address1=11.0.1.15/24,11.0.1.2
 dns=11.0.1.2
 method=manual
-```
-更改网卡配置
-```shell
+# 修改完毕, 重启服务
 systemctl restart NetworkManager
 ```
+
 ### 关闭selinux
 ```shell
 
