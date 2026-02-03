@@ -528,9 +528,12 @@ chmod +x /usr/bin/chmod
 #### 文件属性中的selinux标签
 - selinux 在安装完成后, 默认是启用的, 在生产中一般是禁用的
 ```shell
-# 查看 Selinux看是否 Diable
+# 查看 Selinux 是否开启
 getenforce
-setenforce # 设置selinux
+enforcing # 表示开启
+
+
+setenforce # 临时设置selinux
 
 # 在 selinux 被禁用后, 创建的新标签, 没有这个.
 # 属性中最后又一个.是 selinux 的标签,用下面的命令可以看到
@@ -546,6 +549,9 @@ SELINUX=disbled
 
 # 重启才能生效
 reboot
+# 重启后检查
+getenforce
+Disabled
 ```
 关闭firewalld
 ```shell
@@ -3504,7 +3510,9 @@ resolvectl # 在ubuntu中默认有 systemd-resolved 服务
 yum list | grep systemd-resolved
 systemctl start systemd-resolved
 systemctl status systemd-resolved
-resolvectl static # 查看缓存命中
+resolvectl statistics # 查看缓存命中
+resolvectl flush-caches # 清理缓存
+resolvectl reset-statistics # 清理缓存
 
 # systemd-resolved 使用的端口是53号
 netstat -tulnp | grep systemd
@@ -3519,6 +3527,7 @@ systemctl restart systemd-resolved
 # 在rocky9 有nscd 命令, rocky10上没有
 apt install nscd
 nscd -g # 查看缓存
+nscd -i hosts # 清除缓存
 
 # windows
 ipconfig /display # 显示dns缓存
@@ -3577,8 +3586,8 @@ options {
 	listen-on port 53 {127.0.0.1; any};
 	allow-query {localhost; any;}
 }
-
-# 数据文件 /var/named
+# 工作目录
+/var/named
 
 # 在ubunt上安装
 apt install bind9
@@ -3588,10 +3597,58 @@ systemctl status named
 # 默认可以被外部访问
 dpkg -L bind9
 /etc/bind/named.conf # 主配置文件
-
+/etc/bind/named.conf.options 
+/etc/bind/named.conf.default-zones # 里面有解析文件
+# 程序内容
+/var/cache/bind 
 
 
 ```
+查看日志
+```shell
+# rocky 下查看日志
+tail /var/log/messages -f
+
+```
+数据解析文件
+```shell
+
+# 名称 TTL 类型 记录类型 数据内容
+cat /etc/bind/db.local
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800 # 全局的TTL
+@       IN      SOA     localhost. root.localhost. (
+                              2         ; Serial # 版本号一定变, 否则任务是旧数据
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      localhost.
+@       IN      A       127.0.0.1
+@       IN      AAAA    ::1
+
+```
+
+
+定制dns配置
+1. 添加zone文件
+2. 增加记录解析王建
+3. 检测配置语法
+4. 重启服务即可
+5. dig命令解析测试
+
+```shell
+
+www.mageedu.com 86400 IN A 10.0.0.21
+www 86400 IN A 10.0.0.21
+www       IN A 10.0.0.21 # 省略TTL, 使用全局TTL
+```
+
+
+
 ## Firewall 防火墙
 
 ```shell
