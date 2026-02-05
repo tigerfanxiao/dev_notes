@@ -3772,6 +3772,38 @@ ll /etc/named/slaves
 vim /etc/resolv.conf
 nameserver 11.0.1.13
 nameserver 11.0.1.15
+
+# 如果dns记录需要变更, 需要主dns设备上修改
+vim /etc/bind/db.magedu.com
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     magedu-dns. admin.magedu.com. (
+                        20260206        ; Serial # 修改序列号
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+                NS      dns1
+                NS      dns2 # 增加dns2 备份
+dns1            A       11.0.1.13
+dns2            A       11.0.1.15 # 指定备份 dns ip
+www             A       11.0.1.14
+image           A       11.0.1.114
+*               A       11.0.1.199
+
+# 更新完毕后reload服务
+systemctl reload named
+# 此时备用dns会自动下载新的record, 如果没有下载, 最终的解决方案是删掉备用设备上的/var/named/slaves/db.magedu.com 文件
+```
+反向解析 PTR记录, 给一个IP地址, 解析成域名
+```shell
+A 记录
+blog.magedu.com. 86400 IN A 10.0.0.167
+# PTR 反向的记录是, 把ip地址的位置颠倒
+167.0.0.10.in-addr.arpa. 86400 IN PTR blog.magedu.com
 ```
 
 ## Firewall 防火墙
