@@ -450,6 +450,20 @@ grpconv grpunconv
 su - user # 完全切换用户
 sudo ls /root # 临时切换, 有效时间为5分钟
 
+# 需要转换到root用户下才能查看sudo密码的有效期
+sudo -V | grep min
+# ubuntu 下是15分钟
+Authentication timestamp timeout: 15.0 minutes
+Password prompt timeout: 0.0 minutes
+# rocky下是5分钟
+[root@rocky10-12 ~]# sudo -V | grep min
+Authentication timestamp timeout: 5.0 minutes
+Password prompt timeout: 5.0 minutes
+
+# 在 /run/sudo/ts 中控制, 里面有认证痕迹, 如果把这个文件删除, 则重新需要认证
+[root@rocky10-12 ~]# ls /run/sudo/ts/
+1000
+
 vim /etc/sudores # 可以看到有sudo命令的执行权限的组
 ```
 
@@ -463,8 +477,8 @@ vim /etc/sudores # 可以看到有sudo命令的执行权限的组
 检查wheel 组的权限
 
 ```shell
-%用户组 主机(所有者:归属组) NOPASSWD:执行命令
-用户   主机(所有者:归属组) NOPASSWD:执行命令 # 加上NOPASSW: 则不需要输入密码
+%用户组 主机(所有者:归属组) NOPASSWD: 执行命令
+用户   主机(所有者:归属组) NOPASSWD:  执行命令 # 加上NOPASSW: 则不需要输入密码
 
 # 测试 /etc/sudoers 语法
 sudo visudo -c
@@ -487,6 +501,81 @@ echo -e '123456\n123456' | passwd <username> # 通用, ubuntu 和 rocky 都支�
 sudo - userA # 切换到该用户
 sudo whoammi # 应该显示root
 
+```
+
+# NTP 时间同步
+
+1. 如果在机房房中的多节点, 有一台设备时间和其他设备不同步, 就会出问题
+2. 如果服务器时间不同步, 用户访问也会有问题
+3. 如果集群中有不同步的设备, 也有问题
+
+```shell
+date +%D
+date +%m/%d/%4Y
+date +%4Y%m%d
+
+date +%T
+date +%H:%M:%S
+
+date -s "+10 years" # 修改时间到10年以后
+
+
+# ntp 服务 ubuntu
+systemctl status systemd-timesyncd
+root@ubuntu2204-13:~# timedatectl
+               Local time: Sun 2026-02-08 18:54:24 UTC
+           Universal time: Sun 2026-02-08 18:54:24 UTC
+                 RTC time: Sun 2026-02-08 18:54:24
+                Time zone: Etc/UTC (UTC, +0000)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+
+cat /etc/timezone # 查看时区
+ls /etc/localtime -l
+timedatectl list-timezones # 查看所有时区
+timedatactl set-timezone America/Moncton
+
+```
+
+## Chrony
+
+推荐使用
+
+```shell
+# ubuntu 默认没有, 需要安装
+apt install chrony
+systemctl status chrony
+
+# 配置文件
+ls /etc/chrony/chrony.conf # ubuntu
+ls /etc/chrony.conf # rocky
+
+chronyc # 交换式命令
+sources # 查看源
+# 或者
+chronyc sources # 查看源
+
+chronyc clients # 查看与我同步时间的客户端
+chronyc activity
+```
+
+修改同步源
+
+```shell
+# vmi /etc/chrony/chrony.conf
+server ntp1.aliyun.com iburst
+allow 10.0.0.0/24 # 只给这个网段找到主机提供时间同步的服务
+local stratum 10 # 允许本机在不能和外网通信的情况下, 已经提供服务
+
+# 重启服务
+systemctl restart chrony # ubuntu 系统
+systemctl restart chronyd #  rocky 系统
+
+# 在客户机上
+vim /etc/chrony.conf
+server 10.0.0.12
+# 重启服务
 ```
 
 查看系统信息
@@ -810,7 +899,7 @@ ctrl + z
 # 查看后台挂起的任务
 jobs
 fg num # 重新执行后台挂起的任务
-kill %1 # 杀死挂起的进程
+kill %1 # 杀死挂起的进程 1
 
 kill -9 pid # 杀死进程
 ```
@@ -1105,15 +1194,15 @@ nginx   1142 www-data txt    REG    8,2  1313752 8273989 /usr/sbin/nginx
 杀死进程
 
 ```shell
-kill -9 pid # 杀死单个进程
+kill -9 pid # 杀死单个进如果终端关闭, 进程也会关闭程
 killall
 pkilll # 连个命令都可以根据进程的名字来删除
 
 # 在后端运行
-sleep 1000 & # 如果终端关闭, 进程也会关闭
+sleep 1000 & # & 表示在背后执行, 但如果终端关闭, 进程也会关闭
 jobs 3 # 查看扔到后台的进程
 
-nohup sleep 1000 >>/dev/null 2>&1 & # 不和终端绑定
+nohup sleep 1000 >>/dev/null 2>&1 & # nohup 表示不和终端绑定
 
 ctrl + z # 可以把正在前台执行的程序扔到后台
 bg # 扔到后面的进程, 可以通过bg查看进程号
@@ -1135,7 +1224,7 @@ wait
 time /bin/bash bing.sh
 ```
 
-定时任务 - 守护进程
+# 定时任务 - 守护进程
 
 - atd 一次性服务
 - crond 周期行任务
@@ -3782,7 +3871,7 @@ cat /etc/sysconfig/network-scripts/ifcfg-ens160
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
-BOOTPROTO=none
+BOOTPROTO=static #确保这里是static才能手动配置ip
 DEFROUTE=yes
 IPV4_FAILURE_FATAL=no
 IPV6INIT=yes
@@ -3798,6 +3887,12 @@ IPADDR=11.0.1.14
 PREFIX=24
 GATEWAY=11.0.1.2
 DNS1=11.0.1.2
+# 重启服务
+systemctl restart network
+# 重启网卡
+ifdown ens19
+ifup ens19
+ip addr del 192.168.8.13/24 dev ens19
 ```
 
 ubuntu 网卡
@@ -3876,16 +3971,16 @@ vim /etc/netplan/50-cloud-init.yaml
 # 以下是配置
 network:
 	ethernets:
-        ens33:
+      ens33:
+        addresses:
+        - 10.0.0.16/24
+        nameservers:
             addresses:
-            - 10.0.0.16/24
-            nameservers:
-                addresses:
-                 - 10.0.0.2
-                search: []
-			routes:
-			- to: default
-			  via: 10.0.0.2
+              - 10.0.0.2
+            search: []
+        routes:
+        - to: default
+          via: 10.0.0.2
 		ens37:
 			addresses:
 			- 10.0.0.116/24 # 增加新的ip地址
@@ -4490,7 +4585,16 @@ openssl req -new -key test.key -out test.csr
 
 ## Firewall 防火墙
 
+- WAF web application firewall
+- 防火墙不仅仅可以控制数据的流入, 还可以控制数据的流出, 还可以控制经过本地主机的数据
 - 在ubuntu中防火墙叫 ufw, 在rocky中叫 firewalld
+- 流出场景: 本地主机访问外部应用 OUTPUT-POSTROUTING
+- 流入数据场景: 外部主机访问本地主机的xx应用 PREROUTING - INPUT
+- 流经数据场景: 外部主机经过本地主机访问另外一个网段的主机的应用 PREROUTING - FORWARD - POSTROUTING
+- 这些东西被保存在Netfilter 内核框架中, 使用iptables这个客户端来控制
+- 钩子函数 hook
+- 最近把netfilter/iptable 升级为 nftable/nft
+- ufw 服务和规则是分开的, firewalld 服务起来, 规则一起起来
 
 ```shell
 # 查看被允许访问的服务. 如果里面没有http, 则不允许被访问80端口
@@ -4510,16 +4614,286 @@ getenforce # 查看selinux是否关闭了
 
 查询防火墙服务
 
+- iptable 五表五链
+  五链
+- PREROUTING 在数据进入的时候控制
+- INPUT 流入的数据进入我本地应用
+- FORWARDING 流经的数据, 不去我本地应用
+- OUTPUT 从我的本地应用层到内核的部分控制
+- POSTROUTING 数据从主机出去的时候控制, 流出控制
+
+五表
+
+- 过滤场景 - filter
+- 地址转换场景 - nat
+- 数据包更改 - mangle
+- 数据追踪场景 - raw
+- 数据上下文环境 - security
+- 表的优先级 security > raw > mangle > nat > filter
+
 ```shell
-# ubuntu 中
-ufw
-# rocky 中
-firewalld
+iptables -vnL # 查看防火墙规则信息, 默认是filter表,-v Verbal, -n 数字方式, -L chain
+iptables -vnL --line-number # 带有行号
+iptables -t filter -vnL # -t 表示表
+iptables -S # 查看所有规则
+
+tcpdump -i ens18 -nn icmp # -n 显示数字ip, -n 显示port
+iptables -t filter -A INPUT -s 10.0.0.12 -j DROP # -A 表示在INPUT中增加一个规则, -j 表示动作
+# -A 用增加方式增加规则, -I 以插入方式增加规则, -F 清空规则 -D 删除规则, -R 替换规则 -Z 规则数据清零
+iptable -A INPUT -j REJECT # 拦截所有访问
+iptable -I INPUT 2 -s 127.0.0.1 -j ACCEPT # 插入到第二条
+iptables -P # 默认策略
+iptables -D INPUT -s 10.0.0.19 -j DROP # 删除INPUT链里的
+iptables -D INPUT 3 # 删除INPUT链中的第三条
+iptables-save > a.rule # 把规则存在某个文件里
+iptables -F # 清理所有的规则
+iptable-restore < a.rules # 从文件中恢复所有规则
+
+iptables -I INPUT 2 -i lo -j ACCEPT # -i 指定网卡
+iptables -R INPUT 2 -s 127.0.0.1 -j ACCEPT # 替换第二条
+# 规则
+ACCEPT # 匹配到规则的数据包允许通过
+DROP # 匹配到规则的数据包丢弃
+RETURN # 返回调用链
+# 扩展动作
+SNAT # 修改数据包的源地址, 仅在nat表中有效, 涉及到的链有 POSTROUTING 和 INPUT
+REDIRECT # 用于数据包的重定向, 仅在nat表中有效, 涉及到的链有 POSTROUTING 和 OUTPUT
+REJECT # 终止数据包匹配并返回错误数据包, 涉及到的链有 INPUT, FORWARD, OUTPUT
+MASQUERADE # 用于动态分配数据包中的ip地址, 即地址伪装, 仅在nat表中有效, 涉及到的链POSTROUTNG
+DNAT # 修改数据包的目标地址, 仅在nat表中有效, 涉及到的链有 PREROUTING 和 OUTPUT
+# 清除防火墙规则
+nft flush ruleset
+nft list ruleset
+```
+
+测试扩展的条件匹配
+
+```shell
+# 给物理网卡增加ip地址
+ip address add 10.0.0.110/24 dev ens33 label ens33:110
+iptables -R INPUT 2 ! -s 10.0.0.12 -j REJECT # 除了10.0.0.12 都拒绝
+iptables -R INPUT 2 -d 10.0.0.110 -p tcp -j REJECt # 把目标是 10.0.0.110 的地址的tcp协议拒绝掉, ssh不能用
+
+dpkg -L iptables | grep libxt_.*so # 查看iptables 扩展模块
+# 隐式引用模块, 因为tcp的协议名和模块名一样
+iptables -t filter -A INPUT -s 10.0.0.12 -d 10.0.0.110 -t tcp --dport 21:23 -j REJECT # 拒绝22号端口访问
+# 显示引用模块, 比如multiport
+iptables -A INPUT -s 10.0.0.12 -d 10.0.0.110 -p tcp -m multiport --dport 22,80 -j REJECT # 拒绝22和80端口
+# 使用模块 iprange
+iptables -t filter -A INPUT -m iprange --src-range 10.0.0.13-10.0.0.99 -p tcp --dport 80 -j REJECT
+# 其他扩展模块
+- time
+- limit/connlimit
+- string
+- mac
+
+# 把记录写到日志
+iptables -t filter -A INPUT -s 10.0.0.12 -j LOG --log-prefix "test-"
+
+# 规则最佳时间
+1. 最精确的放在最前面
+2. 兜底的规则放在最后
+3. 匹配最多次数最多的放在前面, 因为如果访问次数多, 也要匹配很多次
+4. 如果可以合并一定要合并, 减少匹配的册数
+5. 特权用户, 建议使用白名单
+```
+
+站在数据包的角度
+DNAT 修改目标IP地址
+SNAT 修改源IP地址
+
+```shell
+ip route list # 查看路由
+ip route delete default # 删除默认路由
+ip route add default via 10.0.0.13 dev ens1 # 添加默认路由
+
+# rocky
+route add default gw 10.0.0.13 # 增加一条默认路由
+route del default # 删除默认路由
+route -n # 查看所有路由
+sysctl -a | grep ip_foward
+echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf # 直接写入内核配置文件
+sysctl -p # 使内核生效
+
+# 做SNAT, 把源ip 10.0.0.0/24 修改为 192.168.8.13
+iptables -t nat -A POSTROUTING -s 10.0.0.0/24 ! -d 10.0.0.0/24 -j SNAT --to-source 192.168.8.13
+# 做地址伪装, 直接绑定网卡
+iptables -t nat -R POSTROUTING 1 -S 10.0.0.0/24 ! -d 10.0.0.0/24 -j MASUERADE
+iptables -t nat -A POSTROUTING -s 192.168.8.14 ! -d 192.168.8.0/24 -j MASQUERADE
+iptables -t nat -vnL
+Chain POSTROUTING (policy ACCEPT 1 packets, 152 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 MASQUERADE  0    --  *      *       10.0.0.0/24         !10.0.0.0/24
+
+iptables -t nat -F # 删除所有配置
+
+# 做DNAT, 修改目标地址, 并制定端口
+iptables -t nat -A PREROUTING -d 10.0.0.13 -p tcp --dport 80 -j DNAT --to-destination 192.168.8.14:80
+# 做DNAT, 将2222端口隐式到别的主机上的22端口
+iptables -t nat -A PREROUTING -d 10.0.0.13 -p tcp --dport 2222 -j DNAT --to-destination 192.168.8.14:22
+ssh xiao@ip -p 2222
+```
+
+自定义链
+
+```shell
+iptables -N web_chain # 创建自定义链
+iptables -E web_chain WEB_CHAIN # 修改自定义链
+iptables -t filter -A WEB_CHAIN  -p tcp -m multiport --dports 80,443 -j ACCEPT # 在自定义链里增加规则
+
+# 调用自定义链
+iptables -t filter -A INPUT -j WEB_CHAIN
+# 拒绝所有
+iptables -t filter -A INPUT -j REJECT
+
+```
+
+# Log
+
+- rsyslog 文本形式的日志
+- systemd
+  - journald 二进制级别日志
+
+```shell
+journalctl -xeu nginx -n 20 # 查看二进制级别的日志 -u代表服务名, -e调到结尾最新的数据处, -x显示详细的日志
+# 可以导出json
+journalctl -xeu nginx -o json | jq > log.json
+
+```
+
+# 存储
+
+- 封闭存储系统
+- 开放存储系统
+  - 内置存储
+  - 外挂存储
+    - 直连式存储DAS
+    - 网络存储 FAS
+      - 存储区域网络 SAN
+      - 网路附加存储 NAS
+
+## NFS
+
+- 多个主机可以使用相同的一份数据, 每个主机端口不一样
+- 设计适用于局域网, 不适合高并发, 大量小文件不合适
+- 跨外网不合适
+- 无集群模式, 有单点故障
+
+```shell
+# ubuntu
+# 安装服务端
+apt install nfs-server # 这个软件真正的服务室 nfs-kernel-server
+systemctl status nfs-server # 查看服务
+# 查询我有哪些命令可以用, 看sbin下的执行文件
+dpkg -L nfs-common | grep sbin
+# 客户端
+apt install nfs-common
+
+# rocky
+# 客户端和服务端在一起
+yum list | grep nfs
+yum install nfs-utils
+
+
+# 服务端配置文件
+vim /etc/exports
+# 修改配置文件如下
+/data/dir1	10.0.0.12(rw) 10.0.0.16 # dir1 目录只能给10.0.0.12 主机访问, 权限是默认的
+/data/dir2	10.0.0.0/24 # dir2 可以给某个网段的主机访问
+# 以上为修改的配置文件
+# 重启服务
+systemctl restart nfs-server.service
+systemctl status nfs-server
+# 查看分享的目录
+exportfs -v # 可以看到默认的属性, 是ro
+/data/dir1    	10.0.0.12(sync,wdelay,hide,no_subtree_check,sec=sys,ro,secure,root_squash,no_all_squash)
+/data/dir2    	10.0.0.0/24(sync,wdelay,hide,no_subtree_check,sec=sys,ro,secure,root_squash,no_all_squash)
+
+exportfs -rv # -r 服务端重新挂载
+rpcinfo # 查看服务端的管理进程的操作
+
+# 在客户端执行一下命令进行挂载
+showmount -e 10.0.0.13 # 看服务器节点共享的目录
+Export list for 10.0.0.13:
+/data/dir2 10.0.0.0/24
+/data/dir1 10.0.0.12
+# 挂载, 可以自动识别文件系统类型, nfs的类型就是nfs
+mount 10.0.0.13:/data/dir1 /mnt1 # 数据源, 挂载点
+mount 10.0.0.13:/data/dir2 /mnt2
+
+# 需要给目录增加other group的写权限, 在 /etc/exports中配置了 rw权限的客户端才允许写入文件
+chmod o+w /data/dir1
+
+# 权限分挂载的权限和文件系统的权限
+sync # 同步, 性能低
+async # 异步, 先进入缓存, 一起落盘, 性能高, 安全性低, 如果中途客户端断电, 可能数据无法传递到服务器
+anonuid # 客户端用户映射到服务端相同的用户ID, 前提是服务端和客户端有相同的用户ID存在
+anongid # 组ID映射, 服务端和客户端有相同的组ID存在
+root_squash # 客户端的root, 在服务端会被变成匿名用户
+
+```
+
+# 数据同步
+
+有两套方案
+
+- rsync + inotify
+- rsync + sersync
+
+## inotify + rsync
+
+- inotify 是内核中的功能模块, 但是要使用他需要通过API调用, 需要安装相关的软件
+- 监听的事件很多, 要筛选
+- 信息的输出
+  - 消息输出格式
+  - 时间格式
+- 命令的执行样式
+  - 一次行执行
+  - 前台执行
+  - 后台执行
+
+```shell
+# 检查inotify 功能在内核中是否已经开启
+root@ubuntu2204-13:/data# grep -i inotify /boot/config-6.8.0-71-generic
+CONFIG_INOTIFY_USER=y # 内核在启动时, 已经把这个功能加载到运行环境中了
+
+# rocky
+yum install epel-release
+yum install inotify-tools
+
+rpm -ql inotify-tools
+/usr/bin/inotifywait # 实时监控制定目录的所有事件
+/usr/bin/inotifywatch # 收集被监控的文件系统使用的统计数据
+
+# 开启对目录的监控, 导出的文件需要提前创建
+inortifywait -mrd /data/ -o monitor.txt # -m monitor 监听, -r 递归, 看到文件夹里面的内容, -d 表示在背后运行
+# %e 表示时间, %T 前面在 -timefmt中定义的时间戳, %w 目录 %f 文件, -q 是精简信息
+# -e 我只监听create, 事件用逗号隔开 delete,moved_to,close_write
+inotifywait -drq /data/ -o inotify.log --timefmt "%Y-%m-%d %H:%M:%S" --format "%T %w %f event: %e" -e create
+
+```
+
+rsync
+
+- 传输数据用的
+  - 增量
+  - 同步
+  - 自动创建目录
+- rsync 的应用方式
+  - 手工执行
+    - 用ssh协议来运行
+    - 用rsync协议来运行
+  - 服务运行
+
+```shell
+
+
 ```
 
 # Nginx
 
 ```shell
+
 dkpg -L nginx-common | grep index
 # 在ubunt上的 nginx 的默认主页
 /var/www/html/index
@@ -4531,7 +4905,38 @@ firewall-cmd --list-services
 firewall-cmd --add-service=http --permanent
 ```
 
-Apache
+```shell
+# 编写颚配置文件
+vim /etc/nginx/nginx.conf
+
+
+    server {
+      listen  81; # 新增加一个端口
+      root  /usr/share/nginx/html;
+    }
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+
+# 编写完成后, 检查语法错误
+nginx -t
+systemctl restart nginx
+```
+
+# Apache
 
 ```shell
 # Rocky
