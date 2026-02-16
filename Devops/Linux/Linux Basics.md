@@ -1026,8 +1026,9 @@ content
 工作在内核中的称为系统进程
 
 创建进程的两种方式
-fork
-clone
+- simple 单进程
+- fork 有主进程和子进程
+- clone
 	- 定制性参数
 
 pstree -p  # 1号进程是systemd 或者叫 init(Centos7之前)
@@ -1754,8 +1755,7 @@ sed -n '1p;3p' test.txt # 只打印第一行和第三行
 sed -n '1,3p' test.txt # 打印第一行到第三行
 
 # 编辑内容, 默认情况下不对文件进行操作
-sed -i
-sed -a
+sed -i # 直接修改源文件
 sed '3d' file # 删除第三行
 sed '/str/d' file # 删除str所在行
 sed '3,6d' file # 删除第三行到第六行, 不修改源文件
@@ -3693,6 +3693,7 @@ systemctl status appname # 查服务
 
 # 安装编译环境
 apt install build-essential gcc g++ libc6 libc6-dev libpcre3 libpcre3-dev libssl-dev libsystemd-dev zlib1g-dev
+apt install libxml2 libxml2-dev libxslt1-dev php-gd libgd-dev geoip-database libgeoip-dev
 # 下载 nginx
 
 # 使用 configure 配置安装文件, 生成Makefile文件, 并指定安装目录
@@ -3700,8 +3701,8 @@ apt install build-essential gcc g++ libc6 libc6-dev libpcre3 libpcre3-dev libssl
 
 # 编译软件
 make
-# 安装软件
-make install
+# 安装软件 = 转移文件 + 赋权
+make install # 可以认为是 cp | mv 和 chmod | chown 的合体
 
 # 启动nginx
 /data/server/nginx/sbin/nginx
@@ -3900,7 +3901,7 @@ ubuntu 网卡
 ```shell
 # Ubuntu
 以下3个文件保留一个就够了
-/etc/netplan/50-cloud-init.yaml # 默认标准的
+/etc/netplan/50-cloud-init.yaml # 默认标准的, 需要办证 chmod 600
 /etc/netplan/01-network-manager-all.yaml # 桌面版默认安装network manager 服务产生的
 /etc/netplan/90-nmxxxx.yaml # 在桌面版中有图像页面配置IP地址的地方
 ```
@@ -4886,11 +4887,239 @@ rsync
   - 服务运行
 
 ```shell
+# 安装客户端
+apt install rsync # 默认是不启动的, /etc/rsyncd.conf 服务文件存在才会起来
 
+# 客户端 - 远程文件同步
+rsync xxx.txt root@10.0.0.12: # 默认传到制定用户的家目录
+
+# 守护进程方式
+# 修改 /etc/rsyncd.conf 服务文件
+root@ubuntu2204-13:~# vim /etc/rsyncd.conf
+uid=root
+gid=root
+max connections=0
+log file=/var/log/rsyncd.log
+pid file=/var/run/rsyncd.pid
+lock file=/var/run/rsyncd.lock # 别人在传输的时候, 会lock文件
+
+[dir1]
+path=/data/dir1
+comment=rsync dir1
+read only=no
+auth users=rsyncer # 使用这个用户
+secrets file=/etc/rsyncd.pwd # 上面这个用户的密码放置地方
+# 以上是配置文件
+
+# 用户密码配置方法, 用户的密码需要写 用户名:密码
+echo 'rsyncer:123456' > /etc/rsyncd.pwd
+chmod 600 /etc/rsyncd.pwd
+# 重启服务
+systemctl restart rsync # 开放的是873端口
+
+# 在客户端
+rsync rsync://10.0.0.13/dir # 查看远端分享的目录
+rsync 10.0.0.13::dir # 这命令与上面的命令一致
+# 默认匿名用户不允许传递文件
+
+# 在服务端只允许nobody 同步文件, 需要使用acl
+getfacl # 查看文件acl
+setfacl # 设置全新
+setfacl -m u:nobody:rwx /data/dir1
+
+# 在客户端可以传文件, 默认nobody 用户来传输, 如果全局文件配置了, 则使用全局配置中的root
+rsync /etc/hosts 10.0.0.13::dir1
+
+# 指定用户名来传输
+rsync /etc/hosts rsyncer@10.0.0.13::dir1
+# 免密访问, 注意在客户端和服务端的密码是不同的, 客户端主要写密码, 不用写用户名
+echo '123456' > /etc/rsyncd.pwd
+chmod 600 /etc/rsyncd.pwd
+rsync /etc/hosts rsyncer@10.0.0.13::dir1 --password-file=/etc/rsyncd.pwd
+# -a 保持文件的属性, -v 显示过程, -z 压缩传输 --delete 以src文件为准, 删除目标目录中多余的文件
+rsync -avz --delete --password-file=/etc/rsyncd.pwd /data/www/ rysncer@10.0.0.13::dir1
+```
+
+inotify + rsync
+
+```shell
+#!/bin/bash
+
+USER="rsyncer"
+PASS_FILE="/data/scripts/www_rsync.pwd"
+REMOTE_HOST="10.0.0.13"
+SRC="/data/www/"
+REMOTE_DIR="dir1"
+DEST="${USER}@${REMOTE_HOST}::${REMOTE_DIR}"
+LOG_FILE="/data/scripts/www_rsync.log"
+
+# prepare
+ubuntu_install_inotify() {
+	if [ ! -f /usr/bin/rsync ]; then
+		apt install inotify-tools -y
+		apt install rsync -y
+	fi
+}
+
+centos_install_inotify() {
+	if [ ! -f /usr/bin/rsync ]; then
+		yum install inotify-tools -y
+		yum install rsync -y
+	fi
+}
+
+install_inotify() {
+	os_type=$(grep Ubuntu /etc/issue > /dev/null && echo "Ubuntu" || echo "CentOS")
+	if [ "${os_type}" == "Ubuntu" ]; then
+		ubuntu_install_inotify
+	else
+		centos_install_inotify
+	fi
+}
+
+rsync_file() {
+	inotifywait -mrq --exclude=".*\.swap" --timefmt '%Y-%m-%d %H:%M:%S' --format '%T %w %f' -e create,delete,moved_to,close_write,attrib ${SRC} | while read DATE TIME DIR FILE;do
+	FILEPATH=${DIR}${FILE}
+	rsync -az --delete --password-file=${PASS_FILE} $SRC $DEST && echo "At ${TIME} on ${DATE}, file ${FILEPATH} was backup via rsync" >> ${LOG_FILE}
+done
+}
+
+install_inotify # 调用函数
+rsync_file # 调用函数
 
 ```
 
+## sersync 方案
+
+```shell
+mkdir /data/softs -p; cd /data/softs
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/sersync/sersync2.5.4_64bit_binary_stable_final.tar.gz
+
+tar -xf sersync2.5.4_64bit_binary_stable_final.tar.gz
+cd GNU-Linux-x86/
+mv GNU-Linux-x86/ /usr/local/sersync
+vim /usr/local/sersync/confxml.xml
+
+# 修改如下配置文件
+<inotify>
+        <delete start="true"/>
+        <createFolder start="true"/>
+        <createFile start="true"/>
+        <closeWrite start="true"/>
+        <moveFrom start="true"/>
+        <moveTo start="true"/>
+        <attrib start="true"/>
+        <modify start="true"/>
+    </inotify>
+
+    <sersync>
+            <localpath watch="/data/www">
+            <remote ip="10.0.0.13" name="dir1"/>
+# 以上是配置文件
+
+./sersync2 -dro ./confxml.xml # 执行
+# 如果要监听多个文件, 那就要写多个配置文件
+```
+
 # Nginx
+
+```shell
+# 在线安装
+apt install nginx
+
+# 编译安装
+# Ubuntu 编译环境准备
+apt install build-essential gcc g++ libc6 libc6-dev libpcre3 libpcre3-dev libssl-dev libsystemd-dev zlib1g-dev
+apt install libxml2 libxml2-dev libxslt1-dev php-gd libgd-dev geoip-database libgeoip-dev
+root@ubuntu2204-13:~# find / -name libperl.so*
+/usr/lib/x86_64-linux-gnu/libperl.so.5.38
+/usr/lib/x86_64-linux-gnu/libperl.so.5.38.2
+# 创建一个软连接, 防止编译问题
+ln -s /usr/lib/x86_64-linux-gnu/libperl.so.5.38 /usr/lib/x86_64-linux-gnu/libperl.so
+# 删除就的版本
+apt purge nginx* -y
+find / -name nginx # 检查是否还有残留文件
+rm -rf /var/www/html # 删除文件残留
+
+mkdir /data/softs -p
+cd /data/softs/
+wget https://nginx.org/download/nginx-1.28.2.tar.gz # 下载最新版本
+tar xf nginx-1.28.2.tar.gz
+cd nginx-1.28.2
+./configure --help # 执行配置脚本
+./configure --prefix=/data/server/nginx # 所有文件都会被安装在指定目录下, 方便未来清理
+make
+make install
+cd /data/server/nginx # 进入nginx的安装目录
+./sbin/nginx # 运行nginx
+netstat -tnulp # 查看端口号
+# 使用nginx 命令的管理样式, 与systemd的管理方式不要交叉使用, 否则可能造成冲突
+# 关闭nginx
+./sbin/nginx -s stop
+# 使用systemd 的方式来管理
+vim /etc/systemd/system/nginx.service # 从自动化安装中复制出来
+[Unit]
+Description=nginx - high performance web server
+Documentation=http://nginx.org/en/docs/
+After=network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+# PIDFile=/data/server/nginx/run/nginx.pid # 和当前的配置文件矛盾
+ExecStart=/data/server/nginx/sbin/nginx -c /data/server/nginx/conf/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+LimitNOFILE=100000
+
+[Install]
+WantedBy=multi-user.target
+# 以上是service 配置文件
+systemctl daemon-reload
+systemctl start nginx
+systemctl status nginx
+systemctl enable nginx
+systemctl is-enabled nginx.service
+echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/data/server/nginx/sbin
+export PATH=$PATH:/data/server/nginx/sbin
+whereis nginx
+
+# selinux 问题
+sed  -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+# 防火墙问题
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
+# 或者直接禁用nginx主机的防火墙功能
+systemctl disabled --now firewalld
+# 创建用户
+useradd -r -s /usr/sbin/nologin nginx
+# 重新配置, 配置万之后, 还需要重新编译
+./configure --prefix=/data/server/nginx/  --user=nginx --group=nginx
+
+
+# Rocky 编译环境准备
+yum install gcc make gcc-c++ glibc glibc-devel pcre2 pcre2-devel openssl openssl-devel systemd-devel zlib-devel
+yum install libxml2 libxml2-devel libxslt libxslt-devel php-gd gd-devel
+# 在Rocky9 编译系统中 pcre pcre-devel
+# 在Rocky10 编译系统中 prec2 prec2-devel
+
+
+# 下载最新源码
+wget https://nginx.org/download/nginx-1.22.1.tar.gz
+
+```
+
+nginx 命令
+
+```shell
+nginx -v # 显示版本
+nginx -V # 显示版本和编译配置
+nginx -t # 检查配置文件
+
+
+```
 
 ```shell
 
@@ -4932,8 +5161,41 @@ vim /etc/nginx/nginx.conf
         }
 
 # 编写完成后, 检查语法错误
-nginx -t
+root@ubuntu2204-13:~# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok # 看到配置文件
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
 systemctl restart nginx
+# ubuntu 配置文件
+# 1. /etc/nginx/nginx.conf
+# 2. /etc/nginx/sites-enabled/default
+
+xiao@ubuntu2204-13:~$ grep -Env '#|^$' /etc/nginx/nginx.conf
+1:user www-data;
+2:worker_processes auto;
+3:pid /run/nginx.pid;
+4:error_log /var/log/nginx/error.log;
+5:include /etc/nginx/modules-enabled/*.conf;
+7:events {
+8:	worker_connections 768;
+10:}
+12:http {
+18:	sendfile on;
+19:	tcp_nopush on;
+20:	types_hash_max_size 2048;
+26:	include /etc/nginx/mime.types;
+27:	default_type application/octet-stream;
+34:	ssl_prefer_server_ciphers on;
+40:	access_log /var/log/nginx/access.log;
+46:	gzip on;
+59:	include /etc/nginx/conf.d/*.conf;
+60:	include /etc/nginx/sites-enabled/*;
+61:}
+
+
+
+
+
 ```
 
 # Apache
