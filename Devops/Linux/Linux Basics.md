@@ -1379,8 +1379,9 @@ fi
 - man帮助的路径是由man帮助的配置文件 `/etc/man_db.conf` 中定义了搜索man帮助文件的路径
 
 ```shell
+apropos director
 # 使用whatis 之前需要构建Whatis 数据库
-mandb
+sudo mandb
 # 回复命令的作用简述, 帮助文档的类别, 可以用man使用
 whatis rm
 # 查看命令帮助文档路径
@@ -1393,6 +1394,8 @@ cmd --help
 man <cmd>
 # 对于手工安装的软件比如, Nginx, 可以直接制定帮助内容路径
 man <path>
+man 1 printf
+man 8 printf
 ```
 
 ### 时间和时区
@@ -5118,8 +5121,16 @@ nginx -v # 显示版本
 nginx -V # 显示版本和编译配置
 nginx -t # 检查配置文件
 
-
 ```
+
+如何在当前的nginx 环境上, 增加额外的功能模块
+基本思路
+
+1. 获取当前的nginx 配置属性
+2. 获取第三方模块
+3. 重新配置
+4. 编译
+5. 安装
 
 ```shell
 
@@ -5492,4 +5503,36 @@ sysctl -p # 使主文件的修改立即永久生效
 sysctl -p /etc/sysctl.d/net.conf # 使子文件的修改立即永久生效
 reboot # 使修改立刻永久生效
 
+```
+
+MySQL
+
+```shell
+# 切换数据库
+use testdb;
+# 查看当前数据库中有哪些表
+show tables;
+# 从别的数控中看表
+show tables from testdb;
+
+```
+
+索引
+
+```shell
+# 查看现有表中的索引
+show index from student_table\G;
+# 查看select 语句的性能, 是否使用了索引
+# 其中关键指标是key, rows, 如果rows = 1 表示使用了索引
+explain select * from student_table where id=12;
+
+# 创建索引, 支持name字段前10个字符, 如果name字段很长的话
+CREATE INDEX idx_name ON student_table(name(10));
+```
+
+```shell
+# 查询环境变量
+show variable like '%auto%';
+
+# autocommit 变动事务是自动提交的
 ```

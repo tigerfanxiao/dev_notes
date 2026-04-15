@@ -1,7 +1,0 @@
-
-```sql
-show databases;  
-
-```
-
-
