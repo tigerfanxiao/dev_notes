@@ -1,5 +1,6 @@
 
 
+
 ### WHERE
 
 | Operator                | Condition                                                                          | SQL Example                                                             |
@@ -13,11 +14,11 @@
 |                         |                                                                                    |                                                                         |
 ### LIKE
 
-| LIKE                    | Case insensitive exact string comparison                                           | col_name LIKE "ABC"                                                     |
-| ----------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| NOT LIKE                | Case insensitive exact string inequality comparison                                | col_name NOT LIKE "ABCD"                                                |
-| %                       | Used anywhere in a string to match a single character (only with LIKE or NOT LIKE) | col_name LIKE "%AT%"  <br>(matches "AT", "ATTIC", "CAT" or even "BATS") |
-| _                       | Used anywhere in a string to match a single character (only with LIKE or NOT LIKE) | col_name LIKE "AN_"  <br>(matches "AND", but not "AN")                  |
+| LIKE     | Case insensitive exact string comparison                                           | col_name LIKE "ABC"                                                     |
+| -------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| NOT LIKE | Case insensitive exact string inequality comparison                                | col_name NOT LIKE "ABCD"                                                |
+| %        | Used anywhere in a string to match a single character (only with LIKE or NOT LIKE) | col_name LIKE "%AT%"  <br>(matches "AT", "ATTIC", "CAT" or even "BATS") |
+| _        | Used anywhere in a string to match a single character (only with LIKE or NOT LIKE) | col_name LIKE "AN_"  <br>(matches "AND", but not "AN")                  |
 ### Sorting
 
 |          |                   |                                                      |
@@ -173,3 +174,142 @@ DROP TABLE IF EXISTS table_name  -- 删除表， 表结构一起删除。
 
 
 # Foreign Key
+
+
+### 基本语法练习
+```sql
+CREATE TABLE students ( 
+	id INT PRIMARY KEY, 
+	name VARCHAR(50), 
+	age INT, 
+	gender CHAR(1), 
+	class_id INT 
+); 
+
+INSERT INTO students VALUES 
+(1,'张三',18,'M',1), 
+(2,'李四',19,'M',2), 
+(3,'王五',18,'F',1), 
+(4,'赵六',20,'F',2), 
+(5,'钱七',17,'M',1), 
+(6,'孙八',19,'F',3);
+
+CREATE TABLE classes ( 
+	id INT PRIMARY KEY, 
+	class_name VARCHAR(50) 
+); 
+
+INSERT INTO classes VALUES 
+(1,'一班'), 
+(2,'二班'), 
+(3,'三班');
+
+
+```
+问题
+```sql
+-- 1. 查询所有学生信息
+select * from students;
+
+-- 2. 只查询 学生姓名、年龄 两列，不要全部字段。
+select name, age 
+from students;
+
+-- 3. 查询 **年龄大于 18 岁** 的所有学生信息。
+select * from students
+where age > 18;
+
+-- 4. 查询：性别为女 (F) 的所有学生信息
+select * from students
+where gender = 'F';
+
+-- 5.查询 一班 (class_id = 1) 的所有学生
+select * from students
+where class_id = 1;
+
+-- 6. 查询 年龄 **18 ~ 20 之间** 的学生（包含 18、20）
+SELECT * FROM students
+WHERE age BETWEEN 18 AND 20;
+
+-- *7. 查询 **姓张** 的学生（模糊查询）
+SELECT * FROM students
+WHERE name LIKE '张%';
+
+-- 8. 题目：查询所有学生，**按年龄从小到大排序**
+SELECT * FROM students
+ORDER BY age ASC;
+
+-- 9. 题目：查询所有学生，**年龄从大到小，年龄相同再按姓名从小到大排序**
+SELECT * FROM students
+ORDER BY age DESC, name ASC;
+
+
+-- *10. 查询学生表里**所有不重复的年龄**
+SELECT DISTINCT age FROM students;
+
+
+-- 11. 查询**年龄最大的 2 个学生**, 关键字：`LIMIT`
+SELECT * FROM students
+ORDER BY age DESC
+LIMIT 2;
+
+-- 12. 使用聚合函数，查询**学生总人数**
+SELECT COUNT(id) AS student_count FROM students;
+
+-- 13. 查询全体学生**平均年龄**
+SELECT AVG(age) AS average_ages FROM students;
+
+-- *14. 查询学生 **最大年龄、最小年龄**
+SELECT MAX(age), MIN(age) FROM students;
+
+-- *15. 统计**每个班级**的学生人数
+SELECT class_id, COUNT(id) AS student_num
+FROM students
+GROUP BY class_id;
+
+-- 16. 学生姓名 + 对应班级名称
+SELECT a.name, b.class_name 
+FROM students AS a, classes AS b
+WHERE a.class_id = b.id;
+-- * Inner Join写法
+SELECT a.name, b.class_name
+FROM students AS a
+INNER JOIN classes AS b
+ON a.class_id = b.id;
+
+
+-- *17. 查询**每个班级名称 + 对应学生人数**
+SELECT 
+	b.class_name, 
+	COUNT(a.id) AS student_num
+FROM students AS a
+INNER JOIN classes AS b
+on a.class_id = b.id
+GROUP BY b.id
+
+
+-- 18. 基于正确的 17 题语句，增加条件：班级人数 > 2
+SELECT 
+	b.class_name, 
+	COUNT(a.id) AS student_num
+FROM students AS a
+INNER JOIN classes AS b
+on a.class_id = b.id
+GROUP BY b.id
+HAVING COUNT(a.id) > 2;
+
+
+-- *19. - 只统计 **18 岁及以上** 的学生
+-- 按班级名称分组, 算出每个班级的大龄学生人数, 只保留 **人数≥2** 的班级
+SELECT 
+	b.class_name, 
+	COUNT(a.id) AS student_num
+FROM students AS a
+INNER JOIN classes AS b
+on a.class_id = b.id
+WHERE a.age >= 18
+GROUP BY b.id, b.class_name -- 凡是写在Select中的非聚合字段必须出现在group by中
+HAVING COUNT(a.id) > 2
+LIMIT 2;
+
+```

@@ -36,7 +36,7 @@ zip 可以方便打印三个列表
 ```python
 
 my_list = []
-for a, b, c in zip(a_list, b_list, c_list):
+	for a, b, c in zip(a_list, b_list, c_list):
 	my_list.append({'a': a, 'b': b, 'c': c})
 
 from pprint import pprint

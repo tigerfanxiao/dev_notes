@@ -26,6 +26,11 @@ amount: int = 3000
 formatted_str = f"The amount is ${amount / 100:.2f}"
 ```
 
+`isnumeric()`
+```python
+"3/4".isnumeric() # True
+"3/5".isdigit() # False
+```
 ### `enum` & `auto`
 
 ```python

@@ -1,6 +1,6 @@
 
 ```python
-random.randint(1, 255) # 随机整数
+random.randint(1, 255) # 随机在1-255之间, 包含1和255
 ```
 
 ## Choices VS Sample

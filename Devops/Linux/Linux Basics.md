@@ -1380,6 +1380,7 @@ fi
 
 ```shell
 apropos director
+apropos -s 1,8 director
 # 使用whatis 之前需要构建Whatis 数据库
 sudo mandb
 # 回复命令的作用简述, 帮助文档的类别, 可以用man使用
@@ -1510,6 +1511,8 @@ dd # 删除一行
 5dd # 删除5行
 5yy # 复制5行
 5p # 粘贴5遍
+
+di" # 删除"中的内容
 
 # 行号
 3,7

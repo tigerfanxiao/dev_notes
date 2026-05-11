@@ -1,5 +1,5 @@
 
-# Closure
+# Closure 闭包
 
 
 ```python
@@ -16,6 +16,18 @@ my_func.__name__ # inner_func
 
 print(my_func())
 ```
+
+```python
+def html(t): 
+	t2 = t[0] + '/' + t[1:] 
+	def bold(str): 
+		return t + str.title() + t2 
+	return bold # 用法示例 b = html("<b>") print(b("hello"))
+	
+b = html('<b>') # 这个函数可以给任何字符增加前后<b> 标签
+b('python')
+```
+
 
 所以 closure 可以实现向一个没有参数的函数进行传参, 并改变函数的行为
 Closure in Python

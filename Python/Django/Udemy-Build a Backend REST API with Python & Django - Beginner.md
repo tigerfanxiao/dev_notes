@@ -703,6 +703,8 @@ HTTP Status
 - 第二 UV 比 PIP 快 10 倍到 100 倍, 可以快速构建自己的环境
 - install uv
 ```shell
+
+# uv 的两种安装方式
 # on mac
 brew install uv
 # on others

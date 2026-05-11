@@ -11,7 +11,17 @@ except TypeError as mytype_err:
 except Exception:
 	pass 
 else: 
-	# 没有错误
+	# 没有错误的时候会被执行
 finally:
 	# 总是会执行
+```
+
+### 自定义Exception
+
+
+```python
+class E(Exception): 
+	def __init__(self,msg): 
+		Exception.__init__(self,msg * 2) # 这里是初始化exception的message
+	self.args = (msg,) # 这里是定义exception 输出的message
 ```
