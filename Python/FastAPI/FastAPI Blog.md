@@ -2,6 +2,16 @@
 1. 需要看一下同一个作者的pydantic的视频, 有2个深度视频
 https://www.youtube.com/watch?v=M81pfi64eeM
 
+为什么要学Fastapi
+1. 快速开发一个API
+2. 在开发过程中学习Devops
+3. 学习一个主流的web框架
+
+一个主流的web框架包含下面这些component
+1. Secure API = Authentication 和 Authorization
+
+
+
 
 # 第一天
 视频链接 https://www.youtube.com/watch?v=iukOehU5aF4
@@ -238,5 +248,19 @@ http://localhost:8000/openapi.json
 
 ```shell
 uv add sqlalchemy
-
+uv pip show fastapi # 查询当前fastapi 版本
 ```
+
+# 第十天
+
+```shell
+uv add "pwdlib[argon2]" pyjwt pydantic-settings
+```
+
+
+```shell
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+# 第十一天
+

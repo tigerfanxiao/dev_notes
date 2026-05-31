@@ -1,27 +1,14 @@
 
 ```python
-import datetime
+from datetime import datetime, timedelta
 
 # 返回的是datetime对象
-datetime.datetime.now()  # datetime.datetime(2023, 3, 24, 9, 1, 40, 859385) # 2023-03-24 09:01:50.429635 # 打印秒后6位
+datetime.now() 
+datetime.now('UTC')
+
+datetime.now() - timedelta(days=2)
 
 ```
-
-### Compare two date
-```python
-# 是不是之前的时间
-print(datetime.now() > datetime_obj)
-```
-
-### Calculate date
-```python
-# 前天此刻的时间
-datetime.datetime.now() - datetime.timedelta(days=2)
-# 4 个小时前
-# 2024-08-23T23:11:12.799204
-(datetime.datetime.now() - datetime.timedelta(hours=4)).isoformat()
-```
-
 
 将文本转为Datetime对象
 
