@@ -729,6 +729,15 @@ uv python find 3.8
 # uninstall specific python version
 uv python uninstall 3.9
 ```
+make project with uv env 
+```python
+mkdir myproject
+cd myproject
+uv env --python 3.11
+.venv\Scripts\activate
+uv add pandas # install python package with uv
+```
+
 
 use uv to run python
 ```shell

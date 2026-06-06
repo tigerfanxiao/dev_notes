@@ -27,3 +27,8 @@ VMtools
 sudo apt update -y
 sudo apt install open-vm-tools open-vm-tools-desktop -y
 ```
+
+
+快捷键
+
+ctrl + alt + enter 最大化屏幕虚拟机

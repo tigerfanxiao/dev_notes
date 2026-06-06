@@ -1,5 +1,9 @@
+Ansible 基于python开发
+
 ### 参考资料
 [思科模块](https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_config_module.html)
+
+
 
 ### Ansible 相关产品
 我们一般说的 Ansible 只是一个执行器. 在这个执行器之上, 如果要实现 RBAC 和 LDAP 两种协议. 就开发了 Ansible AWX 及其商用版本 Ansibe Power
@@ -377,3 +381,21 @@ debug可用的参数有 var 和 msg
 
 td4a 是一个渲染 ansible 模板的工具, 且是开源的, 值得研究
 https://github.com/cidrblock/td4a/
+
+
+# Ansible 安装
+
+```shell
+sudo apt install pkg-config gcc g++ openssl libssl-dev make zlib1g zlib1g-dev 
+# mysqlclient 用
+sudo apt install libmysqlclient-dev
+
+ansible 需要安装libff-dev 否则报错, 到时候还需要重新编译 CPython
+sudo apt install libffi-dev
+```
+
+下载 python 3.11 版本
+
+```shell
+
+```
