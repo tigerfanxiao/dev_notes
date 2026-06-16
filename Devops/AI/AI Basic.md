@@ -53,6 +53,43 @@ Content Engineering 上下文工程,
 
 ![[Pasted image 20260531082403.png]]
 
+![[Pasted image 20260601110415.png]]
+
+![[Pasted image 20260601110439.png]]
+
+![[Pasted image 20260601110701.png]]
+
+![[Pasted image 20260601110731.png]]
+
+![[Pasted image 20260601110823.png]]
+
+![[Pasted image 20260601110857.png]]
+
+
+![[Pasted image 20260601111040.png]]
+
+![[Pasted image 20260601111207.png]]
+
+![[Pasted image 20260601111458.png]]
+
+![[Pasted image 20260601111522.png]]
+
+![[Pasted image 20260601111549.png]]
+
+![[Pasted image 20260601111612.png]]
+
+
+![[Pasted image 20260601111654.png]]
+
+![[Pasted image 20260601111720.png]]
+
+![[Pasted image 20260601111947.png]]
+
+
+![[Pasted image 20260601111958.png]]
+
+
+![[Pasted image 20260601112015.png]]
 
 Harness 
 对上面提到的3点 - AI 工程师能做什么
