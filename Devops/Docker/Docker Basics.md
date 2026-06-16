@@ -357,9 +357,17 @@ export PGUSER="postgre"
 psql -c "CREATE DATABASE <database>" # -c 表示运行后面的命令
 psql <database> -c "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";" # 为数据库增加uuid插件
 ```
-### Docker compose up
+### Docker Compose
+安装docker compose 命令
+```shell
+docker compose version # 是不是 2
+# 目前已经在 version 5, version 2之后, 忽略version 字段
+sudo apt install docker-compose-v2 # 如果是安装v2版本
+```
+1. docker compose up 命令可以读取 当前目录下 compose文件样式
+	1. `compose.yaml`,`compose.yml`,  `docker-compose.yaml`, `docker-compose.yml`
 - 创建 `docker-compose.yml` 文件
-- docker compose 命令会让container的log日志定在terminal里
+
 
 ```shell
 
@@ -369,13 +377,36 @@ docker compose build
 # 重构镜像, 运行容器
 # -d 运行容器 detach 模式, 否则 terminal 会顶在那里
 docker compose up -d --build
-# 指定 docker-compose 文件来启动进项
+# 指定 docker-compose 文件来启动
 docker compose up -d -f docker-compose.yml
 
+docker compose logs
+docker compose ps # 列出相关服务
 # 关闭容器
 docker compose down 
 ```
-### docker compose exec
+
+docker compose 样例 https://distribution.github.io/distribution/about/deploying/
+```yaml
+services:
+  registry:
+    image: registry:3
+    ports:
+      - "5000:5000"
+    volumes:
+      - registry-data:/var/lib/registry
+
+volumes:
+  registry-data:
+    driver: local # 在本地docker自己找一个地方映射存储
+```
+
+gitea 样例 https://docs.gitea.com/installation/install-with-docker
+```yaml
+https://docs.gitea.com/installation/install-with-docker
+```
+ 
+docker compose exec
 ```shell
 # 访问容器中 postgres
 docker compose exec <container_name> psql -U postgres

@@ -10,7 +10,7 @@ mysql 是客户端
 ```shell
 # 使用管理员权限打开terminal
 # 初始化 mysql, 创建 data 文件夹
-C:\mysql-8.0.46-winx64\bin>mysqld --console --initialize
+	C:\mysql-8.0.46-winx64\bin>mysqld --console --initialize
 2026-06-06T09:01:37.456087Z 0 [System] [MY-013169] [Server] C:\mysql-8.0.46-winx64\bin\mysqld.exe (mysqld 8.0.46) initializing of server in progress as process 32592
 2026-06-06T09:01:37.472803Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
 2026-06-06T09:01:37.623305Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
