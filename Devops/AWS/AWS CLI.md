@@ -57,6 +57,11 @@ aws s3api create-bucket --bucket <bucket_name> --profile <user_name>
 }
 ```
 
+验证 aws 账号
+```shell
+aws sts get-caller-identity # 
+```
+
 ### SSH 连接 Instance
 
 如果创建了 instance 后, 允许 ssh, 下载.perm 文件后
