@@ -1,4 +1,11 @@
 
+# Concepts
+- Database
+	- Inside of database is tables
+- Column
+	- column name is lower case and underscore 
+	- column is also called as field, attribute
+	- 
 
 
 ### WHERE

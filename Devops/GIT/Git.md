@@ -1,6 +1,4 @@
 # 学习资料
-
-
 - Git 是分布式的版本管理工具. 分布式说的是每个终端都有一个完整的版本
 - Git 使用保存不大的文件, 所以大文件上传git有问题, 应该用其他数据库的方式, 比如面向对象的存储来保存大的二进制文件, 图像, 视频这些信息
 # Installment
@@ -95,7 +93,22 @@ git log --pretty=raw <commit id>
 git cat-file tag <tagname>
 ```
 
-### Git Reference
+### Rebase
+First time you pull the repo, the main branch has HAED at B.
+```
+A---B---C---F  (main)
+     \
+      D---E    (feature)
+```
+
+然后你需要先下载的她的新内容. 再把自己的 commit 放在她的提交后面
+
+```shell
+# 使用 rebase 可以规避 git pull必然会多出一个没有意义的 merge commit
+git pull origin main <url> --rebase
+# not the first time 
+git pull --rebase
+```
 
 
 # git config
@@ -108,18 +121,14 @@ git cat-file tag <tagname>
 git config -l # 只有做了 git init . 的目录下才有返回
 git config --global user.name <name>
 git config --global user.email <email>
-git config --global core.editor vim # 也可以通过 GIT_EDITOR 环境变量来配置, 且优先级更高
-git config --global color.ui true # 启动语法着色功能
-
-```
-- 把默认的 git pull 配置成 git rebase
-```shell
 # 配置 git pull 模式使用 rebase
-git config pull.rebase true
-# rollback git rebase configuration
-git config pull.rebase false
-```
+git config --global pull.rebase true
+# 也可以通过 GIT_EDITOR 环境变量来配置, 且优先级更高
+git config --global core.editor vim 
 
+
+git config --global color.ui true # 启动语法着色功能
+```
 
 # Git Branches
 - 一般情况下, 分支分为长期分支和短期分支. 
@@ -162,15 +171,6 @@ git merge <branch_B> # 将brach_B 合并到master上
 git branch -d <branch_B>
 ```
 
-### rebase
-当两个人修改同一个分支. 别人在这个分支上先提交了, 当你提交的时候就会被 reject. 然后你需要先下载的她的新内容. 再把自己的 commit 放在她的提交后面
-
-```shell
-# 使用 rebase 可以规避 git pull必然会多出一个没有意义的 merge commit
-git pull origin main <url> --rebase
-# not the first time 
-git pull --rebase
-```
 
 
 ### fork
