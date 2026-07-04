@@ -1,19 +1,8 @@
 
-### clone
-- 复制本地代码仓库
-```shell
-git clone <local/path.git> # 只要clone本地项目的git文件, 就能复制项目
-```
-- 将远端的代码下载到本地
-```shell
-git clone https://github.com/miguelgrinberg/flasky.git 
-```
-
-
 ### pull
 
-git pull 是面向远程仓库的命令. 作用是将 remote repo 中的代码拉下来并合并
-git pull =  git fetch + git merge
+
+
 * fetch只是拉取, 不会做合并, 在本地会出现一个 FETCH_HEAD 分支
 * merge之后才会出现 conflict
 ```shell
