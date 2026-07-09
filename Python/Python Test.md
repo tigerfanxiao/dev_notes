@@ -1,11 +1,10 @@
 # 问题
 1. 怎么确定测试覆盖范围的报告
-2. 找一些 assert_called, assert_called_once 这些的练习
-3. 模拟数据库不能访问的测试函数
-4. 了解一些Integration test的内容
-5. 发送邮件的测试函数, patch mock的例子
+2. 模拟数据库不能访问的测试函数
+3. 了解一些Integration test的内容
+4. 发送邮件的测试函数, patch mock的例子
 
-# 概念
+# Concepts
 黑盒白盒测试 black-box testing and white-box testing
 - 黑盒是不懂程序内部结构的, 只知道输入和预期的返回值.
 - 白盒是了解程序内部架构的
@@ -802,16 +801,16 @@ master_suite = unittest.TestSuite([suite1, suite2])
 ```
 
 # Pytest
+### module 安装
 
 ```shell
-"""
-Install Pytest
-"""
+# === Install Pytest ===
 pip install pytest
+uv add pytest
 ```
-
+### 测试文件写法
 1. pytest的文件同样用`test_`开头
-2. Pytest 不需要继承TestCase， 只要定义函数用`test_`开头
+2. pytest 不需要继承TestCase， 只要定义函数用`test_`开头
 3. 函数中直接用Python关键词assert， 不像Unittest中用self.assert
 4. 在一个测试函数中可以写多个assert 
 
@@ -882,8 +881,11 @@ def setup_teardown():
 # Run test
 
 ```shell
-# 执行所有测试
+# run all the test under current directory
 pythom -m pytest 
+uv run pytest # run with uv
+
+
 # 压制 warning 执行所有测试
 python -m pytest -p no:warnings
 # 执行所有带有 read 的测试函数

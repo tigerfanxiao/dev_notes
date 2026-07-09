@@ -3,8 +3,6 @@ Ansible 基于python开发
 ### 参考资料
 [思科模块](https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_config_module.html)
 
-
-
 ### Ansible 相关产品
 我们一般说的 Ansible 只是一个执行器. 在这个执行器之上, 如果要实现 RBAC 和 LDAP 两种协议. 就开发了 Ansible AWX 及其商用版本 Ansibe Power
 RBAC 即 role-based access control  对不同的角色分配不同的权限
@@ -12,16 +10,19 @@ LDAP 即 Lightweight Directory Access Protocol 对用户身份进行验证.
 
 
 # 概念
-
-### Ansible 组件
-
-1. Ansible 是不需要在设备上装什么 agent 的. 
-2. Ansiblie 通过 module 向设备发送命令. 这个 module 是不同的设备厂商用 python 开发的. 类似与驱动. 每个 module 有些特殊的用法. 里面使用到的参数要在 playbook 里写. 比如发送的命令
-
+1. Ansible is agentless 
+2.  Ansiblie 通过 module 向设备发送命令. 这个 module 是不同的设备厂商用 python 开发的. 类似与驱动. 每个 module 有些特殊的用法. 里面使用到的参数要在 playbook 里写. 比如发送的命令
 ### Ansible 核心文件
 Ansible 要运行, 需要一下文件
-1. `ansible.cfg`  文件
-2. `inventory` 文件, 用于配置目标网元和变量
+1. `/etc/ansible/ansible.cfg`  
+
+```shell
+ansible-config list # list all configuration
+ansible-config view # show current config file
+ansible-config dump # show current setting
+```
+
+2. `/etc/ansible/hosts` Inventory 文件
 3. playbook用 yaml 写的, 可以基于 jinja2 来渲染
 
 
@@ -37,9 +38,7 @@ inventory 文件定义的地方
 1. `/etc/ansible/hosts`
 2. 环境变量 ANSIBLE_INVENTORY
 3.  ansible.cfg中指定的地方
-
-
-默认所有的设备都属于 all 群组
+4. 默认所有的设备都属于 all 群组
 
 ini 格式的 inventory 文件样例
 ``` shell
@@ -58,7 +57,7 @@ switch.cisco.com
 ```
 
 带有变量的 inventory
-```
+```ini
 [cpe] # 定义了变量
 csr1kv1 loopback_id=1 location=SF # 给群里的单个 host 定义变量
 csr1kv3 loopback_id=3 location=LA
@@ -394,8 +393,3 @@ ansible 需要安装libff-dev 否则报错, 到时候还需要重新编译 CPyth
 sudo apt install libffi-dev
 ```
 
-下载 python 3.11 版本
-
-```shell
-
-```
