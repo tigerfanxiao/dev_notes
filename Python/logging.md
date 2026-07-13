@@ -12,8 +12,6 @@ https://www.youtube.com/watch?v=pxuXaaT1u3k&t=45s
 
 
 
-
-
 ```python
 import logging
 
