@@ -1,27 +1,38 @@
 # Concepts
 
-## `Dataframe` & `Series`
-## read files
-### read csv
-```python
 
+### Load data
+
+```python
 import pandas as pd
 
-# 指定读取部分列
+# === read CSV ===
 specific_cols_names = ['col1', 'col2']
-# 对于一些欧洲字符
-df = pd.read_csv(csv_file_path,  encoding='iso8859-1', usecols=specific_cols_names)
+
+df = pd.read_csv(
+	csv_file_path,  
+	encoding='iso8859-1', # 对于一些欧洲字符
+	usecols=specific_cols_names
+)
+
+
 wine_reviews = pd.read_csv("csv_filepath", index_col=0)
 
-
-# 输出到 csv
-df.to_csv('path')
-```
-
-### read excel
-```python
+# read === EXCEL ===
 excel_data_df = pandas.read_excel('records.xlsx', sheet_name='Employees')
+
+
+
 ```
+
+export data
+```python
+# === export csv ===
+df.to_csv('path')
+
+
+```
+
 
 ## Dataframe
 ### DataFrame meta info
@@ -59,15 +70,19 @@ df1 = pd.DataFrame({'A':[3,4],'B':[5,6]})
 | 1     | 4   | 6   |
 可以给每一行加一个 index
 ```python
-pd.DataFrame({'Bob': ['I liked it.', 'It was awful.'], 
-              'Sue': ['Pretty good.', 'Bland.']},
-             index=['Product A', 'Product B'])
+pd.DataFrame(
+	{'Bob': ['I liked it.', 'It was awful.'], 
+    'Sue': ['Pretty good.', 'Bland.']},
+    index=['Product A', 'Product B']
+)
 ```
 
 |           | Bob           | Sue          |
 | --------- | ------------- | ------------ |
 | Product A | I liked it.   | Pretty good. |
 | Product B | It was awful. | Bland.       |
+
+
 从序列构建df
 ```python
 # 构建只有一列的df
@@ -84,8 +99,10 @@ df.append({'col1': 'val1', 'col2': 'val2'}, ignore_index=True)
 用Series给df增加一行
 ```python
 df = pd.DataFrame({'name': ['John', 'Mike'], 'age': [25, 30]})
-# new_row 是 series
+# create a new record with Series
 new_row = pd.Series(['Sam', 31], index=df.columns)
+df = pd.concat([df, new_row.to_frame().T], ignore_index=True)
+
 ```
 
 获得一列数据
@@ -574,13 +591,14 @@ with pd.ExcelWriter(file_path) as writer:
 
 ```
 
-# 压制warning
+# suppress warning
 
 ```python
 import warnings
 
 with warnings.catch_warnings(record=True):  
-	warnings.simplefilter("always")  
+	warnings.simplefilter("always")
+	# There is no warning for following read_excel
 	offboard_df = pd.read_excel(file_path, sheet_name='sheet', engine="openpyxl")
 ```
 
