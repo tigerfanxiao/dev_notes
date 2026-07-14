@@ -5,7 +5,7 @@
 2. Think of deleting log
 
 原本的例子
-
+  
 
 video 
 https://www.youtube.com/watch?v=pxuXaaT1u3k&t=45s
