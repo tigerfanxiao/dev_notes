@@ -18,17 +18,15 @@ npm i <package_name>@<version>
 ```
 
 
-install on ubuntu
-
 ```shell
+# install nodejs on ubuntu
 sudo apt update
 sudo apt install nodejs
-```
-check
-```shell
-node --version && npm --version
-```
 
+node --version && npm --version
+
+
+```
 ### Initiate project
 1. 构建环境
 ```shell
@@ -60,10 +58,3 @@ npm start # 启动 vite 服务器
 		"jest": "^29.7.0" 
 	}
 }
-```
-3. index.html
-```html
-<!-- 确保程序有正确的入口 -->
-<script src="index.js" type="module"></script>
-```
-

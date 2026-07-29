@@ -254,14 +254,15 @@ class TestDataTransformer(unittest.TestCase):
 ```
 ### mock
 
-当我们的代码中有类似request, 调用远端api, 需要访问网络这种情况时, 因为网络范围有很多不确定性,所以可以利用mock来处理
+当我们的代码中有类似request, 调用远端api, 需要访问网络这种情况时, 因为网络范围有很多不确定性,所以可以利用mock, patch 来处理
 下面举个简单的例子
 ```python
-# 文件名是 main.py
+# 文件名是 len_joke.py
 import requests  
-# 只是需要被测试的函数 len_joke
+
+# 这是真正是需要被测试的函数 len_joke
 def len_joke():  
-    joke = get_joke()  
+    joke = get_joke()  # 里面有一个request 调用, 我们要用mock去替换掉
     return len(joke)  
 
 # 这里是被依赖的函数, 因为是API调用, 我们要mock的是这个函数
@@ -279,19 +280,21 @@ def get_joke():
 import unittest
 
 from unittest.mock import patch
-# 先吧需要测试的函数引入
+# 先把需要测试的函数引入
 # 注意这里不一定需要引入 get_joke 因为这个被mock的函数是patch装饰器去找的
-from main import len_joke
+from len_joke import len_joke
 
-class TestLenJoke(unittest.TestCase):
-	@patch('main.get_joke') # 这里main是module的名字, get_joke是对应的函数
-	def test_len_joke(self, mock_get_joke) # 这里是说我们要用mock_get_joke整个函数来替代原来的get_joke函数
-		mock_get_joke.return_value = 'one' # 这里我们定义了这get_joke函数的返回值
-		# 我们假设在实际运行len_joke时, 依赖的get_joke返回值是 "one", 所以len_joke的返回值是3
-		self.assertEqual(len_joke(), 3)
 
-if __name__ == '__main__':
-	unittest.main()
+@patch('main.get_joke') # 这里main是module的名字, get_joke是对应的函数
+def test_len_joke(mock_get_joke) # 这里是说我们要用mock_get_joke整个函数来替代原来的get_joke函数
+	mock_get_joke.return_value = 'one' # 这里我们定义了这get_joke函数的返回值
+	# 我们假设在实际运行len_joke时, 依赖的get_joke返回值是 "one", 所以len_joke的返回值是3
+	self.assertEqual(len_joke(), 3)
+
+
+	
+# 使用 uv 测试 -vv 详细信息
+uv run python -m pytest tests/mock/test_len_joke.py -vv
 ```
 MagicMock 的作用
 当我们patch一个函数的时候, 如果整个函数的返回值是一个有复杂架构的实例对象, 比如一个HTTP请求的返回值response是一个有复杂结构的对象. 那么模拟整个对象是需要先构造一个类的, 再通过实例化, 才能生成一个模拟的对象. 所以在unittest框架中提供了MagicMock 这个类. 用于快速构建一个复杂结构的实例. 我们还是用上面的例子举例
@@ -840,11 +843,11 @@ class MyClass:
 		return 2
 
 @pytest.fixture
-def c_instance():  # 类似工厂方法，用函数加fixture创建一个对象
+def c_instance():  # like factory, should return an object
 	return MyClass()
 
-def test_g(c_instance):  # 这里保证和fixture的函数定义一样
-	assert c_instance.g() == 2    # 这里直接用c_instance作为实例
+def test_g(c_instance):  # input fixture
+	assert c_instance.g() == 2, "should return 2"  # c_instance used as instance
 ```
 
 ### setup & teardown
@@ -900,7 +903,7 @@ python -m pytest -k read
 
 ```shell
 
-# run only the last failed tests
+# run only the la 
 $ docker-compose exec web python -m pytest --lf
 
 # run only the tests with names that match the string expression

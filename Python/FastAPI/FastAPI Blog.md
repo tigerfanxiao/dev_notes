@@ -25,8 +25,8 @@ uv add "fastapi[standard]" # 使用uv安装包
 ```
 在目录下已经存在uv 为我们创建的main.py
 ```python
-from fastapi import FastAPI
-from fastapi import HTMLResponse
+from fastapi import FastAPI, HTMLResponse
+from fastapi import 
 
 app = FastAPI()
 
