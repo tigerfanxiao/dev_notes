@@ -48,9 +48,16 @@ def test_foo():
 ### Testing Exceptions
 
 ```python
-def test_configured_isis_with_value_error():
+def divide(x, y):
+	if y == 0:
+		raise ValueException("cannot divide by zero")
+	return x / y
+
+
+def test_divide_by_zero():
     with pytest.raises(ValueError) as e_info:  # 指定某一种exception
-        func()  # function will raise ValueError
+        divide(5, 0)  # function will raise ValueError
+    assert str(e_info.value) == "cannot divide by zero"
 ```
 
 ### Creating Shared Instances (Fixtures)
@@ -153,13 +160,29 @@ def test_len_joke(mock_get_joke):
 ### Using MagicMock with Pytest
 
 ```python
+import requests
+
+def get_joke():
+    response = requests.get("https://api.icndb.com/jokes/random")
+	
+    if response.status_code == 200: # 返回值的属性值, 在构造模拟结果实例化的时候作为参数
+        data = response.json() # 返回值的方法的结果, 用 .return_value 
+        return data["value"]["joke"]
+
+    return None
+```
+测试函数
+
+```python
 from unittest.mock import patch, MagicMock
 
 
 @patch("main.requests")
-def test_get_joke(mock_requests):
+def test_get_joke(mock_requests): # 构造一个模拟函数来替换 mock_requests
+	# 构建模拟函数的返回值
     mock_response = MagicMock(status_code=200)
     mock_response.json.return_value = {"value": {"joke": "one"}}
+    # 将模拟的函数, 和模拟函数的返回值关联起来
     mock_requests.get.return_value = mock_response
     assert get_joke() == "one"
 ```
@@ -250,6 +273,19 @@ def test_send_email(mock_smtp):
 ```
 ## Summary
 Pytest is the recommended testing framework for Python. It reduces boilerplate compared to unittest, uses simple `assert` statements, provides powerful fixtures with setup/teardown support via `yield`, integrates seamlessly with `unittest.mock` for mocking, and supports parameterized testing for comprehensive test coverage.
+
+## Mindmap
+
+```mermaid
+mindmap
+	root((Pytest Guide))
+		Fixture
+			调用方法
+				函数参数
+				autouse=True
+				@usefixtures
+    
+```
 
 ## Related Notes
 - [[Python/Python Test.md|Python Test]]
