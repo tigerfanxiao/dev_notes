@@ -253,6 +253,10 @@ uv pip show fastapi # 查询当前fastapi 版本
 
 # 第十天
 
+jwt.io 可以分析jwt的内容
+- JWT 里面有  header, payload, secret
+- 
+
 ```shell
 uv add "pwdlib[argon2]" pyjwt pydantic-settings
 ```
