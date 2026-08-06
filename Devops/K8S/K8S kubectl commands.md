@@ -15,73 +15,82 @@ kubectl apply -f nginx-configuration.yaml
 kubtctl delete -f nginx-configuration.yaml
 ```
 
-Kubenetes manifests file 的结构
-- 版本
-- kind 类型: 区分类型是 Development 还是 Service
-```yaml
-apiVersion: v1
-kind: Development
-metadata:
-	name:
-	label:
-spec:
-
-```
-### Deployment
-
+查询信息
 ```shell
+kubectl describe pod <pod-name>
 
-# 查看 user-db deployment
-# 查看 deployment label
-kubectl get deployment user-db -o yaml
+kubectl port-foward <pod-name> 8080:5001 # 8080 is port in local device
 
+
+kubectl delete pod -l "app.kubernetes.io/name=grade-submission"
+
+# 
+kubectl get endpointslices \
+  -l kubernetes.io/service-name=grade-submission-portal
+
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                      ENDPOINTS         AGE
+grade-submission-portal   10.244.0.9:5001   58s
 ```
 
 
-# namespace
+### kubenetes
 ```shell
+# 帮助
+kubectl --help 
+kubectl get --help
+```
+### log
+```shell
+kubectl logs <pod-name>
+# steaming log
+kubectl logs -f <pod-name> -c <container-name>
+```
+### node
+```shell
+# 查看节点信息
+kubectl get node -o wide
+```
+### namespace
+```shell
+kubectl get namespace
 # 创建 namespace
 kubectl create namesapce <namespace_name>
 ```
-
+### pod
 ```shell
-kubectl get node # check node information
-kubectl get service
-kubectl get svc # get the service
-
-# 查看节点信息
-kubectl get node -o wide
-# 查看 pod 信息
+# check node information
+kubectl get node 
+# 查看 pod 详细信息, 包好ip地址
 kubectl get pods -o wide 
-NAME           READY   STATUS    RESTARTS   AGE   IP               NODE          NOMINATED NODE   READINESS GATES
-auth-proc      2/2     Running   0          80m   192.168.194.68   k8s-worker1   <none>           <none>
-beebox-auth1   1/1     Running   0          80m   192.168.194.66   k8s-worker1   <none>           <none>
-beebox-auth2   1/1     Running   0          80m   192.168.194.65   k8s-worker1   <none>           <none>
-
-# 查看 lable 信息
-kubectl get pods -n beebox-mobile --show-labels
-NAME           READY   STATUS    RESTARTS   AGE   LABELS
-beebox-auth2   1/1     Running   0          68m   app=auth
-db-proc        2/2     Running   0          68m   app=db
-
-# 使用 selector
+# 查看 namespace 下面 所有 pod 的 label 信息
+kubectl get pods -n <namespace> --show-labels
+# 通过 label selector 来过滤 pod
 kubectl get pods -n beebox-mobile --selector app=auth
 NAME           READY   STATUS    RESTARTS   AGE
 auth-proc      2/2     Running   0          79m
 beebox-auth1   1/1     Running   0          79m
-
-kubectl --help # 
-kubectl get --help
-
-
+```
+### service
+```shell
+kubectl get svc
 kubectl describe service <service_name> 
+```
+### Deployment
 
-kubectl logs <podname>
-kubectl logs <podname> -f # stream the log
-
-
+```shell
+# 查看 user-db deployment
+kubectl get deployment user-db -o yaml
 ```
 
+### 容器层面的命令
+```shell
+# 向 pod 中的所有容器下发命令
+kubectl exec -it <pod_name> -- <command>
+# 向 pod 中指定某个容器下发命令 -c
+kubectl exec -it <pod_name> -c <container_name> -- <command>
+
+```
 # Draining a node
 gracefully terminate the cont
 
@@ -106,8 +115,6 @@ kubectl delete deployment my-deployment
 | **kubectl config get-clusters** | Displays clusters defined in the kubeconfig.                              |
 | **kubectl config get-contexts** | Displays the current context.                                             |
 | **kubectl expose**              | Exposes a resource to the internet as a Kubernetes service.               |
-| **kubectl get**                 | Displays resources.                                                       |
-| **kubectl get pods**            | Lists all the Pods.                                                       |
 | **kubectl get pods -o wide**    | Lists all the Pods with details.                                          |
 | **kubectl get deployments**     | Lists the deployments created.                                            |
 | **kubectl get services**        | Lists the services created.                                               |
@@ -115,12 +122,3 @@ kubectl delete deployment my-deployment
 | **kubectl run**                 | Creates and runs a particular image in a pod.                             |
 | **kubectl version**             | Prints the client and server version information.                         |
 
-```shell
-
-
-# 向 pod 中的所有容器下发命令
-kubectl exec -it <pod_name> -- <command>
-# 向 pod 中指定某个容器下发命令 -c
-kubectl exec -it <pod_name> -c <container_name> -- <command>
-
-```

@@ -89,5 +89,5 @@ sam build --use-container \
 ```
 
 ```shell
-uv export --format requirements-txt --no-dev > src/requirements.txt
+uv export --format requirements-txt --no-dev > requirements.txt
 ```
