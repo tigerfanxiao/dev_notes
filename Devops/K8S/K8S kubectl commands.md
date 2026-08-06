@@ -33,6 +33,21 @@ NAME                      ENDPOINTS         AGE
 grade-submission-portal   10.244.0.9:5001   58s
 ```
 
+```shell
+kubectl describe pod <pod-name>
+
+kubectl port-foward <pod-name> 8080:5001 # 8080 is port in local device
+
+
+kubectl delete pod -l "app.kubernetes.io/name=grade-submission"
+
+# 
+
+
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                      ENDPOINTS         AGE
+grade-submission-portal   10.244.0.9:5001   58s
+```
 
 ### kubenetes
 ```shell
@@ -41,9 +56,18 @@ kubectl --help
 kubectl get --help
 ```
 ### log
+- 区分各种不同对象的log
 ```shell
+#== system level
+# kubetlet log 需要在node上查看
+sudo journalctl -u kubelet
+# K8s api server log
+kubectl log -n kube-system <api_server_pod_name>
+
+#== pod level
+# pod log
 kubectl logs <pod-name>
-# steaming log
+# steaming container log
 kubectl logs -f <pod-name> -c <container-name>
 ```
 ### node
@@ -66,15 +90,32 @@ kubectl get pods -o wide
 # 查看 namespace 下面 所有 pod 的 label 信息
 kubectl get pods -n <namespace> --show-labels
 # 通过 label selector 来过滤 pod
-kubectl get pods -n beebox-mobile --selector app=auth
+kubectl get pods -n <namespace> --selector app=auth
 NAME           READY   STATUS    RESTARTS   AGE
 auth-proc      2/2     Running   0          79m
 beebox-auth1   1/1     Running   0          79m
+
+# 删除所有 pod
+kubectl delete pods --all -n default
+kubectl delete pod -l "app.kubernetes.io/name=grade-submission"
+# 删除所有pod 和 service
+kubectl delete pods,services --all -n <namespace>
+
 ```
 ### service
+- service 的名字, 在k8s中的dns中注册了. 上游的pod发送请求是, 只要制定service的名字, k8s的dns会解析出service的ip地址
+- 每个 service 都有一个自己的IP地址, 默认就是clusterIP
+- Service 如果知名了pod 的label, k8s 就是实时监控对应的标签的pod, 并把他们都加入 endpointslices 清单中
 ```shell
+# 查看 default namespace下的service
 kubectl get svc
+# 查看指定namespace下的service
+kubectl get svc -n <namespace>
+# 查看指定 service 的详细信息
 kubectl describe service <service_name> 
+# 查看指定 service 的 endpointslices 清单
+kubectl get endpointslices -l kubernetes.io/service-name=grade-submission-portal
+
 ```
 ### Deployment
 
@@ -82,8 +123,7 @@ kubectl describe service <service_name>
 # 查看 user-db deployment
 kubectl get deployment user-db -o yaml
 ```
-
-### 容器层面的命令
+### container
 ```shell
 # 向 pod 中的所有容器下发命令
 kubectl exec -it <pod_name> -- <command>
@@ -91,6 +131,7 @@ kubectl exec -it <pod_name> -- <command>
 kubectl exec -it <pod_name> -c <container_name> -- <command>
 
 ```
+
 # Draining a node
 gracefully terminate the cont
 
