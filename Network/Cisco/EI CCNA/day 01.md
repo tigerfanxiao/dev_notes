@@ -18,11 +18,6 @@ My Idea: 在会议室的影音设备, 因为平时移动较少, 建议使用有�
 cisco 官网
 cisco.com -> product service -> network - 交换机
 
-EVE-NG 和 Packet Tracker 的区别
-EVE 是 NFV 是一种虚拟化的设备, 是可以产品级的, 一样需要花钱.
-Packet Tracker 是模拟器, 只是模拟设备
-
-
 
 [cisco 文档](https://www.cisco.com/c/en/us/support/ios-nx-os-software/ios-xe-dublin-17-10-1/model.html)
 
