@@ -13,9 +13,9 @@ version: "0.1"
 
 ## Today's Notes (2026-07-30)
 
-| # | Note | Created | 1st Review | 2nd Review | 3rd Review | 4th Review | 5th Review |
-|---|------|---------|------------|------------|------------|------------|------------|
-| 1 | [[MCP/Pytest Guide.md\|Pytest Guide]] | 2026-07-30 | 2026-07-31 | 2026-08-01 | 2026-08-06 | 2026-08-13 | 2026-08-27 |
+| #   | Note                                  | Created    | 1st Review | 2nd Review | 3rd Review | 4th Review | 5th Review |
+| --- | ------------------------------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| 1   | [[MCP/Pytest Guide.md\|Pytest Guide]] | 2026-07-30 | ~~2026-07-31~~ ✅ | 2026-08-01 | 2026-08-06 | 2026-08-13 | 2026-08-27 |
 
 
 ## How the Forgetting Curve Works
@@ -43,7 +43,7 @@ Where:
 
 ### Review Progress Checklist
 
-- [ ] **2026-07-31 (1 day)** — Review [[MCP/Pytest Guide.md\|Pytest Guide]]
+- [x] **2026-07-31 (1 day)** — Review [[MCP/Pytest Guide.md\|Pytest Guide]] ✅ done
 - [ ] **2026-08-01 (2 days)** — Review [[MCP/Pytest Guide.md\|Pytest Guide]]
 - [ ] **2026-08-06 (7 days)** — Review [[MCP/Pytest Guide.md\|Pytest Guide]]
 - [ ] **2026-08-13 (14 days)** — Review [[MCP/Pytest Guide.md\|Pytest Guide]]

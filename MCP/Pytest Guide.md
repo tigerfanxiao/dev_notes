@@ -50,7 +50,7 @@ def test_foo():
 ```python
 def divide(x, y):
 	if y == 0:
-		raise ValueException("cannot divide by zero")
+		raise ValueError("cannot divide by zero")
 	return x / y
 
 
@@ -60,23 +60,58 @@ def test_divide_by_zero():
     assert str(e_info.value) == "cannot divide by zero"
 ```
 
-### Creating Shared Instances (Fixtures)
+### Using Fixture to Setup and Teardown
 
 ```python
+import sqlite3
 import pytest
 
-class MyClass:
-    def g(self):
-        return 2
+
+def get_user_by_email(db, email):
+    return db.execute(
+        "SELECT id, name, email FROM users WHERE email = ?",
+        (email,),
+    ).fetchone()
+
 
 @pytest.fixture
-def c_instance():  # like factory, should return an object
-    return MyClass()
+def db():
+    # Setup: create an isolated in-memory test database
+    connection = sqlite3.connect(":memory:")
 
-def test_g(c_instance):  # input fixture
-    assert c_instance.g() == 2, "should return 2"
+    connection.execute("""
+        CREATE TABLE users (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE
+        )
+    """)
+
+    connection.execute(
+        "INSERT INTO users (name, email) VALUES (?, ?)",
+        ("Alice", "alice@example.com"),
+    )
+    connection.commit()
+
+    yield connection  # Tests run here
+
+    # Cleanup: executed after each test
+    connection.close()
+
+
+def test_get_existing_user(db):
+    user = get_user_by_email(db, "alice@example.com")
+
+    assert user is not None
+    assert user[1] == "Alice"
+    assert user[2] == "alice@example.com"
+
+
+def test_get_missing_user(db):
+    user = get_user_by_email(db, "missing@example.com")
+
+    assert user is None
 ```
-
 ### Setup & Teardown with yield
 
 ```python
