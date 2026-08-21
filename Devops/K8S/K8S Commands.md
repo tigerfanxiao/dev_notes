@@ -48,7 +48,6 @@ Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointS
 NAME                      ENDPOINTS         AGE
 grade-submission-portal   10.244.0.9:5001   58s
 ```
-
 ### kubenetes
 ```shell
 # 帮助
@@ -102,6 +101,13 @@ kubectl delete pod -l "app.kubernetes.io/name=grade-submission"
 kubectl delete pods,services --all -n <namespace>
 
 ```
+### container
+```shell
+# find container id
+kubectl describe pod web-app
+
+```
+
 ### service
 - service 的名字, 在k8s中的dns中注册了. 上游的pod发送请求是, 只要制定service的名字, k8s的dns会解析出service的ip地址
 - 每个 service 都有一个自己的IP地址, 默认就是clusterIP
@@ -118,10 +124,29 @@ kubectl get endpointslices -l kubernetes.io/service-name=grade-submission-portal
 
 ```
 ### Deployment
-
+- deployment rolling update
+```yaml
+spec:
+	strategy:
+		type: RollingUpdate
+		rollingupdate:
+			maxUnavailable: 50% # 每次只能干掉 50% 老的pod
+			maxSurge: 1 # 每次只增加1个新的
+```
+- deployment rollback
 ```shell
 # 查看 user-db deployment
 kubectl get deployment user-db -o yaml
+# rolling updates
+# 改动deployment中的镜像, 就会自动逐步替换pod, 但是保证至少有一个老的pod在线
+
+# rollback k8s会保存之前版本的deployment用于回退, 不需要改回deployment文件
+kubectl rollout undo deployment/<deployment_name> -n <namespace>
+
+```
+- delete deployment
+```shell
+kubectl delete deployment my-deployment
 ```
 ### container
 ```shell
@@ -129,11 +154,9 @@ kubectl get deployment user-db -o yaml
 kubectl exec -it <pod_name> -- <command>
 # 向 pod 中指定某个容器下发命令 -c
 kubectl exec -it <pod_name> -c <container_name> -- <command>
-
-```
-
 # Draining a node
 gracefully terminate the cont
+```
 
 daemonsets: pods that are tied to each node
 ```shell
@@ -145,9 +168,29 @@ kubectl apply -f pod.yml
 kubectl apply -f deployment.yml
 ```
 
+### helm
+Package Manager for K8s 
+```shell
+mychart/
+├── Chart.yaml # Contains chart information
+├── values.yaml # Default configuration values
+└── templates/ # Directory for template files
+├── deployment.yaml
+├── service.yaml
+└── ingress.yaml
+```
+
 
 ```shell
-kubectl delete deployment my-deployment
+helm list -A # show all installed package 
+helm package . # package ./template values.yaml Chart.yaml
+helm install <app_name> <app_package> -n <namespace>
+helm uninstall <app_name> 
+# upgrade existing app
+helm upgrade <app_name> <app_package> -n <namespace>
+helm upgrade <app_name> . -n <namespace> # 如果当年目录已经有新的内容, 可以自动打包
+
+helm rollback <app_name> <revision> -n <namespace> 
 ```
 
 | Command                         | Description                                                               |

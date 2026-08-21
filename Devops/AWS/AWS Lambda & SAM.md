@@ -91,3 +91,36 @@ sam build --use-container \
 ```shell
 uv export --format requirements-txt --no-dev > requirements.txt
 ```
+
+```shell
+aws dynamodb export-table-to-point-in-time \
+  --table-arn arn:aws:dynamodb:eu-west-1:$(aws sts get-caller-identity --query Account --output text):table/ai-sandbox-pdp-auditor-results-dev \
+  --s3-bucket ai-sandbox-pdp-auditor-exports-dev \
+  --s3-prefix exports \
+  --export-format ION \
+  --region eu-west-1
+  
+
+{
+    "ExportDescription": {
+        "ExportArn": "arn:aws:dynamodb:eu-west-1:757992231822:table/ai-sandbox-pdp-auditor-results-dev/export/01786011628183-58d21314",
+        "ExportStatus": "IN_PROGRESS",
+        "StartTime": "2026-08-06T12:20:28.183000+02:00",
+        "TableArn": "arn:aws:dynamodb:eu-west-1:757992231822:table/ai-sandbox-pdp-auditor-results-dev",
+        "TableId": "b82bb46b-9e62-4b11-b866-2ac01078d92f",
+        "ExportTime": "2026-08-06T12:20:28.183000+02:00",
+        "ClientToken": "da3985e0-83bf-4623-b7ff-6607aee0a49e",
+        "S3Bucket": "ai-sandbox-pdp-auditor-exports-dev",
+        "S3Prefix": "exports",
+        "S3SseAlgorithm": "AES256",
+        "ExportFormat": "ION"
+    }
+}
+
+aws dynamodb describe-export \
+  --export-arn "arn:aws:dynamodb:eu-west-1:757992231822:table/ai-sandbox-pdp-auditor-results-dev/export/01786011628183-58d21314" \
+  --region eu-west-1 \
+  --query 'ExportDescription.{Status:ExportStatus, StartTime:StartTime, EndTime:EndTime, S3Bucket:S3Bucket, S3Prefix:S3Prefix}'
+```
+
+
